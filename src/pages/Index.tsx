@@ -1,12 +1,151 @@
-// Update this page (the content is just a fallback if you fail to update the page)
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Brain, Code, Users, BookOpen, Target, TrendingUp } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { ThemeToggle } from "@/components/ThemeToggle";
+import { StatsCard } from "@/components/StatsCard";
 
 const Index = () => {
+  const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+
+  const categories = [
+    {
+      id: "dsa",
+      title: "Data Structures & Algorithms",
+      description: "Master coding interviews with comprehensive DSA topics, from arrays to dynamic programming.",
+      icon: Code,
+      gradient: "from-blue-500 to-cyan-500",
+      path: "/dsa",
+      stats: "150+ Problems"
+    },
+    {
+      id: "system-design",
+      title: "System Design",
+      description: "Learn to design scalable systems with real-world examples and best practices.",
+      icon: Brain,
+      gradient: "from-purple-500 to-pink-500",
+      path: "/system-design",
+      stats: "25+ Designs"
+    },
+    {
+      id: "behavioral",
+      title: "Behavioral",
+      description: "Ace behavioral interviews with proven frameworks and example scenarios.",
+      icon: Users,
+      gradient: "from-green-500 to-emerald-500",
+      path: "/behavioral",
+      stats: "40+ Questions"
+    }
+  ];
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold mb-4">Welcome to Your Blank App</h1>
-        <p className="text-xl text-muted-foreground">Start building your amazing project here!</p>
-      </div>
+    <div className="min-h-screen bg-background">
+      {/* Header */}
+      <header className="border-b border-border bg-card/30 backdrop-blur-md sticky top-0 z-50">
+        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center space-x-2">
+            <div className="w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center">
+              <BookOpen className="w-5 h-5 text-white" />
+            </div>
+            <h1 className="text-xl font-bold gradient-text">Interview Prep Hub</h1>
+          </div>
+          
+          <div className="flex items-center space-x-4">
+            <ThemeToggle />
+            <Button variant="outline" size="sm">
+              Sign In
+            </Button>
+            <Button size="sm">
+              Get Started
+            </Button>
+          </div>
+        </div>
+      </header>
+
+      {/* Hero Section */}
+      <section className="py-20 px-6">
+        <div className="container mx-auto text-center">
+          <h2 className="text-5xl font-bold mb-6">
+            Master Your Next{" "}
+            <span className="gradient-text">Tech Interview</span>
+          </h2>
+          <p className="text-xl text-muted-foreground mb-12 max-w-3xl mx-auto">
+            Comprehensive preparation platform with curated problems, system design concepts, 
+            and behavioral interview strategies used by engineers at top tech companies.
+          </p>
+          
+          <div className="flex justify-center items-center space-x-8 mb-16">
+            <StatsCard icon={Target} value="500+" label="Problems Solved" />
+            <StatsCard icon={Users} value="10K+" label="Students" />
+            <StatsCard icon={TrendingUp} value="85%" label="Success Rate" />
+          </div>
+        </div>
+      </section>
+
+      {/* Main Categories */}
+      <section className="py-16 px-6">
+        <div className="container mx-auto">
+          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+            {categories.map((category) => {
+              const Icon = category.icon;
+              return (
+                <Link
+                  key={category.id}
+                  to={category.path}
+                  className="group"
+                  onMouseEnter={() => setHoveredCard(category.id)}
+                  onMouseLeave={() => setHoveredCard(null)}
+                >
+                  <div className={`topic-card h-80 flex flex-col justify-between relative overflow-hidden ${
+                    hoveredCard === category.id ? 'scale-105' : ''
+                  } transition-all duration-300`}>
+                    {/* Background gradient overlay */}
+                    <div className={`absolute inset-0 bg-gradient-to-br ${category.gradient} opacity-5 group-hover:opacity-10 transition-opacity duration-300`} />
+                    
+                    <div className="relative z-10">
+                      <div className={`w-16 h-16 rounded-xl bg-gradient-to-r ${category.gradient} flex items-center justify-center mb-6`}>
+                        <Icon className="w-8 h-8 text-white" />
+                      </div>
+                      
+                      <h3 className="text-2xl font-bold text-foreground mb-4">
+                        {category.title}
+                      </h3>
+                      
+                      <p className="text-muted-foreground leading-relaxed">
+                        {category.description}
+                      </p>
+                    </div>
+                    
+                    <div className="relative z-10 flex items-center justify-between">
+                      <span className="text-sm font-medium text-primary">
+                        {category.stats}
+                      </span>
+                      <Button variant="ghost" size="sm" className="group-hover:bg-primary/10">
+                        Start Learning →
+                      </Button>
+                    </div>
+                  </div>
+                </Link>
+              );
+            })}
+          </div>
+        </div>
+      </section>
+
+      {/* Footer */}
+      <footer className="border-t border-border py-12 px-6 mt-20">
+        <div className="container mx-auto text-center">
+          <div className="flex items-center justify-center space-x-2 mb-4">
+            <div className="w-6 h-6 bg-gradient-to-r from-primary to-accent rounded flex items-center justify-center">
+              <BookOpen className="w-4 h-4 text-white" />
+            </div>
+            <span className="font-bold gradient-text">Interview Prep Hub</span>
+          </div>
+          <p className="text-muted-foreground">
+            Empowering developers to succeed in technical interviews
+          </p>
+        </div>
+      </footer>
     </div>
   );
 };
