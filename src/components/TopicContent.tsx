@@ -3,23 +3,74 @@ import { CheckCircle, Circle, Bookmark, BookmarkCheck, Clock, Code } from "lucid
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Topic } from "@/types";
+import { supabase } from "@/integrations/supabase/client";
 
 interface TopicContentProps {
   topic: Topic;
+  category: string;
+  onProgressUpdate: () => Promise<void>;
 }
 
-export function TopicContent({ topic }: TopicContentProps) {
+export function TopicContent({ topic, category, onProgressUpdate }: TopicContentProps) {
   const [isCompleted, setIsCompleted] = useState(topic.isCompleted || false);
   const [isBookmarked, setIsBookmarked] = useState(topic.isBookmarked || false);
 
-  const toggleComplete = () => {
-    setIsCompleted(!isCompleted);
-    // In a real app, this would update the backend
+  const toggleComplete = async () => {
+    const newCompleted = !isCompleted;
+    setIsCompleted(newCompleted);
+    await updateProgress(topic.id, { isCompleted: newCompleted });
   };
 
-  const toggleBookmark = () => {
-    setIsBookmarked(!isBookmarked);
-    // In a real app, this would update the backend
+  const toggleBookmark = async () => {
+    const newBookmarked = !isBookmarked;
+    setIsBookmarked(newBookmarked);
+    await updateProgress(topic.id, { isBookmarked: newBookmarked });
+  };
+
+  const updateProgress = async (questionId: string, updates: { isCompleted?: boolean; isBookmarked?: boolean }) => {
+    try {
+      const { data: { user } } = await supabase.auth.getUser();
+      if (!user) return;
+
+      const questionType = category === 'system-design' ? 'system_design' : category;
+
+      const { data: existing } = await supabase
+        .from('user_progress')
+        .select('id')
+        .eq('user_id', user.id)
+        .eq('question_id', questionId)
+        .eq('question_type', questionType)
+        .single();
+
+      const updateData = {
+        user_id: user.id,
+        question_id: questionId,
+        question_type: questionType,
+        ...(updates.isCompleted !== undefined && {
+          is_completed: updates.isCompleted,
+          completed_at: updates.isCompleted ? new Date().toISOString() : null
+        }),
+        ...(updates.isBookmarked !== undefined && {
+          is_bookmarked: updates.isBookmarked,
+          bookmarked_at: updates.isBookmarked ? new Date().toISOString() : null
+        })
+      };
+
+      if (existing) {
+        await supabase
+          .from('user_progress')
+          .update(updateData)
+          .eq('id', existing.id);
+      } else {
+        await supabase
+          .from('user_progress')
+          .insert(updateData);
+      }
+
+      onProgressUpdate();
+    } catch (error) {
+      console.error('Error updating progress:', error);
+    }
   };
 
   const formatContent = (content: string) => {

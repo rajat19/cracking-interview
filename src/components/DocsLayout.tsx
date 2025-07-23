@@ -1,47 +1,148 @@
-import { useState, useMemo } from "react";
-import { Link } from "react-router-dom";
+import { useState, useMemo, useEffect } from "react";
 import { Search, BookOpen, Clock, Code, CheckCircle, Bookmark, BookmarkCheck } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Topic } from "@/types";
 import { TopicContent } from "@/components/TopicContent";
-import { ThemeToggle } from "@/components/ThemeToggle";
+import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
+import Navigation from "@/components/Navigation";
 
 interface DocsLayoutProps {
   title: string;
   description: string;
-  topics: Topic[];
   category: string;
 }
 
-export function DocsLayout({ title, description, topics, category }: DocsLayoutProps) {
-  const [selectedTopic, setSelectedTopic] = useState<Topic | null>(topics[0] || null);
+export function DocsLayout({ title, description, category }: DocsLayoutProps) {
+  const { user } = useAuth();
+  const [topics, setTopics] = useState<Topic[]>([]);
+  const [userProgress, setUserProgress] = useState<Record<string, { is_completed: boolean; is_bookmarked: boolean }>>({});
+  const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [difficultyFilter, setDifficultyFilter] = useState<string>("all");
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    fetchQuestions();
+  }, [category]);
+
+  useEffect(() => {
+    if (user && topics.length > 0) {
+      fetchUserProgress();
+    }
+  }, [user, topics]);
+
+  const fetchQuestions = async () => {
+    try {
+      const tableName = getTableName(category);
+      const { data, error } = await supabase
+        .from(tableName)
+        .select('*')
+        .order('created_at');
+
+      if (error) throw error;
+
+      const mappedTopics: Topic[] = data?.map(q => ({
+        id: q.id,
+        title: q.title,
+        difficulty: q.difficulty as "easy" | "medium" | "hard",
+        timeComplexity: (q as any).time_complexity,
+        spaceComplexity: (q as any).space_complexity,
+        description: q.description,
+        content: q.content,
+        examples: q.examples || [],
+        relatedTopics: q.related_topics || [],
+        isCompleted: false,
+        isBookmarked: false
+      })) || [];
+
+      setTopics(mappedTopics);
+      if (mappedTopics.length > 0 && !selectedTopic) {
+        setSelectedTopic(mappedTopics[0]);
+      }
+    } catch (error) {
+      console.error('Error fetching questions:', error);
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  const fetchUserProgress = async () => {
+    if (!user) return;
+
+    try {
+      const { data, error } = await supabase
+        .from('user_progress')
+        .select('question_id, is_completed, is_bookmarked')
+        .eq('user_id', user.id)
+        .eq('question_type', category === 'system-design' ? 'system_design' : category);
+
+      if (error) throw error;
+
+      const progressMap: Record<string, { is_completed: boolean; is_bookmarked: boolean }> = {};
+      data?.forEach(progress => {
+        progressMap[progress.question_id] = {
+          is_completed: progress.is_completed,
+          is_bookmarked: progress.is_bookmarked
+        };
+      });
+
+      setUserProgress(progressMap);
+    } catch (error) {
+      console.error('Error fetching user progress:', error);
+    }
+  };
+
+  const getTableName = (category: string) => {
+    switch (category) {
+      case 'dsa': return 'dsa_questions';
+      case 'system-design': return 'system_design_questions';
+      case 'behavioral': return 'behavioral_questions';
+      default: return 'dsa_questions';
+    }
+  };
+
+  const topicsWithProgress = useMemo(() => {
+    return topics.map(topic => ({
+      ...topic,
+      isCompleted: userProgress[topic.id]?.is_completed || false,
+      isBookmarked: userProgress[topic.id]?.is_bookmarked || false
+    }));
+  }, [topics, userProgress]);
 
   const filteredTopics = useMemo(() => {
-    return topics.filter(topic => {
+    return topicsWithProgress.filter(topic => {
       const matchesSearch = topic.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           topic.description.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesDifficulty = difficultyFilter === "all" || topic.difficulty === difficultyFilter;
       return matchesSearch && matchesDifficulty;
     });
-  }, [topics, searchQuery, difficultyFilter]);
+  }, [topicsWithProgress, searchQuery, difficultyFilter]);
 
-  const completedCount = topics.filter(t => t.isCompleted).length;
-  const progressPercentage = topics.length > 0 ? Math.round((completedCount / topics.length) * 100) : 0;
+  const completedCount = topicsWithProgress.filter(t => t.isCompleted).length;
+  const progressPercentage = topicsWithProgress.length > 0 ? Math.round((completedCount / topicsWithProgress.length) * 100) : 0;
+
+  if (loading) {
+    return (
+      <>
+        <Navigation />
+        <div className="min-h-screen flex items-center justify-center">
+          <div className="text-center">Loading questions...</div>
+        </div>
+      </>
+    );
+  }
 
   return (
-    <div className="min-h-screen bg-background flex">
-      {/* Sidebar */}
-      <div className="w-80 border-r border-border bg-card/30 backdrop-blur-sm">
-        {/* Header */}
-        <div className="p-6 border-b border-border">
-          <Link to="/" className="flex items-center space-x-2 mb-4 text-muted-foreground hover:text-foreground transition-colors">
-            <BookOpen className="w-4 h-4" />
-            <span className="text-sm">← Back to Home</span>
-          </Link>
+    <>
+      <Navigation />
+      <div className="min-h-screen bg-background flex">
+        {/* Sidebar */}
+        <div className="w-80 border-r border-border bg-card/30 backdrop-blur-sm">
+          {/* Header */}
+          <div className="p-6 border-b border-border">
           
           <h1 className="text-2xl font-bold text-foreground mb-2">{title}</h1>
           <p className="text-sm text-muted-foreground mb-4">{description}</p>
@@ -50,7 +151,7 @@ export function DocsLayout({ title, description, topics, category }: DocsLayoutP
           <div className="space-y-2">
             <div className="flex justify-between text-sm">
               <span className="text-muted-foreground">Progress</span>
-              <span className="text-foreground font-medium">{completedCount}/{topics.length}</span>
+              <span className="text-foreground font-medium">{completedCount}/{topicsWithProgress.length}</span>
             </div>
             <div className="progress-indicator">
               <div 
@@ -183,13 +284,16 @@ export function DocsLayout({ title, description, topics, category }: DocsLayoutP
               </Badge>
             )}
           </div>
-          <ThemeToggle />
         </div>
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto">
           {selectedTopic ? (
-            <TopicContent topic={selectedTopic} />
+            <TopicContent 
+              topic={selectedTopic} 
+              category={category}
+              onProgressUpdate={fetchUserProgress}
+            />
           ) : (
             <div className="flex items-center justify-center h-full text-muted-foreground">
               <div className="text-center">
@@ -202,5 +306,6 @@ export function DocsLayout({ title, description, topics, category }: DocsLayoutP
         </div>
       </div>
     </div>
+    </>
   );
 }

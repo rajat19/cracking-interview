@@ -14,7 +14,186 @@ export type Database = {
   }
   public: {
     Tables: {
-      [_ in never]: never
+      behavioral_questions: {
+        Row: {
+          content: string
+          created_at: string
+          description: string
+          difficulty: string
+          examples: string[] | null
+          id: string
+          related_topics: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          description: string
+          difficulty: string
+          examples?: string[] | null
+          id?: string
+          related_topics?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          description?: string
+          difficulty?: string
+          examples?: string[] | null
+          id?: string
+          related_topics?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      dsa_questions: {
+        Row: {
+          content: string
+          created_at: string
+          description: string
+          difficulty: string
+          examples: string[] | null
+          id: string
+          related_topics: string[] | null
+          space_complexity: string | null
+          time_complexity: string | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          description: string
+          difficulty: string
+          examples?: string[] | null
+          id?: string
+          related_topics?: string[] | null
+          space_complexity?: string | null
+          time_complexity?: string | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          description?: string
+          difficulty?: string
+          examples?: string[] | null
+          id?: string
+          related_topics?: string[] | null
+          space_complexity?: string | null
+          time_complexity?: string | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      profiles: {
+        Row: {
+          created_at: string
+          display_name: string | null
+          email: string | null
+          id: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          display_name?: string | null
+          email?: string | null
+          id?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          display_name?: string | null
+          email?: string | null
+          id?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
+      system_design_questions: {
+        Row: {
+          content: string
+          created_at: string
+          description: string
+          difficulty: string
+          examples: string[] | null
+          id: string
+          related_topics: string[] | null
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          content: string
+          created_at?: string
+          description: string
+          difficulty: string
+          examples?: string[] | null
+          id?: string
+          related_topics?: string[] | null
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          content?: string
+          created_at?: string
+          description?: string
+          difficulty?: string
+          examples?: string[] | null
+          id?: string
+          related_topics?: string[] | null
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      user_progress: {
+        Row: {
+          bookmarked_at: string | null
+          completed_at: string | null
+          created_at: string
+          id: string
+          is_bookmarked: boolean
+          is_completed: boolean
+          question_id: string
+          question_type: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          bookmarked_at?: string | null
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          is_bookmarked?: boolean
+          is_completed?: boolean
+          question_id: string
+          question_type: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          bookmarked_at?: string | null
+          completed_at?: string | null
+          created_at?: string
+          id?: string
+          is_bookmarked?: boolean
+          is_completed?: boolean
+          question_id?: string
+          question_type?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

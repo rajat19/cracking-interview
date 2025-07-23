@@ -4,8 +4,10 @@ import { Brain, Code, Users, BookOpen, Target, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { StatsCard } from "@/components/StatsCard";
+import { useAuth } from "@/hooks/useAuth";
 
 const Index = () => {
+  const { user } = useAuth();
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   const categories = [
@@ -52,12 +54,26 @@ const Index = () => {
           
           <div className="flex items-center space-x-4">
             <ThemeToggle />
-            <Button variant="outline" size="sm">
-              Sign In
-            </Button>
-            <Button size="sm">
-              Get Started
-            </Button>
+            {user ? (
+              <Link to="/bookmarks">
+                <Button variant="outline" size="sm">
+                  Bookmarks
+                </Button>
+              </Link>
+            ) : (
+              <>
+                <Link to="/auth">
+                  <Button variant="outline" size="sm">
+                    Sign In
+                  </Button>
+                </Link>
+                <Link to="/auth">
+                  <Button size="sm">
+                    Get Started
+                  </Button>
+                </Link>
+              </>
+            )}
           </div>
         </div>
       </header>
