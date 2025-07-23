@@ -3,14 +3,18 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<"light" | "dark">("dark");
+  const [theme, setTheme] = useState<"light" | "dark">("light");
 
   useEffect(() => {
     const root = window.document.documentElement;
+    const body = window.document.body;
+    
     if (theme === "dark") {
       root.classList.add("dark");
+      body.setAttribute("data-theme", "dark");
     } else {
       root.classList.remove("dark");
+      body.setAttribute("data-theme", "light");
     }
   }, [theme]);
 
