@@ -1,14 +1,42 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Brain, Code, Users, BookOpen, Target, TrendingUp } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { StatsCard } from "@/components/StatsCard";
 import { useAuth } from "@/hooks/useAuth";
+import { supabase } from "@/integrations/supabase/client";
 
 const Index = () => {
   const { user } = useAuth();
+  const [stats, setStats] = useState({
+    dsaQuestions: 0,
+    systemDesignQuestions: 0,
+    behavioralQuestions: 0
+  });
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchStats = async () => {
+      try {
+        const [dsaResult, systemDesignResult, behavioralResult] = await Promise.all([
+          supabase.from('dsa_questions').select('id', { count: 'exact', head: true }),
+          supabase.from('system_design_questions').select('id', { count: 'exact', head: true }),
+          supabase.from('behavioral_questions').select('id', { count: 'exact', head: true })
+        ]);
+
+        setStats({
+          dsaQuestions: dsaResult.count || 0,
+          systemDesignQuestions: systemDesignResult.count || 0,
+          behavioralQuestions: behavioralResult.count || 0
+        });
+      } catch (error) {
+        console.error('Error fetching stats:', error);
+      }
+    };
+
+    fetchStats();
+  }, []);
 
   const categories = [
     {
@@ -18,7 +46,7 @@ const Index = () => {
       icon: Code,
       gradient: "from-blue-500 to-cyan-500",
       path: "/dsa",
-      stats: "150+ Problems"
+      stats: `${stats.dsaQuestions}+ Problems`
     },
     {
       id: "system-design",
@@ -27,7 +55,7 @@ const Index = () => {
       icon: Brain,
       gradient: "from-purple-500 to-pink-500",
       path: "/system-design",
-      stats: "25+ Designs"
+      stats: `${stats.systemDesignQuestions}+ Designs`
     },
     {
       id: "behavioral",
@@ -36,7 +64,7 @@ const Index = () => {
       icon: Users,
       gradient: "from-green-500 to-emerald-500",
       path: "/behavioral",
-      stats: "40+ Questions"
+      stats: `${stats.behavioralQuestions}+ Questions`
     }
   ];
 

@@ -287,7 +287,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
         </div>
 
         {/* Content */}
-        <div className="flex-1 overflow-y-auto">
+        <div className="flex-1 overflow-y-auto page-transition">
           {selectedTopic ? (
             <TopicContent 
               topic={selectedTopic} 

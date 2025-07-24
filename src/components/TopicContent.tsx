@@ -4,6 +4,10 @@ import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Topic } from "@/types";
 import { supabase } from "@/integrations/supabase/client";
+import ReactMarkdown from 'react-markdown';
+import remarkGfm from 'remark-gfm';
+import rehypeHighlight from 'rehype-highlight';
+import 'highlight.js/styles/github-dark.css';
 
 interface TopicContentProps {
   topic: Topic;
@@ -149,13 +153,13 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
       </div>
 
       {/* Content */}
-      <div className="prose prose-invert max-w-none">
-        <div 
-          dangerouslySetInnerHTML={{ 
-            __html: formatContent(topic.content) 
-          }}
-          className="text-muted-foreground leading-relaxed"
-        />
+      <div className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-code:text-primary prose-pre:bg-card prose-pre:border prose-pre:border-border markdown-content">
+        <ReactMarkdown
+          remarkPlugins={[remarkGfm]}
+          rehypePlugins={[rehypeHighlight]}
+        >
+          {topic.content}
+        </ReactMarkdown>
       </div>
 
       {/* Examples */}

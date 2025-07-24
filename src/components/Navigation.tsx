@@ -12,7 +12,7 @@ const Navigation = () => {
   if (isHomePage) return null;
 
   return (
-    <nav className="navbar bg-base-100 shadow-lg">
+    <nav className="navbar bg-base-100 shadow-lg sticky top-0 z-50 transition-all duration-300">
       <div className="navbar-start">
         <Link to="/" className="btn btn-ghost normal-case text-xl">
           Interview Prep

@@ -108,6 +108,41 @@ All colors MUST be HSL.
   }
 }
 
+/* Smooth transitions for navigation */
+.page-transition {
+  animation: fade-in 0.3s ease-out;
+}
+
+/* Code highlighting styles */
+.markdown-content pre {
+  @apply bg-base-200 border border-base-300 rounded-lg p-4 overflow-x-auto;
+}
+
+.markdown-content code {
+  @apply bg-base-200 px-2 py-1 rounded text-sm;
+}
+
+.markdown-content pre code {
+  @apply bg-transparent p-0;
+}
+
+/* Custom scrollbar for theme selector */
+.dropdown-content::-webkit-scrollbar {
+  width: 6px;
+}
+
+.dropdown-content::-webkit-scrollbar-track {
+  @apply bg-base-300 rounded;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb {
+  @apply bg-base-content/20 rounded;
+}
+
+.dropdown-content::-webkit-scrollbar-thumb:hover {
+  @apply bg-base-content/30;
+}
+
 @layer base {
   * {
     @apply border-border;
