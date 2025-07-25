@@ -3,7 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/use-toast';
+import { useToast } from '@/hooks/useToast.ts';
 import { Code, Zap, Target, Users, ArrowRight, CheckCircle } from 'lucide-react';
 
 const AuthPage = () => {

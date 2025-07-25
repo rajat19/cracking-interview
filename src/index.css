@@ -6,6 +6,10 @@
 All colors MUST be HSL.
 */
 
+@plugin "daisyui" {
+  themes: light, dark --prefersdark, retro --default;
+}
+
 @layer base {
   :root {
     /* Light theme colors */
@@ -56,7 +60,7 @@ All colors MUST be HSL.
     --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
     --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(210 20% 98%));
     --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 100%);
-    
+
     /* Shadows */
     --shadow-glow: 0 0 30px hsl(var(--primary) / 0.2);
     --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.1);
@@ -106,41 +110,41 @@ All colors MUST be HSL.
     --gradient-hero: linear-gradient(135deg, hsl(222.2 84% 4.9%) 0%, hsl(217.2 32.6% 17.5%) 100%);
     --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.3);
   }
-}
 
-/* Smooth transitions for navigation */
-.page-transition {
-  animation: fade-in 0.3s ease-out;
-}
+  /* Smooth transitions for navigation */
+  .page-transition {
+    animation: fade-in 0.3s ease-out;
+  }
 
-/* Code highlighting styles */
-.markdown-content pre {
-  @apply bg-base-200 border border-base-300 rounded-lg p-4 overflow-x-auto;
-}
+  /* Code highlighting styles */
+  .markdown-content pre {
+    @apply bg-base-200 border border-base-300 rounded-lg p-4 overflow-x-auto;
+  }
 
-.markdown-content code {
-  @apply bg-base-200 px-2 py-1 rounded text-sm;
-}
+  .markdown-content code {
+    @apply bg-base-200 px-2 py-1 rounded text-sm;
+  }
 
-.markdown-content pre code {
-  @apply bg-transparent p-0;
-}
+  .markdown-content pre code {
+    @apply bg-transparent p-0;
+  }
 
-/* Custom scrollbar for theme selector */
-.dropdown-content::-webkit-scrollbar {
-  width: 6px;
-}
+  /* Custom scrollbar for theme selector */
+  .dropdown-content::-webkit-scrollbar {
+    width: 6px;
+  }
 
-.dropdown-content::-webkit-scrollbar-track {
-  @apply bg-base-300 rounded;
-}
+  .dropdown-content::-webkit-scrollbar-track {
+    @apply bg-base-300 rounded;
+  }
 
-.dropdown-content::-webkit-scrollbar-thumb {
-  @apply bg-base-content/20 rounded;
-}
+  .dropdown-content::-webkit-scrollbar-thumb {
+    @apply bg-base-200 rounded;
+  }
 
-.dropdown-content::-webkit-scrollbar-thumb:hover {
-  @apply bg-base-content/30;
+  .dropdown-content::-webkit-scrollbar-thumb:hover {
+    @apply bg-base-300;
+  }
 }
 
 @layer base {
