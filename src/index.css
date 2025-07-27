@@ -7,7 +7,7 @@ All colors MUST be HSL.
 */
 
 @plugin "daisyui" {
-  themes: light, dark --prefersdark, retro --default;
+  themes: light --default, dark --prefersdark;
 }
 
 @layer base {
