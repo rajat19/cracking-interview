@@ -3,8 +3,8 @@ import { useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { useToast } from '@/hooks/useToast.ts';
 import { Code, Zap, Target, Users, ArrowRight, CheckCircle } from 'lucide-react';
+import { toast } from 'sonner';
 
 const AuthPage = () => {
   const [isLogin, setIsLogin] = useState(true);
@@ -12,7 +12,6 @@ const AuthPage = () => {
   const [password, setPassword] = useState('');
   const [loading, setLoading] = useState(false);
   const navigate = useNavigate();
-  const { toast } = useToast();
 
   useEffect(() => {
     // Check if user is already logged in
@@ -36,10 +35,7 @@ const AuthPage = () => {
           password,
         });
         if (error) throw error;
-        toast({
-          title: "Welcome back!",
-          description: "You have successfully logged in.",
-        });
+        toast.success("Welcome back! You have successfully logged in.");
         navigate('/');
       } else {
         const { error } = await supabase.auth.signUp({
@@ -50,17 +46,10 @@ const AuthPage = () => {
           }
         });
         if (error) throw error;
-        toast({
-          title: "Account created!",
-          description: "Please check your email to confirm your account.",
-        });
+        toast.success("Account created! Please check your email to confirm your account.");
       }
     } catch (error: any) {
-      toast({
-        title: "Error",
-        description: error.message,
-        variant: "destructive",
-      });
+      toast.error(error.message);
     } finally {
       setLoading(false);
     }

@@ -1,6 +1,4 @@
-import { Toaster } from "@/components/ui/toaster";
 import { Toaster as Sonner } from "@/components/ui/sonner";
-import { TooltipProvider } from "@/components/ui/tooltip";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { AuthProvider } from "@/hooks/useAuth";
@@ -20,23 +18,20 @@ const App = () => (
   <QueryClientProvider client={queryClient}>
     <ThemeProvider>
       <AuthProvider>
-        <TooltipProvider>
-          <Toaster />
-          <Sonner />
-          <BrowserRouter>
-            <Routes>
-              <Route path="/" element={<Index />} />
-              <Route path="/dsa" element={<DSA />} />
-              <Route path="/system-design" element={<SystemDesign />} />
-              <Route path="/behavioral" element={<Behavioral />} />
-              <Route path="/auth" element={<AuthPage />} />
-              <Route path="/bookmarks" element={<Bookmarks />} />
-              <Route path="/mock-interview" element={<MockInterview />} />
-              {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
-              <Route path="*" element={<NotFound />} />
-            </Routes>
-          </BrowserRouter>
-        </TooltipProvider>
+        <Sonner />
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<Index />} />
+            <Route path="/dsa" element={<DSA />} />
+            <Route path="/system-design" element={<SystemDesign />} />
+            <Route path="/behavioral" element={<Behavioral />} />
+            <Route path="/auth" element={<AuthPage />} />
+            <Route path="/bookmarks" element={<Bookmarks />} />
+            <Route path="/mock-interview" element={<MockInterview />} />
+            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+            <Route path="*" element={<NotFound />} />
+          </Routes>
+        </BrowserRouter>
       </AuthProvider>
     </ThemeProvider>
   </QueryClientProvider>
