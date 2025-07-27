@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Brain, Code, Users, BookOpen, Target, TrendingUp } from "lucide-react";
+import { Brain, Code, Users, BookOpen, Target, TrendingUp, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { StatsCard } from "@/components/StatsCard";
@@ -122,6 +122,27 @@ const Index = () => {
             <StatsCard icon={Target} value="500+" label="Problems Solved" />
             <StatsCard icon={Users} value="10K+" label="Students" />
             <StatsCard icon={TrendingUp} value="85%" label="Success Rate" />
+          </div>
+
+          {/* Mock Interview CTA */}
+          <div className="max-w-2xl mx-auto">
+            <div className="card bg-gradient-to-r from-primary/10 to-secondary/10 border border-primary/20">
+              <div className="card-body text-center">
+                <Video className="w-12 h-12 mx-auto mb-4 text-primary" />
+                <h3 className="text-2xl font-bold mb-3 text-base-content">
+                  Practice with AI Mock Interviews
+                </h3>
+                <p className="text-base-content/70 mb-6">
+                  Experience realistic interview scenarios with our AI interviewer. 
+                  Get instant feedback and improve your performance.
+                </p>
+                <Link to="/mock-interview">
+                  <Button size="lg" className="btn-primary">
+                    Start Mock Interview
+                  </Button>
+                </Link>
+              </div>
+            </div>
           </div>
         </div>
       </section>

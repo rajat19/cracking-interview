@@ -7,7 +7,13 @@ All colors MUST be HSL.
 */
 
 @plugin "daisyui" {
-  themes: light --default, dark --prefersdark;
+  themes: [
+    "light", "dark", "cupcake", "bumblebee", "emerald", "corporate", 
+    "synthwave", "retro", "cyberpunk", "valentine", "halloween", "garden",
+    "forest", "aqua", "lofi", "pastel", "fantasy", "wireframe", "black",
+    "luxury", "dracula", "cmyk", "autumn", "business", "acid", "lemonade",
+    "night", "coffee", "winter", "dim", "nord", "sunset"
+  ];
 }
 
 @layer base {
@@ -224,5 +230,46 @@ All colors MUST be HSL.
 
   .topic-list-item.active {
     @apply border-primary bg-primary/10;
+  }
+
+  /* Calendar styling for daisyUI integration */
+  .rbc-calendar {
+    @apply bg-base-100 text-base-content;
+  }
+
+  .rbc-toolbar {
+    @apply bg-base-200 p-4 rounded-t-lg border-b border-base-300;
+  }
+
+  .rbc-toolbar button {
+    @apply btn btn-sm btn-ghost text-base-content;
+  }
+
+  .rbc-toolbar button.rbc-active {
+    @apply btn-primary;
+  }
+
+  .rbc-month-view, .rbc-time-view {
+    @apply bg-base-100;
+  }
+
+  .rbc-header {
+    @apply bg-base-200 text-base-content font-semibold p-2 border-b border-base-300;
+  }
+
+  .rbc-date-cell {
+    @apply text-base-content;
+  }
+
+  .rbc-event {
+    @apply bg-primary text-primary-content rounded;
+  }
+
+  .rbc-selected {
+    @apply bg-primary/20;
+  }
+
+  .rbc-today {
+    @apply bg-accent/10;
   }
 }

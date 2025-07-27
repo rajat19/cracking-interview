@@ -1,5 +1,5 @@
 import { Palette } from "lucide-react";
-import { useEffect, useState } from "react";
+import { useTheme } from "@/contexts/ThemeContext";
 
 const themes = [
   'light', 'dark', 'cupcake', 'bumblebee', 'emerald', 'corporate', 
@@ -10,19 +10,7 @@ const themes = [
 ];
 
 export function ThemeToggle() {
-  const [theme, setTheme] = useState<string>("light");
-
-  useEffect(() => {
-    const savedTheme = localStorage.getItem('theme') || 'light';
-    setTheme(savedTheme);
-    document.documentElement.setAttribute('data-theme', savedTheme);
-  }, []);
-
-  const handleThemeChange = (newTheme: string) => {
-    setTheme(newTheme);
-    localStorage.setItem('theme', newTheme);
-    document.documentElement.setAttribute('data-theme', newTheme);
-  };
+  const { theme, setTheme } = useTheme();
 
   return (
     <div className="dropdown dropdown-end">
@@ -39,14 +27,15 @@ export function ThemeToggle() {
               data-theme={themeName}
             >
               <div
-                onClick={() => handleThemeChange(themeName)}
+                onClick={() => setTheme(themeName)}
                 className="bg-base-100 text-base-content w-full cursor-pointer font-sans transition-colors duration-200 hover:bg-base-200"
                 data-theme={themeName}
               >
                 <div className="grid grid-cols-5 grid-rows-3">
                   <div className="col-span-5 row-span-3 row-start-1 flex gap-1 py-3 px-4">
-                    <div className="flex-grow text-sm font-bold">
+                    <div className="flex-grow text-sm font-bold capitalize">
                       {themeName}
+                      {theme === themeName && <span className="ml-2 text-primary">✓</span>}
                     </div>
                     <div className="flex flex-shrink-0 flex-wrap gap-1">
                       <div className="bg-primary w-2 rounded"></div>
