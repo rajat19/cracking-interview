@@ -12,7 +12,7 @@ const Navigation = () => {
   if (isHomePage) return null;
 
   return (
-    <nav className="navbar bg-base-100 shadow-lg sticky top-0 z-50 transition-all duration-300">
+    <nav className="navbar bg-background border-b border-border shadow-lg sticky top-0 z-50 transition-all duration-300">
       <div className="navbar-start">
         <Link to="/" className="btn btn-ghost normal-case text-xl">
           Interview Prep
@@ -53,7 +53,7 @@ const Navigation = () => {
               <label tabIndex={0} className="btn btn-ghost btn-circle avatar">
                 <User size={20} />
               </label>
-              <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52">
+              <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-card border border-border rounded-box w-52">
                 <li>
                   <button onClick={signOut} className="text-error">
                     <LogOut size={16} />

@@ -79,7 +79,7 @@ const AuthPage = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-primary/10 via-base-100 to-secondary/10 flex items-center justify-center p-4">
+    <div className="min-h-screen bg-background flex items-center justify-center p-4">
       <div className="max-w-6xl w-full grid lg:grid-cols-2 gap-8 items-center">
         {/* Left Side - Features */}
         <div className="space-y-8 animate-fade-in">
@@ -88,11 +88,11 @@ const AuthPage = () => {
               <Zap size={16} />
               Ace Your Tech Interviews
             </div>
-            <h1 className="text-4xl lg:text-5xl font-bold text-base-content">
+            <h1 className="text-4xl lg:text-5xl font-bold text-foreground">
               Master Technical
               <span className="text-primary block">Interviews</span>
             </h1>
-            <p className="text-xl text-base-content/70 max-w-lg">
+            <p className="text-xl text-muted-foreground max-w-lg">
               Comprehensive platform for DSA, System Design, and Behavioral interview preparation
             </p>
           </div>
@@ -101,31 +101,31 @@ const AuthPage = () => {
             {features.map((feature, index) => (
               <div 
                 key={feature.title}
-                className="flex items-start gap-3 p-4 bg-base-100/50 backdrop-blur-sm rounded-lg border border-base-300/50 hover:border-primary/20 transition-all duration-300 hover:shadow-lg animate-scale-in"
+                className="flex items-start gap-3 p-4 bg-card backdrop-blur-sm rounded-lg border border-border hover:border-primary/20 transition-all duration-300 hover:shadow-lg animate-scale-in"
                 style={{ animationDelay: `${index * 0.1}s` }}
               >
                 <div className="bg-primary/10 p-2 rounded-lg">
                   <feature.icon size={20} className="text-primary" />
                 </div>
                 <div>
-                  <h3 className="font-semibold text-base-content">{feature.title}</h3>
-                  <p className="text-sm text-base-content/60 mt-1">{feature.description}</p>
+                  <h3 className="font-semibold text-card-foreground">{feature.title}</h3>
+                  <p className="text-sm text-muted-foreground mt-1">{feature.description}</p>
                 </div>
               </div>
             ))}
           </div>
 
-          <div className="flex items-center gap-4 text-sm text-base-content/60">
+          <div className="flex items-center gap-4 text-sm text-muted-foreground">
             <div className="flex items-center gap-2">
-              <CheckCircle size={16} className="text-success" />
+              <CheckCircle size={16} className="text-accent" />
               <span>1000+ Questions</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckCircle size={16} className="text-success" />
+              <CheckCircle size={16} className="text-accent" />
               <span>Progress Tracking</span>
             </div>
             <div className="flex items-center gap-2">
-              <CheckCircle size={16} className="text-success" />
+              <CheckCircle size={16} className="text-accent" />
               <span>Free Forever</span>
             </div>
           </div>
@@ -134,12 +134,12 @@ const AuthPage = () => {
         {/* Right Side - Auth Form */}
         <div className="flex justify-center lg:justify-end">
           <div className="w-full max-w-md">
-            <div className="bg-base-100 shadow-2xl rounded-2xl border border-base-300/50 p-8 animate-slide-in-right">
+            <div className="bg-card shadow-2xl rounded-2xl border border-border p-8 animate-slide-in-right">
               <div className="text-center mb-8">
-                <h2 className="text-3xl font-bold text-base-content mb-2">
+                <h2 className="text-3xl font-bold text-card-foreground mb-2">
                   {isLogin ? 'Welcome Back' : 'Get Started'}
                 </h2>
-                <p className="text-base-content/60">
+                <p className="text-muted-foreground">
                   {isLogin ? 'Sign in to continue your journey' : 'Create your account to begin'}
                 </p>
               </div>
