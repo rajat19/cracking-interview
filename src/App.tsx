@@ -19,7 +19,7 @@ const App = () => (
     <ThemeProvider>
       <AuthProvider>
         <Sonner />
-        <BrowserRouter>
+        <BrowserRouter basename="/cracking-interview/">
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/dsa" element={<DSA />} />

@@ -79,7 +79,7 @@ export const PlatformLinks: React.FC<PlatformLinksProps> = ({ topic }) => {
             >
               <div className="flex items-center gap-2 min-w-0">
                 <img 
-                  src={`/src/assets/img/platform/${platform.img}`} 
+                  src={`${import.meta.env.BASE_URL}assets/img/platform/${platform.img}`} 
                   alt={platform.name}
                   className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0"
                   onError={(e) => {

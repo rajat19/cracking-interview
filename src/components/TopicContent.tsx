@@ -12,6 +12,9 @@ import { useAuth } from '@/hooks/useAuth';
 import { getUserProgress, upsertUserProgress } from '@/lib/progressStore';
 import { useNavigate } from 'react-router-dom';
 
+// Public assets helper respecting Vite base
+const companyIconSrc = (company: string) => `${import.meta.env.BASE_URL}assets/img/company/${company}.svg`;
+
 interface TopicContentProps {
   topic: Topic;
   category: TopicCategoryId;
@@ -177,12 +180,14 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
         <div className="my-6 lg:my-8">
           <h3 className="text-lg lg:text-xl font-medium mb-3 lg:mb-4 text-foreground">Companies</h3>
           <div className="flex flex-wrap gap-2">
-            {topic.companies.map((company, index) => (
-              <button className="btn bg-white text-black border-[#e5e5e5] text-xs lg:text-sm px-2 lg:px-3 py-1 lg:py-2" key={index}>
-                <img src={`/src/assets/img/company/${company}.svg`} alt={company} className="w-3 h-3 lg:w-4 lg:h-4" />
-                {company}
-              </button>
-            ))}
+            {topic.companies.map((company, index) => {
+              return (
+                <button className="btn bg-white text-black border-[#e5e5e5] text-xs lg:text-sm px-2 lg:px-3 py-1 lg:py-2" key={index}>
+                  <img src={companyIconSrc(company)} alt={company} className="w-3 h-3 lg:w-4 lg:h-4" />
+                  {company}
+                </button>
+              );
+            })}
           </div>
         </div>
       )}

@@ -3,22 +3,6 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { oneDark, oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { useTheme } from "@/contexts/ThemeContext";
 
-// Language icon imports
-import cIcon from '../assets/img/lang/c.svg';
-import cppIcon from '../assets/img/lang/cpp.svg';
-import csIcon from '../assets/img/lang/cs.svg';
-import goIcon from '../assets/img/lang/go.svg';
-import javaIcon from '../assets/img/lang/java.svg';
-import jsIcon from '../assets/img/lang/js.svg';
-import ktIcon from '../assets/img/lang/kt.svg';
-import phpIcon from '../assets/img/lang/php.svg';
-import pyIcon from '../assets/img/lang/py.svg';
-import rbIcon from '../assets/img/lang/rb.svg';
-import rustIcon from '../assets/img/lang/rust.svg';
-import scalaIcon from '../assets/img/lang/scala.svg';
-import swiftIcon from '../assets/img/lang/swift.svg';
-import tsIcon from '../assets/img/lang/ts.svg';
-
 export interface SolutionEntry {
   language: string;
   code: string;
@@ -29,31 +13,33 @@ interface SolutionTabsProps {
   solutions: Record<string, SolutionEntry>;
 }
 
-// Language icon mapping
+// Language icon mapping to public assets
+const LANG_ICON_FILE: Record<string, string> = {
+  c: 'c.svg',
+  cpp: 'cpp.svg',
+  cs: 'cs.svg',
+  go: 'go.svg',
+  java: 'java.svg',
+  javascript: 'js.svg',
+  js: 'js.svg',
+  kotlin: 'kt.svg',
+  kt: 'kt.svg',
+  php: 'php.svg',
+  python: 'py.svg',
+  py: 'py.svg',
+  ruby: 'rb.svg',
+  rb: 'rb.svg',
+  rust: 'rust.svg',
+  rst: 'rust.svg',
+  scala: 'scala.svg',
+  swift: 'swift.svg',
+  typescript: 'ts.svg',
+  ts: 'ts.svg',
+};
+
 const getLanguageIcon = (language: string): string => {
-  const iconMap: Record<string, string> = {
-    c: cIcon,
-    cpp: cppIcon,
-    cs: csIcon,
-    go: goIcon,
-    java: javaIcon,
-    javascript: jsIcon,
-    js: jsIcon,
-    kotlin: ktIcon,
-    kt: ktIcon,
-    php: phpIcon,
-    python: pyIcon,
-    py: pyIcon,
-    ruby: rbIcon,
-    rb: rbIcon,
-    rust: rustIcon,
-    rst: rustIcon,
-    scala: scalaIcon,
-    swift: swiftIcon,
-    typescript: tsIcon,
-    ts: tsIcon,
-  };
-  return iconMap[language.toLowerCase()] || jsIcon; // Default to JS icon
+  const file = LANG_ICON_FILE[language.toLowerCase()] || 'js.svg';
+  return `${import.meta.env.BASE_URL}assets/img/lang/${file}`;
 };
 
 export function SolutionTabs({ solutions }: SolutionTabsProps) {
