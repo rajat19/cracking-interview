@@ -10,6 +10,7 @@ export interface Topic {
   relatedTopics?: string[];
   isCompleted?: boolean;
   isBookmarked?: boolean;
+  solutions?: Record<string, { language: string; code: string; path: string }>;
 }
 
 export interface TopicCategory {

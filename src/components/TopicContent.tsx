@@ -1,31 +1,44 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { CheckCircle, Circle, Bookmark, BookmarkCheck, Clock, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Topic } from "@/types";
-import { supabase } from "@/integrations/supabase/client";
-import ReactMarkdown from 'react-markdown';
-import remarkGfm from 'remark-gfm';
-import rehypeHighlight from 'rehype-highlight';
-// import 'highlight.js/styles/github-dark.css';
+import { updateLocalProgress } from "@/lib/contentLoader";
+import type { TopicCategoryId } from "@/lib/contentLoader";
+import MarkdownContent from '@/components/MarkdownContent';
+import { SolutionTabs } from '@/components/SolutionTabs';
+import { useAuth } from '@/hooks/useAuth';
+import { getUserProgress, upsertUserProgress } from '@/lib/progressStore';
+import { useNavigate } from 'react-router-dom';
 
 interface TopicContentProps {
   topic: Topic;
-  category: string;
+  category: TopicCategoryId;
   onProgressUpdate: () => Promise<void>;
 }
 
 export function TopicContent({ topic, category, onProgressUpdate }: TopicContentProps) {
   const [isCompleted, setIsCompleted] = useState(topic.isCompleted || false);
   const [isBookmarked, setIsBookmarked] = useState(topic.isBookmarked || false);
+  const [activeLanguage, setActiveLanguage] = useState<string | null>(null);
+  const { user } = useAuth();
+  const navigate = useNavigate();
 
   const toggleComplete = async () => {
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
     const newCompleted = !isCompleted;
     setIsCompleted(newCompleted);
     await updateProgress(topic.id, { isCompleted: newCompleted });
   };
 
   const toggleBookmark = async () => {
+    if (!user) {
+      navigate('/auth');
+      return;
+    }
     const newBookmarked = !isBookmarked;
     setIsBookmarked(newBookmarked);
     await updateProgress(topic.id, { isBookmarked: newBookmarked });
@@ -33,49 +46,45 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
 
   const updateProgress = async (questionId: string, updates: { isCompleted?: boolean; isBookmarked?: boolean }) => {
     try {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) return;
-
-      const questionType = category === 'system-design' ? 'system_design' : category;
-
-      const { data: existing } = await supabase
-        .from('user_progress')
-        .select('id')
-        .eq('user_id', user.id)
-        .eq('question_id', questionId)
-        .eq('question_type', questionType)
-        .single();
-
-      const updateData = {
-        user_id: user.id,
-        question_id: questionId,
-        question_type: questionType,
-        ...(updates.isCompleted !== undefined && {
-          is_completed: updates.isCompleted,
-          completed_at: updates.isCompleted ? new Date().toISOString() : null
-        }),
-        ...(updates.isBookmarked !== undefined && {
-          is_bookmarked: updates.isBookmarked,
-          bookmarked_at: updates.isBookmarked ? new Date().toISOString() : null
-        })
-      };
-
-      if (existing) {
-        await supabase
-          .from('user_progress')
-          .update(updateData)
-          .eq('id', existing.id);
+      if (user) {
+        await upsertUserProgress(user.id, category, questionId, updates);
       } else {
-        await supabase
-          .from('user_progress')
-          .insert(updateData);
+        updateLocalProgress(category, questionId, updates);
       }
-
       onProgressUpdate();
     } catch (error) {
       console.error('Error updating progress:', error);
     }
   };
+
+  // Initialize the default active solution language when topic changes
+  useEffect(() => {
+    if (topic.solutions && Object.keys(topic.solutions).length > 0) {
+      const first = Object.values(topic.solutions)[0]?.language ?? null;
+      setActiveLanguage(first);
+    } else {
+      setActiveLanguage(null);
+    }
+  }, [topic.id, topic.solutions]);
+
+  // Load initial user progress if signed in
+  useEffect(() => {
+    let mounted = true;
+    (async () => {
+      if (!user) return;
+      try {
+        const doc = await getUserProgress(user.id, category, topic.id);
+        if (!mounted || !doc) return;
+        setIsCompleted(!!doc.is_completed);
+        setIsBookmarked(!!doc.is_bookmarked);
+      } catch (e) {
+        // no-op
+      }
+    })();
+    return () => {
+      mounted = false;
+    };
+  }, [user, category, topic.id]);
 
   const formatContent = (content: string) => {
     // Simple markdown-like formatting
@@ -127,8 +136,6 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
           </div>
         </div>
 
-        <p className="text-lg text-muted-foreground mb-6">{topic.description}</p>
-
         {/* Complexity Info */}
         {(topic.timeComplexity || topic.spaceComplexity) && (
           <div className="flex items-center space-x-6 p-4 bg-card rounded-lg border border-border">
@@ -153,14 +160,7 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
       </div>
 
       {/* Content */}
-      <div className="prose prose-lg max-w-none prose-headings:text-foreground prose-p:text-muted-foreground prose-strong:text-foreground prose-code:text-primary prose-pre:bg-card prose-pre:border prose-pre:border-border markdown-content">
-        <ReactMarkdown
-          remarkPlugins={[remarkGfm]}
-          rehypePlugins={[rehypeHighlight]}
-        >
-          {topic.content}
-        </ReactMarkdown>
-      </div>
+      <MarkdownContent content={topic.content} />
 
       {/* Examples */}
       {topic.examples && topic.examples.length > 0 && (
@@ -176,6 +176,11 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
             ))}
           </div>
         </div>
+      )}
+
+      {/* Solutions */}
+      {topic.solutions && Object.keys(topic.solutions).length > 0 && (
+        <SolutionTabs solutions={topic.solutions} />
       )}
 
       {/* Related Topics */}

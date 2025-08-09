@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { StatsCard } from "@/components/StatsCard";
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/integrations/supabase/client";
+import { loadTopics } from "@/lib/contentLoader";
 
 const Index = () => {
   const { user } = useAuth();
@@ -19,16 +19,13 @@ const Index = () => {
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const [dsaResult, systemDesignResult, behavioralResult] = await Promise.all([
-          supabase.from('dsa_questions').select('id', { count: 'exact', head: true }),
-          supabase.from('system_design_questions').select('id', { count: 'exact', head: true }),
-          supabase.from('behavioral_questions').select('id', { count: 'exact', head: true })
+        const [dsa] = await Promise.all([
+          loadTopics('dsa' as any),
         ]);
-
         setStats({
-          dsaQuestions: dsaResult.count || 0,
-          systemDesignQuestions: systemDesignResult.count || 0,
-          behavioralQuestions: behavioralResult.count || 0
+          dsaQuestions: dsa.length,
+          systemDesignQuestions: 0,
+          behavioralQuestions: 0,
         });
       } catch (error) {
         console.error('Error fetching stats:', error);

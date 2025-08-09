@@ -1,17 +1,20 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { supabase } from '@/integrations/supabase/client';
 import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';
 import { Bookmark, ExternalLink } from 'lucide-react';
 import Navigation from '@/components/Navigation';
+import { loadTopics } from '@/lib/contentLoader';
+import type { Topic } from '@/types';
+import type { TopicCategoryId } from '@/lib/contentLoader';
+import { getCachedCategoryProgress, preloadUserProgress, upsertUserProgress } from '@/lib/progressStore';
 
 interface BookmarkedQuestion {
   id: string;
   title: string;
   difficulty: string;
-  question_type: string;
+  question_type: TopicCategoryId;
   description: string;
 }
 
@@ -29,90 +32,71 @@ const Bookmarks = () => {
     fetchBookmarks();
   }, [user, navigate]);
 
-  const fetchBookmarks = async () => {
+  const fetchBookmarks = useCallback(async () => {
     if (!user) return;
 
     try {
-      // Get all bookmarked progress
-      const { data: progressData, error: progressError } = await supabase
-        .from('user_progress')
-        .select('question_id, question_type')
-        .eq('user_id', user.id)
-        .eq('is_bookmarked', true);
+      // Load topics for each supported category
+      const [dsa, system, behavioral] = await Promise.all([
+        loadTopics('dsa'),
+        loadTopics('system-design'),
+        loadTopics('behavioral'),
+      ]);
 
-      if (progressError) throw progressError;
+      const categories: Array<{ id: TopicCategoryId; topics: Topic[] }> = [
+        { id: 'dsa', topics: dsa },
+        { id: 'system-design', topics: system },
+        { id: 'behavioral', topics: behavioral },
+      ];
 
-      // Fetch questions from each table
-      const dsaIds = progressData?.filter(p => p.question_type === 'dsa').map(p => p.question_id) || [];
-      const systemIds = progressData?.filter(p => p.question_type === 'system_design').map(p => p.question_id) || [];
-      const behavioralIds = progressData?.filter(p => p.question_type === 'behavioral').map(p => p.question_id) || [];
+      const all: BookmarkedQuestion[] = [];
 
-      const questions: BookmarkedQuestion[] = [];
+      for (const { id: category, topics } of categories) {
+        // cache-first progress fetch per category
+        let progress = getCachedCategoryProgress(user.id, category);
+        if (Object.keys(progress).length === 0) {
+          progress = await preloadUserProgress(user.id, category);
+        }
+        const bookmarkedIds = Object.entries(progress)
+          .filter(([, v]) => v.is_bookmarked)
+          .map(([topicId]) => topicId);
 
-      if (dsaIds.length > 0) {
-        const { data: dsaData } = await supabase
-          .from('dsa_questions')
-          .select('id, title, difficulty, description')
-          .in('id', dsaIds);
-        
-        if (dsaData) {
-          questions.push(...dsaData.map(q => ({ ...q, question_type: 'dsa' })));
+        if (bookmarkedIds.length === 0) continue;
+
+        for (const t of topics) {
+          if (!bookmarkedIds.includes(t.id)) continue;
+          all.push({
+            id: t.id,
+            title: t.title,
+            difficulty: t.difficulty,
+            description: t.description,
+            question_type: category,
+          });
         }
       }
 
-      if (systemIds.length > 0) {
-        const { data: systemData } = await supabase
-          .from('system_design_questions')
-          .select('id, title, difficulty, description')
-          .in('id', systemIds);
-        
-        if (systemData) {
-          questions.push(...systemData.map(q => ({ ...q, question_type: 'system_design' })));
-        }
-      }
-
-      if (behavioralIds.length > 0) {
-        const { data: behavioralData } = await supabase
-          .from('behavioral_questions')
-          .select('id, title, difficulty, description')
-          .in('id', behavioralIds);
-        
-        if (behavioralData) {
-          questions.push(...behavioralData.map(q => ({ ...q, question_type: 'behavioral' })));
-        }
-      }
-
-      setBookmarks(questions);
+      setBookmarks(all);
     } catch (error) {
       console.error('Error fetching bookmarks:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [user]);
 
-  const removeBookmark = async (questionId: string, questionType: string) => {
+  const removeBookmark = async (questionId: string, questionType: TopicCategoryId) => {
     if (!user) return;
-
     try {
-      const { error } = await supabase
-        .from('user_progress')
-        .update({ is_bookmarked: false, bookmarked_at: null })
-        .eq('user_id', user.id)
-        .eq('question_id', questionId)
-        .eq('question_type', questionType);
-
-      if (error) throw error;
-
-      setBookmarks(prev => prev.filter(b => b.id !== questionId));
+      await upsertUserProgress(user.id, questionType, questionId, { isBookmarked: false });
+      setBookmarks(prev => prev.filter(b => !(b.id === questionId && b.question_type === questionType)));
     } catch (error) {
       console.error('Error removing bookmark:', error);
     }
   };
 
-  const getQuestionRoute = (questionType: string) => {
+  const getQuestionRoute = (questionType: TopicCategoryId) => {
     switch (questionType) {
       case 'dsa': return '/dsa';
-      case 'system_design': return '/system-design';
+      case 'system-design': return '/system-design';
       case 'behavioral': return '/behavioral';
       default: return '/';
     }
@@ -154,12 +138,15 @@ const Bookmarks = () => {
         ) : (
           <div className="grid gap-4">
             {bookmarks.map((question) => (
-              <div key={`${question.question_type}-${question.id}`} className="card bg-base-100 shadow-lg">
-                <div className="card-body">
+              <div
+                key={`${question.question_type}-${question.id}`}
+                className="p-6 bg-card rounded-lg border border-border shadow-sm"
+              >
+                <div>
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
-                      <h3 className="card-title text-lg">{question.title}</h3>
-                      <p className="text-base-content/70 mt-2">{question.description}</p>
+                      <h3 className="text-lg font-semibold text-foreground">{question.title}</h3>
+                      <p className="text-muted-foreground mt-2">{question.description}</p>
                       <div className="flex items-center gap-2 mt-4">
                         <Badge variant={
                           question.difficulty === 'easy' ? 'default' : 

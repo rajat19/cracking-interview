@@ -1,18 +1,21 @@
-import { useState, useMemo, useEffect } from "react";
-import { Search, BookOpen, Clock, Code, CheckCircle, Bookmark, BookmarkCheck } from "lucide-react";
+import { useState, useMemo, useEffect, useCallback } from "react";
+import { Search, BookOpen } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Topic } from "@/types";
 import { TopicContent } from "@/components/TopicContent";
 import { useAuth } from "@/hooks/useAuth";
-import { supabase } from "@/integrations/supabase/client";
+import { loadTopics, getLocalProgress } from "@/lib/contentLoader";
+import { preloadUserProgress, getCachedCategoryProgress } from "@/lib/progressStore";
+import type { TopicCategoryId } from "@/lib/contentLoader";
 import Navigation from "@/components/Navigation";
+import TopicListItem from "@/components/TopicListItem";
 
 interface DocsLayoutProps {
   title: string;
   description: string;
-  category: string;
+  category: TopicCategoryId;
 }
 
 export function DocsLayout({ title, description, category }: DocsLayoutProps) {
@@ -24,85 +27,46 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
   const [difficultyFilter, setDifficultyFilter] = useState<string>("all");
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    fetchQuestions();
-  }, [category]);
-
-  useEffect(() => {
-    if (user && topics.length > 0) {
-      fetchUserProgress();
-    }
-  }, [user, topics]);
-
-  const fetchQuestions = async () => {
+  const fetchQuestions = useCallback(async (): Promise<void> => {
     try {
-      const tableName = getTableName(category);
-      const { data, error } = await supabase
-        .from(tableName)
-        .select('*')
-        .order('created_at');
-
-      if (error) throw error;
-
-      const mappedTopics: Topic[] = data?.map(q => ({
-        id: q.id,
-        title: q.title,
-        difficulty: q.difficulty as "easy" | "medium" | "hard",
-        timeComplexity: (q as any).time_complexity,
-        spaceComplexity: (q as any).space_complexity,
-        description: q.description,
-        content: q.content,
-        examples: q.examples || [],
-        relatedTopics: q.related_topics || [],
-        isCompleted: false,
-        isBookmarked: false
-      })) || [];
-
-      setTopics(mappedTopics);
-      if (mappedTopics.length > 0 && !selectedTopic) {
-        setSelectedTopic(mappedTopics[0]);
+      const loaded = await loadTopics(category as 'dsa' | 'system-design' | 'behavioral');
+      setTopics(loaded);
+      if (loaded.length > 0) {
+        setSelectedTopic(prev => prev ?? loaded[0]);
       }
     } catch (error) {
-      console.error('Error fetching questions:', error);
+      console.error('Error loading topics:', error);
     } finally {
       setLoading(false);
     }
-  };
+  }, [category]);
 
-  const fetchUserProgress = async () => {
-    if (!user) return;
-
-    try {
-      const { data, error } = await supabase
-        .from('user_progress')
-        .select('question_id, is_completed, is_bookmarked')
-        .eq('user_id', user.id)
-        .eq('question_type', category === 'system-design' ? 'system_design' : category);
-
-      if (error) throw error;
-
-      const progressMap: Record<string, { is_completed: boolean; is_bookmarked: boolean }> = {};
-      data?.forEach(progress => {
-        progressMap[progress.question_id] = {
-          is_completed: progress.is_completed,
-          is_bookmarked: progress.is_bookmarked
-        };
-      });
-
-      setUserProgress(progressMap);
-    } catch (error) {
-      console.error('Error fetching user progress:', error);
+  const fetchUserProgress = useCallback(async (): Promise<void> => {
+    if (user) {
+      const cached = getCachedCategoryProgress(user.id, category as 'dsa' | 'system-design' | 'behavioral');
+      if (Object.keys(cached).length > 0) {
+        setUserProgress(cached);
+      } else {
+        const loaded = await preloadUserProgress(user.id, category as 'dsa' | 'system-design' | 'behavioral');
+        setUserProgress(loaded);
+      }
+    } else {
+      const progress = getLocalProgress(category as 'dsa' | 'system-design' | 'behavioral');
+      setUserProgress(progress);
     }
-  };
+  }, [category, user?.id]);
 
-  const getTableName = (category: string) => {
-    switch (category) {
-      case 'dsa': return 'dsa_questions';
-      case 'system-design': return 'system_design_questions';
-      case 'behavioral': return 'behavioral_questions';
-      default: return 'dsa_questions';
+  useEffect(() => {
+    fetchQuestions();
+  }, [fetchQuestions]);
+
+  useEffect(() => {
+    if (topics.length > 0) {
+      fetchUserProgress();
     }
-  };
+  }, [topics, fetchUserProgress]);
+
+  const getTableName = (_category: string) => 'local';
 
   const topicsWithProgress = useMemo(() => {
     return topics.map(topic => ({
@@ -138,9 +102,9 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
   return (
     <>
       <Navigation />
-      <div className="min-h-screen bg-background flex">
+      <div className="h-[calc(100vh-64px)] bg-background flex overflow-hidden">
         {/* Sidebar */}
-        <div className="w-80 border-r border-border bg-card/30 backdrop-blur-sm">
+        <div className="w-80 border-r border-border bg-card/30 backdrop-blur-sm flex flex-col h-full overflow-hidden">
           {/* Header */}
           <div className="p-6 border-b border-border">
           
@@ -210,65 +174,20 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
         </div>
 
         {/* Topics List */}
-        <div className="overflow-y-auto max-h-[calc(100vh-400px)]">
+        <div className="flex-1 overflow-y-auto">
           {filteredTopics.map((topic) => (
-            <div
+            <TopicListItem
               key={topic.id}
-              className={`topic-list-item m-2 ${selectedTopic?.id === topic.id ? 'active' : ''}`}
+              topic={topic}
+              isActive={selectedTopic?.id === topic.id}
               onClick={() => setSelectedTopic(topic)}
-            >
-              <div className="flex items-start justify-between mb-2">
-                <h3 className="font-medium text-foreground text-sm leading-tight">
-                  {topic.title}
-                </h3>
-                <div className="flex items-center space-x-1 ml-2">
-                  {topic.isCompleted && (
-                    <CheckCircle className="w-4 h-4 text-success" />
-                  )}
-                  {topic.isBookmarked ? (
-                    <BookmarkCheck className="w-4 h-4 text-primary" />
-                  ) : (
-                    <Bookmark className="w-4 h-4 text-muted-foreground" />
-                  )}
-                </div>
-              </div>
-              
-              <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
-                {topic.description}
-              </p>
-              
-              <div className="flex items-center justify-between">
-                <Badge 
-                  variant="secondary" 
-                  className={`text-xs difficulty-${topic.difficulty}`}
-                >
-                  {topic.difficulty}
-                </Badge>
-                
-                {(topic.timeComplexity || topic.spaceComplexity) && (
-                  <div className="flex items-center space-x-2 text-xs text-muted-foreground">
-                    {topic.timeComplexity && (
-                      <span className="flex items-center">
-                        <Clock className="w-3 h-3 mr-1" />
-                        {topic.timeComplexity}
-                      </span>
-                    )}
-                    {topic.spaceComplexity && (
-                      <span className="flex items-center">
-                        <Code className="w-3 h-3 mr-1" />
-                        {topic.spaceComplexity}
-                      </span>
-                    )}
-                  </div>
-                )}
-              </div>
-            </div>
+            />
           ))}
         </div>
       </div>
 
       {/* Main Content */}
-      <div className="flex-1 flex flex-col">
+      <div className="flex-1 flex flex-col h-full overflow-hidden">
         {/* Top Bar */}
         <div className="border-b border-border bg-card/30 backdrop-blur-sm p-4 flex justify-between items-center">
           <div className="flex items-center space-x-2">
