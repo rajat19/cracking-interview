@@ -1,0 +1,40 @@
+const n=`---
+layout: post
+title: Set Matrix Zeroes
+topics: [array, hash-table, matrix]
+langs: [java]
+tc: O(n<sup>2</sup>)
+sc: O(1)
+leetid: 73
+companies: [adobe, amazon, apple, bloomberg, facebook, microsoft, oracle]
+difficulty: medium
+gfg: 
+hackerrank: 
+interviewbit: set-matrix-zeros
+leetcode: set-matrix-zeroes
+---
+
+Given an \`m x n\` integer \`matrix\`, if an element is \`0\`, set its entire row and column to \`0\`'s.
+
+You must do it in place.
+
+---
+
+## Test Cases
+
+**Example 1:**
+
+![image](https://assets.leetcode.com/uploads/2020/08/17/mat1.jpg)
+
+\`\`\`
+Input: matrix = [[1,1,1],[1,0,1],[1,1,1]]
+Output: [[1,0,1],[0,0,0],[1,0,1]]
+\`\`\`
+
+**Example 2:**
+
+![Image](https://assets.leetcode.com/uploads/2020/08/17/mat2.jpg)
+\`\`\`
+Input: matrix = [[0,1,2,0],[3,4,5,2],[1,3,1,5]]
+Output: [[0,0,0,0],[0,4,5,0],[0,3,1,0]]
+\`\`\``;export{n as default};
