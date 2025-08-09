@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ThemeToggle } from "@/components/ThemeToggle";
 import { StatsCard } from "@/components/StatsCard";
 import { useAuth } from "@/hooks/useAuth";
-import { loadTopics } from "@/lib/contentLoader";
+import { loadTopicsList } from "@/lib/contentLoader";
 
 const Index = () => {
   const { user } = useAuth();
@@ -15,12 +15,14 @@ const Index = () => {
     behavioralQuestions: 0
   });
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
+  const [showPerformanceDemo, setShowPerformanceDemo] = useState(false);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
+        // Load only topic metadata for faster stats calculation
         const [dsa] = await Promise.all([
-          loadTopics('dsa' as any),
+          loadTopicsList('dsa' as any),
         ]);
         setStats({
           dsaQuestions: dsa.length,

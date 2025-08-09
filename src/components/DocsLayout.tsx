@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Topic } from "@/types";
 import { TopicContent } from "@/components/TopicContent";
 import { useAuth } from "@/hooks/useAuth";
-import { loadTopics, getLocalProgress } from "@/lib/contentLoader";
+import { loadTopicsList, loadTopic, getLocalProgress } from "@/lib/contentLoader";
 import { preloadUserProgress, getCachedCategoryProgress } from "@/lib/progressStore";
 import type { TopicCategoryId } from "@/lib/contentLoader";
 import Navigation from "@/components/Navigation";
@@ -20,24 +20,41 @@ interface DocsLayoutProps {
 
 export function DocsLayout({ title, description, category }: DocsLayoutProps) {
   const { user } = useAuth();
-  const [topics, setTopics] = useState<Topic[]>([]);
+  const [topics, setTopics] = useState<Omit<Topic, 'content' | 'solutions'>[]>([]);
   const [userProgress, setUserProgress] = useState<Record<string, { is_completed: boolean; is_bookmarked: boolean }>>({});
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
   const [difficultyFilter, setDifficultyFilter] = useState<string>("all");
   const [loading, setLoading] = useState(true);
+  const [loadingTopic, setLoadingTopic] = useState(false);
 
   const fetchQuestions = useCallback(async (): Promise<void> => {
     try {
-      const loaded = await loadTopics(category as 'dsa' | 'system-design' | 'behavioral');
+      // Load only topic metadata initially for faster loading
+      const loaded = await loadTopicsList(category as 'dsa' | 'system-design' | 'behavioral');
       setTopics(loaded);
-      if (loaded.length > 0) {
-        setSelectedTopic(prev => prev ?? loaded[0]);
+      if (loaded.length > 0 && !selectedTopic) {
+        // Load the first topic's full content
+        await loadFullTopic(loaded[0].id);
       }
     } catch (error) {
       console.error('Error loading topics:', error);
     } finally {
       setLoading(false);
+    }
+  }, [category, selectedTopic]);
+
+  const loadFullTopic = useCallback(async (topicId: string): Promise<void> => {
+    setLoadingTopic(true);
+    try {
+      const fullTopic = await loadTopic(category as 'dsa' | 'system-design' | 'behavioral', topicId);
+      if (fullTopic) {
+        setSelectedTopic(fullTopic);
+      }
+    } catch (error) {
+      console.error('Error loading topic:', error);
+    } finally {
+      setLoadingTopic(false);
     }
   }, [category]);
 
@@ -75,6 +92,11 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
       isBookmarked: userProgress[topic.id]?.is_bookmarked || false
     }));
   }, [topics, userProgress]);
+
+  const handleTopicSelect = useCallback(async (topic: Omit<Topic, 'content' | 'solutions'>) => {
+    if (selectedTopic?.id === topic.id) return;
+    await loadFullTopic(topic.id);
+  }, [selectedTopic?.id, loadFullTopic]);
 
   const filteredTopics = useMemo(() => {
     return topicsWithProgress.filter(topic => {
@@ -180,7 +202,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
               key={topic.id}
               topic={topic}
               isActive={selectedTopic?.id === topic.id}
-              onClick={() => setSelectedTopic(topic)}
+              onClick={() => handleTopicSelect(topic)}
             />
           ))}
         </div>
@@ -207,7 +229,14 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
 
         {/* Content */}
         <div className="flex-1 overflow-y-auto page-transition">
-          {selectedTopic ? (
+          {loadingTopic ? (
+            <div className="flex items-center justify-center h-full">
+              <div className="flex flex-col items-center space-y-4">
+                <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                <p className="text-muted-foreground">Loading topic...</p>
+              </div>
+            </div>
+          ) : selectedTopic ? (
             <TopicContent 
               topic={selectedTopic} 
               category={category}

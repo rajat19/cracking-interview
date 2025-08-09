@@ -8,6 +8,7 @@ export interface Topic {
   content: string;
   examples?: string[];
   relatedTopics?: string[];
+  companies?: string[];
   isCompleted?: boolean;
   isBookmarked?: boolean;
   solutions?: Record<string, { language: string; code: string; path: string }>;

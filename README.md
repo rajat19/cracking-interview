@@ -1,73 +1,109 @@
-# Welcome to your Lovable project
+# Cracking Interview
 
-## Project info
+A comprehensive interview preparation platform designed to help you master technical interviews with practice questions for Data Structures & Algorithms (DSA), System Design, and Behavioral interviews.
 
-**URL**: https://lovable.dev/projects/7be3a1e8-379d-42f7-b512-306f0517481f
+## 🚀 Features
 
-## How can I edit this code?
+- **DSA Questions**: 149+ carefully curated coding problems with multiple language solutions
+- **Progress Tracking**: Track your progress across different topics and difficulty levels
+- **Multiple Solutions**: View solutions in Java, Python, C++, and other popular languages
+- **Bookmarking**: Save questions for later review
+- **Dark/Light Mode**: Toggle between themes for comfortable studying
+- **Responsive Design**: Works seamlessly on desktop and mobile devices
 
-There are several ways of editing your application.
+## 🛠️ Technologies Used
 
-**Use Lovable**
+- **Frontend**: React 18 with TypeScript
+- **Build Tool**: Vite
+- **Styling**: Tailwind CSS with shadcn/ui components
+- **Routing**: React Router DOM
+- **State Management**: React Context API
+- **Authentication**: Supabase Auth
+- **Database**: Firebase Firestore (for progress tracking)
+- **Deployment**: GitHub Pages
 
-Simply visit the [Lovable Project](https://lovable.dev/projects/7be3a1e8-379d-42f7-b512-306f0517481f) and start prompting.
+## 📁 Project Structure
 
-Changes made via Lovable will be committed automatically to this repo.
-
-**Use your preferred IDE**
-
-If you want to work locally using your own IDE, you can clone this repo and push changes. Pushed changes will also be reflected in Lovable.
-
-The only requirement is having Node.js & npm installed - [install with nvm](https://github.com/nvm-sh/nvm#installing-and-updating)
-
-Follow these steps:
-
-```sh
-# Step 1: Clone the repository using the project's Git URL.
-git clone <YOUR_GIT_URL>
-
-# Step 2: Navigate to the project directory.
-cd <YOUR_PROJECT_NAME>
-
-# Step 3: Install the necessary dependencies.
-npm i
-
-# Step 4: Start the development server with auto-reloading and an instant preview.
-npm run dev
+```
+src/
+├── components/          # Reusable UI components
+├── pages/              # Main application pages
+├── content/            # Markdown files for questions
+├── lib/                # Utility functions and helpers
+├── hooks/              # Custom React hooks
+├── contexts/           # React context providers
+└── types/              # TypeScript type definitions
 ```
 
-**Edit a file directly in GitHub**
+## 🚦 Getting Started
 
-- Navigate to the desired file(s).
-- Click the "Edit" button (pencil icon) at the top right of the file view.
-- Make your changes and commit the changes.
+### Prerequisites
 
-**Use GitHub Codespaces**
+- Node.js (v18 or higher)
+- npm or pnpm package manager
 
-- Navigate to the main page of your repository.
-- Click on the "Code" button (green button) near the top right.
-- Select the "Codespaces" tab.
-- Click on "New codespace" to launch a new Codespace environment.
-- Edit files directly within the Codespace and commit and push your changes once you're done.
+### Installation
 
-## What technologies are used for this project?
+1. Clone the repository:
+```bash
+git clone <your-repo-url>
+cd cracking-interview
+```
 
-This project is built with:
+2. Install dependencies:
+```bash
+npm install
+# or
+pnpm install
+```
 
-- Vite
-- TypeScript
-- React
-- shadcn-ui
-- Tailwind CSS
+3. Start the development server:
+```bash
+npm run dev
+# or
+pnpm dev
+```
 
-## How can I deploy this project?
+4. Open your browser and navigate to `http://localhost:5173`
 
-Simply open [Lovable](https://lovable.dev/projects/7be3a1e8-379d-42f7-b512-306f0517481f) and click on Share -> Publish.
+## 📖 Usage
 
-## Can I connect a custom domain to my Lovable project?
+1. **Browse Questions**: Navigate through different categories (DSA, System Design, Behavioral)
+2. **Practice**: Click on any question to view the problem statement and solutions
+3. **Track Progress**: Mark questions as completed to track your learning journey
+4. **Bookmark**: Save important questions for quick access later
+5. **Switch Themes**: Use the theme toggle for your preferred viewing experience
 
-Yes, you can!
+## 🔧 Configuration
 
-To connect a domain, navigate to Project > Settings > Domains and click Connect Domain.
+The application uses Firebase for progress tracking and Supabase for authentication. To set up these services:
 
-Read more here: [Setting up a custom domain](https://docs.lovable.dev/tips-tricks/custom-domain#step-by-step-guide)
+1. Create a Firebase project and add your configuration to `src/integrations/firebase/client.ts`
+2. Create a Supabase project and add your configuration to `src/integrations/supabase/client.ts`
+
+## 📝 Contributing
+
+Contributions are welcome! Please feel free to submit a Pull Request.
+
+1. Fork the project
+2. Create your feature branch (`git checkout -b feature/AmazingFeature`)
+3. Commit your changes (`git commit -m 'Add some AmazingFeature'`)
+4. Push to the branch (`git push origin feature/AmazingFeature`)
+5. Open a Pull Request
+
+## 📄 License
+
+This project is open source and available under the [MIT License](LICENSE).
+
+## 👤 Author
+
+**Rajat Srivastava**
+
+- GitHub: [@rajatsrivastava](https://github.com/rajatsrivastava)
+- Twitter: [@rajatsrivastava](https://twitter.com/rajatsrivastava)
+
+## 🙏 Acknowledgments
+
+- Questions and problems curated from various competitive programming platforms
+- UI components from shadcn/ui
+- Icons from Lucide React

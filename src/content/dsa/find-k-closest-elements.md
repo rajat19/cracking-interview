@@ -22,16 +22,18 @@ An integer `a` is closer to `x` than an integer `b` if:
  
 ---
 ## Test Cases
+
 **Example 1:**
-<div class="example-block">
-Input: <span class="example-io">arr = [1,2,3,4,5], k = 4, x = 3</span>
-Output: <span class="example-io">[1,2,3,4]</span>
-</div>
+```
+Input: arr = [1,2,3,4,5], k = 4, x = 3
+Output: [1,2,3,4]
+```
+
 **Example 2:**
-<div class="example-block">
-Input: <span class="example-io">arr = [1,1,2,3,4,5], k = 4, x = -1</span>
-Output: <span class="example-io">[1,1,2,3]</span>
-</div>
+```
+Input: arr = [1,1,2,3,4,5], k = 4, x = -1
+Output: [1,1,2,3]
+```
  
 **Constraints:**
 	

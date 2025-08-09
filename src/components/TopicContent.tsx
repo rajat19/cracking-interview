@@ -159,6 +159,33 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
         )}
       </div>
 
+      {/* Related Topics */}
+      {topic.relatedTopics && topic.relatedTopics.length > 0 && (
+        <div className="my-8">
+          <h3 className="text-xl font-medium mb-4 text-foreground">Related Topics</h3>
+          <div className="flex flex-wrap gap-2">
+            {topic.relatedTopics.map((relatedTopic, index) => (
+              <div key={index} className="badge badge-secondary p-4">{relatedTopic}</div>
+            ))}
+          </div>
+        </div>
+      )}
+
+      {/* Related Topics */}
+      {topic.companies && topic.companies.length > 0 && (
+        <div className="my-8">
+          <h3 className="text-xl font-medium mb-4 text-foreground">Companies</h3>
+          <div className="flex flex-wrap gap-2">
+            {topic.companies.map((company, index) => (
+              <button className="btn bg-white text-black border-[#e5e5e5]" key={index}>
+                <img src={`/src/assets/img/company/${company}.svg`} alt={company} className="w-4 h-4" />
+                {company}
+              </button>
+            ))}
+          </div>
+        </div>
+      )}
+
       {/* Content */}
       <MarkdownContent content={topic.content} />
 
@@ -181,20 +208,6 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
       {/* Solutions */}
       {topic.solutions && Object.keys(topic.solutions).length > 0 && (
         <SolutionTabs solutions={topic.solutions} />
-      )}
-
-      {/* Related Topics */}
-      {topic.relatedTopics && topic.relatedTopics.length > 0 && (
-        <div className="mt-8">
-          <h3 className="text-xl font-medium mb-4 text-foreground">Related Topics</h3>
-          <div className="flex flex-wrap gap-2">
-            {topic.relatedTopics.map((relatedTopic, index) => (
-              <Badge key={index} variant="outline" className="cursor-pointer hover:bg-muted">
-                {relatedTopic}
-              </Badge>
-            ))}
-          </div>
-        </div>
       )}
     </div>
   );

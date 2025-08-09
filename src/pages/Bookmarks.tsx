@@ -5,7 +5,7 @@ import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';
 import { Bookmark, ExternalLink } from 'lucide-react';
 import Navigation from '@/components/Navigation';
-import { loadTopics } from '@/lib/contentLoader';
+import { loadTopicsList } from '@/lib/contentLoader';
 import type { Topic } from '@/types';
 import type { TopicCategoryId } from '@/lib/contentLoader';
 import { getCachedCategoryProgress, preloadUserProgress, upsertUserProgress } from '@/lib/progressStore';
@@ -36,14 +36,14 @@ const Bookmarks = () => {
     if (!user) return;
 
     try {
-      // Load topics for each supported category
+      // Load only topic metadata for each supported category for better performance
       const [dsa, system, behavioral] = await Promise.all([
-        loadTopics('dsa'),
-        loadTopics('system-design'),
-        loadTopics('behavioral'),
+        loadTopicsList('dsa'),
+        loadTopicsList('system-design'),
+        loadTopicsList('behavioral'),
       ]);
 
-      const categories: Array<{ id: TopicCategoryId; topics: Topic[] }> = [
+      const categories: Array<{ id: TopicCategoryId; topics: Omit<Topic, 'content' | 'solutions'>[] }> = [
         { id: 'dsa', topics: dsa },
         { id: 'system-design', topics: system },
         { id: 'behavioral', topics: behavioral },
