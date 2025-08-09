@@ -34,10 +34,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
       // Load only topic metadata initially for faster loading
       const loaded = await loadTopicsList(category as 'dsa' | 'system-design' | 'behavioral');
       setTopics(loaded);
-      if (loaded.length > 0 && !selectedTopic) {
-        // Load the first topic's full content
-        await loadFullTopic(loaded[0].id);
-      }
+      // Do not auto-load the first topic to keep initial load light
     } catch (error) {
       console.error('Error loading topics:', error);
     } finally {

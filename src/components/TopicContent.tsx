@@ -1,12 +1,12 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, lazy, Suspense } from "react";
 import { CheckCircle, Circle, Bookmark, BookmarkCheck, Clock, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Topic } from "@/types";
 import { updateLocalProgress } from "@/lib/contentLoader";
 import type { TopicCategoryId } from "@/lib/contentLoader";
-import MarkdownContent from '@/components/MarkdownContent';
-import { SolutionTabs } from '@/components/SolutionTabs';
+const MarkdownContent = lazy(() => import('@/components/MarkdownContent'));
+const SolutionTabs = lazy(() => import('@/components/SolutionTabs'));
 import { PlatformLinks } from '@/components/PlatformLinks';
 import { useAuth } from '@/hooks/useAuth';
 import { getUserProgress, upsertUserProgress } from '@/lib/progressStore';
@@ -191,7 +191,9 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
       <PlatformLinks topic={topic} />
 
       {/* Content */}
-      <MarkdownContent content={topic.content} />
+      <Suspense fallback={<div className="mt-6 text-sm text-muted-foreground">Rendering content…</div>}>
+        <MarkdownContent content={topic.content} />
+      </Suspense>
 
       {/* Examples */}
       {topic.examples && topic.examples.length > 0 && (
@@ -211,7 +213,9 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
 
       {/* Solutions */}
       {topic.solutions && Object.keys(topic.solutions).length > 0 && (
-        <SolutionTabs solutions={topic.solutions} />
+        <Suspense fallback={<div className="mt-6 text-sm text-muted-foreground">Loading solutions…</div>}>
+          <SolutionTabs solutions={topic.solutions} />
+        </Suspense>
       )}
     </div>
   );

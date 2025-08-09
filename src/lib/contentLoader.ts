@@ -56,48 +56,60 @@ function mapFrontmatterToTopic(
 
 // Load topic metadata (title, difficulty, etc.) without full content
 export async function loadTopicsList(category: TopicCategoryId): Promise<Omit<Topic, 'content' | 'solutions'>[]> {
-  if (category === 'dsa') {
-    const modules = import.meta.glob('/src/content/dsa/**/*.md', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
-    
-    const topics: Omit<Topic, 'content' | 'solutions'>[] = [];
-    
-    for (const [path, moduleLoader] of Object.entries(modules)) {
-      try {
-        const raw = await moduleLoader();
-        const parsed = fm<any>(raw);
-        const data = parsed.attributes || {};
-        const content = parsed.body || '';
-        const id = generateSlugFromPath(path);
-        
-        const difficulty = (data.difficulty || 'medium').toLowerCase();
-        const related = Array.isArray(data.topics) ? data.topics : undefined;
-        
-        topics.push({
-          id,
-          title: data.title || id,
-          difficulty: difficulty === 'easy' || difficulty === 'hard' ? difficulty : 'medium',
-          timeComplexity: data.tc || undefined,
-          spaceComplexity: data.sc || undefined,
-          description: data.description || createExcerpt(content),
-          companies: data.companies || undefined,
-          // Platform identifiers
-          leetcode: data.leetcode || undefined,
-          gfg: data.gfg || undefined,
-          interviewbit: data.interviewbit || undefined,
-          hackerrank: data.hackerrank || undefined,
-          examples: undefined,
-          relatedTopics: related,
-        });
-      } catch (error) {
-        console.warn(`Failed to load topic metadata for ${path}:`, error);
-      }
+  if (category !== 'dsa') {
+    return [];
+  }
+
+  // Prefer a prebuilt lightweight JSON index for fast initial load
+  try {
+    const indexModule = await import('@/data/dsa-index.json');
+    const items = (indexModule as any).default as Omit<Topic, 'content' | 'solutions'>[];
+    if (Array.isArray(items) && items.length >= 0) {
+      return items;
     }
-    
-    topics.sort((a, b) => a.title.localeCompare(b.title));
-    return topics;
+  } catch {
+    // If index is missing or invalid, fall back to scanning markdown
+  }
+
+  // Fallback: scan markdown files and parse frontmatter in the client (slower)
+  const modules = import.meta.glob('/src/content/dsa/**/*.md', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
+  
+  const topics: Omit<Topic, 'content' | 'solutions'>[] = [];
+  
+  for (const [path, moduleLoader] of Object.entries(modules)) {
+    try {
+      const raw = await moduleLoader();
+      const parsed = fm<any>(raw);
+      const data = parsed.attributes || {};
+      const content = parsed.body || '';
+      const id = generateSlugFromPath(path);
+      
+      const difficulty = (data.difficulty || 'medium').toLowerCase();
+      const related = Array.isArray(data.topics) ? data.topics : undefined;
+      
+      topics.push({
+        id,
+        title: data.title || id,
+        difficulty: difficulty === 'easy' || difficulty === 'hard' ? difficulty : 'medium',
+        timeComplexity: data.tc || undefined,
+        spaceComplexity: data.sc || undefined,
+        description: data.description || createExcerpt(content),
+        companies: data.companies || undefined,
+        // Platform identifiers
+        leetcode: data.leetcode || undefined,
+        gfg: data.gfg || undefined,
+        interviewbit: data.interviewbit || undefined,
+        hackerrank: data.hackerrank || undefined,
+        examples: undefined,
+        relatedTopics: related,
+      });
+    } catch (error) {
+      console.warn(`Failed to load topic metadata for ${path}:`, error);
+    }
   }
   
-  return [];
+  topics.sort((a, b) => a.title.localeCompare(b.title));
+  return topics;
 }
 
 // Load a specific topic with full content and solutions
