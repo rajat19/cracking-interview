@@ -2,7 +2,6 @@ import { useState, useMemo, useEffect, useCallback } from "react";
 import { Search, BookOpen, Menu, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Topic } from "@/types";
 import { TopicContent } from "@/components/TopicContent";
 import { useAuth } from "@/hooks/useAuth";
@@ -11,6 +10,7 @@ import { preloadUserProgress, getCachedCategoryProgress } from "@/lib/progressSt
 import type { TopicCategoryId } from "@/lib/contentLoader";
 import Navigation from "@/components/Navigation";
 import TopicListItem from "@/components/TopicListItem";
+import TopicDifficulty from "@/components/TopicDifficulty";
 
 interface DocsLayoutProps {
   title: string;
@@ -40,7 +40,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
     } finally {
       setLoading(false);
     }
-  }, [category, selectedTopic]);
+  }, [category]);
 
   const loadFullTopic = useCallback(async (topicId: string): Promise<void> => {
     setLoadingTopic(true);
@@ -69,7 +69,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
       const progress = getLocalProgress(category as 'dsa' | 'system-design' | 'behavioral');
       setUserProgress(progress);
     }
-  }, [category, user?.id]);
+  }, [category, user]);
 
   useEffect(() => {
     fetchQuestions();
@@ -360,12 +360,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
                   {selectedTopic?.title || "Select a topic"}
                 </h2>
                 {selectedTopic && (
-                  <Badge 
-                    variant="secondary" 
-                    className={`difficulty-${selectedTopic.difficulty}`}
-                  >
-                    {selectedTopic.difficulty}
-                  </Badge>
+                  <TopicDifficulty difficulty={selectedTopic.difficulty} />
                 )}
               </div>
             </div>

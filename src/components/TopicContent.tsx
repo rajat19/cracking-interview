@@ -1,7 +1,6 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import { CheckCircle, Circle, Bookmark, BookmarkCheck, Clock, Code } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Topic } from "@/types";
 import { updateLocalProgress } from "@/lib/contentLoader";
 import type { TopicCategoryId } from "@/lib/contentLoader";
@@ -11,6 +10,7 @@ import { PlatformLinks } from '@/components/PlatformLinks';
 import { useAuth } from '@/hooks/useAuth';
 import { getUserProgress, upsertUserProgress } from '@/lib/progressStore';
 import { useNavigate } from 'react-router-dom';
+import TopicDifficulty from "@/components/TopicDifficulty";
 
 // Public assets helper respecting Vite base
 const companyIconSrc = (company: string) => `${import.meta.env.BASE_URL}assets/img/company/${company}.svg`;
@@ -111,12 +111,7 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
         <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
           <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
             <h1 className="text-2xl lg:text-3xl font-bold text-foreground">{topic.title}</h1>
-            <Badge 
-              variant="secondary" 
-              className={`difficulty-${topic.difficulty} w-fit`}
-            >
-              {topic.difficulty}
-            </Badge>
+            <TopicDifficulty difficulty={topic.difficulty} />
           </div>
           
           <div className="flex items-center space-x-2">

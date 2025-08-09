@@ -1,7 +1,7 @@
 import React from "react";
-import { Badge } from "@/components/ui/badge";
 import { CheckCircle, Bookmark, BookmarkCheck, Clock, Code } from "lucide-react";
 import type { Topic } from "@/types";
+import TopicDifficulty from "@/components/TopicDifficulty";
 
 interface TopicListItemProps {
   topic: Topic;
@@ -34,9 +34,7 @@ export function TopicListItem({ topic, isActive, onClick }: TopicListItemProps) 
       </p>
 
       <div className="flex items-center justify-between">
-        <Badge variant="secondary" className={`text-xs difficulty-${topic.difficulty}`}>
-          {topic.difficulty}
-        </Badge>
+        <TopicDifficulty difficulty={topic.difficulty} />
         {(topic.timeComplexity || topic.spaceComplexity) && (
           <div className="flex items-center space-x-2 text-xs text-muted-foreground">
             {topic.timeComplexity && (

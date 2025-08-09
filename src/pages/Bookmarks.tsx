@@ -9,6 +9,7 @@ import { loadTopicsList } from '@/lib/contentLoader';
 import type { Topic } from '@/types';
 import type { TopicCategoryId } from '@/lib/contentLoader';
 import { getCachedCategoryProgress, preloadUserProgress, upsertUserProgress } from '@/lib/progressStore';
+import TopicDifficulty from '@/components/TopicDifficulty';
 
 interface BookmarkedQuestion {
   id: string;
@@ -148,16 +149,10 @@ const Bookmarks = () => {
                       <h3 className="text-lg font-semibold text-foreground">{question.title}</h3>
                       <p className="text-muted-foreground mt-2">{question.description}</p>
                       <div className="flex items-center gap-2 mt-4">
-                        <Badge variant={
-                          question.difficulty === 'easy' ? 'default' : 
-                          question.difficulty === 'medium' ? 'secondary' : 
-                          'destructive'
-                        }>
-                          {question.difficulty}
-                        </Badge>
-                        <Badge variant="outline" className="capitalize">
+                        <TopicDifficulty difficulty={question.difficulty} />
+                        <div className="badge badge-info capitalize p-2 rounded-md text-xs">
                           {question.question_type.replace('_', ' ')}
-                        </Badge>
+                        </div>
                       </div>
                     </div>
                     <div className="flex gap-2">
