@@ -45,6 +45,11 @@ function mapFrontmatterToTopic(
     examples: undefined,
     relatedTopics: related,
     companies: fm.companies || undefined,
+    // Platform identifiers
+    leetcode: fm.leetcode || undefined,
+    gfg: fm.gfg || undefined,
+    interviewbit: fm.interviewbit || undefined,
+    hackerrank: fm.hackerrank || undefined,
     solutions: undefined,
   };
 }
@@ -75,6 +80,11 @@ export async function loadTopicsList(category: TopicCategoryId): Promise<Omit<To
           spaceComplexity: data.sc || undefined,
           description: data.description || createExcerpt(content),
           companies: data.companies || undefined,
+          // Platform identifiers
+          leetcode: data.leetcode || undefined,
+          gfg: data.gfg || undefined,
+          interviewbit: data.interviewbit || undefined,
+          hackerrank: data.hackerrank || undefined,
           examples: undefined,
           relatedTopics: related,
         });

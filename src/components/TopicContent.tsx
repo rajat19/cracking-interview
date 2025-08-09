@@ -7,6 +7,7 @@ import { updateLocalProgress } from "@/lib/contentLoader";
 import type { TopicCategoryId } from "@/lib/contentLoader";
 import MarkdownContent from '@/components/MarkdownContent';
 import { SolutionTabs } from '@/components/SolutionTabs';
+import { PlatformLinks } from '@/components/PlatformLinks';
 import { useAuth } from '@/hooks/useAuth';
 import { getUserProgress, upsertUserProgress } from '@/lib/progressStore';
 import { useNavigate } from 'react-router-dom';
@@ -101,15 +102,15 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
   };
 
   return (
-    <div className="max-w-4xl mx-auto p-8">
+    <div className="w-full p-4 lg:p-8 lg:max-w-4xl lg:mx-auto">
       {/* Header */}
-      <div className="mb-8">
-        <div className="flex items-center justify-between mb-4">
-          <div className="flex items-center space-x-3">
-            <h1 className="text-3xl font-bold text-foreground">{topic.title}</h1>
+      <div className="mb-6 lg:mb-8">
+        <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between mb-4 gap-3">
+          <div className="flex flex-col sm:flex-row sm:items-center space-y-2 sm:space-y-0 sm:space-x-3">
+            <h1 className="text-2xl lg:text-3xl font-bold text-foreground">{topic.title}</h1>
             <Badge 
               variant="secondary" 
-              className={`difficulty-${topic.difficulty}`}
+              className={`difficulty-${topic.difficulty} w-fit`}
             >
               {topic.difficulty}
             </Badge>
@@ -171,20 +172,23 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
         </div>
       )}
 
-      {/* Related Topics */}
+      {/* Companies */}
       {topic.companies && topic.companies.length > 0 && (
-        <div className="my-8">
-          <h3 className="text-xl font-medium mb-4 text-foreground">Companies</h3>
+        <div className="my-6 lg:my-8">
+          <h3 className="text-lg lg:text-xl font-medium mb-3 lg:mb-4 text-foreground">Companies</h3>
           <div className="flex flex-wrap gap-2">
             {topic.companies.map((company, index) => (
-              <button className="btn bg-white text-black border-[#e5e5e5]" key={index}>
-                <img src={`/src/assets/img/company/${company}.svg`} alt={company} className="w-4 h-4" />
+              <button className="btn bg-white text-black border-[#e5e5e5] text-xs lg:text-sm px-2 lg:px-3 py-1 lg:py-2" key={index}>
+                <img src={`/src/assets/img/company/${company}.svg`} alt={company} className="w-3 h-3 lg:w-4 lg:h-4" />
                 {company}
               </button>
             ))}
           </div>
         </div>
       )}
+
+      {/* Platform Links */}
+      <PlatformLinks topic={topic} />
 
       {/* Content */}
       <MarkdownContent content={topic.content} />
