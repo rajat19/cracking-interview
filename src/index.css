@@ -295,6 +295,9 @@ All colors MUST be HSL.
   .dropdown-content::-webkit-scrollbar-thumb:hover {
     @apply bg-muted-foreground rounded;
   }
+
+  .dropdown .menu { flex-direction: column; }
+  .dropdown .menu > li { display: flex; width: 100%; }
 }
 
 @layer base {

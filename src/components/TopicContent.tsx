@@ -19,9 +19,11 @@ interface TopicContentProps {
   topic: Topic;
   category: TopicCategoryId;
   onProgressUpdate: () => Promise<void>;
+  onFilterByTag?: (tag: string) => void;
+  onFilterByCompany?: (company: string) => void;
 }
 
-export function TopicContent({ topic, category, onProgressUpdate }: TopicContentProps) {
+export function TopicContent({ topic, category, onProgressUpdate, onFilterByTag, onFilterByCompany }: TopicContentProps) {
   const [isCompleted, setIsCompleted] = useState(topic.isCompleted || false);
   const [isBookmarked, setIsBookmarked] = useState(topic.isBookmarked || false);
   const [activeLanguage, setActiveLanguage] = useState<string | null>(null);
@@ -194,7 +196,14 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
           <h3 className="text-xl font-medium mb-4 text-foreground">Related Topics</h3>
           <div className="flex flex-wrap gap-2">
             {topic.relatedTopics.map((relatedTopic, index) => (
-              <div key={index} className="badge badge-secondary p-4">{relatedTopic}</div>
+              <button
+                key={index}
+                className="btn bg-white text-black border-[#e5e5e5] text-xs lg:text-sm px-2 lg:px-3 py-1 lg:py-2"
+                onClick={() => onFilterByTag?.(relatedTopic)}
+                title={`Filter by ${relatedTopic}`}
+              >
+                {relatedTopic}
+              </button>
             ))}
           </div>
         </div>
@@ -207,7 +216,12 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
           <div className="flex flex-wrap gap-2">
             {topic.companies.map((company, index) => {
               return (
-                <button className="btn bg-white text-black border-[#e5e5e5] text-xs lg:text-sm px-2 lg:px-3 py-1 lg:py-2" key={index}>
+                <button
+                  className="btn bg-white text-black border-[#e5e5e5] text-xs lg:text-sm px-2 lg:px-3 py-1 lg:py-2"
+                  key={index}
+                  onClick={() => onFilterByCompany?.(company)}
+                  title={`Filter by ${company}`}
+                >
                   <img src={companyIconSrc(company)} alt={company} className="w-3 h-3 lg:w-4 lg:h-4" />
                   {company}
                 </button>

@@ -1,7 +1,9 @@
+export type Difficulty = 'all' | "easy" | "medium" | "hard";
+
 export interface Topic {
   id: string;
   title: string;
-  difficulty: "easy" | "medium" | "hard";
+  difficulty: Difficulty;
   timeComplexity?: string;
   spaceComplexity?: string;
   description: string;

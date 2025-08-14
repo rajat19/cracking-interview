@@ -1,9 +1,9 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Search, BookOpen, Menu, X } from "lucide-react";
-import { Input } from "@/components/ui/input";
+import { BookOpen, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Topic } from "@/types/topic";
+import FiltersControls from "@/components/FiltersControls";
+import { Difficulty, Topic } from "@/types/topic";
 import { TopicContent } from "@/components/TopicContent";
 import { useAuth } from "@/hooks/useAuth";
 import { loadTopicsList, loadTopic, getLocalProgress } from "@/lib/contentLoader";
@@ -25,7 +25,9 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
   const [userProgress, setUserProgress] = useState<Record<string, { is_completed: boolean; is_bookmarked: boolean }>>({});
   const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [difficultyFilter, setDifficultyFilter] = useState<string>("all");
+  const [difficultyFilter, setDifficultyFilter] = useState<Difficulty>("all");
+  const [topicTagFilter, setTopicTagFilter] = useState<string>("");
+  const [companyFilter, setCompanyFilter] = useState<string>("");
   const [loading, setLoading] = useState(true);
   const [loadingTopic, setLoadingTopic] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -33,10 +35,8 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
 
   const fetchQuestions = useCallback(async (): Promise<void> => {
     try {
-      // Load only topic metadata initially for faster loading
       const loaded = await loadTopicsList(category as 'dsa' | 'system-design' | 'behavioral');
       setTopics(loaded);
-      // Do not auto-load the first topic to keep initial load light
     } catch (error) {
       console.error('Error loading topics:', error);
     } finally {
@@ -83,16 +83,16 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
     }
   }, [topics, fetchUserProgress]);
 
-  // Load topic from URL (e.g., /dsa?t=alien-dictionary)
   useEffect(() => {
     const topicId = searchParams.get('t');
     if (topicId && topicId !== selectedTopic?.id) {
       loadFullTopic(topicId);
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [searchParams, loadFullTopic]);
-
-  const getTableName = (_category: string) => 'local';
+    const topicFilterParam = searchParams.get('topic') || '';
+    const companyFilterParam = searchParams.get('company') || '';
+    setTopicTagFilter(topicFilterParam);
+    setCompanyFilter(companyFilterParam);
+  }, [searchParams, loadFullTopic, selectedTopic?.id]);
 
   const topicsWithProgress = useMemo(() => {
     return topics.map(topic => ({
@@ -118,9 +118,54 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
       const matchesSearch = topic.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
                           topic.description.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesDifficulty = difficultyFilter === "all" || topic.difficulty === difficultyFilter;
-      return matchesSearch && matchesDifficulty;
+      const matchesTopicTag = !topicTagFilter || (topic.relatedTopics || []).map(t => t.toLowerCase()).includes(topicTagFilter.toLowerCase());
+      const matchesCompany = !companyFilter || (topic.companies || []).map(c => c.toLowerCase()).includes(companyFilter.toLowerCase());
+      return matchesSearch && matchesDifficulty && matchesTopicTag && matchesCompany;
     });
-  }, [topicsWithProgress, searchQuery, difficultyFilter]);
+  }, [topicsWithProgress, searchQuery, difficultyFilter, topicTagFilter, companyFilter]);
+
+  const { allTags, allCompanies } = useMemo(() => {
+    const tagSet = new Set<string>();
+    const companySet = new Set<string>();
+    for (const t of topics) {
+      (t.relatedTopics || []).forEach(tag => tag && tagSet.add(tag));
+      (t.companies || []).forEach(comp => comp && companySet.add(comp));
+    }
+    return {
+      allTags: Array.from(tagSet).sort((a, b) => a.localeCompare(b)),
+      allCompanies: Array.from(companySet).sort((a, b) => a.localeCompare(b)),
+    };
+  }, [topics]);
+
+  const updateSearchParams = (next: URLSearchParams) => {
+    // Keep empty values out of URL
+    if (next.get('topic') === '') next.delete('topic');
+    if (next.get('company') === '') next.delete('company');
+    setSearchParams(next);
+  };
+
+  const handleSetTopicTagFilter = (value: string) => {
+    setTopicTagFilter(value);
+    const next = new URLSearchParams(searchParams);
+    if (value) next.set('topic', value); else next.delete('topic');
+    updateSearchParams(next);
+  };
+
+  const handleSetCompanyFilter = (value: string) => {
+    setCompanyFilter(value);
+    const next = new URLSearchParams(searchParams);
+    if (value) next.set('company', value); else next.delete('company');
+    updateSearchParams(next);
+  };
+
+  const handleClearFilters = () => {
+    setTopicTagFilter('');
+    setCompanyFilter('');
+    const next = new URLSearchParams(searchParams);
+    next.delete('topic');
+    next.delete('company');
+    updateSearchParams(next);
+  };
 
   const completedCount = topicsWithProgress.filter(t => t.isCompleted).length;
   const progressPercentage = topicsWithProgress.length > 0 ? Math.round((completedCount / topicsWithProgress.length) * 100) : 0;
@@ -140,9 +185,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
     <>
       <Navigation />
       <div className="min-h-[calc(100vh-64px)] bg-background">
-        {/* Mobile Layout */}
         <div className="lg:hidden">
-          {/* Mobile Toggle */}
           <div className="sticky top-0 z-50 bg-background border-b border-border p-3">
             <Button
               variant="outline"
@@ -155,14 +198,13 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
             </Button>
           </div>
 
-          {/* Mobile Sidebar */}
           {sidebarOpen && (
             <>
               <div 
                 className="fixed inset-0 bg-black/50 z-40"
                 onClick={() => setSidebarOpen(false)}
               />
-              <div className="fixed top-0 left-0 w-80 h-full bg-card border-r border-border z-50 flex flex-col overflow-hidden">
+              <div className="fixed top-0 left-0 w-80 h-full bg-card border-r border-border z-50 flex flex-col overflow-visible">
                 <div className="p-4 border-b border-border">
                   <div className="flex items-center justify-between mb-4">
                     <h1 className="text-xl font-bold text-foreground">{title}</h1>
@@ -190,56 +232,21 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
                     </div>
                   </div>
                 </div>
+                <FiltersControls
+                  variant="mobile"
+                  searchQuery={searchQuery}
+                  onChangeSearch={setSearchQuery}
+                  difficultyFilter={difficultyFilter}
+                  onChangeDifficulty={setDifficultyFilter}
+                  topicTagFilter={topicTagFilter}
+                  companyFilter={companyFilter}
+                  allTags={allTags}
+                  allCompanies={allCompanies}
+                  onChangeTopic={handleSetTopicTagFilter}
+                  onChangeCompany={handleSetCompanyFilter}
+                  onClear={handleClearFilters}
+                />
 
-                {/* Search and Filters */}
-                <div className="p-3 border-b border-border space-y-2">
-                  <div className="relative">
-                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-                    <Input
-                      placeholder="Search topics..."
-                      value={searchQuery}
-                      onChange={(e) => setSearchQuery(e.target.value)}
-                      className="pl-10 text-sm"
-                    />
-                  </div>
-                  
-                  <div className="flex gap-1 flex-wrap">
-                    <Button
-                      variant={difficultyFilter === "all" ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setDifficultyFilter("all")}
-                      className="text-xs px-2"
-                    >
-                      All
-                    </Button>
-                    <Button
-                      variant={difficultyFilter === "easy" ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setDifficultyFilter("easy")}
-                      className="difficulty-easy text-xs px-2"
-                    >
-                      Easy
-                    </Button>
-                    <Button
-                      variant={difficultyFilter === "medium" ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setDifficultyFilter("medium")}
-                      className="difficulty-medium text-xs px-2"
-                    >
-                      Medium
-                    </Button>
-                    <Button
-                      variant={difficultyFilter === "hard" ? "default" : "outline"}
-                      size="sm"
-                      onClick={() => setDifficultyFilter("hard")}
-                      className="difficulty-hard text-xs px-2"
-                    >
-                      Hard
-                    </Button>
-                  </div>
-                </div>
-
-                {/* Topics List */}
                 <div className="flex-1 overflow-y-auto">
                   {filteredTopics.map((topic) => (
                     <TopicListItem
@@ -268,6 +275,14 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
                 topic={selectedTopic} 
                 category={category}
                 onProgressUpdate={fetchUserProgress}
+                onFilterByTag={(tag) => {
+                  handleSetTopicTagFilter(tag);
+                  setSidebarOpen(true);
+                }}
+                onFilterByCompany={(comp) => {
+                  handleSetCompanyFilter(comp);
+                  setSidebarOpen(true);
+                }}
               />
             ) : (
               <div className="flex items-center justify-center h-64 text-muted-foreground">
@@ -282,9 +297,9 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
         </div>
 
         {/* Desktop Layout */}
-        <div className="hidden lg:flex h-[calc(100vh-64px)] overflow-hidden">
+            <div className="hidden lg:flex h-[calc(100vh-64px)] overflow-visible">
           {/* Desktop Sidebar */}
-          <div className="w-80 border-r border-border bg-card/30 backdrop-blur-sm flex flex-col h-full overflow-hidden">
+          <div className="w-80 border-r border-border bg-card/30 backdrop-blur-sm flex flex-col h-full overflow-visible">
             {/* Header */}
             <div className="p-6 border-b border-border">
               <h1 className="text-2xl font-bold text-foreground mb-2">{title}</h1>
@@ -306,52 +321,20 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
         </div>
 
         {/* Search and Filters */}
-        <div className="p-3 lg:p-4 border-b border-border space-y-2 lg:space-y-3">
-          <div className="relative">
-            <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-muted-foreground w-4 h-4" />
-            <Input
-              placeholder="Search topics..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="pl-10 text-sm"
-            />
-          </div>
-          
-          <div className="flex gap-1 lg:gap-2 flex-wrap">
-            <Button
-              variant={difficultyFilter === "all" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setDifficultyFilter("all")}
-              className="text-xs px-2 lg:px-3"
-            >
-              All
-            </Button>
-            <Button
-              variant={difficultyFilter === "easy" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setDifficultyFilter("easy")}
-              className="difficulty-easy text-xs px-2 lg:px-3"
-            >
-              Easy
-            </Button>
-            <Button
-              variant={difficultyFilter === "medium" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setDifficultyFilter("medium")}
-              className="difficulty-medium text-xs px-2 lg:px-3"
-            >
-              Medium
-            </Button>
-            <Button
-              variant={difficultyFilter === "hard" ? "default" : "outline"}
-              size="sm"
-              onClick={() => setDifficultyFilter("hard")}
-              className="difficulty-hard text-xs px-2 lg:px-3"
-            >
-              Hard
-            </Button>
-          </div>
-        </div>
+        <FiltersControls
+          variant="desktop"
+          searchQuery={searchQuery}
+          onChangeSearch={setSearchQuery}
+          difficultyFilter={difficultyFilter}
+          onChangeDifficulty={setDifficultyFilter}
+          topicTagFilter={topicTagFilter}
+          companyFilter={companyFilter}
+          allTags={allTags}
+          allCompanies={allCompanies}
+          onChangeTopic={handleSetTopicTagFilter}
+          onChangeCompany={handleSetCompanyFilter}
+          onClear={handleClearFilters}
+        />
 
         {/* Topics List */}
         <div className="flex-1 overflow-y-auto">
@@ -394,6 +377,13 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
                   topic={selectedTopic} 
                   category={category}
                   onProgressUpdate={fetchUserProgress}
+                  onFilterByTag={(tag) => {
+                    handleSetTopicTagFilter(tag);
+                    // Keep sidebar closed on desktop, user can see list filtered
+                  }}
+                  onFilterByCompany={(comp) => {
+                    handleSetCompanyFilter(comp);
+                  }}
                 />
               ) : (
                 <div className="flex items-center justify-center h-full text-muted-foreground">
