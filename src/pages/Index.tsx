@@ -82,9 +82,9 @@ const Index = () => {
           <div className="flex items-center space-x-4">
             <ThemeToggle />
             {user ? (
-              <Link to="/bookmarks">
+              <Link to="/profile">
                 <Button variant="outline" size="sm">
-                  Bookmarks
+                  Profile
                 </Button>
               </Link>
             ) : (

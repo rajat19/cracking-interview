@@ -18,7 +18,7 @@ A comprehensive interview preparation platform designed to help you master techn
 - **Styling**: Tailwind CSS with shadcn/ui components
 - **Routing**: React Router DOM
 - **State Management**: React Context API
-- **Authentication**: Supabase Auth
+- **Authentication**: Firebase Auth
 - **Database**: Firebase Firestore (for progress tracking)
 - **Deployment**: GitHub Pages
 
@@ -76,10 +76,9 @@ pnpm dev
 
 ## 🔧 Configuration
 
-The application uses Firebase for progress tracking and Supabase for authentication. To set up these services:
+The application uses Firebase for authentication and progress tracking. To set up:
 
 1. Create a Firebase project and add your configuration to `src/integrations/firebase/client.ts`
-2. Create a Supabase project and add your configuration to `src/integrations/supabase/client.ts`
 
 ## 📝 Contributing
 

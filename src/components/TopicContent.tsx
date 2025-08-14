@@ -73,7 +73,7 @@ export function TopicContent({ topic, category, onProgressUpdate, onFilterByTag,
   const updateProgress = async (questionId: string, updates: { isCompleted?: boolean; isBookmarked?: boolean }) => {
     try {
       if (user) {
-        await upsertUserProgress(user.id, category, questionId, updates);
+        await upsertUserProgress(user.uid, category, questionId, updates);
       } else {
         updateLocalProgress(category, questionId, updates);
       }
@@ -99,7 +99,7 @@ export function TopicContent({ topic, category, onProgressUpdate, onFilterByTag,
     (async () => {
       if (!user) return;
       try {
-        const doc = await getUserProgress(user.id, category, topic.id);
+        const doc = await getUserProgress(user.uid, category, topic.id);
         if (!mounted || !doc) return;
         setIsCompleted(!!doc.is_completed);
         setIsBookmarked(!!doc.is_bookmarked);

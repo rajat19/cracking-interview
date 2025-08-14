@@ -60,11 +60,11 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
 
   const fetchUserProgress = useCallback(async (): Promise<void> => {
     if (user) {
-      const cached = getCachedCategoryProgress(user.id, category as 'dsa' | 'system-design' | 'behavioral');
+      const cached = getCachedCategoryProgress(user.uid, category as 'dsa' | 'system-design' | 'behavioral');
       if (Object.keys(cached).length > 0) {
         setUserProgress(cached);
       } else {
-        const loaded = await preloadUserProgress(user.id, category as 'dsa' | 'system-design' | 'behavioral');
+        const loaded = await preloadUserProgress(user.uid, category as 'dsa' | 'system-design' | 'behavioral');
         setUserProgress(loaded);
       }
     } else {

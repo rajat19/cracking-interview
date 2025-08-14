@@ -7,7 +7,7 @@ import DSA from "./pages/DSA";
 import SystemDesign from "./pages/SystemDesign";
 import Behavioral from "./pages/Behavioral";
 import AuthPage from "@/components/AuthPage";
-import Bookmarks from "./pages/Bookmarks";
+import Profile from "./pages/Profile";
 import MockInterview from "./pages/MockInterview";
 import NotFound from "./pages/NotFound";
 
@@ -24,9 +24,8 @@ const App = () => (
             <Route path="/system-design" element={<SystemDesign />} />
             <Route path="/behavioral" element={<Behavioral />} />
             <Route path="/auth" element={<AuthPage />} />
-            <Route path="/bookmarks" element={<Bookmarks />} />
+            <Route path="/profile" element={<Profile />} />
             <Route path="/mock-interview" element={<MockInterview />} />
-            {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>
         </BrowserRouter>

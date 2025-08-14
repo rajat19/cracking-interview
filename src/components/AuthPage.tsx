@@ -1,55 +1,33 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { supabase } from '@/integrations/supabase/client';
+import { auth } from '@/integrations/firebase/client';
 import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
 import { Code, Zap, Target, Users, ArrowRight, CheckCircle } from 'lucide-react';
 import { toast } from 'sonner';
+import { useAuth } from '@/hooks/useAuth';
 
 const AuthPage = () => {
-  const [isLogin, setIsLogin] = useState(true);
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [loading, setLoading] = useState(false);
+  const { signInWithGoogle } = useAuth();
   const navigate = useNavigate();
+  const [loading, setLoading] = useState(false);
 
   useEffect(() => {
-    // Check if user is already logged in
-    const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
-      if (session) {
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      if (user) {
         navigate('/');
       }
-    };
-    checkAuth();
+    });
+    return () => unsubscribe();
   }, [navigate]);
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleGoogleSignIn = async () => {
     setLoading(true);
-
     try {
-      if (isLogin) {
-        const { error } = await supabase.auth.signInWithPassword({
-          email,
-          password,
-        });
-        if (error) throw error;
-        toast.success("Welcome back! You have successfully logged in.");
-        navigate('/');
-      } else {
-        const { error } = await supabase.auth.signUp({
-          email,
-          password,
-          options: {
-            emailRedirectTo: `${window.location.origin}/`
-          }
-        });
-        if (error) throw error;
-        toast.success("Account created! Please check your email to confirm your account.");
-      }
-    } catch (error: any) {
-      toast.error(error.message);
+      await signInWithGoogle();
+      toast.success("Welcome! You have successfully signed in with Google.");
+      navigate('/');
+    } catch (error: unknown) {
+      toast.error(error instanceof Error ? error.message : 'An unknown error occurred');
     } finally {
       setLoading(false);
     }
@@ -137,62 +115,21 @@ const AuthPage = () => {
             <div className="bg-card shadow-2xl rounded-2xl border border-border p-8 animate-slide-in-right">
               <div className="text-center mb-8">
                 <h2 className="text-3xl font-bold text-card-foreground mb-2">
-                  {isLogin ? 'Welcome Back' : 'Get Started'}
+                  Sign in with Google
                 </h2>
                 <p className="text-muted-foreground">
-                  {isLogin ? 'Sign in to continue your journey' : 'Create your account to begin'}
+                  Use your Google account to get started
                 </p>
               </div>
               
-              <form onSubmit={handleSubmit} className="space-y-6">
-                <div className="space-y-4">
-                  <div>
-                    <label className="label">
-                      <span className="label-text font-medium">Email</span>
-                    </label>
-                    <Input
-                      type="email"
-                      value={email}
-                      onChange={(e) => setEmail(e.target.value)}
-                      required
-                      className="input input-bordered w-full transition-all duration-200 focus:scale-[1.02]"
-                      placeholder="Enter your email"
-                    />
-                  </div>
-                  
-                  <div>
-                    <label className="label">
-                      <span className="label-text font-medium">Password</span>
-                    </label>
-                    <Input
-                      type="password"
-                      value={password}
-                      onChange={(e) => setPassword(e.target.value)}
-                      required
-                      className="input input-bordered w-full transition-all duration-200 focus:scale-[1.02]"
-                      placeholder="Enter your password"
-                    />
-                  </div>
-                </div>
-                
-                <Button 
-                  type="submit" 
-                  disabled={loading}
-                  className="btn btn-primary w-full group transition-all duration-200 hover:scale-[1.02]"
-                >
-                  <span>{loading ? 'Loading...' : (isLogin ? 'Sign In' : 'Sign Up')}</span>
-                  {!loading && <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />}
-                </Button>
-              </form>
-              
-              <div className="divider my-6">OR</div>
-              
-              <button
-                onClick={() => setIsLogin(!isLogin)}
-                className="btn btn-ghost w-full transition-all duration-200 hover:scale-[1.02]"
+              <Button 
+                onClick={handleGoogleSignIn}
+                disabled={loading}
+                className="btn btn-primary w-full group transition-all duration-200 hover:scale-[1.02]"
               >
-                {isLogin ? "Don't have an account? Sign Up" : "Already have an account? Sign In"}
-              </button>
+                <span>{loading ? 'Loading...' : 'Continue with Google'}</span>
+                {!loading && <ArrowRight size={16} className="ml-2 group-hover:translate-x-1 transition-transform" />}
+              </Button>
             </div>
           </div>
         </div>

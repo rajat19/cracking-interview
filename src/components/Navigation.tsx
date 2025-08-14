@@ -55,18 +55,27 @@ const Navigation = () => {
               {user ? (
                 <>
                   <Link 
-                    to="/bookmarks" 
+                    to="/profile" 
                     className="flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-200"
                   >
                     <Bookmark size={16} />
                     <span>Bookmarks</span>
                   </Link>
                   <div className="relative group">
-                    <Button variant="ghost" size="sm" className="flex items-center space-x-1">
-                      <User size={16} />
-                    </Button>
+                    <Link to="/profile">
+                      <Button variant="ghost" size="sm" className="flex items-center space-x-1">
+                        <User size={16} />
+                      </Button>
+                    </Link>
                     <div className="absolute right-0 top-full mt-2 w-48 bg-card border border-border rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                       <div className="py-1">
+                        <Link
+                          to="/profile"
+                          className="flex items-center space-x-2 w-full px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent"
+                        >
+                          <User size={16} />
+                          <span>Profile</span>
+                        </Link>
                         <button
                           onClick={signOut}
                           className="flex items-center space-x-2 w-full px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent"
@@ -125,12 +134,20 @@ const Navigation = () => {
                 {user ? (
                   <>
                     <Link
-                      to="/bookmarks"
+                      to="/profile"
                       onClick={() => setMobileMenuOpen(false)}
                       className="flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-200"
                     >
                       <Bookmark size={16} />
                       <span>Bookmarks</span>
+                    </Link>
+                    <Link
+                      to="/profile"
+                      onClick={() => setMobileMenuOpen(false)}
+                      className="flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-200"
+                    >
+                      <User size={16} />
+                      <span>Profile</span>
                     </Link>
                     <button
                       onClick={() => {
