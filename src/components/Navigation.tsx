@@ -7,11 +7,13 @@ import { useState } from 'react';
 
 const Navigation = () => {
   const location = useLocation();
-  const { user, signOut } = useAuth();
+  const { user, signOut, loading } = useAuth();
   const isHomePage = location.pathname === '/';
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
-  if (isHomePage) return null;
+  if (loading) {
+    return null;
+  }
 
   const navigationLinks = [
     { to: '/dsa', label: 'DSA', active: location.pathname === '/dsa' },

@@ -2,8 +2,8 @@ import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { Brain, Code, Users, BookOpen, Target, TrendingUp, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { ThemeToggle } from "@/components/ThemeToggle";
 import { StatsCard } from "@/components/StatsCard";
+import Navigation from '@/components/Navigation';
 import { useAuth } from "@/hooks/useAuth";
 import { loadTopicsList } from "@/lib/contentLoader";
 
@@ -69,41 +69,7 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background">
-      {/* Header */}
-      <header className="border-b border-border bg-card/30 backdrop-blur-md sticky top-0 z-50">
-        <div className="container mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center space-x-2">
-            <div className="w-8 h-8 bg-gradient-to-r from-primary to-accent rounded-lg flex items-center justify-center">
-              <BookOpen className="w-5 h-5 text-white" />
-            </div>
-            <h1 className="text-xl font-bold gradient-text">Cracking Interview</h1>
-          </div>
-          
-          <div className="flex items-center space-x-4">
-            <ThemeToggle />
-            {user ? (
-              <Link to="/profile">
-                <Button variant="outline" size="sm">
-                  Profile
-                </Button>
-              </Link>
-            ) : (
-              <>
-                <Link to="/auth">
-                  <Button variant="outline" size="sm">
-                    Sign In
-                  </Button>
-                </Link>
-                <Link to="/auth">
-                  <Button size="sm">
-                    Get Started
-                  </Button>
-                </Link>
-              </>
-            )}
-          </div>
-        </div>
-      </header>
+      <Navigation />
 
       {/* Hero Section */}
       <section className="py-20 px-6">
