@@ -1,6 +1,6 @@
 import React from "react";
 import { CheckCircle, Bookmark, BookmarkCheck, Clock, Code } from "lucide-react";
-import type { Topic } from "@/types";
+import type { Topic } from "@/types/topic";
 import TopicDifficulty from "@/components/TopicDifficulty";
 
 interface TopicListItemProps {

@@ -1,7 +1,7 @@
 import { useEffect, useState, lazy, Suspense } from "react";
-import { CheckCircle, Circle, Bookmark, BookmarkCheck, Clock, Code } from "lucide-react";
+import { CheckCircle, Circle, Bookmark, BookmarkCheck, Clock, Code, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Topic } from "@/types";
+import { Topic } from "@/types/topic";
 import { updateLocalProgress } from "@/lib/contentLoader";
 import type { TopicCategoryId } from "@/lib/contentLoader";
 const MarkdownContent = lazy(() => import('@/components/MarkdownContent'));
@@ -27,6 +27,7 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
   const [activeLanguage, setActiveLanguage] = useState<string | null>(null);
   const { user } = useAuth();
   const navigate = useNavigate();
+  const [copied, setCopied] = useState(false);
 
   const toggleComplete = async () => {
     if (!user) {
@@ -46,6 +47,25 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
     const newBookmarked = !isBookmarked;
     setIsBookmarked(newBookmarked);
     await updateProgress(topic.id, { isBookmarked: newBookmarked });
+  };
+
+  const handleShare = async () => {
+    try {
+      const shareUrl = window.location.href;
+      if (navigator.share) {
+        await navigator.share({
+          title: topic.title,
+          text: `Check out this topic: ${topic.title}`,
+          url: shareUrl,
+        });
+      } else if (navigator.clipboard && navigator.clipboard.writeText) {
+        await navigator.clipboard.writeText(shareUrl);
+        setCopied(true);
+        setTimeout(() => setCopied(false), 1500);
+      }
+    } catch (_) {
+      // no-op on user cancel or errors
+    }
   };
 
   const updateProgress = async (questionId: string, updates: { isCompleted?: boolean; isBookmarked?: boolean }) => {
@@ -115,6 +135,16 @@ export function TopicContent({ topic, category, onProgressUpdate }: TopicContent
           </div>
           
           <div className="flex items-center space-x-2">
+            <Button
+              variant="outline"
+              size="sm"
+              onClick={handleShare}
+              className=""
+              title="Share"
+            >
+              <Share2 className="w-4 h-4 mr-2" />
+              {copied ? 'Link copied' : 'Share'}
+            </Button>
             <Button
               variant="outline"
               size="sm"

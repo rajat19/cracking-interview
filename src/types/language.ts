@@ -1,0 +1,22 @@
+interface Language {
+    name: string;
+    extension: string;
+}
+
+export const LANGUAGES_MAP: Record<string, Language> = {
+    c: { name: "C", extension: "c" },
+    cpp: { name: "C++", extension: "cpp" },
+    java: { name: "Java", extension: "java" },
+    py: { name: "Python", extension: "py" },
+    js: { name: "JavaScript", extension: "js" },
+    ts: { name: "TypeScript", extension: "ts" },
+    go: { name: "Go", extension: "go" },
+    rb: { name: "Ruby", extension: "rb" },
+    rs: { name: "Rust", extension: "rs" },
+    kt: { name: "Kotlin", extension: "kt" },
+    swift: { name: "Swift", extension: "swift" },
+    dart: { name: "Dart", extension: "dart" },
+    php: { name: "PHP", extension: "php" },
+    sql: { name: "SQL", extension: "sql" },
+    sh: { name: "Bash", extension: "sh" },
+};

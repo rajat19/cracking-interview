@@ -1,5 +1,5 @@
 import fm from 'front-matter';
-import type { Topic } from '@/types';
+import type { Topic } from '@/types/topic';
 
 export type TopicCategoryId = 'dsa' | 'system-design' | 'behavioral';
 
@@ -17,7 +17,7 @@ function generateSlugFromPath(filePath: string): string {
 function createExcerpt(markdown: string, maxLength = 200): string {
   const text = markdown
     .replace(/```[\s\S]*?```/g, '')
-    .replace(/\!\[[^\]]*\]\([^)]*\)/g, '')
+    .replace(/!\[[^\]]*\]\([^)]*\)/g, '')
     .replace(/\[[^\]]*\]\([^)]*\)/g, '')
     .replace(/[#>*_`>-]/g, ' ')
     .replace(/\s+/g, ' ')
@@ -45,7 +45,6 @@ function mapFrontmatterToTopic(
     examples: undefined,
     relatedTopics: related,
     companies: fm.companies || undefined,
-    // Platform identifiers
     leetcode: fm.leetcode || undefined,
     gfg: fm.gfg || undefined,
     interviewbit: fm.interviewbit || undefined,
@@ -186,12 +185,10 @@ export async function loadTopicSolutions(topicId: string): Promise<Record<string
       
       const fileName = parts[parts.length - 1];
       const ext = (fileName.split('.').pop() || '').toLowerCase();
-      const language = mapExtToLanguage(ext);
-      if (!language) continue;
       
       try {
         const raw = await moduleLoader();
-        solutions[language] = { language, code: raw, path: normalized };
+        solutions[ext] = { language: ext, code: raw, path: normalized };
       } catch (error) {
         console.warn(`Failed to load solution ${solPath}:`, error);
       }
@@ -231,11 +228,9 @@ export async function loadTopics(category: TopicCategoryId): Promise<Topic[]> {
         const problemDir = parts[solutionsIndex + 1];
         const fileName = parts[parts.length - 1];
         const ext = (fileName.split('.').pop() || '').toLowerCase();
-        const language = mapExtToLanguage(ext);
-        if (!language) continue;
-        const entry = { language, code: raw, path: normalized };
+        const entry = { language: ext, code: raw, path: normalized };
         nameToSolutions[problemDir] ||= {};
-        nameToSolutions[problemDir][language] = entry;
+        nameToSolutions[problemDir][ext] = entry;
       } catch (error) {
         console.warn(`Failed to load solution ${solPath}:`, error);
       }
@@ -297,20 +292,6 @@ export function updateLocalProgress(
     }
   };
   localStorage.setItem(`progress:${category}`, JSON.stringify(next));
-}
-
-function mapExtToLanguage(ext: string): string | null {
-  switch (ext) {
-    case 'java': return 'java';
-    case 'py': return 'python';
-    case 'cpp': return 'cpp';
-    case 'c': return 'c';
-    case 'js': return 'javascript';
-    case 'ts': return 'typescript';
-    case 'go': return 'go';
-    case 'rb': return 'ruby';
-    default: return null;
-  }
 }
 
 // Clear cache when needed

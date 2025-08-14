@@ -6,7 +6,7 @@ import { Link, useNavigate } from 'react-router-dom';
 import { Bookmark, ExternalLink } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import { loadTopicsList } from '@/lib/contentLoader';
-import type { Topic } from '@/types';
+import type { Topic } from '@/types/topic';
 import type { TopicCategoryId } from '@/lib/contentLoader';
 import { getCachedCategoryProgress, preloadUserProgress, upsertUserProgress } from '@/lib/progressStore';
 import TopicDifficulty from '@/components/TopicDifficulty';

@@ -1,6 +1,6 @@
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
-import { Topic } from '@/types';
+import { Topic } from '@/types/topic';
 
 interface Platform {
   name: string;

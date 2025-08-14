@@ -1,8 +1,9 @@
 import { useState, useMemo, useEffect, useCallback } from "react";
+import { useSearchParams } from "react-router-dom";
 import { Search, BookOpen, Menu, X } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
-import { Topic } from "@/types";
+import { Topic } from "@/types/topic";
 import { TopicContent } from "@/components/TopicContent";
 import { useAuth } from "@/hooks/useAuth";
 import { loadTopicsList, loadTopic, getLocalProgress } from "@/lib/contentLoader";
@@ -28,6 +29,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
   const [loading, setLoading] = useState(true);
   const [loadingTopic, setLoadingTopic] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
+  const [searchParams, setSearchParams] = useSearchParams();
 
   const fetchQuestions = useCallback(async (): Promise<void> => {
     try {
@@ -45,7 +47,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
   const loadFullTopic = useCallback(async (topicId: string): Promise<void> => {
     setLoadingTopic(true);
     try {
-      const fullTopic = await loadTopic(category as 'dsa' | 'system-design' | 'behavioral', topicId);
+      const fullTopic = await loadTopic(category, topicId);
       if (fullTopic) {
         setSelectedTopic(fullTopic);
       }
@@ -81,6 +83,15 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
     }
   }, [topics, fetchUserProgress]);
 
+  // Load topic from URL (e.g., /dsa?t=alien-dictionary)
+  useEffect(() => {
+    const topicId = searchParams.get('t');
+    if (topicId && topicId !== selectedTopic?.id) {
+      loadFullTopic(topicId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, loadFullTopic]);
+
   const getTableName = (_category: string) => 'local';
 
   const topicsWithProgress = useMemo(() => {
@@ -94,9 +105,13 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
   const handleTopicSelect = useCallback(async (topic: Omit<Topic, 'content' | 'solutions'>) => {
     if (selectedTopic?.id === topic.id) return;
     await loadFullTopic(topic.id);
+    // Reflect selection in URL for shareability
+    const next = new URLSearchParams(searchParams);
+    next.set('t', topic.id);
+    setSearchParams(next);
     // Close sidebar on mobile after selection
     setSidebarOpen(false);
-  }, [selectedTopic?.id, loadFullTopic]);
+  }, [selectedTopic?.id, loadFullTopic, searchParams, setSearchParams]);
 
   const filteredTopics = useMemo(() => {
     return topicsWithProgress.filter(topic => {

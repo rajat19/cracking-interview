@@ -5,7 +5,7 @@ export interface Topic {
   timeComplexity?: string;
   spaceComplexity?: string;
   description: string;
-  content: string;
+  content?: string;
   examples?: string[];
   relatedTopics?: string[];
   companies?: string[];
