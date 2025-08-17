@@ -307,7 +307,11 @@ All colors MUST be HSL.
 
   body {
     @apply bg-background text-foreground overflow-x-hidden;
-    font-family: 'Inter', sans-serif;
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-variant-numeric: oldstyle-nums;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
   }
 
   /* Scrollbar styling */
@@ -418,5 +422,80 @@ All colors MUST be HSL.
 
   .rbc-today {
     @apply bg-accent/10;
+  }
+
+  /* MDX Content Styling */
+  .prose {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    --tw-prose-body: hsl(var(--foreground)) !important;
+    --tw-prose-headings: hsl(var(--foreground)) !important;
+    --tw-prose-lead: hsl(var(--foreground)) !important;
+    --tw-prose-links: hsl(var(--primary)) !important;
+    --tw-prose-bold: hsl(var(--foreground)) !important;
+    --tw-prose-counters: hsl(var(--foreground)) !important;
+    --tw-prose-bullets: hsl(var(--foreground)) !important;
+    --tw-prose-hr: hsl(var(--border)) !important;
+    --tw-prose-quotes: hsl(var(--foreground)) !important;
+    --tw-prose-quote-borders: hsl(var(--border)) !important;
+    --tw-prose-captions: hsl(var(--muted-foreground)) !important;
+    --tw-prose-code: hsl(var(--foreground)) !important;
+    --tw-prose-pre-code: hsl(var(--foreground)) !important;
+    --tw-prose-pre-bg: hsl(var(--muted)) !important;
+    --tw-prose-th-borders: hsl(var(--border)) !important;
+    --tw-prose-td-borders: hsl(var(--border)) !important;
+  }
+
+  .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .prose p {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .prose li {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .prose ul li, .prose ol li {
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .prose ul li::marker, .prose ol li::marker {
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .prose code {
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    font-weight: 500;
+    font-size: 0.875em;
+    color: hsl(var(--foreground)) !important;
+  }
+
+  .prose pre {
+    font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    color: hsl(var(--foreground)) !important;
+  }
+
+  /* Better text rendering for all content */
+  .prose * {
+    text-rendering: optimizeLegibility;
+  }
+
+  /* Force all prose content to use proper colors */
+  .prose > * {
+    color: hsl(var(--foreground)) !important;
   }
 }

@@ -5,12 +5,14 @@ import { Topic } from "@/types/topic";
 import { updateLocalProgress } from "@/lib/contentLoader";
 import type { TopicCategoryId } from "@/lib/contentLoader";
 const MarkdownContent = lazy(() => import('@/components/MarkdownContent'));
+const SimpleMDXRenderer = lazy(() => import('@/components/SimpleMDXRenderer').then(module => ({ default: module.SimpleMDXRenderer })));
 const SolutionTabs = lazy(() => import('@/components/SolutionTabs'));
 import { PlatformLinks } from '@/components/PlatformLinks';
 import { useAuth } from '@/hooks/useAuth';
 import { getUserProgress, upsertUserProgress } from '@/lib/progressStore';
 import { useNavigate } from 'react-router-dom';
 import TopicDifficulty from "@/components/TopicDifficulty";
+import { categoryFeatureHelpers, getCategoryContentType } from '@/config/categoryConfig';
 
 // Public assets helper respecting Vite base
 const companyIconSrc = (company: string) => `${import.meta.env.BASE_URL}assets/img/company/${company}.svg`;
@@ -232,15 +234,21 @@ export function TopicContent({ topic, category, onProgressUpdate, onFilterByTag,
       )}
 
       {/* Platform Links */}
-      <PlatformLinks topic={topic} />
+      {categoryFeatureHelpers.shouldShowPlatformLinks(category) && (
+        <PlatformLinks topic={topic} />
+      )}
 
       {/* Content */}
       <Suspense fallback={<div className="mt-6 text-sm text-muted-foreground">Rendering content…</div>}>
-        <MarkdownContent content={topic.content} />
+        {categoryFeatureHelpers.shouldUseMDXRenderer(category) ? (
+          <SimpleMDXRenderer content={topic.content} />
+        ) : (
+          <MarkdownContent content={topic.content} />
+        )}
       </Suspense>
 
       {/* Examples */}
-      {topic.examples && topic.examples.length > 0 && (
+      {categoryFeatureHelpers.shouldShowExamples(category) && topic.examples && topic.examples.length > 0 && (
         <div className="mt-8">
           <h3 className="text-xl font-medium mb-4 text-foreground">Examples</h3>
           <div className="space-y-4">
@@ -256,7 +264,7 @@ export function TopicContent({ topic, category, onProgressUpdate, onFilterByTag,
       )}
 
       {/* Solutions */}
-      {topic.solutions && Object.keys(topic.solutions).length > 0 && (
+      {categoryFeatureHelpers.shouldShowSolutionTabs(category) && topic.solutions && Object.keys(topic.solutions).length > 0 && (
         <Suspense fallback={<div className="mt-6 text-sm text-muted-foreground">Loading solutions…</div>}>
           <SolutionTabs solutions={topic.solutions} />
         </Suspense>

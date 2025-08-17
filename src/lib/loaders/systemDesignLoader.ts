@@ -19,7 +19,7 @@ const systemDesignCodeCache = new Map<string, Record<string, { language: string;
 function generateSlugFromPath(filePath: string): string {
   const parts = filePath.replace(/\\/g, '/').split('/');
   const fileName = parts[parts.length - 1];
-  return fileName.replace(/\.md$/, '');
+  return fileName.replace(/\.mdx$/, '');
 }
 
 function createExcerpt(markdown: string, maxLength = 200): string {
@@ -55,7 +55,7 @@ function mapFrontmatterToTopic(
 // Load system design topic metadata (title, difficulty, etc.) without full content
 export async function loadSystemDesignTopicsList(): Promise<Omit<Topic, 'content' | 'solutions'>[]> {
   // Load system design content from designs folder only (concepts moved to OOD)
-  const designModules = import.meta.glob('/src/content/system-design/designs/**/*.md', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
+  const designModules = import.meta.glob('/src/content/system-design/designs/**/*.mdx', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
   
   const topics: Omit<Topic, 'content' | 'solutions'>[] = [];
   
@@ -98,7 +98,7 @@ export async function loadSystemDesignTopic(topicId: string): Promise<Topic | nu
   
   try {
     // Load system design content from designs folder only (concepts moved to OOD)
-    const designModules = import.meta.glob('/src/content/system-design/designs/**/*.md', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
+    const designModules = import.meta.glob('/src/content/system-design/designs/**/*.mdx', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
     
     const allModules = { ...designModules };
     
@@ -141,14 +141,18 @@ export async function loadSystemDesignTopic(topicId: string): Promise<Topic | nu
 
 // Load system design code examples for a specific topic
 export async function loadSystemDesignCode(topicId: string): Promise<Record<string, { language: string; code: string; path: string }> | null> {
+  console.log(`loadSystemDesignCode called with topicId: ${topicId}`);
+  
   // Check cache first
   if (systemDesignCodeCache.has(topicId)) {
+    console.log(`Returning cached code for: ${topicId}`);
     return systemDesignCodeCache.get(topicId)!;
   }
 
   try {
     const codeModules = import.meta.glob('/src/content/system-design/code/**/*.*', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
     
+    console.log('Available code module paths:', Object.keys(codeModules));
     const codeExamples: Record<string, { language: string; code: string; path: string }> = {};
     
     for (const [codePath, moduleLoader] of Object.entries(codeModules)) {
@@ -161,14 +165,15 @@ export async function loadSystemDesignCode(topicId: string): Promise<Record<stri
       
       // Map system design folder names to topic IDs
       const folderToTopicMap: Record<string, string> = {
-        'library': '2020-10-15-library-management-system',
-        'parking': '2020-10-25-parking-lot',
-        'shopping': '2020-10-28-online-shopping',
-        'stack-overflow': '2020-10-30-stack-overflow',
-        'movie-booking': '2020-11-22-movie-booking'
+        'library-management': 'library-management',
+        'parking-lot': 'parking-lot',
+        'online-shopping': 'online-shopping',
+        'stack-overflow': 'stack-overflow',
+        'movie-booking': 'movie-booking'
       };
       
       const mappedTopicId = folderToTopicMap[problemDir];
+      console.log(`Processing: ${problemDir} -> ${mappedTopicId}, looking for: ${topicId}`);
       if (mappedTopicId !== topicId) continue;
       
       const fileName = parts[parts.length - 1];
@@ -176,13 +181,14 @@ export async function loadSystemDesignCode(topicId: string): Promise<Record<stri
       
       try {
         const raw = await moduleLoader();
-        codeExamples[ext] = { language: ext, code: raw, path: normalized };
+        codeExamples[fileName] = { language: ext, code: raw, path: normalized };
       } catch (error) {
         console.warn(`Failed to load system design code ${codePath}:`, error);
       }
     }
     
     // Cache the code examples
+    console.log(`Loaded ${Object.keys(codeExamples).length} code files for ${topicId}:`, Object.keys(codeExamples));
     systemDesignCodeCache.set(topicId, codeExamples);
     
     return Object.keys(codeExamples).length > 0 ? codeExamples : null;
@@ -202,7 +208,7 @@ export async function loadSystemDesignTopics(): Promise<Topic[]> {
   }
   
   // For system design, load all topics with full content from designs folder only
-  const designModules = import.meta.glob('/src/content/system-design/designs/**/*.md', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
+  const designModules = import.meta.glob('/src/content/system-design/designs/**/*.mdx', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
   
   const topics: Topic[] = [];
   

@@ -1,0 +1,66 @@
+{
+  "dsa": {
+    "name": "Data Structures & Algorithms",
+    "features": {
+      "solutionTabs": true,
+      "mdxRenderer": false,
+      "platformLinks": true,
+      "examples": true,
+      "bookmarkable": true,
+      "progressTracking": true
+    },
+    "contentType": "markdown",
+    "difficulty": {
+      "enabled": true,
+      "levels": ["easy", "medium", "hard"]
+    }
+  },
+  "system-design": {
+    "name": "System Design",
+    "features": {
+      "solutionTabs": false,
+      "mdxRenderer": true,
+      "platformLinks": false,
+      "examples": false,
+      "bookmarkable": true,
+      "progressTracking": true
+    },
+    "contentType": "mdx",
+    "difficulty": {
+      "enabled": false,
+      "levels": []
+    }
+  },
+  "behavioral": {
+    "name": "Behavioral",
+    "features": {
+      "solutionTabs": false,
+      "mdxRenderer": false,
+      "platformLinks": false,
+      "examples": true,
+      "bookmarkable": true,
+      "progressTracking": true
+    },
+    "contentType": "markdown",
+    "difficulty": {
+      "enabled": false,
+      "levels": []
+    }
+  },
+  "ood": {
+    "name": "Object-Oriented Design",
+    "features": {
+      "solutionTabs": false,
+      "mdxRenderer": false,
+      "platformLinks": false,
+      "examples": true,
+      "bookmarkable": true,
+      "progressTracking": true
+    },
+    "contentType": "markdown",
+    "difficulty": {
+      "enabled": true,
+      "levels": ["easy", "medium", "hard"]
+    }
+  }
+}

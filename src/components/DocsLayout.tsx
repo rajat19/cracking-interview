@@ -12,6 +12,7 @@ import type { TopicCategoryId } from "@/lib/contentLoader";
 import Navigation from "@/components/Navigation";
 import TopicListItem from "@/components/TopicListItem";
 import TopicDifficulty from "@/components/TopicDifficulty";
+import { categoryFeatureHelpers } from '@/config/categoryConfig';
 
 interface DocsLayoutProps {
   title: string;
@@ -357,7 +358,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
                 <h2 className="font-semibold text-foreground text-xl">
                   {selectedTopic?.title || "Select a topic"}
                 </h2>
-                {selectedTopic && (
+                {selectedTopic && categoryFeatureHelpers.shouldShowDifficulty(category) && (
                   <TopicDifficulty difficulty={selectedTopic.difficulty} />
                 )}
               </div>
