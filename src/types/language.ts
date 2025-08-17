@@ -11,6 +11,7 @@ export const LANGUAGES_MAP: Record<string, Language> = {
     js: { name: "JavaScript", extension: "js" },
     ts: { name: "TypeScript", extension: "ts" },
     go: { name: "Go", extension: "go" },
+    cs: { name: "C#", extension: "cs" },
     rb: { name: "Ruby", extension: "rb" },
     rs: { name: "Rust", extension: "rs" },
     kt: { name: "Kotlin", extension: "kt" },

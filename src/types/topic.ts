@@ -17,6 +17,8 @@ export interface Topic {
   gfg?: string;
   interviewbit?: string;
   hackerrank?: string;
+  hellointerview?: string;
+  metacareers?: string;
 
   // Progress tracking
   isCompleted?: boolean;

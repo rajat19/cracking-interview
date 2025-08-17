@@ -457,6 +457,7 @@
       "facebook"
     ],
     "leetcode": "find-median-from-data-stream",
+    "metacareers": 547645422524434,
     "relatedTopics": [
       "heap",
       "sorting",
@@ -1999,7 +2000,7 @@
     "difficulty": "medium",
     "timeComplexity": "O(n<sup>2</sup>)",
     "spaceComplexity": "O(1)",
-    "description": "Given an m x n integer matrix , if an element is 0 , set its entire row and column to 0 's. You must do it in place. Test Cases Example 1: <div style=\"display: flex\" {% include matrix.html rows=3 col…",
+    "description": "Given an m x n integer matrix , if an element is 0 , set its entire row and column to 0 's. You must do it in place. Test Cases Example 1: Example 2:",
     "companies": [
       "adobe",
       "amazon",
@@ -2149,6 +2150,7 @@
       "facebook"
     ],
     "leetcode": "subarray-sum-equals-k",
+    "metacareers": 840934449713537,
     "relatedTopics": [
       "array",
       "hash-table"
@@ -2282,6 +2284,7 @@
     "leetcode": "trapping-rain-water",
     "gfg": "trapping-rain-water",
     "interviewbit": "container-with-most-water",
+    "hellointerview": "code/two-pointers/container-with-most-water",
     "relatedTopics": [
       "array",
       "stack",

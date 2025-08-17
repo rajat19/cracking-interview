@@ -18,6 +18,7 @@ const Navigation = () => {
   const navigationLinks = [
     { to: '/dsa', label: 'DSA', active: location.pathname === '/dsa' },
     { to: '/system-design', label: 'System Design', active: location.pathname === '/system-design' },
+    { to: '/ood', label: 'OOD', active: location.pathname === '/ood' },
     { to: '/behavioral', label: 'Behavioral', active: location.pathname === '/behavioral' },
   ];
 

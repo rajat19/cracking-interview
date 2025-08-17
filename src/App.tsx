@@ -5,6 +5,7 @@ import { ThemeProvider } from "@/contexts/ThemeContext";
 import Index from "./pages/Index";
 import DSA from "./pages/DSA";
 import SystemDesign from "./pages/SystemDesign";
+import OOD from "./pages/OOD";
 import Behavioral from "./pages/Behavioral";
 import AuthPage from "@/components/AuthPage";
 import Profile from "./pages/Profile";
@@ -22,6 +23,7 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/dsa" element={<DSA />} />
             <Route path="/system-design" element={<SystemDesign />} />
+            <Route path="/ood" element={<OOD />} />
             <Route path="/behavioral" element={<Behavioral />} />
             <Route path="/auth" element={<AuthPage />} />
             <Route path="/profile" element={<Profile />} />

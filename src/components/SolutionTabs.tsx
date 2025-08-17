@@ -37,32 +37,40 @@ export function SolutionTabs({ solutions }: SolutionTabsProps) {
       <h2 className="text-xl font-large mb-2 text-foreground">Solutions</h2>
 
       <div className="tabs tabs-boxed bg-base-200 p-1.5 gap-1 border border-base-300 shadow-sm rounded-lg">
-        {Object.values(solutions).map((sol) => (
-          <button
-            key={LANGUAGES_MAP[sol.language].extension}
-            role="tab"
-            className={`tab rounded-lg gap-2 transition-all duration-200 relative ${
-              activeLanguage === sol.language 
-                ? 'tab-active bg-primary text-primary-foreground shadow-lg' 
-                : 'shadow-sm hover:text-base-content hover:bg-base-200 hover:shadow-md'
-            }`}
-            onClick={() => setActiveLanguage(sol.language)}
-          >
-            <img 
-              src={getLanguageIcon(sol.language)} 
-              alt={`${sol.language} icon`}
-              className={`w-4 h-4 transition-all duration-200 ${
-                activeLanguage === sol.language ? 'drop-shadow-sm brightness-110' : 'opacity-100'
+        {Object.values(solutions).map((sol) => {
+          const languageInfo = LANGUAGES_MAP[sol.language];
+          if (!languageInfo) {
+            console.warn(`Language "${sol.language}" not found in LANGUAGES_MAP`);
+            return null;
+          }
+          
+          return (
+            <button
+              key={languageInfo.extension}
+              role="tab"
+              className={`tab rounded-lg gap-2 transition-all duration-200 relative ${
+                activeLanguage === sol.language 
+                  ? 'tab-active bg-primary text-primary-foreground shadow-lg' 
+                  : 'shadow-sm hover:text-base-content hover:bg-base-200 hover:shadow-md'
               }`}
-            />
-            <span className='capitalize transition-all duration-200'>
-              {LANGUAGES_MAP[sol.language].name}
-            </span>
-          </button>
-        ))}
+              onClick={() => setActiveLanguage(sol.language)}
+            >
+              <img 
+                src={getLanguageIcon(sol.language)} 
+                alt={`${sol.language} icon`}
+                className={`w-4 h-4 transition-all duration-200 ${
+                  activeLanguage === sol.language ? 'drop-shadow-sm brightness-110' : 'opacity-100'
+                }`}
+              />
+              <span className='capitalize transition-all duration-200'>
+                {languageInfo.name}
+              </span>
+            </button>
+          );
+        })}
       </div>
 
-      {activeLanguage && (
+      {activeLanguage && LANGUAGES_MAP[activeLanguage] && (
         <div className="border border-base-300 rounded-lg overflow-hidden shadow-sm">
           <SyntaxHighlighter
             language={LANGUAGES_MAP[activeLanguage].extension}

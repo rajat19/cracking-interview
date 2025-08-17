@@ -37,13 +37,64 @@ const PLATFORMS: Platform[] = [
     base: 'https://www.hackerrank.com/challenges/',
     suffix: '/problem',
     identifier: 'hackerrank',
-    img: 'hackerrank.svg'
+    img: 'hackerrank.svg',
+  },
+  {
+    name: 'Youtube',
+    base: 'https://www.youtube.com/results?search_query=',
+    suffix: '',
+    identifier: 'title',
+    img: 'youtube.svg',
+  },
+  {
+    name: 'Metacareers',
+    base: 'https://www.metacareers.com/profile/coding_practice_question/?problem_id=',
+    suffix: '',
+    identifier: 'metacareers',
+    img: 'meta.svg',
+  },
+  {
+    name: 'HelloInterview',
+    base: 'https://www.hellointerview.com/learn/',
+    suffix: '',
+    identifier: 'hellointerview',
+    img: 'hellointerview.svg'
   }
 ];
 
 interface PlatformLinksProps {
   topic: Topic;
 }
+
+const PlatformLink = ({ platform, topic }: { platform: Platform, topic: Topic }) => {
+  const identifier = platform.identifier as keyof Topic;
+  const problemId = topic[identifier] as string;
+  const url = `${platform.base}${problemId}${platform.suffix}`;
+
+  return (
+    <a
+      key={platform.identifier}
+      href={url}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="inline-flex items-center gap-2 px-3 lg:px-4 py-2 bg-card border border-border rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors duration-200 group min-w-0"
+    >
+      <div className="flex items-center gap-2 min-w-0">
+        <img 
+          src={`${import.meta.env.BASE_URL}assets/img/platform/${platform.img}`} 
+          alt={platform.name}
+          className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0"
+          onError={(e) => {
+            // Fallback if image doesn't exist
+            (e.target as HTMLImageElement).style.display = 'none';
+          }}
+        />
+        <span className="font-medium text-xs lg:text-sm truncate">{platform.name}</span>
+        <ExternalLink className="w-3 h-3 lg:w-4 lg:h-4 opacity-60 group-hover:opacity-100 transition-opacity flex-shrink-0" />
+      </div>
+    </a>
+  );
+};
 
 export const PlatformLinks: React.FC<PlatformLinksProps> = ({ topic }) => {
   // Get available platforms for this topic
@@ -65,32 +116,8 @@ export const PlatformLinks: React.FC<PlatformLinksProps> = ({ topic }) => {
       </p>
       <div className="flex flex-wrap gap-2 lg:gap-3">
         {availablePlatforms.map((platform) => {
-          const identifier = platform.identifier as keyof Topic;
-          const problemId = topic[identifier] as string;
-          const url = `${platform.base}${problemId}${platform.suffix}`;
-          
           return (
-            <a
-              key={platform.identifier}
-              href={url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 px-3 lg:px-4 py-2 bg-card border border-border rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors duration-200 group min-w-0"
-            >
-              <div className="flex items-center gap-2 min-w-0">
-                <img 
-                  src={`${import.meta.env.BASE_URL}assets/img/platform/${platform.img}`} 
-                  alt={platform.name}
-                  className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0"
-                  onError={(e) => {
-                    // Fallback if image doesn't exist
-                    (e.target as HTMLImageElement).style.display = 'none';
-                  }}
-                />
-                <span className="font-medium text-xs lg:text-sm truncate">{platform.name}</span>
-                <ExternalLink className="w-3 h-3 lg:w-4 lg:h-4 opacity-60 group-hover:opacity-100 transition-opacity flex-shrink-0" />
-              </div>
-            </a>
+            <PlatformLink key={platform.identifier} platform={platform} topic={topic} />
           );
         })}
       </div>

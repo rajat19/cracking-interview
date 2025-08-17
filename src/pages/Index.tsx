@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-import { Brain, Code, Users, BookOpen, Target, TrendingUp, Video } from "lucide-react";
+import { Brain, Code, Users, BookOpen, Target, TrendingUp, Video, Layers } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { StatsCard } from "@/components/StatsCard";
 import Navigation from '@/components/Navigation';
@@ -12,6 +12,7 @@ const Index = () => {
   const [stats, setStats] = useState({
     dsaQuestions: 0,
     systemDesignQuestions: 0,
+    oodQuestions: 0,
     behavioralQuestions: 0
   });
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
@@ -21,13 +22,17 @@ const Index = () => {
     const fetchStats = async () => {
       try {
         // Load only topic metadata for faster stats calculation
-        const [dsa] = await Promise.all([
-          loadTopicsList('dsa' as any),
+        const [dsa, systemDesign, ood, behavioral] = await Promise.all([
+          loadTopicsList('dsa'),
+          loadTopicsList('system-design'),
+          loadTopicsList('ood'),
+          loadTopicsList('behavioral'),
         ]);
         setStats({
           dsaQuestions: dsa.length,
-          systemDesignQuestions: 0,
-          behavioralQuestions: 0,
+          systemDesignQuestions: systemDesign.length,
+          oodQuestions: ood.length,
+          behavioralQuestions: behavioral.length,
         });
       } catch (error) {
         console.error('Error fetching stats:', error);
@@ -55,6 +60,15 @@ const Index = () => {
       gradient: "from-purple-500 to-pink-500",
       path: "/system-design",
       stats: `${stats.systemDesignQuestions}+ Designs`
+    },
+    {
+      id: "ood",
+      title: "Object-Oriented Design",
+      description: "Master OOP principles, design patterns, and UML diagrams for technical interviews.",
+      icon: Layers,
+      gradient: "from-orange-500 to-red-500",
+      path: "/ood",
+      stats: `${stats.oodQuestions}+ Concepts`
     },
     {
       id: "behavioral",
@@ -115,7 +129,7 @@ const Index = () => {
       {/* Main Categories */}
       <section className="py-16 px-6">
         <div className="container mx-auto">
-          <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
             {categories.map((category) => {
               const Icon = category.icon;
               return (

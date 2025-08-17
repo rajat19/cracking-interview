@@ -58,6 +58,8 @@ async function main() {
         gfg: data.gfg || undefined,
         interviewbit: data.interviewbit || undefined,
         hackerrank: data.hackerrank || undefined,
+        hellointerview: data.hellointerview || undefined,
+        metacareers: data.metacareers || undefined,
         examples: undefined,
         relatedTopics: related,
       });
