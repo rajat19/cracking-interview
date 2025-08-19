@@ -23,7 +23,7 @@
     <script>
       // GitHub Pages SPA routing fix
       // This script handles client-side routing for SPAs on GitHub Pages
-      // It restores the original path when redirected from 404.html
+      // It redirects 404 errors back to index.html with the original path preserved
       (function() {
         var redirect = sessionStorage.redirect;
         delete sessionStorage.redirect;
@@ -32,11 +32,14 @@
         }
       })();
     </script>
-    <script type="module" crossorigin src="/cracking-interview/assets/index-Bj_GjLxz.js"></script>
-    <link rel="stylesheet" crossorigin href="/cracking-interview/assets/index-CsoiEg5r.css">
   </head>
 
   <body>
     <div id="root"></div>
+    <script>
+      // Store the current path and redirect to index.html
+      sessionStorage.redirect = location.href;
+      location.replace('/cracking-interview/');
+    </script>
   </body>
 </html>
