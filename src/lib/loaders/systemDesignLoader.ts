@@ -141,7 +141,6 @@ export async function loadSystemDesignTopic(topicId: string): Promise<Topic | nu
 
 // Load system design code examples for a specific topic
 export async function loadMdxCode(topicId: string): Promise<Record<string, { language: string; code: string; path: string }> | null> {
-  console.log(`loadMdxCode called with topicId: ${topicId}`);
   
   // Check cache first
   if (MdxCodeCache.has(topicId)) {
@@ -151,8 +150,6 @@ export async function loadMdxCode(topicId: string): Promise<Record<string, { lan
 
   try {
     const codeModules = import.meta.glob('/src/content/system-design/code/**/*.*', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
-    
-    console.log('Available code module paths:', Object.keys(codeModules));
     const codeExamples: Record<string, { language: string; code: string; path: string }> = {};
     
     for (const [codePath, moduleLoader] of Object.entries(codeModules)) {
@@ -173,7 +170,6 @@ export async function loadMdxCode(topicId: string): Promise<Record<string, { lan
       };
       
       const mappedTopicId = folderToTopicMap[problemDir];
-      console.log(`Processing: ${problemDir} -> ${mappedTopicId}, looking for: ${topicId}`);
       if (mappedTopicId !== topicId) continue;
       
       const fileName = parts[parts.length - 1];
@@ -186,9 +182,6 @@ export async function loadMdxCode(topicId: string): Promise<Record<string, { lan
         console.warn(`Failed to load system design code ${codePath}:`, error);
       }
     }
-    
-    // Cache the code examples
-    console.log(`Loaded ${Object.keys(codeExamples).length} code files for ${topicId}:`, Object.keys(codeExamples));
     MdxCodeCache.set(topicId, codeExamples);
     
     return Object.keys(codeExamples).length > 0 ? codeExamples : null;

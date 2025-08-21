@@ -41,7 +41,10 @@ Here are the top use cases of the Online Shopping System:
 6. Add a new product category.
 7. Send notifications to members with shipment updates.
 
-*Use Case*
+<MdxImage 
+  src="design/online-shopping/use-case.svg" 
+  alt="Usecase Diagram for Online Shopping"
+/>
 
 ---
 ## Class Diagrams
@@ -61,25 +64,47 @@ Here are the descriptions of the different classes of our Online Shopping System
 - **Notification:** This class will take care of sending notifications to customers.
 - **Payment:** This class will encapsulate the payment for an order. Members can pay through credit card or electronic bank transfer.
 
-*Class Diagram*
+<MdxImage 
+  src="design/online-shopping/class-diagram.png" 
+  alt="Class Diagram for Online Shopping"
+/>
 
-*UML Conventions*
+<MdxImage 
+  src="design/concepts/uml.svg" 
+  alt="Uml"
+/>
 
 ---
 ## Activity Diagram
 Following is the activity diagram for a user performing online shopping:
-*Activity Shopping*
+
+<MdxImage 
+  src="design/online-shopping/activity.svg" 
+  alt="Activity Diagram for Online Shopping"
+/>
 
 ---
 ## Sequence Diagram
 1. Here is the sequence diagram for searching from the catalog:
-*Sequence Searching*
+
+<MdxImage 
+  src="design/online-shopping/sequence-searching.svg" 
+  alt="Sequence Diagram for Online Shopping"
+/>
 
 2. Here is the sequence diagram for adding an item to the shopping cart:
-*Sequence Adding*
+
+<MdxImage 
+  src="design/online-shopping/sequence-adding-items.svg" 
+  alt="Sequence Diagram for Online Shopping"
+/>
 
 3. Here is the sequence diagram for checking out to place an order:
-*Sequence Checkout*
+
+<MdxImage 
+  src="design/online-shopping/sequence-checkout.svg" 
+  alt="Sequence Diagram for Online Shopping"
+/>
 
 ---
 ## Code
@@ -87,24 +112,42 @@ Here is the high-level definition for the classes described above.
 
 - **Enums and Constants:** Here are the required enums, data types, and constants:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/online-shopping/enums"
+/>
 
 - **Account, Customer, Admin, and Guest:** These classes represent different people that interact with our system:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/online-shopping/accounts"
+/>
 
 - **ProductCategory, Product, and ProductReview:** Here are the classes related to a product:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/online-shopping/product"
+/>
 
 - **ShoppingCart, Item, Order, and OrderLog:** Users will add items to the shopping cart and place an order to buy all the items in the cart.
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/online-shopping/cart"
+/>
 
 - **Shipment, ShipmentLog, and Notification:** After successfully placing an order, a shipment record will be created:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/online-shopping/shipment"
+/>
 
 - **Search interface and Catalog:** Catalog will implement Search to facilitate searching of products.
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/online-shopping/search"
+/>

@@ -20,4 +20,5 @@ export const LANGUAGES_MAP: Record<string, ILanguage> = {
     php: { name: "PHP", extension: "php" },
     sql: { name: "SQL", extension: "sql" },
     sh: { name: "Bash", extension: "sh" },
+    scala: { name: "Scala", extension: "scala" },
 };

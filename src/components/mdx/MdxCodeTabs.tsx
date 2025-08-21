@@ -60,6 +60,6 @@ export function MdxCodeTabs({ langs, path }: MdxCodeTabsProps) {
   }
 
   return (
-    <SolutionTabs solutions={solutions} />
+    <SolutionTabs solutions={solutions} showHeader={false} />
   );
 }

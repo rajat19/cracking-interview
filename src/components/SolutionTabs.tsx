@@ -11,13 +11,14 @@ export interface SolutionEntry {
 
 interface SolutionTabsProps {
   solutions: Record<string, SolutionEntry>;
+  showHeader?: boolean;
 }
 
 const getLanguageIcon = (language: string): string => {
   return `${import.meta.env.BASE_URL}assets/img/lang/${language}.svg`;
 };
 
-export function SolutionTabs({ solutions }: SolutionTabsProps) {
+export function SolutionTabs({ solutions, showHeader = true }: SolutionTabsProps) {
   const [activeLanguage, setActiveLanguage] = useState<string | null>(null);
 
   useEffect(() => {
@@ -29,8 +30,12 @@ export function SolutionTabs({ solutions }: SolutionTabsProps) {
 
   return (
     <div className="mt-10 space-y-4">
-      <hr />
-      <h2 className="text-xl font-large mb-2 text-foreground">Solutions</h2>
+      {showHeader && (
+        <>
+          <hr />
+          <h2 className="text-xl font-large mb-2 text-foreground">Solutions</h2>
+        </>
+      )}
 
       <div className="tabs tabs-boxed bg-primary/50 p-1.5 gap-1 border border-base-300 shadow-sm rounded-lg">
         {Object.values(solutions).map((sol) => {
