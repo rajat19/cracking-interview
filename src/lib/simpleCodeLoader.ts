@@ -1,14 +1,10 @@
 import { LANGUAGES_MAP } from "@/types/language";
-
-export interface SolutionEntry {
-  language: string;
-  code: string;
-}
+import { ISolutionEntry } from "@/types/topic";
 
 /**
  * {path: {lang: SolutionEntry}}
  */
-const codeCache = new Map<string, Record<string, SolutionEntry>>();
+const codeCache = new Map<string, Record<string, ISolutionEntry>>();
 
 // Create lazy loaders for system design code files (only created once at module load)
 const codeModules = import.meta.glob('/src/content/**/code/**/solution.{java,py,cpp,js,ts,c,go,kt,rs,rb,swift,php,sql}', { 
@@ -16,14 +12,14 @@ const codeModules = import.meta.glob('/src/content/**/code/**/solution.{java,py,
   import: 'default' 
 }) as unknown as Record<string, () => Promise<string>>;
 
-export async function loadMdxCodeSimple(path: string, languages: string[]): Promise<Record<string, SolutionEntry>> {
+export async function loadMdxCodeSimple(path: string, languages: string[]): Promise<Record<string, ISolutionEntry>> {
 
   const cacheKey = path;
   if (codeCache.has(cacheKey)) {
     return codeCache.get(cacheKey)!;
   }
 
-  const codeSolutions: Record<string, SolutionEntry> = {};
+  const codeSolutions: Record<string, ISolutionEntry> = {};
   
   try {
     for (const lang of languages) {

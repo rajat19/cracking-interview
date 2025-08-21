@@ -1,33 +1,27 @@
-import type { Topic } from '@/types/topic';
+import type { ITopic, ITopicCategory, ITopicList } from '@/types/topic';
 import {
   loadDSATopicsList,
   loadDSATopic,
-  loadDSATopics,
   clearDSACache
 } from './loaders/dsaLoader';
 import {
   loadSystemDesignTopicsList,
   loadSystemDesignTopic,
-  loadSystemDesignTopics,
   clearSystemDesignCache
 } from './loaders/systemDesignLoader';
 import {
   loadBehavioralTopicsList,
   loadBehavioralTopic,
-  loadBehavioralTopics,
   clearBehavioralCache
 } from './loaders/behavioralLoader';
 import {
   loadOODTopicsList,
   loadOODTopic,
-  loadOODTopics,
   clearOODCache
 } from './loaders/oodLoader';
 
-export type TopicCategoryId = 'dsa' | 'system-design' | 'behavioral' | 'ood';
-
 // Load topic metadata (title, difficulty, etc.) without full content
-export async function loadTopicsList(category: TopicCategoryId): Promise<Omit<Topic, 'content' | 'solutions'>[]> {
+export async function loadTopicsList(category: ITopicCategory): Promise<ITopicList[]> {
   switch (category) {
     case 'dsa':
       return loadDSATopicsList();
@@ -43,7 +37,7 @@ export async function loadTopicsList(category: TopicCategoryId): Promise<Omit<To
 }
 
 // Load a specific topic with full content and solutions
-export async function loadTopic(category: TopicCategoryId, topicId: string): Promise<Topic | null> {
+export async function loadTopic(category: ITopicCategory, topicId: string): Promise<ITopic | null> {
   switch (category) {
     case 'dsa':
       return loadDSATopic(topicId);
@@ -58,24 +52,8 @@ export async function loadTopic(category: TopicCategoryId, topicId: string): Pro
   }
 }
 
-// Legacy function for backward compatibility - loads all topics with full content
-export async function loadTopics(category: TopicCategoryId): Promise<Topic[]> {
-  switch (category) {
-    case 'dsa':
-      return loadDSATopics();
-    case 'system-design':
-      return loadSystemDesignTopics();
-    case 'behavioral':
-      return loadBehavioralTopics();
-    case 'ood':
-      return loadOODTopics();
-    default:
-      return [];
-  }
-}
-
 // Progress management functions
-export function getLocalProgress(category: TopicCategoryId): Record<string, { is_completed: boolean; is_bookmarked: boolean }> {
+export function getLocalProgress(category: ITopicCategory): Record<string, { is_completed: boolean; is_bookmarked: boolean }> {
   try {
     const raw = localStorage.getItem(`progress:${category}`);
     return raw ? JSON.parse(raw) : {};
@@ -85,7 +63,7 @@ export function getLocalProgress(category: TopicCategoryId): Record<string, { is
 }
 
 export function updateLocalProgress(
-  category: TopicCategoryId,
+  category: ITopicCategory,
   topicId: string,
   updates: { isCompleted?: boolean; isBookmarked?: boolean }
 ) {

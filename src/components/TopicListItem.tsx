@@ -1,10 +1,9 @@
-import React from "react";
 import { CheckCircle, Bookmark, BookmarkCheck, Clock, Code } from "lucide-react";
-import type { Topic } from "@/types/topic";
+import type { ITopicList } from "@/types/topic";
 import TopicDifficulty from "@/components/TopicDifficulty";
 
 interface TopicListItemProps {
-  topic: Topic;
+  topic: ITopicList;
   isActive: boolean;
   onClick: () => void;
 }
@@ -28,10 +27,6 @@ export function TopicListItem({ topic, isActive, onClick }: TopicListItemProps) 
           )}
         </div>
       </div>
-
-      <p className="text-xs text-muted-foreground mb-2 line-clamp-2">
-        {topic.description}
-      </p>
 
       <div className="flex items-center justify-between">
         <TopicDifficulty difficulty={topic.difficulty} />

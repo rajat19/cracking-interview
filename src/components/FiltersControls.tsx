@@ -2,14 +2,14 @@ import { Button } from "@/components/ui/button";
 import SearchFilter from "@/components/filters/SearchFilter";
 import DifficultyFilter from "@/components/filters/DifficultyFilter";
 import DropdownFilter from "@/components/filters/DropdownFilter";
-import { Difficulty } from "@/types/topic";
+import { ITopicDifficulty } from "@/types/topic";
 
 interface FiltersControlsProps {
   variant: 'mobile' | 'desktop';
   searchQuery: string;
   onChangeSearch: (value: string) => void;
-  difficultyFilter: Difficulty;
-  onChangeDifficulty: (value: Difficulty) => void;
+  difficultyFilter: ITopicDifficulty;
+  onChangeDifficulty: (value: ITopicDifficulty) => void;
   topicTagFilter: string;
   companyFilter: string;
   allTags: string[];

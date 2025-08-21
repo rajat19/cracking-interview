@@ -1,9 +1,10 @@
 import fm from 'front-matter';
-import type { Topic } from '@/types/topic';
+import type { ITopic, ITopicList } from '@/types/topic';
 
 // Type for frontmatter data
 interface DSAFrontmatterData {
   title?: string;
+  author?: string;
   difficulty?: string;
   tc?: string;
   sc?: string;
@@ -20,8 +21,8 @@ interface DSAFrontmatterData {
 }
 
 // Cache for loaded topics to avoid re-loading
-const dsaTopicsCache = new Map<string, Topic[]>();
-const dsaTopicCache = new Map<string, Topic>();
+const dsaTopicsCache = new Map<string, ITopic[]>();
+const dsaTopicCache = new Map<string, ITopic>();
 const dsaSolutionsCache = new Map<string, Record<string, { language: string; code: string; path: string }>>();
 
 function generateSlugFromPath(filePath: string): string {
@@ -45,13 +46,14 @@ function mapFrontmatterToTopic(
   id: string,
   fm: DSAFrontmatterData,
   content: string
-): Topic {
+): ITopic {
   const difficulty = (fm.difficulty || 'medium').toLowerCase();
   const related = Array.isArray(fm.topics) ? fm.topics : undefined;
 
   return {
     id,
     title: fm.title || id,
+    author: fm.author || undefined,
     difficulty: difficulty === 'easy' || difficulty === 'hard' ? difficulty : 'medium',
     timeComplexity: fm.tc || undefined,
     spaceComplexity: fm.sc || undefined,
@@ -71,11 +73,11 @@ function mapFrontmatterToTopic(
 }
 
 // Load DSA topic metadata (title, difficulty, etc.) without full content
-export async function loadDSATopicsList(): Promise<Omit<Topic, 'content' | 'solutions'>[]> {
+export async function loadDSATopicsList(): Promise<ITopicList[]> {
   // Prefer a prebuilt lightweight JSON index for fast initial load
   try {
     const indexModule = await import('@/data/dsa-index.json');
-    const items = (indexModule as { default: Omit<Topic, 'content' | 'solutions'>[] }).default;
+    const items = (indexModule as { default: ITopicList[] }).default;
     if (Array.isArray(items) && items.length >= 0) {
       return items;
     }
@@ -86,14 +88,13 @@ export async function loadDSATopicsList(): Promise<Omit<Topic, 'content' | 'solu
   // Fallback: scan markdown files and parse frontmatter in the client (slower)
   const modules = import.meta.glob('/src/content/dsa/**/*.md', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
   
-  const topics: Omit<Topic, 'content' | 'solutions'>[] = [];
+  const topics: ITopicList[] = [];
   
   for (const [path, moduleLoader] of Object.entries(modules)) {
     try {
       const raw = await moduleLoader();
       const parsed = fm<DSAFrontmatterData>(raw);
       const data = parsed.attributes || {};
-      const content = parsed.body || '';
       const id = generateSlugFromPath(path);
       
       const difficulty = (data.difficulty || 'medium').toLowerCase();
@@ -105,16 +106,7 @@ export async function loadDSATopicsList(): Promise<Omit<Topic, 'content' | 'solu
         difficulty: difficulty === 'easy' || difficulty === 'hard' ? difficulty : 'medium',
         timeComplexity: data.tc || undefined,
         spaceComplexity: data.sc || undefined,
-        description: data.description || createExcerpt(content),
         companies: data.companies || undefined,
-        // Platform identifiers
-        leetcode: data.leetcode || undefined,
-        gfg: data.gfg || undefined,
-        interviewbit: data.interviewbit || undefined,
-        hackerrank: data.hackerrank || undefined,
-        hellointerview: data.hellointerview || undefined,
-        metacareers: data.metacareers || undefined,
-        examples: undefined,
         relatedTopics: related,
       });
     } catch (error) {
@@ -127,7 +119,7 @@ export async function loadDSATopicsList(): Promise<Omit<Topic, 'content' | 'solu
 }
 
 // Load a specific DSA topic with full content and solutions
-export async function loadDSATopic(topicId: string): Promise<Topic | null> {
+export async function loadDSATopic(topicId: string): Promise<ITopic | null> {
   const cacheKey = `dsa:${topicId}`;
   
   // Check cache first
@@ -213,68 +205,6 @@ export async function loadDSATopicSolutions(topicId: string): Promise<Record<str
     console.error(`Failed to load DSA solutions for topic ${topicId}:`, error);
     return null;
   }
-}
-
-// Legacy function for backward compatibility - loads all DSA topics with full content
-export async function loadDSATopics(): Promise<Topic[]> {
-  const cacheKey = 'all-dsa-topics';
-  
-  // Check cache first
-  if (dsaTopicsCache.has(cacheKey)) {
-    return dsaTopicsCache.get(cacheKey)!;
-  }
-  
-  const modules = import.meta.glob('/src/content/dsa/**/*.md', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
-  const solutionModules = import.meta.glob('/src/content/dsa/solutions/**/*.*', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
-
-  const nameToSolutions: Record<string, Record<string, { language: string; code: string; path: string }>> = {};
-  
-  // Load all solutions eagerly for now (can be optimized further if needed)
-  for (const [solPath, moduleLoader] of Object.entries(solutionModules)) {
-    try {
-      const raw = await moduleLoader();
-      const normalized = solPath.replace(/\\/g, '/');
-      const parts = normalized.split('/');
-      const solutionsIndex = parts.findIndex(p => p === 'solutions');
-      if (solutionsIndex === -1 || solutionsIndex + 1 >= parts.length) continue;
-      const problemDir = parts[solutionsIndex + 1];
-      const fileName = parts[parts.length - 1];
-      const ext = (fileName.split('.').pop() || '').toLowerCase();
-      const entry = { language: ext, code: raw, path: normalized };
-      nameToSolutions[problemDir] ||= {};
-      nameToSolutions[problemDir][ext] = entry;
-    } catch (error) {
-      console.warn(`Failed to load DSA solution ${solPath}:`, error);
-    }
-  }
-
-  const topics: Topic[] = [];
-  
-  // Load all topics with full content for legacy compatibility
-  for (const [path, moduleLoader] of Object.entries(modules)) {
-    try {
-      const raw = await moduleLoader();
-      const parsed = fm<DSAFrontmatterData>(raw);
-      const data = parsed.attributes || {};
-      const content = parsed.body || '';
-      const id = generateSlugFromPath(path);
-      const topic = mapFrontmatterToTopic(id, data, content);
-      const problemKey = id;
-      if (nameToSolutions[problemKey]) {
-        topic.solutions = nameToSolutions[problemKey];
-      }
-      topics.push(topic);
-    } catch (error) {
-      console.warn(`Failed to load DSA topic ${path}:`, error);
-    }
-  }
-  
-  topics.sort((a, b) => a.title.localeCompare(b.title));
-  
-  // Cache the result
-  dsaTopicsCache.set(cacheKey, topics);
-  
-  return topics;
 }
 
 // Clear DSA cache when needed

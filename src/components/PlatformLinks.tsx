@@ -1,6 +1,6 @@
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
-import { Topic } from '@/types/topic';
+import { ITopic } from '@/types/topic';
 
 interface Platform {
   name: string;
@@ -63,11 +63,11 @@ const PLATFORMS: Platform[] = [
 ];
 
 interface PlatformLinksProps {
-  topic: Topic;
+  topic: ITopic;
 }
 
-const PlatformLink = ({ platform, topic }: { platform: Platform, topic: Topic }) => {
-  const identifier = platform.identifier as keyof Topic;
+const PlatformLink = ({ platform, topic }: { platform: Platform, topic: ITopic }) => {
+  const identifier = platform.identifier as keyof ITopic;
   const problemId = topic[identifier] as string;
   const url = `${platform.base}${problemId}${platform.suffix}`;
 
@@ -99,7 +99,7 @@ const PlatformLink = ({ platform, topic }: { platform: Platform, topic: Topic })
 export const PlatformLinks: React.FC<PlatformLinksProps> = ({ topic }) => {
   // Get available platforms for this topic
   const availablePlatforms = PLATFORMS.filter(platform => {
-    const identifier = platform.identifier as keyof Topic;
+    const identifier = platform.identifier as keyof ITopic;
     return topic[identifier] && typeof topic[identifier] === 'string';
   });
 

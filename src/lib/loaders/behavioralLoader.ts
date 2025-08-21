@@ -1,5 +1,5 @@
 import fm from 'front-matter';
-import type { Topic } from '@/types/topic';
+import type { ITopic } from '@/types/topic';
 
 // Type for behavioral frontmatter data
 interface BehavioralFrontmatterData {
@@ -12,8 +12,8 @@ interface BehavioralFrontmatterData {
 }
 
 // Cache for loaded topics to avoid re-loading
-const behavioralTopicsCache = new Map<string, Topic[]>();
-const behavioralTopicCache = new Map<string, Topic>();
+const behavioralTopicsCache = new Map<string, ITopic[]>();
+const behavioralTopicCache = new Map<string, ITopic>();
 
 function generateSlugFromPath(filePath: string): string {
   const parts = filePath.replace(/\\/g, '/').split('/');
@@ -36,9 +36,10 @@ function mapFrontmatterToTopic(
   id: string,
   fm: BehavioralFrontmatterData,
   content: string
-): Topic {
+): ITopic {
   return {
     id,
+    author: fm.author || undefined,
     title: fm.title || id,
     difficulty: 'medium' as const, // Behavioral questions are generally medium difficulty
     timeComplexity: undefined,
@@ -57,11 +58,11 @@ function mapFrontmatterToTopic(
 }
 
 // Load behavioral topic metadata (title, difficulty, etc.) without full content
-export async function loadBehavioralTopicsList(): Promise<Omit<Topic, 'content' | 'solutions'>[]> {
+export async function loadBehavioralTopicsList(): Promise<Omit<ITopic, 'content' | 'solutions'>[]> {
   // Load behavioral content
   const modules = import.meta.glob('/src/content/behavioral/**/*.md', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
   
-  const topics: Omit<Topic, 'content' | 'solutions'>[] = [];
+  const topics: Omit<ITopic, 'content' | 'solutions'>[] = [];
   
   for (const [path, moduleLoader] of Object.entries(modules)) {
     try {
@@ -73,6 +74,7 @@ export async function loadBehavioralTopicsList(): Promise<Omit<Topic, 'content' 
       
       topics.push({
         id,
+        author: data.author || undefined,
         title: data.title || id,
         difficulty: 'medium' as const,
         timeComplexity: undefined,
@@ -96,7 +98,7 @@ export async function loadBehavioralTopicsList(): Promise<Omit<Topic, 'content' 
 }
 
 // Load a specific behavioral topic with full content
-export async function loadBehavioralTopic(topicId: string): Promise<Topic | null> {
+export async function loadBehavioralTopic(topicId: string): Promise<ITopic | null> {
   const cacheKey = `behavioral:${topicId}`;
   
   // Check cache first
@@ -137,7 +139,7 @@ export async function loadBehavioralTopic(topicId: string): Promise<Topic | null
 }
 
 // Legacy function for backward compatibility - loads all behavioral topics with full content
-export async function loadBehavioralTopics(): Promise<Topic[]> {
+export async function loadBehavioralTopics(): Promise<ITopic[]> {
   const cacheKey = 'all-behavioral-topics';
   
   // Check cache first
@@ -148,7 +150,7 @@ export async function loadBehavioralTopics(): Promise<Topic[]> {
   // For behavioral, load all topics with full content
   const modules = import.meta.glob('/src/content/behavioral/**/*.md', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
   
-  const topics: Topic[] = [];
+  const topics: ITopic[] = [];
   
   for (const [path, moduleLoader] of Object.entries(modules)) {
     try {

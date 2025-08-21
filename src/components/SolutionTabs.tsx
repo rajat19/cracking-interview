@@ -1,16 +1,11 @@
 import { useEffect, useMemo, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import useHighlight from '@/hooks/useHighlight';
-import { useTheme } from "@/contexts/ThemeContext";
 import { LANGUAGES_MAP } from "@/types/language";
-
-export interface SolutionEntry {
-  language: string;
-  code: string;
-}
+import { ISolutionEntry } from "@/types/topic";
 
 interface SolutionTabsProps {
-  solutions: Record<string, SolutionEntry>;
+  solutions: Record<string, ISolutionEntry>;
   showHeader?: boolean;
 }
 

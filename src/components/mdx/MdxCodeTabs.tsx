@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
-import { loadMdxCodeSimple, SolutionEntry } from '@/lib/simpleCodeLoader';
+import { loadMdxCodeSimple } from '@/lib/simpleCodeLoader';
 
 import SolutionTabs from '@/components//SolutionTabs';
+import { ISolutionEntry } from '@/types/topic';
 
 interface MdxCodeTabsProps {
   langs: string[];
@@ -9,13 +10,13 @@ interface MdxCodeTabsProps {
 }
 
 export function MdxCodeTabs({ langs, path }: MdxCodeTabsProps) {
-  const [solutions, setSolutions] = useState<Record<string, SolutionEntry>>({});
+  const [solutions, setSolutions] = useState<Record<string, ISolutionEntry>>({});
   const [loading, setLoading] = useState(true);
   
   useEffect(() => {
     const loadAllFiles = async () => {
       setLoading(true);
-      let loadedFiles: Record<string, SolutionEntry> = {};
+      let loadedFiles: Record<string, ISolutionEntry> = {};
       
       try {
         loadedFiles = await loadMdxCodeSimple(path, langs);

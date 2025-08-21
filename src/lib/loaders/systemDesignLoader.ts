@@ -1,19 +1,19 @@
 import fm from 'front-matter';
-import type { Topic } from '@/types/topic';
+import type { ITopic } from '@/types/topic';
 
 // Type for system design frontmatter data
 interface SystemDesignFrontmatterData {
   title?: string;
   author?: string;
   categories?: string;
-  tags?: string[];
+  topics?: string[];
   description?: string;
   [key: string]: unknown;
 }
 
 // Cache for loaded topics to avoid re-loading
-const systemDesignTopicsCache = new Map<string, Topic[]>();
-const systemDesignTopicCache = new Map<string, Topic>();
+const systemDesignTopicsCache = new Map<string, ITopic[]>();
+const systemDesignTopicCache = new Map<string, ITopic>();
 const MdxCodeCache = new Map<string, Record<string, { language: string; code: string; path: string }>>();
 
 function generateSlugFromPath(filePath: string): string {
@@ -38,9 +38,10 @@ function mapFrontmatterToTopic(
   fm: SystemDesignFrontmatterData,
   content: string,
   isDesignProblem: boolean = false
-): Topic {
+): ITopic {
   return {
     id,
+    author: fm.author || undefined,
     title: fm.title || id,
     difficulty: isDesignProblem ? 'hard' : 'medium', // Design problems are harder than concepts
     description: fm.description || createExcerpt(content),
@@ -53,11 +54,11 @@ function mapFrontmatterToTopic(
 }
 
 // Load system design topic metadata (title, difficulty, etc.) without full content
-export async function loadSystemDesignTopicsList(): Promise<Omit<Topic, 'content' | 'solutions'>[]> {
+export async function loadSystemDesignTopicsList(): Promise<Omit<ITopic, 'content' | 'solutions'>[]> {
   // Load system design content from designs folder only (concepts moved to OOD)
   const designModules = import.meta.glob('/src/content/system-design/designs/**/*.mdx', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
   
-  const topics: Omit<Topic, 'content' | 'solutions'>[] = [];
+  const topics: Omit<ITopic, 'content' | 'solutions'>[] = [];
   
   // Process designs
   for (const [path, moduleLoader] of Object.entries(designModules)) {
@@ -88,7 +89,7 @@ export async function loadSystemDesignTopicsList(): Promise<Omit<Topic, 'content
 }
 
 // Load a specific system design topic with full content and code examples
-export async function loadSystemDesignTopic(topicId: string): Promise<Topic | null> {
+export async function loadSystemDesignTopic(topicId: string): Promise<ITopic | null> {
   const cacheKey = `system-design:${topicId}`;
   
   // Check cache first
@@ -192,7 +193,7 @@ export async function loadMdxCode(topicId: string): Promise<Record<string, { lan
 }
 
 // Legacy function for backward compatibility - loads all system design topics with full content
-export async function loadSystemDesignTopics(): Promise<Topic[]> {
+export async function loadSystemDesignTopics(): Promise<ITopic[]> {
   const cacheKey = 'all-system-design-topics';
   
   // Check cache first
@@ -203,7 +204,7 @@ export async function loadSystemDesignTopics(): Promise<Topic[]> {
   // For system design, load all topics with full content from designs folder only
   const designModules = import.meta.glob('/src/content/system-design/designs/**/*.mdx', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
   
-  const topics: Topic[] = [];
+  const topics: ITopic[] = [];
   
   // Process designs
   for (const [path, moduleLoader] of Object.entries(designModules)) {

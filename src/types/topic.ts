@@ -1,9 +1,11 @@
-export type Difficulty = 'all' | "easy" | "medium" | "hard";
+export type ITopicDifficulty = 'all' | "easy" | "medium" | "hard";
+export type ITopicCategory = 'dsa' | 'system-design' | 'behavioral' | 'ood';
 
-export interface Topic {
+export interface ITopic {
   id: string;
+  author?: string;
   title: string;
-  difficulty: Difficulty;
+  difficulty: ITopicDifficulty;
   timeComplexity?: string;
   spaceComplexity?: string;
   description: string;
@@ -23,12 +25,16 @@ export interface Topic {
   // Progress tracking
   isCompleted?: boolean;
   isBookmarked?: boolean;
-  solutions?: Record<string, { language: string; code: string; path: string }>;
+  solutions?: Record<string, ISolutionEntry>;
 }
 
-export interface TopicCategory {
-  id: string;
-  title: string;
-  description: string;
-  topics: Topic[];
+export type ITopicList = Pick<ITopic, 
+    'id' | 'title' | 'difficulty' | 'timeComplexity' | 'spaceComplexity'
+    | 'companies' | 'relatedTopics'
+    | 'isBookmarked' | 'isCompleted'
+  >
+
+export interface ISolutionEntry {
+  language: string;
+  code: string;
 }

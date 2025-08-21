@@ -1,5 +1,5 @@
+import { ITopicCategory } from '@/types/topic';
 import categoryConfigData from './categoryConfig.json';
-import type { TopicCategoryId } from '@/lib/contentLoader';
 
 export interface CategoryFeatures {
   solutionTabs: boolean;
@@ -22,13 +22,13 @@ export interface CategoryConfig {
   difficulty: CategoryDifficulty;
 }
 
-export type CategoryConfigMap = Record<TopicCategoryId, CategoryConfig>;
+export type CategoryConfigMap = Record<ITopicCategory, CategoryConfig>;
 
 // Type-safe configuration object
 export const categoryConfig = categoryConfigData as CategoryConfigMap;
 
 // Utility functions
-export function getCategoryConfig(categoryId: TopicCategoryId): CategoryConfig {
+export function getCategoryConfig(categoryId: ITopicCategory): CategoryConfig {
   const config = categoryConfig[categoryId];
   if (!config) {
     throw new Error(`No configuration found for category: ${categoryId}`);
@@ -36,50 +36,50 @@ export function getCategoryConfig(categoryId: TopicCategoryId): CategoryConfig {
   return config;
 }
 
-export function getCategoryFeatures(categoryId: TopicCategoryId): CategoryFeatures {
+export function getCategoryFeatures(categoryId: ITopicCategory): CategoryFeatures {
   return getCategoryConfig(categoryId).features;
 }
 
-export function isCategoryFeatureEnabled(categoryId: TopicCategoryId, feature: keyof CategoryFeatures): boolean {
+export function isCategoryFeatureEnabled(categoryId: ITopicCategory, feature: keyof CategoryFeatures): boolean {
   return getCategoryFeatures(categoryId)[feature];
 }
 
-export function getCategoryName(categoryId: TopicCategoryId): string {
+export function getCategoryName(categoryId: ITopicCategory): string {
   return getCategoryConfig(categoryId).name;
 }
 
-export function getCategoryContentType(categoryId: TopicCategoryId): 'markdown' | 'mdx' {
+export function getCategoryContentType(categoryId: ITopicCategory): 'markdown' | 'mdx' {
   return getCategoryConfig(categoryId).contentType;
 }
 
-export function isCategoryDifficultyEnabled(categoryId: TopicCategoryId): boolean {
+export function isCategoryDifficultyEnabled(categoryId: ITopicCategory): boolean {
   return getCategoryConfig(categoryId).difficulty.enabled;
 }
 
-export function getCategoryDifficultyLevels(categoryId: TopicCategoryId): string[] {
+export function getCategoryDifficultyLevels(categoryId: ITopicCategory): string[] {
   return getCategoryConfig(categoryId).difficulty.levels;
 }
 
 // Helper functions for common feature checks
 export const categoryFeatureHelpers = {
-  shouldShowSolutionTabs: (categoryId: TopicCategoryId) => 
+  shouldShowSolutionTabs: (categoryId: ITopicCategory) => 
     isCategoryFeatureEnabled(categoryId, 'solutionTabs'),
   
-  shouldUseMDXRenderer: (categoryId: TopicCategoryId) => 
+  shouldUseMDXRenderer: (categoryId: ITopicCategory) => 
     isCategoryFeatureEnabled(categoryId, 'mdxRenderer'),
   
-  shouldShowPlatformLinks: (categoryId: TopicCategoryId) => 
+  shouldShowPlatformLinks: (categoryId: ITopicCategory) => 
     isCategoryFeatureEnabled(categoryId, 'platformLinks'),
   
-  shouldShowExamples: (categoryId: TopicCategoryId) => 
+  shouldShowExamples: (categoryId: ITopicCategory) => 
     isCategoryFeatureEnabled(categoryId, 'examples'),
   
-  shouldShowBookmark: (categoryId: TopicCategoryId) => 
+  shouldShowBookmark: (categoryId: ITopicCategory) => 
     isCategoryFeatureEnabled(categoryId, 'bookmarkable'),
   
-  shouldTrackProgress: (categoryId: TopicCategoryId) => 
+  shouldTrackProgress: (categoryId: ITopicCategory) => 
     isCategoryFeatureEnabled(categoryId, 'progressTracking'),
   
-  shouldShowDifficulty: (categoryId: TopicCategoryId) => 
+  shouldShowDifficulty: (categoryId: ITopicCategory) => 
     isCategoryDifficultyEnabled(categoryId),
 };

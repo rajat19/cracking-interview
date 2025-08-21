@@ -3,20 +3,19 @@ import { useAuth } from '@/hooks/useAuth';
 import { useNavigate } from 'react-router-dom';
 import Navigation from '@/components/Navigation';
 import { loadTopicsList } from '@/lib/contentLoader';
-import type { Topic } from '@/types/topic';
-import type { TopicCategoryId } from '@/lib/contentLoader';
 import { getCachedCategoryProgress, preloadUserProgress, upsertUserProgress } from '@/lib/progressStore';
 import { Button } from '@/components/ui/button';
 import { Link } from 'react-router-dom';
 import { Bookmark, ExternalLink, CheckCircle, UserCircle, LogOut } from 'lucide-react';
 import TopicDifficulty from '@/components/TopicDifficulty';
+import { ITopicCategory } from '@/types/topic';
 
 interface ProgressItem {
   id: string;
   title: string;
   difficulty: string;
-  question_type: TopicCategoryId;
-  description: string;
+  question_type: ITopicCategory;
+  description?: string;
 }
 
 const Profile = () => {
@@ -45,9 +44,9 @@ const Profile = () => {
       ]);
 
       const categories = [
-        { id: 'dsa' as TopicCategoryId, topics: dsa },
-        { id: 'system-design' as TopicCategoryId, topics: system },
-        { id: 'behavioral' as TopicCategoryId, topics: behavioral },
+        { id: 'dsa' as ITopicCategory, topics: dsa },
+        { id: 'system-design' as ITopicCategory, topics: system },
+        { id: 'behavioral' as ITopicCategory, topics: behavioral },
       ];
 
       const allBookmarks: ProgressItem[] = [];
@@ -73,7 +72,6 @@ const Profile = () => {
               id: t.id,
               title: t.title,
               difficulty: t.difficulty,
-              description: t.description,
               question_type: category,
             });
           }
@@ -82,7 +80,6 @@ const Profile = () => {
               id: t.id,
               title: t.title,
               difficulty: t.difficulty,
-              description: t.description,
               question_type: category,
             });
           }
@@ -98,7 +95,7 @@ const Profile = () => {
     }
   }, [user]);
 
-  const removeBookmark = async (questionId: string, questionType: TopicCategoryId) => {
+  const removeBookmark = async (questionId: string, questionType: ITopicCategory) => {
     if (!user) return;
     try {
       await upsertUserProgress(user.uid, questionType, questionId, { isBookmarked: false });
@@ -108,7 +105,7 @@ const Profile = () => {
     }
   };
 
-  const getQuestionRoute = (questionType: TopicCategoryId) => {
+  const getQuestionRoute = (questionType: ITopicCategory) => {
     switch (questionType) {
       case 'dsa': return '/dsa';
       case 'system-design': return '/system-design';

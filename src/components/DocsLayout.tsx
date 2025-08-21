@@ -3,12 +3,11 @@ import { useSearchParams } from "react-router-dom";
 import { BookOpen, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import FiltersControls from "@/components/FiltersControls";
-import { Difficulty, Topic } from "@/types/topic";
+import { ITopicDifficulty, ITopic, ITopicList, ITopicCategory } from "@/types/topic";
 import { TopicContent } from "@/components/TopicContent";
 import { useAuth } from "@/hooks/useAuth";
 import { loadTopicsList, loadTopic, getLocalProgress } from "@/lib/contentLoader";
 import { preloadUserProgress, getCachedCategoryProgress } from "@/lib/progressStore";
-import type { TopicCategoryId } from "@/lib/contentLoader";
 import Navigation from "@/components/Navigation";
 import TopicListItem from "@/components/TopicListItem";
 import TopicDifficulty from "@/components/TopicDifficulty";
@@ -17,16 +16,16 @@ import { categoryFeatureHelpers } from '@/config/categoryConfig';
 interface DocsLayoutProps {
   title: string;
   description: string;
-  category: TopicCategoryId;
+  category: ITopicCategory;
 }
 
 export function DocsLayout({ title, description, category }: DocsLayoutProps) {
   const { user } = useAuth();
-  const [topics, setTopics] = useState<Omit<Topic, 'content' | 'solutions'>[]>([]);
+  const [topics, setTopics] = useState<ITopicList[]>([]);
   const [userProgress, setUserProgress] = useState<Record<string, { is_completed: boolean; is_bookmarked: boolean }>>({});
-  const [selectedTopic, setSelectedTopic] = useState<Topic | null>(null);
+  const [selectedTopic, setSelectedTopic] = useState<ITopic | null>(null);
   const [searchQuery, setSearchQuery] = useState("");
-  const [difficultyFilter, setDifficultyFilter] = useState<Difficulty>("all");
+  const [difficultyFilter, setDifficultyFilter] = useState<ITopicDifficulty>("all");
   const [topicTagFilter, setTopicTagFilter] = useState<string>("");
   const [companyFilter, setCompanyFilter] = useState<string>("");
   const [loading, setLoading] = useState(true);
@@ -36,7 +35,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
 
   const fetchQuestions = useCallback(async (): Promise<void> => {
     try {
-      const loaded = await loadTopicsList(category as 'dsa' | 'system-design' | 'behavioral');
+      const loaded = await loadTopicsList(category);
       setTopics(loaded);
     } catch (error) {
       console.error('Error loading topics:', error);
@@ -103,12 +102,12 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
     }));
   }, [topics, userProgress]);
 
-  const handleTopicSelect = useCallback(async (topic: Omit<Topic, 'content' | 'solutions'>) => {
-    if (selectedTopic?.id === topic.id) return;
-    await loadFullTopic(topic.id);
+  const handleTopicSelect = useCallback(async (topicId: string) => {
+    if (selectedTopic?.id === topicId) return;
+    await loadFullTopic(topicId);
     // Reflect selection in URL for shareability
     const next = new URLSearchParams(searchParams);
-    next.set('t', topic.id);
+    next.set('t', topicId);
     setSearchParams(next);
     // Close sidebar on mobile after selection
     setSidebarOpen(false);
@@ -116,8 +115,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
 
   const filteredTopics = useMemo(() => {
     return topicsWithProgress.filter(topic => {
-      const matchesSearch = topic.title.toLowerCase().includes(searchQuery.toLowerCase()) ||
-                          topic.description.toLowerCase().includes(searchQuery.toLowerCase());
+      const matchesSearch = topic.title.toLowerCase().includes(searchQuery.toLowerCase());
       const matchesDifficulty = difficultyFilter === "all" || topic.difficulty === difficultyFilter;
       const matchesTopicTag = !topicTagFilter || (topic.relatedTopics || []).map(t => t.toLowerCase()).includes(topicTagFilter.toLowerCase());
       const matchesCompany = !companyFilter || (topic.companies || []).map(c => c.toLowerCase()).includes(companyFilter.toLowerCase());
@@ -254,7 +252,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
                       key={topic.id}
                       topic={topic}
                       isActive={selectedTopic?.id === topic.id}
-                      onClick={() => handleTopicSelect(topic)}
+                      onClick={() => handleTopicSelect(topic.id)}
                     />
                   ))}
                 </div>
@@ -344,7 +342,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
               key={topic.id}
               topic={topic}
               isActive={selectedTopic?.id === topic.id}
-              onClick={() => handleTopicSelect(topic)}
+              onClick={() => handleTopicSelect(topic.id)}
             />
           ))}
           </div>

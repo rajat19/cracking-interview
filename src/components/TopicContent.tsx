@@ -1,9 +1,8 @@
 import { useEffect, useState, lazy, Suspense } from "react";
 import { CheckCircle, Circle, Bookmark, BookmarkCheck, Clock, Code, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Topic } from "@/types/topic";
+import { ITopic, ITopicCategory } from "@/types/topic";
 import { updateLocalProgress } from "@/lib/contentLoader";
-import type { TopicCategoryId } from "@/lib/contentLoader";
 const MarkdownContent = lazy(() => import('@/components/MarkdownContent'));
 const SimpleMDXRenderer = lazy(() => import('@/components/SimpleMDXRenderer').then(module => ({ default: module.SimpleMDXRenderer })));
 const SolutionTabs = lazy(() => import('@/components/SolutionTabs'));
@@ -18,8 +17,8 @@ import { categoryFeatureHelpers, getCategoryContentType } from '@/config/categor
 const companyIconSrc = (company: string) => `${import.meta.env.BASE_URL}assets/img/company/${company}.svg`;
 
 interface TopicContentProps {
-  topic: Topic;
-  category: TopicCategoryId;
+  topic: ITopic;
+  category: ITopicCategory;
   onProgressUpdate: () => Promise<void>;
   onFilterByTag?: (tag: string) => void;
   onFilterByCompany?: (company: string) => void;

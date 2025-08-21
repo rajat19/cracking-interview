@@ -1,13 +1,11 @@
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/hooks/useAuth';
-import { Badge } from '@/components/ui/badge';
 import { Button } from '@/components/ui/button';
 import { Link, useNavigate } from 'react-router-dom';
 import { Bookmark, ExternalLink } from 'lucide-react';
 import Navigation from '@/components/Navigation';
 import { loadTopicsList } from '@/lib/contentLoader';
-import type { Topic } from '@/types/topic';
-import type { TopicCategoryId } from '@/lib/contentLoader';
+import type { ITopicCategory, ITopicList } from '@/types/topic';
 import { getCachedCategoryProgress, preloadUserProgress, upsertUserProgress } from '@/lib/progressStore';
 import TopicDifficulty from '@/components/TopicDifficulty';
 
@@ -15,8 +13,7 @@ interface BookmarkedQuestion {
   id: string;
   title: string;
   difficulty: string;
-  question_type: TopicCategoryId;
-  description: string;
+  question_type: ITopicCategory;
 }
 
 const Bookmarks = () => {
@@ -44,7 +41,7 @@ const Bookmarks = () => {
         loadTopicsList('behavioral'),
       ]);
 
-      const categories: Array<{ id: TopicCategoryId; topics: Omit<Topic, 'content' | 'solutions'>[] }> = [
+      const categories: Array<{ id: ITopicCategory; topics: ITopicList[] }> = [
         { id: 'dsa', topics: dsa },
         { id: 'system-design', topics: system },
         { id: 'behavioral', topics: behavioral },
@@ -54,9 +51,9 @@ const Bookmarks = () => {
 
       for (const { id: category, topics } of categories) {
         // cache-first progress fetch per category
-        let progress = getCachedCategoryProgress(user.id, category);
+        let progress = getCachedCategoryProgress(user.uid, category);
         if (Object.keys(progress).length === 0) {
-          progress = await preloadUserProgress(user.id, category);
+          progress = await preloadUserProgress(user.uid, category);
         }
         const bookmarkedIds = Object.entries(progress)
           .filter(([, v]) => v.is_bookmarked)
@@ -70,7 +67,6 @@ const Bookmarks = () => {
             id: t.id,
             title: t.title,
             difficulty: t.difficulty,
-            description: t.description,
             question_type: category,
           });
         }
@@ -84,17 +80,17 @@ const Bookmarks = () => {
     }
   }, [user]);
 
-  const removeBookmark = async (questionId: string, questionType: TopicCategoryId) => {
+  const removeBookmark = async (questionId: string, questionType: ITopicCategory) => {
     if (!user) return;
     try {
-      await upsertUserProgress(user.id, questionType, questionId, { isBookmarked: false });
+      await upsertUserProgress(user.uid, questionType, questionId, { isBookmarked: false });
       setBookmarks(prev => prev.filter(b => !(b.id === questionId && b.question_type === questionType)));
     } catch (error) {
       console.error('Error removing bookmark:', error);
     }
   };
 
-  const getQuestionRoute = (questionType: TopicCategoryId) => {
+  const getQuestionRoute = (questionType: ITopicCategory) => {
     switch (questionType) {
       case 'dsa': return '/dsa';
       case 'system-design': return '/system-design';
@@ -147,7 +143,6 @@ const Bookmarks = () => {
                   <div className="flex justify-between items-start">
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold text-foreground">{question.title}</h3>
-                      <p className="text-muted-foreground mt-2">{question.description}</p>
                       <div className="flex items-center gap-2 mt-4">
                         <TopicDifficulty difficulty={question.difficulty} />
                         <div className="badge badge-info capitalize p-2 rounded-md text-xs">

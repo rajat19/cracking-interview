@@ -1,5 +1,5 @@
 import fm from 'front-matter';
-import type { Topic } from '@/types/topic';
+import type { ITopic } from '@/types/topic';
 
 // Type for OOD frontmatter data
 interface OODFrontmatterData {
@@ -12,8 +12,8 @@ interface OODFrontmatterData {
 }
 
 // Cache for loaded topics to avoid re-loading
-const oodTopicsCache = new Map<string, Topic[]>();
-const oodTopicCache = new Map<string, Topic>();
+const oodTopicsCache = new Map<string, ITopic[]>();
+const oodTopicCache = new Map<string, ITopic>();
 
 function generateSlugFromPath(filePath: string): string {
   const parts = filePath.replace(/\\/g, '/').split('/');
@@ -36,7 +36,7 @@ function mapFrontmatterToTopic(
   id: string,
   fm: OODFrontmatterData,
   content: string
-): Topic {
+): ITopic {
   return {
     id,
     title: fm.title || id,
@@ -59,11 +59,11 @@ function mapFrontmatterToTopic(
 }
 
 // Load OOD topic metadata (title, difficulty, etc.) without full content
-export async function loadOODTopicsList(): Promise<Omit<Topic, 'content' | 'solutions'>[]> {
+export async function loadOODTopicsList(): Promise<Omit<ITopic, 'content' | 'solutions'>[]> {
   // Load OOD content
   const modules = import.meta.glob('/src/content/ood/**/*.md', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
   
-  const topics: Omit<Topic, 'content' | 'solutions'>[] = [];
+  const topics: Omit<ITopic, 'content' | 'solutions'>[] = [];
   
   for (const [path, moduleLoader] of Object.entries(modules)) {
     try {
@@ -100,7 +100,7 @@ export async function loadOODTopicsList(): Promise<Omit<Topic, 'content' | 'solu
 }
 
 // Load a specific OOD topic with full content
-export async function loadOODTopic(topicId: string): Promise<Topic | null> {
+export async function loadOODTopic(topicId: string): Promise<ITopic | null> {
   const cacheKey = `ood:${topicId}`;
   
   // Check cache first
@@ -141,7 +141,7 @@ export async function loadOODTopic(topicId: string): Promise<Topic | null> {
 }
 
 // Legacy function for backward compatibility - loads all OOD topics with full content
-export async function loadOODTopics(): Promise<Topic[]> {
+export async function loadOODTopics(): Promise<ITopic[]> {
   const cacheKey = 'all-ood-topics';
   
   // Check cache first
@@ -152,7 +152,7 @@ export async function loadOODTopics(): Promise<Topic[]> {
   // For OOD, load all topics with full content
   const modules = import.meta.glob('/src/content/ood/**/*.md', { query: '?raw', import: 'default' }) as unknown as Record<string, () => Promise<string>>;
   
-  const topics: Topic[] = [];
+  const topics: ITopic[] = [];
   
   for (const [path, moduleLoader] of Object.entries(modules)) {
     try {

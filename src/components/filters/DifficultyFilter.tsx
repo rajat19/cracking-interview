@@ -1,16 +1,16 @@
 import { Button } from "@/components/ui/button";
-import { Difficulty } from "@/types/topic";
+import { ITopicDifficulty } from "@/types/topic";
 import { Variant } from "@/types/variant";
 
 interface DifficultyFilterProps {
-    difficultyFilter: Difficulty;
-    onChangeDifficulty: (value: Difficulty) => void;
+    difficultyFilter: ITopicDifficulty;
+    onChangeDifficulty: (value: ITopicDifficulty) => void;
     variant: Variant;
 }
 
 const DifficultyFilter = ({ difficultyFilter, onChangeDifficulty, variant }: DifficultyFilterProps) => {
     const difficultyBtnSizeClass = variant === 'mobile' ? "text-xs px-2" : "text-xs px-2 lg:px-3";
-    const difficulties: Difficulty[] = ['all', 'easy', 'medium', 'hard'];
+    const difficulties: ITopicDifficulty[] = ['all', 'easy', 'medium', 'hard'];
 
     return (
         <div className="flex gap-1 flex-wrap">

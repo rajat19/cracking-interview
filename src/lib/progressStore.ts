@@ -1,6 +1,6 @@
 import { doc, getDoc, setDoc, getDocs, collection } from 'firebase/firestore';
 import { db } from '@/integrations/firebase/client';
-import type { TopicCategoryId } from '@/lib/contentLoader';
+import { ITopicCategory } from '@/types/topic';
 
 export interface UserProgressDoc {
   is_completed: boolean;
@@ -10,11 +10,11 @@ export interface UserProgressDoc {
 
 const PROGRESS_CACHE_PREFIX = 'progress_cache_v1';
 
-function makeCategoryCacheKey(userId: string, category: TopicCategoryId): string {
+function makeCategoryCacheKey(userId: string, category: ITopicCategory): string {
   return `${PROGRESS_CACHE_PREFIX}:${userId}:${category}`;
 }
 
-function readCategoryCache(userId: string, category: TopicCategoryId): Record<string, UserProgressDoc> {
+function readCategoryCache(userId: string, category: ITopicCategory): Record<string, UserProgressDoc> {
   try {
     const raw = localStorage.getItem(makeCategoryCacheKey(userId, category));
     return raw ? (JSON.parse(raw) as Record<string, UserProgressDoc>) : {};
@@ -25,7 +25,7 @@ function readCategoryCache(userId: string, category: TopicCategoryId): Record<st
 
 function writeCategoryCache(
   userId: string,
-  category: TopicCategoryId,
+  category: ITopicCategory,
   data: Record<string, UserProgressDoc>
 ): void {
   localStorage.setItem(makeCategoryCacheKey(userId, category), JSON.stringify(data));
@@ -33,7 +33,7 @@ function writeCategoryCache(
 
 function upsertIntoCategoryCache(
   userId: string,
-  category: TopicCategoryId,
+  category: ITopicCategory,
   topicId: string,
   value: UserProgressDoc
 ): void {
@@ -44,7 +44,7 @@ function upsertIntoCategoryCache(
 
 export async function getUserProgress(
   userId: string,
-  category: TopicCategoryId,
+  category: ITopicCategory,
   topicId: string
 ): Promise<UserProgressDoc | null> {
   // Cache-first
@@ -61,7 +61,7 @@ export async function getUserProgress(
 
 export async function upsertUserProgress(
   userId: string,
-  category: TopicCategoryId,
+  category: ITopicCategory,
   topicId: string,
   updates: { isCompleted?: boolean; isBookmarked?: boolean }
 ): Promise<void> {
@@ -89,7 +89,7 @@ export async function upsertUserProgress(
  */
 export async function preloadUserProgress(
   userId: string,
-  category: TopicCategoryId
+  category: ITopicCategory
 ): Promise<Record<string, UserProgressDoc>> {
   const colRef = collection(db, 'users', userId, 'progress');
   const snapshot = await getDocs(colRef);
@@ -106,7 +106,7 @@ export async function preloadUserProgress(
 
 export function getCachedCategoryProgress(
   userId: string,
-  category: TopicCategoryId
+  category: ITopicCategory
 ): Record<string, UserProgressDoc> {
   return readCategoryCache(userId, category);
 }
