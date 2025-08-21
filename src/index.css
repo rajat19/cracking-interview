@@ -498,4 +498,11 @@ All colors MUST be HSL.
   .prose > * {
     color: hsl(var(--foreground)) !important;
   }
+
+  /* Fix image margins in tab buttons */
+  .tab img,
+  .tabs img,
+  button img {
+    margin: 0 !important;
+  }
 }

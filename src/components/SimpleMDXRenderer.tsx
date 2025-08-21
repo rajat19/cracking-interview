@@ -1,7 +1,6 @@
 import { useState, useEffect } from 'react';
-import { SystemDesignImage } from '@/components/mdx/SystemDesignImage';
-import { SystemDesignCode } from '@/components/mdx/SystemDesignCode';
-import { SystemDesignCodeTabs } from '@/components/mdx/SystemDesignCodeTabs';
+import { MdxImage } from '@/components/mdx/MdxImage';
+import { MdxCodeTabs } from '@/components/mdx/MdxCodeTabs';
 import { MarkdownContent } from '@/components/MarkdownContent';
 
 interface SimpleMDXRendererProps {
@@ -18,18 +17,16 @@ export function SimpleMDXRenderer({ content }: SimpleMDXRendererProps) {
       const componentMatches: React.ReactNode[] = [];
       let componentIndex = 0;
 
-      // Process SystemDesignImage components
+      // Process MdxImage components
       processed = processed.replace(
-        /<SystemDesignImage\s+([^>]+)\/?>(?:<\/SystemDesignImage>)?/g,
+        /<MdxImage\s+([^>]+)\/?>(?:<\/MdxImage>)?/g,
         (match, attributes) => {
           const props = parseAttributes(attributes);
           const component = (
-            <SystemDesignImage
+            <MdxImage
               key={`img-${componentIndex}`}
               src={props.src || ''}
               alt={props.alt || ''}
-              caption={props.caption}
-              design={props.design || ''}
             />
           );
           componentMatches.push(component);
@@ -37,47 +34,26 @@ export function SimpleMDXRenderer({ content }: SimpleMDXRendererProps) {
         }
       );
 
-      // Process SystemDesignCode components
+      // Process MdxCodeTabs components
       processed = processed.replace(
-        /<SystemDesignCode\s+([^>]+)\/?>(?:<\/SystemDesignCode>)?/g,
+        /<MdxCodeTabs\s+([^>]+)\/?>(?:<\/MdxCodeTabs>)?/g,
         (match, attributes) => {
           const props = parseAttributes(attributes);
-          const component = (
-            <SystemDesignCode
-              key={`code-${componentIndex}`}
-              file={props.file || ''}
-              design={props.design || ''}
-              title={props.title}
-              description={props.description}
-            />
-          );
-          componentMatches.push(component);
-          return `__COMPONENT_${componentIndex++}__`;
-        }
-      );
-
-      // Process SystemDesignCodeTabs components
-      processed = processed.replace(
-        /<SystemDesignCodeTabs\s+([^>]+)\/?>(?:<\/SystemDesignCodeTabs>)?/g,
-        (match, attributes) => {
-          const props = parseAttributes(attributes);
-          let files: string[] = [];
+          let langs: string[] = [];
           try {
             // Parse the files array from the attributes
-            if (props.files) {
-              files = JSON.parse(props.files.replace(/'/g, '"'));
+            if (props.langs) {
+              langs = JSON.parse(props.langs);
             }
           } catch (e) {
-            console.error('Failed to parse files array:', props.files);
+            console.error('Failed to parse langs array:', props.langs);
           }
           
           const component = (
-            <SystemDesignCodeTabs
+            <MdxCodeTabs
               key={`tabs-${componentIndex}`}
-              files={files}
-              design={props.design || ''}
-              title={props.title}
-              description={props.description}
+              langs={langs}
+              path={props.path}
             />
           );
           componentMatches.push(component);

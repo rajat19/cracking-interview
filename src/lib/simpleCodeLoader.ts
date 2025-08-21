@@ -1,49 +1,64 @@
-import { systemDesignCodeMap } from './systemDesignCodeMap';
+import { LANGUAGES_MAP } from "@/types/language";
 
-const codeCache = new Map<string, Record<string, { language: string; code: string; path: string }>>();
+export interface SolutionEntry {
+  language: string;
+  code: string;
+}
 
-export async function loadSystemDesignCodeSimple(design: string): Promise<Record<string, { language: string; code: string; path: string }> | null> {
-  console.log(`Loading code for design: ${design}`);
-  
-  // Check cache first
-  const cacheKey = design;
+/**
+ * {path: {lang: SolutionEntry}}
+ */
+const codeCache = new Map<string, Record<string, SolutionEntry>>();
+
+// Create lazy loaders for system design code files (only created once at module load)
+const codeModules = import.meta.glob('/src/content/**/code/**/solution.{java,py,cpp,js,ts,c,go,kt,rs,rb,swift,php,sql}', { 
+  query: '?raw', 
+  import: 'default' 
+}) as unknown as Record<string, () => Promise<string>>;
+
+export async function loadMdxCodeSimple(path: string, languages: string[]): Promise<Record<string, SolutionEntry>> {
+
+  const cacheKey = path;
   if (codeCache.has(cacheKey)) {
-    console.log(`Returning cached code for: ${design}`);
     return codeCache.get(cacheKey)!;
   }
-  
-  const designFiles = systemDesignCodeMap[design as keyof typeof systemDesignCodeMap];
-  if (!designFiles) {
-    console.log(`No code files found for design: ${design}`);
-    return null;
-  }
-  
-  const codeExamples: Record<string, { language: string; code: string; path: string }> = {};
+
+  const codeSolutions: Record<string, SolutionEntry> = {};
   
   try {
-    for (const [fileName, loader] of Object.entries(designFiles)) {
-      try {
-        const module = await loader();
-        const extension = fileName.split('.').pop()?.toLowerCase() || '';
-        codeExamples[fileName] = {
-          language: extension,
-          code: module.default || '',
-          path: `src/content/system-design/code/${design}/${fileName}`,
-        };
-        console.log(`Loaded code file: ${fileName}`);
-      } catch (error) {
-        console.warn(`Failed to load code file ${fileName}:`, error);
+    for (const lang of languages) {
+      const expectedFileName = `solution.${LANGUAGES_MAP[lang].extension}`;
+      const expectedPath = `/src/content/${path}/${expectedFileName}`;
+      
+      // Find the matching module
+      const moduleLoader = codeModules[expectedPath];
+      
+      if (moduleLoader) {
+        try {
+          const rawCode = await moduleLoader();
+          codeSolutions[lang] = {
+            language: lang,
+            code: rawCode || '',
+          };
+        } catch(error) {
+          console.warn(`Failed to load code file ${expectedPath}`, error);
+        }
+      } else {
+        console.warn(`Code file not found: ${expectedPath}`);
       }
     }
+
+    const solutionCount = Object.keys(codeSolutions).length;
     
-    console.log(`Successfully loaded ${Object.keys(codeExamples).length} code files for ${design}`);
-    
-    // Cache the result
-    codeCache.set(cacheKey, codeExamples);
-    
-    return Object.keys(codeExamples).length > 0 ? codeExamples : null;
+    if (solutionCount > 0) {
+      codeCache.set(cacheKey, codeSolutions);
+      return codeSolutions;
+    } else {
+      console.warn(`No code examples found for path: ${path}`);
+      return null;
+    }
   } catch (error) {
-    console.error(`Failed to load code for design ${design}:`, error);
+    console.error(`Failed to load code for path ${path}:`, error);
     return null;
   }
 }

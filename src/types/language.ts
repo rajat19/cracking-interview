@@ -1,9 +1,9 @@
-interface Language {
+export interface ILanguage {
     name: string;
     extension: string;
 }
 
-export const LANGUAGES_MAP: Record<string, Language> = {
+export const LANGUAGES_MAP: Record<string, ILanguage> = {
     c: { name: "C", extension: "c" },
     cpp: { name: "C++", extension: "cpp" },
     java: { name: "Java", extension: "java" },

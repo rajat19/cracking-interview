@@ -14,7 +14,7 @@ interface SystemDesignFrontmatterData {
 // Cache for loaded topics to avoid re-loading
 const systemDesignTopicsCache = new Map<string, Topic[]>();
 const systemDesignTopicCache = new Map<string, Topic>();
-const systemDesignCodeCache = new Map<string, Record<string, { language: string; code: string; path: string }>>();
+const MdxCodeCache = new Map<string, Record<string, { language: string; code: string; path: string }>>();
 
 function generateSlugFromPath(filePath: string): string {
   const parts = filePath.replace(/\\/g, '/').split('/');
@@ -124,7 +124,7 @@ export async function loadSystemDesignTopic(topicId: string): Promise<Topic | nu
     
     // System design topics don't have code solutions, but might have code examples
     // Load code examples if they exist in the code folder
-    const codeExamples = await loadSystemDesignCode(topicId);
+    const codeExamples = await loadMdxCode(topicId);
     if (codeExamples) {
       topic.solutions = codeExamples;
     }
@@ -140,13 +140,13 @@ export async function loadSystemDesignTopic(topicId: string): Promise<Topic | nu
 }
 
 // Load system design code examples for a specific topic
-export async function loadSystemDesignCode(topicId: string): Promise<Record<string, { language: string; code: string; path: string }> | null> {
-  console.log(`loadSystemDesignCode called with topicId: ${topicId}`);
+export async function loadMdxCode(topicId: string): Promise<Record<string, { language: string; code: string; path: string }> | null> {
+  console.log(`loadMdxCode called with topicId: ${topicId}`);
   
   // Check cache first
-  if (systemDesignCodeCache.has(topicId)) {
+  if (MdxCodeCache.has(topicId)) {
     console.log(`Returning cached code for: ${topicId}`);
-    return systemDesignCodeCache.get(topicId)!;
+    return MdxCodeCache.get(topicId)!;
   }
 
   try {
@@ -189,7 +189,7 @@ export async function loadSystemDesignCode(topicId: string): Promise<Record<stri
     
     // Cache the code examples
     console.log(`Loaded ${Object.keys(codeExamples).length} code files for ${topicId}:`, Object.keys(codeExamples));
-    systemDesignCodeCache.set(topicId, codeExamples);
+    MdxCodeCache.set(topicId, codeExamples);
     
     return Object.keys(codeExamples).length > 0 ? codeExamples : null;
   } catch (error) {
@@ -223,7 +223,7 @@ export async function loadSystemDesignTopics(): Promise<Topic[]> {
       const topic = mapFrontmatterToTopic(id, data, content, true);
       
       // Load code examples for system design topics
-      const codeExamples = await loadSystemDesignCode(id);
+      const codeExamples = await loadMdxCode(id);
       if (codeExamples) {
         topic.solutions = codeExamples;
       }
@@ -246,5 +246,5 @@ export async function loadSystemDesignTopics(): Promise<Topic[]> {
 export function clearSystemDesignCache() {
   systemDesignTopicsCache.clear();
   systemDesignTopicCache.clear();
-  systemDesignCodeCache.clear();
+  MdxCodeCache.clear();
 }

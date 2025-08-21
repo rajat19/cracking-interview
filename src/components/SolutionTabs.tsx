@@ -1,13 +1,12 @@
 import { useEffect, useMemo, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
-import { oneDark, oneLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+import useHighlight from '@/hooks/useHighlight';
 import { useTheme } from "@/contexts/ThemeContext";
 import { LANGUAGES_MAP } from "@/types/language";
 
 export interface SolutionEntry {
   language: string;
   code: string;
-  path: string;
 }
 
 interface SolutionTabsProps {
@@ -20,23 +19,20 @@ const getLanguageIcon = (language: string): string => {
 
 export function SolutionTabs({ solutions }: SolutionTabsProps) {
   const [activeLanguage, setActiveLanguage] = useState<string | null>(null);
-  const { theme } = useTheme();
 
   useEffect(() => {
     const first = Object.values(solutions)[0]?.language ?? null;
     setActiveLanguage(first);
   }, [solutions]);
 
-  const syntaxStyle = useMemo(() => {
-    return theme === 'dark' ? oneDark : oneLight;
-  }, [theme]);
+  const syntaxStyle = useHighlight();
 
   return (
     <div className="mt-10 space-y-4">
       <hr />
       <h2 className="text-xl font-large mb-2 text-foreground">Solutions</h2>
 
-      <div className="tabs tabs-boxed bg-base-200 p-1.5 gap-1 border border-base-300 shadow-sm rounded-lg">
+      <div className="tabs tabs-boxed bg-primary/50 p-1.5 gap-1 border border-base-300 shadow-sm rounded-lg">
         {Object.values(solutions).map((sol) => {
           const languageInfo = LANGUAGES_MAP[sol.language];
           if (!languageInfo) {
@@ -51,7 +47,7 @@ export function SolutionTabs({ solutions }: SolutionTabsProps) {
               className={`tab rounded-lg gap-2 transition-all duration-200 relative ${
                 activeLanguage === sol.language 
                   ? 'tab-active bg-primary text-primary-foreground shadow-lg' 
-                  : 'shadow-sm hover:text-base-content hover:bg-base-200 hover:shadow-md'
+                  : 'text-foreground shadow-sm hover:text-foreground hover:bg-muted/50 hover:shadow-md'
               }`}
               onClick={() => setActiveLanguage(sol.language)}
             >

@@ -1,18 +1,16 @@
 import { useState } from 'react';
 
-interface SystemDesignImageProps {
+interface MdxImageProps {
   src: string;
   alt: string;
-  caption?: string;
-  design: string; // e.g., "library-management"
 }
 
-export function SystemDesignImage({ src, alt, caption, design }: SystemDesignImageProps) {
+export function MdxImage({ src, alt }: MdxImageProps) {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   
   // Construct the full image path
-  const imagePath = `${import.meta.env.BASE_URL}assets/img/design/${design}/${src}`;
+  const imagePath = `${import.meta.env.BASE_URL}assets/img/${src}`;
   
   const handleImageLoad = () => {
     setIsLoading(false);
@@ -52,11 +50,6 @@ export function SystemDesignImage({ src, alt, caption, design }: SystemDesignIma
           onError={handleImageError}
         />
       </div>
-      {caption && (
-        <figcaption className="text-center text-sm text-muted-foreground mt-2 italic">
-          {caption}
-        </figcaption>
-      )}
     </figure>
   );
 }

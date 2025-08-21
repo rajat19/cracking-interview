@@ -5,9 +5,9 @@ import * as runtime from 'react/jsx-runtime';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import { oneDark, oneLight } from 'react-syntax-highlighter/dist/esm/styles/prism';
 import { useTheme } from '@/contexts/ThemeContext';
-import { SystemDesignImage } from '@/components/mdx/SystemDesignImage';
-import { SystemDesignCode } from '@/components/mdx/SystemDesignCode';
-import { SystemDesignCodeTabs } from '@/components/mdx/SystemDesignCodeTabs';
+import { MdxImage } from '@/components/mdx/MdxImage';
+import { MdxCode } from '@/components/mdx/MdxCode';
+import { MdxCodeTabs } from '@/components/mdx/MdxCodeTabs';
 
 // Types for MDX component props
 interface MDXComponentProps {
@@ -175,9 +175,9 @@ const createMDXComponents = (isDark: boolean) => ({
   ),
   
   // Custom MDX components for system design
-  SystemDesignImage,
-  SystemDesignCode,
-  SystemDesignCodeTabs,
+  MdxImage,
+  MdxCode,
+  MdxCodeTabs,
 });
 
 export function MDXRenderer({ content }: MDXRendererProps) {
@@ -193,9 +193,9 @@ export function MDXRenderer({ content }: MDXRendererProps) {
   // Memoize components to avoid re-compilation
   const mdxComponents = useMemo(() => ({
     ...baseComponents,
-    SystemDesignImage,
-    SystemDesignCode,
-    SystemDesignCodeTabs,
+    MdxImage,
+    MdxCode,
+    MdxCodeTabs,
   }), [baseComponents]);
   
   useEffect(() => {
