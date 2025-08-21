@@ -2,7 +2,7 @@ import { useState, useMemo, useEffect, useCallback } from "react";
 import { useSearchParams } from "react-router-dom";
 import { BookOpen, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import FiltersControls from "@/components/FiltersControls";
+import FiltersControls from "@/components/filters/FiltersControls";
 import { ITopicDifficulty, ITopic, ITopicList, ITopicCategory } from "@/types/topic";
 import { TopicContent } from "@/components/TopicContent";
 import { useAuth } from "@/hooks/useAuth";

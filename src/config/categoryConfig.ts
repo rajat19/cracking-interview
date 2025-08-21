@@ -6,8 +6,6 @@ export interface CategoryFeatures {
   mdxRenderer: boolean;
   platformLinks: boolean;
   examples: boolean;
-  bookmarkable: boolean;
-  progressTracking: boolean;
 }
 
 export interface CategoryDifficulty {
@@ -73,12 +71,6 @@ export const categoryFeatureHelpers = {
   
   shouldShowExamples: (categoryId: ITopicCategory) => 
     isCategoryFeatureEnabled(categoryId, 'examples'),
-  
-  shouldShowBookmark: (categoryId: ITopicCategory) => 
-    isCategoryFeatureEnabled(categoryId, 'bookmarkable'),
-  
-  shouldTrackProgress: (categoryId: ITopicCategory) => 
-    isCategoryFeatureEnabled(categoryId, 'progressTracking'),
   
   shouldShowDifficulty: (categoryId: ITopicCategory) => 
     isCategoryDifficultyEnabled(categoryId),

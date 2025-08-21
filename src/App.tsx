@@ -7,7 +7,7 @@ import DSA from "./pages/DSA";
 import SystemDesign from "./pages/SystemDesign";
 import OOD from "./pages/OOD";
 import Behavioral from "./pages/Behavioral";
-import AuthPage from "@/components/AuthPage";
+import AuthPage from "@/pages/AuthPage";
 import Profile from "./pages/Profile";
 import MockInterview from "./pages/MockInterview";
 import NotFound from "./pages/NotFound";

@@ -1,4 +1,4 @@
-import { DocsLayout } from "@/components/DocsLayout";
+import { DocsLayout } from "@/components/layout/DocsLayout";
 
 const Behavioral = () => {
   return (
