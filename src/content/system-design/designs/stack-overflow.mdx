@@ -2,7 +2,7 @@
 title: "Design Stack Overflow"
 author: "Rajat Srivastava"
 categories: system-designs
-tags: [design]
+tags: [system-design, hld, lld]
 description: "System design concepts and patterns"
 ---
 
@@ -45,7 +45,10 @@ Here are the top use cases for Stack Overflow:
 4. Add comments to questions or answers.
 5. Moderators can close, delete, and un-delete any question.
 
-*Use Case*
+<MdxImage 
+  src="design/stack-overflow/use-case.svg" 
+  alt="Usecase Diagram for Stack Overflow"
+/>
 
 ---
 ## Class Diagrams
@@ -61,19 +64,33 @@ Here are the main classes of Stack Overflow System:
 - **Account:** We will have four types of accounts in the system, guest, member, admin, and moderator. Guests can search and view questions. Members can ask questions and earn reputation by answering questions and from bounties.
 - **Notification:** This class will be responsible for sending notifications to members and assigning badges to members based on their reputations.
 
-*Class Diagram*
+<MdxImage 
+  src="design/stack-overflow/class-diagram.png" 
+  alt="Class Diagram for Stack Overflow"
+/>
 
-*UML Conventions*
+<MdxImage 
+  src="design/concepts/uml.svg" 
+  alt="Uml"
+/>
 
 ---
 ## Activity Diagram
 **Post a new question:** Any member or moderator can perform this activity. Here are the steps to post a question:
-*Activity post*
+
+<MdxImage 
+  src="design/stack-overflow/activity-post.svg" 
+  alt="Activity Diagram for Stack Overflow"
+/>
 
 ---
 ## Sequence Diagram
 Following is the sequence diagram for creating a new question:
-*Sequence Create Question*
+
+<MdxImage 
+  src="design/stack-overflow/sequence-create-question.svg" 
+  alt="Sequence Diagram for Stack Overflow"
+/>
 
 ---
 ## Code
@@ -81,20 +98,35 @@ Here is the high-level definition for the classes described above.
 
 - **Enums and Constants:** Here are the required enums, data types, and constants:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/stack-overflow/enums"
+/>
 
 - **Account, Member, Admin, and Moderator:** These classes represent different people that interact with our system:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/stack-overflow/accounts"
+/>
 
 - **Badge, Tag, and Notification:** Members have badges, questions have tags and notifications:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/stack-overflow/tag"
+/>
 
 - **Photo and Bounty:** Members can put bounties on questions. Answers and Questions can have multiple photos:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/stack-overflow/photo-bounty"
+/>
 
 - **Question, Comment and Answer:** Members can ask questions, as well as add an answer to any question. All members can add comments to all open questions or answers:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/stack-overflow/question"
+/>
