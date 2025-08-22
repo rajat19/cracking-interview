@@ -1,55 +1,18 @@
 import type { ITopic, ITopicCategory, ITopicList } from '@/types/topic';
 import {
-  loadDSATopicsList,
-  loadDSATopic,
-  clearDSACache
-} from './loaders/dsaLoader';
-import {
-  loadSystemDesignTopicsList,
-  loadSystemDesignTopic,
-  clearSystemDesignCache
-} from './loaders/systemDesignLoader';
-import {
-  loadBehavioralTopicsList,
-  loadBehavioralTopic,
-  clearBehavioralCache
-} from './loaders/behavioralLoader';
-import {
-  loadOODTopicsList,
-  loadOODTopic,
-  clearOODCache
-} from './loaders/oodLoader';
+  loadTopicsList as loadUnifiedTopicsList,
+  loadTopic as loadUnifiedTopic,
+  clearTopicCache
+} from './topicLoader';
 
 // Load topic metadata (title, difficulty, etc.) without full content
 export async function loadTopicsList(category: ITopicCategory): Promise<ITopicList[]> {
-  switch (category) {
-    case 'dsa':
-      return loadDSATopicsList();
-    case 'system-design':
-      return loadSystemDesignTopicsList();
-    case 'behavioral':
-      return loadBehavioralTopicsList();
-    case 'ood':
-      return loadOODTopicsList();
-    default:
-      return [];
-  }
+  return loadUnifiedTopicsList(category);
 }
 
 // Load a specific topic with full content and solutions
 export async function loadTopic(category: ITopicCategory, topicId: string): Promise<ITopic | null> {
-  switch (category) {
-    case 'dsa':
-      return loadDSATopic(topicId);
-    case 'system-design':
-      return loadSystemDesignTopic(topicId);
-    case 'behavioral':
-      return loadBehavioralTopic(topicId);
-    case 'ood':
-      return loadOODTopic(topicId);
-    default:
-      return null;
-  }
+  return loadUnifiedTopic(category, topicId);
 }
 
 // Progress management functions
@@ -80,9 +43,6 @@ export function updateLocalProgress(
 }
 
 // Clear cache when needed
-export function clearTopicsCache() {
-  clearDSACache();
-  clearSystemDesignCache();
-  clearBehavioralCache();
-  clearOODCache();
+export function clearTopicsCache(category?: ITopicCategory) {
+  clearTopicCache(category);
 }
