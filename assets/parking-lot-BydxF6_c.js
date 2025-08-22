@@ -2,7 +2,7 @@ const e=`---
 title: "Design a Parking Lot"
 author: "Rajat Srivastava"
 categories: system-designs
-tags: [design]
+tags: [system-design, hld, lld]
 description: "System design concepts and patterns"
 ---
 
@@ -44,7 +44,10 @@ Here are the top use cases for Parking Lot:
 - **Cash payment:** To pay the parking ticket through cash.
 - **Add/Modify parking rate:** To allow admin to add or modify the hourly parking rate.
 
-*Use Case*
+<MdxImage 
+  src="design/parking-lot/use-case.svg" 
+  alt="Usecase Diagram for Parking Lot"
+/>
 
 ---
 ## Class Diagrams
@@ -64,15 +67,25 @@ Here are the main classes of our Parking Lot System:
 - **CustomerInfoPortal:** This class will encapsulate the info portal that customers use to pay for the parking ticket. Once paid, the info portal will update the ticket to keep track of the payment.
 - **ElectricPanel:** Customers will use the electric panels to pay and charge their electric vehicles.
 
-*Class Diagram*
+<MdxImage 
+  src="design/parking-lot/class-diagram.png" 
+  alt="Class Diagram for Parking Lot"
+/>
 
-*UML Conventions*
+<MdxImage 
+  src="design/concepts/uml.svg" 
+  alt="Uml"
+/>
 
 ---
 ## Activity diagrams
 
 - **Customer paying for parking ticket:** Any customer can perform this activity. Here are the set of steps:
-*Activity Checkout*
+
+<MdxImage 
+  src="design/parking-lot/activity-payout.svg" 
+  alt="Activity Diagram for Parking Lot"
+/>
 
 ---
 ## Code
@@ -80,28 +93,49 @@ Following is the skeleton code for our parking lot system:
 
 - **Enums and Constants:** Here are the required enums, data types, and constants:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/parking-lot/enums"
+/>
 
 - **Account, Admin, and ParkingAttendant:** These classes represent various people that interact with our system:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/parking-lot/accounts"
+/>
 
 - **ParkingSpot:** Here is the definition of ParkingSpot and all of its children classes:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/parking-lot/parkingSpot"
+/>
 
 - **Vehicle:** Here is the definition for Vehicle and all of its child classes:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/parking-lot/vehicle"
+/>
 
 - **ParkingFloor:** This class encapsulates a parking floor:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/parking-lot/parkingFloor"
+/>
 
 - **ParkingDisplayBoard:** This class encapsulates a parking display board:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/parking-lot/parkingDisplay"
+/>
 
-- **ParkingLot:** Our system will have only one object of this class. This can be enforced by using the [Singleton](https://en.wikipedia.org/wiki/Singleton_pattern) pattern. In software engineering, the singleton pattern is a software design pattern that restricts the instantiation of a class to only one object.
+- **ParkingLot:** Our system will have only one object of this class. This can be enforced by using the <MdxLink href="https://en.wikipedia.org/wiki/Singleton_pattern">Singleton</MdxLink> pattern. In software engineering, the singleton pattern is a software design pattern that restricts the instantiation of a class to only one object.
 
-*Code implementation available in associated files*`;export{e as default};
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/parking-lot/parkingLot"
+/>`;export{e as default};

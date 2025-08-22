@@ -31,7 +31,7 @@ or \`-1\` if the ball gets stuck in the box.
 
 ## Test Cases
 
-![Ball]({{site.github.url}}/assets/img/code/ball.jpeg)
+<MdxImage src="code/ball.jpeg" alt="Ball" />
 
 **Example 1:** 
 \`\`\`

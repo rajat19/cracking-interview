@@ -26,7 +26,7 @@ A given string \`s\` starting at index \`start\` and ending at index \`end\` is 
 1. The characters at \`start\` and \`end\` indexes are equal. 
 2. The substring starting at index \`start+1\` and ending at index \`end−1\` is a palindrome.
 
-![Palindrome]({{ site.github.url }}/assets/img/code/palindrome_dp.png)
+<MdxImage src="code/palindrome_dp.png" alt="Palindrome" />
 
 Let \`N\` be the length of the string. 
 To determine if a substring starting at index \`start\` and ending at index \`end\` is a palindrome or not, 

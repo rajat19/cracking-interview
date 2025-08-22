@@ -2,7 +2,7 @@ const e=`---
 title: "Design a Library Management System"
 author: "Rajat Srivastava"
 categories: system-designs
-tags: [system-design]
+tags: [system-design, hld, lld]
 difficulty: medium
 ---
 
@@ -46,11 +46,9 @@ Here are the top use cases of the Library Management System:
 - **Renew a book:** To reborrow an already checked-out book.
 - **Return a book:** To return a book to the library which was issued to a member.
 
-<SystemDesignImage 
-  src="use-case.png" 
+<MdxImage 
+  src="design/library-management/use-case.png" 
   alt="Use Case Diagram for Library Management System"
-  caption="Use Case Diagram showing the main actors and their interactions"
-  design="library-management"
 />
 
 ---
@@ -70,17 +68,14 @@ Here are the main classes of our Library Management System:
 - **Rack:** Books will be placed on racks. Each rack will be identified by a rack number and will have a location identifier to describe the physical location of the rack in the library.
 - **Notification:** This class will take care of sending notifications to library members.
 
-<SystemDesignImage 
-  src="class-diagram.png" 
+<MdxImage 
+  src="design/library-management/class-diagram.png" 
   alt="Class Diagram for Library Management System"
-  caption="Complete class diagram showing relationships between all system components"
-  design="library-management"
 />
 
-<SystemDesignImage 
-  src="uml.svg" 
+<MdxImage 
+  src="design/concepts/uml.svg" 
   alt="UML Diagram for Library Management System"
-  design="concepts"
 />
 
 ---
@@ -94,10 +89,9 @@ Here are the main classes of our Library Management System:
   5. Create lending record
   6. Send confirmation to member
 
-<SystemDesignImage 
-  src="activity-checkout.svg" 
+<MdxImage 
+  src="design/library-management/activity-checkout.svg" 
   alt="Activity Diagram for Library Management System"
-  design="library-management"
 />
 
 - **Return a book:** Any library member or librarian can perform this activity. The system will collect fines from members if they return books after the due date. Here are the steps for returning a book:
@@ -109,10 +103,9 @@ Here are the main classes of our Library Management System:
   6. Close lending record
   7. Send confirmation to member
 
-<SystemDesignImage 
-  src="activity-return.png" 
+<MdxImage 
+  src="design/library-management/activity-return.png" 
   alt="Activity Diagram for Library Management System"
-  design="library-management"
 />
 
 - **Renew a book:** While renewing (re-issuing) a book, the system will check for fines and see if any other member has not reserved the same book, in that case the book item cannot be renewed. Here are the different steps for renewing a book:
@@ -123,10 +116,9 @@ Here are the main classes of our Library Management System:
   5. Update lending record
   6. Send confirmation to member
 
-<SystemDesignImage 
-  src="activity-renew.svg" 
-  alt="Activity Diagram for Library Management System"
-  design="library-management"
+<MdxImage 
+  src="design/library-management/activity-renew.svg" 
+  alt="Activity Diagram for Movie Booking System"
 />
 
 ---
@@ -142,23 +134,20 @@ Note: This code only focuses on the design part of the use cases. Since you are 
 - **ReservationStatus:** Waiting, Pending, Canceled, None
 - **Address:** Basic address information for members
 
-<SystemDesignCodeTabs 
-  files={["enums.java", "enums.py"]}
-  design="library-management"
-  title="Enums and Constants (Java)"
-  description="Basic enums and data types used throughout the system"
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/library-management/enums"
 />
+
 
 ### Account Management
 - **Account:** Base class for all system users
 - **Member:** Library members who can borrow books
 - **Librarian:** Staff members with administrative privileges
 
-<SystemDesignCodeTabs 
-  files={["accounts.java", "accounts.py"]}
-  design="library-management"
-  title="Account Classes"
-  description="Account, Member, and Librarian class implementations"
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/library-management/accounts"
 />
 
 ### Core Library Operations
@@ -166,11 +155,9 @@ Note: This code only focuses on the design part of the use cases. Since you are 
 - **BookLending:** Handles the lending process
 - **Fine:** Calculates and manages overdue fines
 
-<SystemDesignCodeTabs 
-  files={["reservation.java", "reservation.py"]}
-  design="library-management"
-  title="Reservation and Lending"
-  description="BookReservation, BookLending, and Fine collection implementations"
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/library-management/reservation"
 />
 
 ### Book and Catalog Management
@@ -178,11 +165,9 @@ Note: This code only focuses on the design part of the use cases. Since you are 
 - **BookItem:** Individual copies of books
 - **Catalog:** Implements search functionality across different criteria
 
-<SystemDesignCodeTabs 
-  files={["book.java", "book.py"]}
-  design="library-management"
-  title="Book and BookItem Classes"
-  description="Core book management functionality including reservation, lending, and return operations"
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/library-management/books"
 />
 
 ### Search Interface
@@ -192,9 +177,8 @@ The system supports searching by:
 - Subject
 - Publication date
 
-<SystemDesignCodeTabs 
-  files={["search.java", "search.py"]}
-  design="library-management"
-  title="Search Interface and Catalog"
-  description="Search functionality implementation for finding books by various criteria"
-/>`;export{e as default};
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/library-management/search"
+/>
+`;export{e as default};

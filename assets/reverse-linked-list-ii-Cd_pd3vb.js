@@ -21,7 +21,7 @@ reverse the nodes of the list from position \`left\` to position \`right\`, and 
 
 ## Test Cases
 
-![Linked list]({{ site.github.url }}/assets/img/code/rev2ex2.jpeg)
+<MdxImage src="code/rev2ex2.jpeg" alt="Linked list" />
 
 **Input:**
 \`\`\`

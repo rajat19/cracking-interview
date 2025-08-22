@@ -27,7 +27,7 @@ return the cheapest price from \`src\` to \`dst\` with at most \`k\` stops. If t
 
 **Example 1:**
 
-![Cheapest flight]({{site.github.url}}/assets/img/code/995.png)
+<MdxImage src="code/995.png" />
 \`\`\`
 Input: n = 3, flights = [[0,1,100],[1,2,100],[0,2,500]], src = 0, dst = 2, k = 1
 Output: 200
@@ -37,7 +37,8 @@ The cheapest price from city 0 to city 2 with at most 1 stop costs 200, as marke
 
 **Example 2:**
 
-![Cheapest flight]({{site.github.url}}/assets/img/code/995.png)
+<MdxImage src="code/995.png" />
+
 \`\`\`
 Input: n = 3, flights = [[0,1,100],[1,2,100],[0,2,500]], src = 0, dst = 2, k = 0
 Output: 500

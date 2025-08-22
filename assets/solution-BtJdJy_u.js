@@ -1,4 +1,4 @@
-const e=`public class ProductCategory {
+const n=`public class ProductCategory {
   private String name;
   private String description;
 }
@@ -22,4 +22,4 @@ public class Product {
 
   public int getAvailableCount();
   public boolean updatePrice(double newPrice);
-}`;export{e as default};
+}`;export{n as default};

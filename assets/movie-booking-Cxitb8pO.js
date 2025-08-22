@@ -2,7 +2,7 @@ const e=`---
 title: "Design a Movie Ticket Booking System"
 author: "Rajat Srivastava"
 categories: system-designs
-tags: [design]
+tags: [system-design, hld, lld]
 description: "System design concepts and patterns"
 ---
 
@@ -43,7 +43,10 @@ Here are the top use cases of the Movie Ticket Booking System:
 - **Assign Seat:** Customers will be shown a seat map to let them select seats for their booking.
 - **Refund payment:** Upon cancellation, customers will be refunded the payment amount as long as the cancellation occurs within the allowed time frame.
 
-*Use Case*
+<MdxImage 
+  src="design/movie-booking/use-case.svg" 
+  alt="Usecase Diagram for Movie Booking System"
+/>
 
 ---
 ## Class Diagrams
@@ -62,18 +65,31 @@ Here are the main classes of the Movie Ticket Booking System:
 - **Payment:** Responsible for collecting payments from customers.
 - **Notification:** Will take care of sending notifications to customers.
 
-*Class Diagram*
+<MdxImage 
+  src="design/movie-booking/class-diagram.png" 
+  alt="Class Diagram for Movie Booking System"
+/>
 
-*UML Conventions*
+<MdxImage 
+  src="design/concepts/uml.svg" 
+  alt="Uml"
+/>
 
 ---
 ## Activity Diagram
 **Make a booking:** Any customer can perform this activity. Here are the steps to book a ticket for a show:
 
-*Activity book*
+<MdxImage 
+  src="design/movie-booking/activity-book.svg" 
+  alt="Activity Diagram for Movie Booking System"
+/>
 
 **Cancel a booking:** Customer can cancel their bookings. Here are the steps to cancel a booking:
-*Activity cancel*
+
+<MdxImage 
+  src="design/movie-booking/activity-cancel.svg" 
+  alt="Activity Diagram for Movie Booking System"
+/>
 
 ---
 ## Code
@@ -81,42 +97,64 @@ Here is the high-level definition for the classes described above.
 
 - **Enums and Constants:** Here are the required enums, data types, and constants:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/movie-booking/enums"
+/>
 
 - **Account, Customer, Admin, FrontDeskOfficer, and Guest:** These classes represent the different people that interact with our system:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/movie-booking/accounts"
+/>
 
 - **Show and Movie:**  A movie will have many shows:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/movie-booking/show"
+/>
 
 - **Booking, ShowSeat, and Payment:** Customers will reserve seats with a booking and make a payment:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/movie-booking/booking"
+/>
 
 - **City, Cinema, and CinemaHall:** Each city can have many cinemas and each cinema can have many cinema halls:
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/movie-booking/cinema"
+/>
 
 - **Search interface and Catalog:** Catalog will implement Search to facilitate searching of products.
 
-*Code implementation available in associated files*
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/movie-booking/search"
+/>
 
 ---
 ## Concurrency
 **How to handle concurrency; such that no two users are able to book the same seat?**
 We can use transactions in SQL databases to avoid any clashes. For example, if we are using SQL server we can utilize Transaction Isolation Levels to lock the rows before we update them. Note: within a transaction, if we read rows we get a write-lock on them so that they can’t be updated by anyone else. Here is the sample code:
 
-{% highlight sql %}
-{% include code/{{ page.folder }}/concurrency.sql %}
-{% endhighlight %}
+<MdxCodeTabs
+  langs={["sql"]}
+  path="system-design/code/movie-booking/concurrency"
+/>
 
-‘Serializable’ is the highest isolation level and guarantees safety from [Dirty Reads](https://en.wikipedia.org/wiki/Isolation_(database_systems)#Dirty_reads), [Nonrepeatable](https://en.wikipedia.org/wiki/Isolation_(database_systems)#Non-repeatable_reads), and [Phantoms reads](https://en.wikipedia.org/wiki/Isolation_(database_systems)#Phantom_reads).
+
+'Serializable' is the highest isolation level and guarantees safety from <MdxLink href="https://en.wikipedia.org/wiki/Isolation_(database_systems)#Dirty_reads">Dirty Reads</MdxLink>, <MdxLink href="https://en.wikipedia.org/wiki/Isolation_(database_systems)#Non-repeatable_reads">Nonrepeatable</MdxLink>, and <MdxLink href="https://en.wikipedia.org/wiki/Isolation_(database_systems)#Phantom_reads">Phantoms reads</MdxLink>.
 
 Once the above database transaction is successful, we can safely assume that the reservation has been marked successfully and no two customers will be able to reserve the same seat.
 
 Here is the sample Java code:
-{% highlight java %}
-{% include code/{{ page.folder }}/concurrency.java %}
-{% endhighlight %}`;export{e as default};
+
+<MdxCodeTabs
+  langs={["java"]}
+  path="system-design/code/movie-booking/concurrency"
+/>`;export{e as default};

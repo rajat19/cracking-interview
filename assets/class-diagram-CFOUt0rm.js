@@ -18,7 +18,7 @@ The purpose of the class diagram can be summarized as:
 
 A class is depicted in the class diagram as a rectangle with three horizontal sections, as shown in the figure below. The upper section shows the class’s name (Flight), the middle section contains the properties of the class, and the lower section contains the class’s operations (or “methods”).
 
-*Class Diagram Flight*
+<MdxImage src="design/concepts/class-flight-basic.svg" />
 
 These are the different types of relationships between classes:
 
@@ -32,7 +32,7 @@ We can indicate the multiplicity of an association by adding multiplicity adornm
 
 The below diagram, demonstrates that **a FlightInstance has exactly two Pilots but a Pilot can have many FlightInstances.**
 
-*Class Diagram Flight*
+<MdxImage src="design/concepts/class-flight-complete.png" />
 
 **Aggregation:** Aggregation is a special type of association used to model a “whole to its parts” relationship. In a basic aggregation relationship, the lifecycle of a PART class is independent of the WHOLE class’s lifecycle. In other words, aggregation implies a relationship where the child can exist independently of the parent. In the above diagram, Aircraft can exist without Airline.
 
