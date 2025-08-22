@@ -1,4 +1,10 @@
-const TopicDifficulty = ({ difficulty }: { difficulty: string }) => {
+import { ITopicDifficulty } from "@/types/topic";
+
+interface TopicDifficultyProps {
+    difficulty: ITopicDifficulty;
+}
+
+const TopicDifficulty = ({ difficulty }: TopicDifficultyProps) => {
     const difficultyMap = {
         'easy': 'badge-success',
         'medium': 'badge-warning',

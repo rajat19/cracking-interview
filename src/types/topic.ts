@@ -29,7 +29,8 @@ export interface ITopic {
 }
 
 export type ITopicList = Pick<ITopic, 
-    'id' | 'title' | 'difficulty' | 'timeComplexity' | 'spaceComplexity'
+    'id' | 'title' | 'difficulty' 
+    | 'timeComplexity' | 'spaceComplexity'
     | 'companies' | 'relatedTopics'
     | 'isBookmarked' | 'isCompleted'
   >

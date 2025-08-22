@@ -18,10 +18,6 @@ Each category can have the following configuration:
     "features": {
       "solutionTabs": true/false,      // Show solution tabs at bottom
       "mdxRenderer": true/false,       // Use MDX renderer vs markdown
-      "platformLinks": true/false,     // Show platform links (LeetCode, etc.)
-      "examples": true/false,          // Show examples section
-      "bookmarkable": true/false,      // Allow bookmarking
-      "progressTracking": true/false   // Track progress
     },
     "contentType": "markdown" | "mdx",
     "difficulty": {
@@ -37,15 +33,15 @@ Each category can have the following configuration:
 ### In Components
 
 ```tsx
-import { categoryFeatureHelpers } from '@/config/categoryConfig';
+import config from '@/config';
 
 // Check if a feature is enabled
-if (categoryFeatureHelpers.shouldShowSolutionTabs(category)) {
+if (config.shouldShowSolutionTabs(category)) {
   // Show solution tabs
 }
 
 // Use in conditional rendering
-{categoryFeatureHelpers.shouldUseMDXRenderer(category) ? (
+{config.shouldUseMDXRenderer(category) ? (
   <SimpleMDXRenderer content={content} />
 ) : (
   <MarkdownContent content={content} />
@@ -56,10 +52,6 @@ if (categoryFeatureHelpers.shouldShowSolutionTabs(category)) {
 
 - `shouldShowSolutionTabs(categoryId)` - Whether to show solution tabs
 - `shouldUseMDXRenderer(categoryId)` - Whether to use MDX renderer
-- `shouldShowPlatformLinks(categoryId)` - Whether to show platform links
-- `shouldShowExamples(categoryId)` - Whether to show examples section
-- `shouldShowBookmark(categoryId)` - Whether to show bookmark button
-- `shouldTrackProgress(categoryId)` - Whether to track progress
 - `shouldShowDifficulty(categoryId)` - Whether to show difficulty badges
 
 ## Current Configuration

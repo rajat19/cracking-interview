@@ -11,7 +11,7 @@ import { useAuth } from '@/hooks/useAuth';
 import { getUserProgress, upsertUserProgress } from '@/lib/progressStore';
 import { useNavigate } from 'react-router-dom';
 import TopicDifficulty from "@/components/TopicDifficulty";
-import { categoryFeatureHelpers, getCategoryContentType } from '@/config/categoryConfig';
+import config from '@/config';
 
 // Public assets helper respecting Vite base
 const companyIconSrc = (company: string) => `${import.meta.env.BASE_URL}assets/img/company/${company}.svg`;
@@ -232,22 +232,18 @@ export function TopicContent({ topic, category, onProgressUpdate, onFilterByTag,
         </div>
       )}
 
-      {/* Platform Links */}
-      {categoryFeatureHelpers.shouldShowPlatformLinks(category) && (
-        <PlatformLinks topic={topic} />
-      )}
+      <PlatformLinks topic={topic} />
 
       {/* Content */}
       <Suspense fallback={<div className="mt-6 text-sm text-muted-foreground">Rendering content…</div>}>
-        {categoryFeatureHelpers.shouldUseMDXRenderer(category) ? (
+        {config.shouldUseMDXRenderer(category) ? (
           <SimpleMDXRenderer content={topic.content} />
         ) : (
           <MarkdownContent content={topic.content} />
         )}
       </Suspense>
 
-      {/* Examples */}
-      {categoryFeatureHelpers.shouldShowExamples(category) && topic.examples && topic.examples.length > 0 && (
+      {topic.examples && topic.examples.length > 0 && (
         <div className="mt-8">
           <h3 className="text-xl font-medium mb-4 text-foreground">Examples</h3>
           <div className="space-y-4">
@@ -263,7 +259,7 @@ export function TopicContent({ topic, category, onProgressUpdate, onFilterByTag,
       )}
 
       {/* Solutions */}
-      {categoryFeatureHelpers.shouldShowSolutionTabs(category) && topic.solutions && Object.keys(topic.solutions).length > 0 && (
+      {config.hasSolutions(category) && topic.solutions && Object.keys(topic.solutions).length > 0 && (
         <Suspense fallback={<div className="mt-6 text-sm text-muted-foreground">Loading solutions…</div>}>
           <SolutionTabs solutions={topic.solutions} />
         </Suspense>

@@ -63,11 +63,6 @@ const mdxModules = import.meta.glob('/src/content/**/*.mdx', {
   query: 'raw',
 }) as unknown as Record<string, () => Promise<string>>;
 
-const solutionModules = import.meta.glob('/src/content/**/solutions/**/*.*', {
-  import: 'default',
-  query: 'raw',
-}) as unknown as Record<string, () => Promise<string>>;
-
 const codeModules = import.meta.glob('/src/content/**/code/**/*.*', {
   import: 'default',
   query: 'raw',
@@ -92,12 +87,8 @@ const getContentPath = (category: ITopicCategory): string => {
   const contentType = config.getContentType(category);
   const extension = contentType === 'mdx' ? 'mdx' : 'md';
   
-  // Special handling for system-design which has designs subfolder
-  if (category === 'system-design') {
-    return `/src/content/${category}/designs/**/*.${extension}`;
-  }
-  
-  return `/src/content/${category}/**/*.${extension}`;
+  // All categories now use consistent posts/ structure
+  return `/src/content/${category}/posts/**/*.${extension}`;
 };
 
 // Map frontmatter to topic based on category
@@ -185,10 +176,7 @@ export const loadTopicsList = async (category: ITopicCategory): Promise<ITopicLi
   
   // Filter modules that match our category path pattern
   const relevantModules = Object.entries(contentModules).filter(([path]) => {
-    if (category === 'system-design') {
-      return path.includes('/system-design/designs/');
-    }
-    return path.includes(`/content/${category}/`);
+    return path.includes(`/content/${category}/posts/`);
   });
 
   for (const [path, moduleLoader] of relevantModules) {
@@ -245,11 +233,8 @@ export const loadTopic = async (category: ITopicCategory, topicId: string): Prom
     
     // Find the correct module path for this topic
     const modulePath = Object.keys(contentModules).find(path => {
-      if (category === 'system-design' && !path.includes('/designs/')) {
-        return false; // Only look in designs folder for system-design
-      }
-      if (!path.includes(`/content/${category}/`)) {
-        return false; // Must be in the correct category folder
+      if (!path.includes(`/content/${category}/posts/`)) {
+        return false; // Must be in the correct category posts folder
       }
       const id = generateSlugFromPath(path, category);
       return id === topicId;
@@ -306,14 +291,14 @@ export const loadTopicSolution = async (
     const solutions: Record<string, ISolutionEntry> = {};
     
     if (category === 'dsa') {
-      // DSA solutions are in /solutions/{topicId}/ folder
-      for (const [solPath, moduleLoader] of Object.entries(solutionModules)) {
-        const normalized = solPath.replace(/\\/g, '/');
+      // DSA solutions are in /code/{topicId}/ folder
+      for (const [codePath, moduleLoader] of Object.entries(codeModules)) {
+        const normalized = codePath.replace(/\\/g, '/');
         const parts = normalized.split('/');
-        const solutionsIndex = parts.findIndex(p => p === 'solutions');
-        if (solutionsIndex === -1 || solutionsIndex + 1 >= parts.length) continue;
+        const codeIndex = parts.findIndex(p => p === 'code');
+        if (codeIndex === -1 || codeIndex + 1 >= parts.length) continue;
         
-        const problemDir = parts[solutionsIndex + 1];
+        const problemDir = parts[codeIndex + 1];
         if (problemDir !== topicId) continue;
         
         const fileName = parts[parts.length - 1];
@@ -323,7 +308,7 @@ export const loadTopicSolution = async (
           const raw = await moduleLoader();
           solutions[ext] = { language: ext, code: raw };
         } catch (error) {
-          console.warn(`Failed to load ${category} solution ${solPath}:`, error);
+          console.warn(`Failed to load ${category} solution ${codePath}:`, error);
         }
       }
     } else if (category === 'system-design') {

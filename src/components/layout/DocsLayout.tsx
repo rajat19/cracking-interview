@@ -11,7 +11,7 @@ import { preloadUserProgress, getCachedCategoryProgress } from "@/lib/progressSt
 import Navigation from "@/components/Navigation";
 import TopicListItem from "@/components/TopicListItem";
 import TopicDifficulty from "@/components/TopicDifficulty";
-import { categoryFeatureHelpers } from '@/config/categoryConfig';
+import config from '@/config';
 
 interface DocsLayoutProps {
   title: string;
@@ -356,7 +356,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
                 <h2 className="font-semibold text-foreground text-xl">
                   {selectedTopic?.title || "Select a topic"}
                 </h2>
-                {selectedTopic && categoryFeatureHelpers.shouldShowDifficulty(category) && (
+                {selectedTopic && config.showDifficulty(category) && (
                   <TopicDifficulty difficulty={selectedTopic.difficulty} />
                 )}
               </div>

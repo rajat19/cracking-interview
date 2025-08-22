@@ -4,15 +4,12 @@
     "features": {
       "solutionTabs": true,
       "mdxRenderer": false,
-      "platformLinks": true,
-      "examples": true,
-      "bookmarkable": true,
-      "progressTracking": true
+      "index": true
     },
     "contentType": "markdown",
     "difficulty": {
       "enabled": true,
-      "levels": ["easy", "medium", "hard"]
+      "levels": ["all", "easy", "medium", "hard"]
     }
   },
   "system-design": {
@@ -20,10 +17,7 @@
     "features": {
       "solutionTabs": false,
       "mdxRenderer": true,
-      "platformLinks": false,
-      "examples": false,
-      "bookmarkable": true,
-      "progressTracking": true
+      "index": false
     },
     "contentType": "mdx",
     "difficulty": {
@@ -36,10 +30,7 @@
     "features": {
       "solutionTabs": false,
       "mdxRenderer": false,
-      "platformLinks": false,
-      "examples": true,
-      "bookmarkable": true,
-      "progressTracking": true
+      "index": false
     },
     "contentType": "markdown",
     "difficulty": {
@@ -52,15 +43,12 @@
     "features": {
       "solutionTabs": false,
       "mdxRenderer": false,
-      "platformLinks": false,
-      "examples": true,
-      "bookmarkable": true,
-      "progressTracking": true
+      "index": false
     },
     "contentType": "markdown",
     "difficulty": {
-      "enabled": true,
-      "levels": ["easy", "medium", "hard"]
+      "enabled": false,
+      "levels": []
     }
   }
 }
