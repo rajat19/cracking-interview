@@ -21,7 +21,7 @@ export async function loadMdxCodeSimple(path: string, languages: string[]): Prom
 
   const codeSolutions: Record<string, ISolutionEntry> = {};
   
-  try {
+  try {    
     for (const lang of languages) {
       const expectedFileName = `solution.${LANGUAGES_MAP[lang].extension}`;
       const expectedPath = `/src/content/${path}/${expectedFileName}`;

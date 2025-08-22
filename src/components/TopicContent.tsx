@@ -3,7 +3,7 @@ import { CheckCircle, Circle, Bookmark, BookmarkCheck, Clock, Code, Share2 } fro
 import { Button } from "@/components/ui/button";
 import { ITopic, ITopicCategory } from "@/types/topic";
 import { updateLocalProgress } from "@/lib/contentLoader";
-const SimpleMDXRenderer = lazy(() => import('@/components/SimpleMDXRenderer').then(module => ({ default: module.SimpleMDXRenderer })));
+const SimpleMDXRenderer = lazy(() => import('@/components/SimpleMDXRenderer'));
 const SolutionTabs = lazy(() => import('@/components/SolutionTabs'));
 import { PlatformLinks } from '@/components/PlatformLinks';
 import { useAuth } from '@/hooks/useAuth';

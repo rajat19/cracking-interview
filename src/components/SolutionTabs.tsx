@@ -71,7 +71,7 @@ export function SolutionTabs({ solutions, showHeader = true }: SolutionTabsProps
           <SyntaxHighlighter
             language={LANGUAGES_MAP[activeLanguage].extension}
             style={syntaxStyle}
-            customStyle={{ 
+            customStyle={{
               margin: 0,
               padding: '1.5rem',
               fontSize: '0.875rem',

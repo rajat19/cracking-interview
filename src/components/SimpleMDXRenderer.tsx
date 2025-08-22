@@ -1,6 +1,7 @@
 import React, { useState, useEffect, useMemo } from 'react';
 import { evaluate } from '@mdx-js/mdx';
-import * as runtime from 'react/jsx-dev-runtime';
+import * as prodRuntime from 'react/jsx-runtime';
+import * as devRuntime from 'react/jsx-dev-runtime';
 import { MdxImage } from '@/components/mdx/MdxImage';
 import { MdxCodeTabs } from '@/components/mdx/MdxCodeTabs';
 import { MdxLink } from '@/components/mdx/MdxLink';
@@ -9,7 +10,7 @@ interface SimpleMDXRendererProps {
   content: string;
 }
 
-export function SimpleMDXRenderer({ content }: SimpleMDXRendererProps) {
+export default function SimpleMDXRenderer({ content }: SimpleMDXRendererProps) {
   const [MDXContent, setMDXContent] = useState<React.ComponentType | null>(null);
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(true);
@@ -28,11 +29,12 @@ export function SimpleMDXRenderer({ content }: SimpleMDXRendererProps) {
         setError(null);
         
         // Evaluate the MDX content with React runtime
+        const runtime = import.meta.env.DEV ? devRuntime : prodRuntime;
         const { default: MDXComponent } = await evaluate(content, {
           ...runtime,
           useMDXComponents: () => components,
-          // Add development mode for better error reporting
-          development: true,
+          // Use development mode only in development
+          development: import.meta.env.DEV,
         });
         setMDXContent(() => MDXComponent);
       } catch (err) {
