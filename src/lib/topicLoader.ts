@@ -216,6 +216,8 @@ export const loadTopicsList = async (category: ITopicCategory): Promise<ITopicLi
     return path.includes(`/content/${category}/posts/`);
   });
 
+
+
   for (const [path, moduleLoader] of relevantModules) {
     try {
       const raw = await moduleLoader();
@@ -267,6 +269,8 @@ export const loadTopic = async (category: ITopicCategory, topicId: string): Prom
       const id = generateSlugFromPath(path, category);
       return id === topicId;
     });
+    
+
     
     if (!modulePath) {
       console.warn(`${category} topic ${topicId} not found`);
