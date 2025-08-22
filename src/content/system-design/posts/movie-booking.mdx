@@ -44,7 +44,7 @@ Here are the top use cases of the Movie Ticket Booking System:
 - **Refund payment:** Upon cancellation, customers will be refunded the payment amount as long as the cancellation occurs within the allowed time frame.
 
 <MdxImage 
-  src="design/movie-booking/activity-renew.svg" 
+  src="design/movie-booking/use-case.svg" 
   alt="Usecase Diagram for Movie Booking System"
 />
 
@@ -142,17 +142,13 @@ Here is the high-level definition for the classes described above.
 **How to handle concurrency; such that no two users are able to book the same seat?**
 We can use transactions in SQL databases to avoid any clashes. For example, if we are using SQL server we can utilize Transaction Isolation Levels to lock the rows before we update them. Note: within a transaction, if we read rows we get a write-lock on them so that they can’t be updated by anyone else. Here is the sample code:
 
-{% highlight sql %}
-{% include code/{{ page.folder }}/concurrency.sql %}
-{% endhighlight %}
-
 <MdxCodeTabs
   langs={["sql"]}
   path="system-design/code/movie-booking/concurrency"
 />
 
 
-‘Serializable’ is the highest isolation level and guarantees safety from [Dirty Reads](https://en.wikipedia.org/wiki/Isolation_(database_systems)#Dirty_reads), [Nonrepeatable](https://en.wikipedia.org/wiki/Isolation_(database_systems)#Non-repeatable_reads), and [Phantoms reads](https://en.wikipedia.org/wiki/Isolation_(database_systems)#Phantom_reads).
+'Serializable' is the highest isolation level and guarantees safety from <MdxLink href="https://en.wikipedia.org/wiki/Isolation_(database_systems)#Dirty_reads">Dirty Reads</MdxLink>, <MdxLink href="https://en.wikipedia.org/wiki/Isolation_(database_systems)#Non-repeatable_reads">Nonrepeatable</MdxLink>, and <MdxLink href="https://en.wikipedia.org/wiki/Isolation_(database_systems)#Phantom_reads">Phantoms reads</MdxLink>.
 
 Once the above database transaction is successful, we can safely assume that the reservation has been marked successfully and no two customers will be able to reserve the same seat.
 

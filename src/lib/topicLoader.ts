@@ -47,18 +47,72 @@ const createExcerpt = (markdown: string, maxLength = 200): string => {
   return text.length > maxLength ? text.slice(0, maxLength - 1) + '…' : text;
 };
 
+// Extract common difficulty logic using configuration
+const getDifficultyForCategory = (category: ITopicCategory, frontmatterDifficulty?: string): ITopic['difficulty'] => {
+  // Only process difficulty if it's enabled for this category
+  if (!config.showDifficulty(category)) {
+    return 'medium'; // Default for categories without difficulty
+  }
+  
+  // For categories with difficulty enabled, parse from frontmatter
+  if (frontmatterDifficulty) {
+    const diff = frontmatterDifficulty.toLowerCase();
+    return diff === 'easy' || diff === 'hard' ? diff : 'medium';
+  }
+  
+  return 'medium'; // Default fallback
+};
+
+// Extract common related topics logic
+const getRelatedTopics = (fm: UniversalFrontmatterData): string[] | undefined => {
+  return Array.isArray(fm.topics) ? fm.topics : 
+         Array.isArray(fm.tags) ? fm.tags : undefined;
+};
+
+// Extract common code loading logic
+const loadCodeForTopic = async (
+  category: ITopicCategory, 
+  topicId: string, 
+  codeModules: Record<string, () => Promise<string>>
+): Promise<Record<string, ISolutionEntry>> => {
+  const solutions: Record<string, ISolutionEntry> = {};
+  
+  for (const [codePath, moduleLoader] of Object.entries(codeModules)) {
+    const normalized = codePath.replace(/\\/g, '/');
+    const parts = normalized.split('/');
+    const codeIndex = parts.findIndex(p => p === 'code');
+    if (codeIndex === -1 || codeIndex + 1 >= parts.length) continue;
+    
+    const problemDir = parts[codeIndex + 1];
+    if (problemDir !== topicId) continue;
+    
+    const fileName = parts[parts.length - 1];
+    const ext = (fileName.split('.').pop() || '').toLowerCase();
+    
+    try {
+      const raw = await moduleLoader();
+      
+      // Different key strategies for different categories
+      if (category === 'dsa') {
+        solutions[ext] = { language: ext, code: raw };
+      } else {
+        solutions[fileName] = { language: ext, code: raw };
+      }
+    } catch (error) {
+      console.warn(`Failed to load ${category} code ${codePath}:`, error);
+    }
+  }
+  
+  return solutions;
+};
+
 // Dynamic module loaders for different content types
 const indexModules = import.meta.glob('/src/data/*-index.json', {
   import: 'default',
   query: 'raw',
 }) as unknown as Record<string, () => Promise<string>>;
 
-const markdownModules = import.meta.glob('/src/content/**/*.md', {
-  import: 'default',
-  query: 'raw',
-}) as unknown as Record<string, () => Promise<string>>;
-
-const mdxModules = import.meta.glob('/src/content/**/*.mdx', {
+const contentModules = import.meta.glob('/src/content/**/*.mdx', {
   import: 'default',
   query: 'raw',
 }) as unknown as Record<string, () => Promise<string>>;
@@ -76,19 +130,15 @@ const dynamicLoader = async (modules: Record<string, () => Promise<string>>, pat
   return await moduleLoader();
 };
 
-// Get appropriate modules based on category
+// Get appropriate modules based on category (now always MDX)
 const getContentModules = (category: ITopicCategory): Record<string, () => Promise<string>> => {
-  const contentType = config.getContentType(category);
-  return contentType === 'mdx' ? mdxModules : markdownModules;
+  return contentModules;
 };
 
-// Category-specific path builders
+// Category-specific path builders (now always MDX)
 const getContentPath = (category: ITopicCategory): string => {
-  const contentType = config.getContentType(category);
-  const extension = contentType === 'mdx' ? 'mdx' : 'md';
-  
-  // All categories now use consistent posts/ structure
-  return `/src/content/${category}/posts/**/*.${extension}`;
+  // All categories now use consistent posts/ structure with MDX
+  return `/src/content/${category}/posts/**/*.mdx`;
 };
 
 // Map frontmatter to topic based on category
@@ -98,21 +148,8 @@ const mapFrontmatterToTopic = (
   content: string,
   category: ITopicCategory
 ): ITopic => {
-  // Category-specific difficulty handling
-  let difficulty: ITopic['difficulty'] = 'medium';
-  
-  if (category === 'dsa' && fm.difficulty) {
-    const diff = fm.difficulty.toLowerCase();
-    difficulty = diff === 'easy' || diff === 'hard' ? diff : 'medium';
-  } else if (category === 'system-design') {
-    difficulty = 'hard'; // System design problems are generally hard
-  } else {
-    difficulty = 'medium'; // Default for behavioral and ood
-  }
-  
-  // Handle related topics/tags
-  const relatedTopics = Array.isArray(fm.topics) ? fm.topics : 
-                       Array.isArray(fm.tags) ? fm.tags : undefined;
+  const difficulty = getDifficultyForCategory(category, fm.difficulty);
+  const relatedTopics = getRelatedTopics(fm);
   
   return {
     id,
@@ -186,17 +223,8 @@ export const loadTopicsList = async (category: ITopicCategory): Promise<ITopicLi
       const data = parsed.attributes || {};
       const id = generateSlugFromPath(path, category);
       
-      // Category-specific difficulty handling
-      let difficulty: ITopicList['difficulty'] = 'medium';
-      if (category === 'dsa' && data.difficulty) {
-        const diff = data.difficulty.toLowerCase();
-        difficulty = diff === 'easy' || diff === 'hard' ? diff : 'medium';
-      } else if (category === 'system-design') {
-        difficulty = 'hard';
-      }
-      
-      const related = Array.isArray(data.topics) ? data.topics : 
-                     Array.isArray(data.tags) ? data.tags : undefined;
+      const difficulty = getDifficultyForCategory(category, data.difficulty);
+      const related = getRelatedTopics(data);
       
       topics.push({
         id,
@@ -288,60 +316,8 @@ export const loadTopicSolution = async (
   }
   
   try {
-    const solutions: Record<string, ISolutionEntry> = {};
-    
-    if (category === 'dsa') {
-      // DSA solutions are in /code/{topicId}/ folder
-      for (const [codePath, moduleLoader] of Object.entries(codeModules)) {
-        const normalized = codePath.replace(/\\/g, '/');
-        const parts = normalized.split('/');
-        const codeIndex = parts.findIndex(p => p === 'code');
-        if (codeIndex === -1 || codeIndex + 1 >= parts.length) continue;
-        
-        const problemDir = parts[codeIndex + 1];
-        if (problemDir !== topicId) continue;
-        
-        const fileName = parts[parts.length - 1];
-        const ext = (fileName.split('.').pop() || '').toLowerCase();
-        
-        try {
-          const raw = await moduleLoader();
-          solutions[ext] = { language: ext, code: raw };
-        } catch (error) {
-          console.warn(`Failed to load ${category} solution ${codePath}:`, error);
-        }
-      }
-    } else if (category === 'system-design') {
-      // System design code examples are in /code/{topicId}/ folder
-      const folderToTopicMap: Record<string, string> = {
-        'library-management': 'library-management',
-        'parking-lot': 'parking-lot',
-        'online-shopping': 'online-shopping',
-        'stack-overflow': 'stack-overflow',
-        'movie-booking': 'movie-booking'
-      };
-      
-      for (const [codePath, moduleLoader] of Object.entries(codeModules)) {
-        const normalized = codePath.replace(/\\/g, '/');
-        const parts = normalized.split('/');
-        const codeIndex = parts.findIndex(p => p === 'code');
-        if (codeIndex === -1 || codeIndex + 1 >= parts.length) continue;
-        
-        const problemDir = parts[codeIndex + 1];
-        const mappedTopicId = folderToTopicMap[problemDir];
-        if (mappedTopicId !== topicId) continue;
-        
-        const fileName = parts[parts.length - 1];
-        const ext = (fileName.split('.').pop() || '').toLowerCase();
-        
-        try {
-          const raw = await moduleLoader();
-          solutions[fileName] = { language: ext, code: raw };
-        } catch (error) {
-          console.warn(`Failed to load ${category} code ${codePath}:`, error);
-        }
-      }
-    }
+    // Use the unified code loading function
+    const solutions = await loadCodeForTopic(category, topicId, codeModules);
     
     // Cache the solutions if any were found
     if (Object.keys(solutions).length > 0) {

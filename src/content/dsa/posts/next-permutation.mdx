@@ -47,7 +47,7 @@ Now, what kind of rearrangement will produce the next larger number?
 We want to create the permutation just larger than the current one.
 Therefore, we need to replace the number `a[i-1]` with the number which is just larger than itself among the numbers lying to its right section, say `a[j]`.
 
-![Next Permutation]({{ site.github.url }}/assets/img/code/nextpermutation.png)
+<MdxImage src="code/nextpermutation.png" alt="Next Permutation" />
 
 We swap the numbers `a[i-1]` and `a[j]`. We now have the correct number at index `i-1`.
 But still the current permutation isn't the permutation that we are looking for.

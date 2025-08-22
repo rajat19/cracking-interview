@@ -36,7 +36,7 @@ export function getFeatures(categoryId: ITopicCategory): CategoryFeatures {
 }
 
 export function isFeatureEnabled(categoryId: ITopicCategory, feature: keyof CategoryFeatures): boolean {
-  return getConfig(categoryId)[feature];
+  return getConfig(categoryId).features[feature];
 }
 
 export function getName(categoryId: ITopicCategory): string {

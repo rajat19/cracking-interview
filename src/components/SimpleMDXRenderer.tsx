@@ -1,118 +1,80 @@
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
+import { evaluate } from '@mdx-js/mdx';
+import * as runtime from 'react/jsx-dev-runtime';
 import { MdxImage } from '@/components/mdx/MdxImage';
 import { MdxCodeTabs } from '@/components/mdx/MdxCodeTabs';
-import { MarkdownContent } from '@/components/MarkdownContent';
+import { MdxLink } from '@/components/mdx/MdxLink';
 
 interface SimpleMDXRendererProps {
   content: string;
 }
 
 export function SimpleMDXRenderer({ content }: SimpleMDXRendererProps) {
-  const [processedContent, setProcessedContent] = useState<string>('');
-  const [components, setComponents] = useState<React.ReactNode[]>([]);
+  const [MDXContent, setMDXContent] = useState<React.ComponentType | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  // MDX components that can be used in the content
+  const components = useMemo(() => ({
+    MdxImage,
+    MdxCodeTabs,
+    MdxLink,
+  }), []);
 
   useEffect(() => {
-    const processContent = () => {
-      let processed = content;
-      const componentMatches: React.ReactNode[] = [];
-      let componentIndex = 0;
-
-      // Process MdxImage components
-      processed = processed.replace(
-        /<MdxImage\s+([^>]+)\/?>(?:<\/MdxImage>)?/g,
-        (match, attributes) => {
-          const props = parseAttributes(attributes);
-          const component = (
-            <MdxImage
-              key={`img-${componentIndex}`}
-              src={props.src || ''}
-              alt={props.alt || ''}
-            />
-          );
-          componentMatches.push(component);
-          return `__COMPONENT_${componentIndex++}__`;
-        }
-      );
-
-      // Process MdxCodeTabs components
-      processed = processed.replace(
-        /<MdxCodeTabs\s+([^>]+)\/?>(?:<\/MdxCodeTabs>)?/g,
-        (match, attributes) => {
-          const props = parseAttributes(attributes);
-          let langs: string[] = [];
-          try {
-            // Parse the files array from the attributes
-            if (props.langs) {
-              langs = JSON.parse(props.langs);
-            }
-          } catch (e) {
-            console.error('Failed to parse langs array:', props.langs);
-          }
-          
-          const component = (
-            <MdxCodeTabs
-              key={`tabs-${componentIndex}`}
-              langs={langs}
-              path={props.path}
-            />
-          );
-          componentMatches.push(component);
-          return `__COMPONENT_${componentIndex++}__`;
-        }
-      );
-
-      setProcessedContent(processed);
-      setComponents(componentMatches);
+    const compileMDX = async () => {
+      try {
+        setLoading(true);
+        setError(null);
+        
+        // Evaluate the MDX content with React runtime
+        const { default: MDXComponent } = await evaluate(content, {
+          ...runtime,
+          useMDXComponents: () => components,
+          // Add development mode for better error reporting
+          development: true,
+        });
+        setMDXContent(() => MDXComponent);
+      } catch (err) {
+        console.error('MDX compilation error:', err);
+        setError(err instanceof Error ? err.message : 'Unknown MDX compilation error');
+      } finally {
+        setLoading(false);
+      }
     };
 
-    processContent();
-  }, [content]);
+    compileMDX();
+  }, [content, components]);
 
-  // Function to parse HTML-like attributes
-  const parseAttributes = (attributeString: string): Record<string, string> => {
-    const attributes: Record<string, string> = {};
-    const regex = /(\w+)=(?:"([^"]*)"|'([^']*)'|{([^}]*)})/g;
-    let match;
+  if (loading) {
+    return (
+      <div className="prose prose-slate dark:prose-invert max-w-none font-sans">
+        <div className="text-sm text-muted-foreground">Rendering content…</div>
+      </div>
+    );
+  }
 
-    while ((match = regex.exec(attributeString)) !== null) {
-      const [, name, doubleQuoted, singleQuoted, braced] = match;
-      attributes[name] = doubleQuoted || singleQuoted || braced || '';
-    }
+  if (error) {
+    return (
+      <div className="prose prose-slate dark:prose-invert max-w-none font-sans">
+        <div className="text-red-600 text-sm">
+          <strong>MDX Error:</strong> {error}
+        </div>
+      </div>
+    );
+  }
 
-    return attributes;
-  };
-
-  // Custom renderer that injects React components
-  const renderContentWithComponents = (markdown: string): React.ReactNode => {
-    const parts = markdown.split(/(__COMPONENT_\d+__)/);
-    const result: React.ReactNode[] = [];
-    
-    for (let i = 0; i < parts.length; i++) {
-      const part = parts[i];
-      const componentMatch = part.match(/^__COMPONENT_(\d+)__$/);
-      
-      if (componentMatch) {
-        const componentIndex = parseInt(componentMatch[1], 10);
-        const component = components[componentIndex];
-        if (component) {
-          result.push(component);
-        }
-      } else if (part.trim()) {
-        // For non-component parts, render as markdown
-        result.push(
-          <div key={`markdown-${i}`} className="mdx-content">
-            <MarkdownContent content={part} />
-          </div>
-        );
-      }
-    }
-    
-    return result;
-  };
+  if (!MDXContent) {
+    return (
+      <div className="prose prose-slate dark:prose-invert max-w-none font-sans">
+        <div className="text-sm text-muted-foreground">No content to render</div>
+      </div>
+    );
+  }
 
   return (
     <div className="prose prose-slate dark:prose-invert max-w-none font-sans">
-      {renderContentWithComponents(processedContent)}
+      <MDXContent />
     </div>
   );
 }

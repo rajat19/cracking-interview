@@ -16,7 +16,7 @@ A use case illustrates a unit of functionality provided by the system. The prima
 
 To illustrate a use case on a use case diagram, we draw an oval in the middle of the diagram and put the name of the use case in the center of the oval. To show an actor (indicating a system user) on a use-case diagram, we draw a stick figure to the left or right of the diagram.
 
-*Sample Use Case*
+<MdxImage src="design/concepts/use-case.svg" />
 
 The different components of the use case diagram are:
 - **System boundary:** A system boundary defines the scope and limits of the system. It is shown as a rectangle that spans all use cases of the system.

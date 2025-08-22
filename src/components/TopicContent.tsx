@@ -3,7 +3,6 @@ import { CheckCircle, Circle, Bookmark, BookmarkCheck, Clock, Code, Share2 } fro
 import { Button } from "@/components/ui/button";
 import { ITopic, ITopicCategory } from "@/types/topic";
 import { updateLocalProgress } from "@/lib/contentLoader";
-const MarkdownContent = lazy(() => import('@/components/MarkdownContent'));
 const SimpleMDXRenderer = lazy(() => import('@/components/SimpleMDXRenderer').then(module => ({ default: module.SimpleMDXRenderer })));
 const SolutionTabs = lazy(() => import('@/components/SolutionTabs'));
 import { PlatformLinks } from '@/components/PlatformLinks';
@@ -236,11 +235,7 @@ export function TopicContent({ topic, category, onProgressUpdate, onFilterByTag,
 
       {/* Content */}
       <Suspense fallback={<div className="mt-6 text-sm text-muted-foreground">Rendering content…</div>}>
-        {config.shouldUseMDXRenderer(category) ? (
-          <SimpleMDXRenderer content={topic.content} />
-        ) : (
-          <MarkdownContent content={topic.content} />
-        )}
+        <SimpleMDXRenderer content={topic.content} />
       </Suspense>
 
       {topic.examples && topic.examples.length > 0 && (

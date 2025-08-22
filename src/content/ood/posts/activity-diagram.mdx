@@ -12,7 +12,7 @@ Activity diagrams illustrate the dynamic nature of a system by modeling the flow
 
 Following is an activity diagram for a user performing online shopping:
 
-*Activity Diagram*
+<MdxImage src="design/concepts/activity-diagram.svg" />
 
 **What is the difference between Activity diagram and Sequence diagram?**
 

@@ -25,7 +25,7 @@ Rules for burning the nodes :
 
 ## Test Cases
 
-![Burn Tree]({{ site.github.url }}/assets/img/code/binarytree.jpeg)
+<MdxImage src="code/binarytree.jpeg" />
 
 **Input:**
 

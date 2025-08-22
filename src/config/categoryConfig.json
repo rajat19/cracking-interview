@@ -3,10 +3,10 @@
     "name": "Data Structures & Algorithms",
     "features": {
       "solutionTabs": true,
-      "mdxRenderer": false,
+      "mdxRenderer": true,
       "index": true
     },
-    "contentType": "markdown",
+    "contentType": "mdx",
     "difficulty": {
       "enabled": true,
       "levels": ["all", "easy", "medium", "hard"]
@@ -29,10 +29,10 @@
     "name": "Behavioral",
     "features": {
       "solutionTabs": false,
-      "mdxRenderer": false,
+      "mdxRenderer": true,
       "index": false
     },
-    "contentType": "markdown",
+    "contentType": "mdx",
     "difficulty": {
       "enabled": false,
       "levels": []
@@ -42,10 +42,10 @@
     "name": "Object-Oriented Design",
     "features": {
       "solutionTabs": false,
-      "mdxRenderer": false,
+      "mdxRenderer": true,
       "index": false
     },
-    "contentType": "markdown",
+    "contentType": "mdx",
     "difficulty": {
       "enabled": false,
       "levels": []

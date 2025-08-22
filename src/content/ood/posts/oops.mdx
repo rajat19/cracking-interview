@@ -14,7 +14,7 @@ If you have never used an object-oriented programming language before, you will 
 
 **Class:** Class is the prototype or blueprint of an object. It is a template definition of the attributes and methods of an object. For example, in the Online Shopping System, the Customer object will have attributes like shipping address, credit card, etc., and methods for placing an order, canceling an order, etc.
 
-*Object-Oriented Programming Fundamentals*
+<MdxImage src="design/concepts/basics.svg" />
 
 The four principles of object-oriented programming are encapsulation, abstraction, inheritance, and polymorphism.
 
