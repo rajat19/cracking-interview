@@ -1,3 +1,5 @@
+"use client";
+
 interface DropdownFilterProps {
   label: string;
   value: string;

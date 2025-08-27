@@ -1,3 +1,5 @@
+"use client";
+
 import { CheckCircle, Bookmark, BookmarkCheck, Clock, Code } from "lucide-react";
 import type { ITopicList } from "@/types/topic";
 import TopicDifficulty from "@/components/TopicDifficulty";

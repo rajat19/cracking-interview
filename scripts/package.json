@@ -1,7 +1,0 @@
-{
-  "type": "module",
-  "scripts": {
-    "import-dsa": "node import-dsa-questions.js",
-    "generate-index": "node generate-content-index.mjs"
-  }
-}

@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useState, lazy, Suspense } from "react";
 import { CheckCircle, Circle, Bookmark, BookmarkCheck, Clock, Code, Share2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,12 +10,12 @@ const SolutionTabs = lazy(() => import('@/components/SolutionTabs'));
 import { PlatformLinks } from '@/components/PlatformLinks';
 import { useAuth } from '@/hooks/useAuth';
 import { getUserProgress, upsertUserProgress } from '@/lib/progressStore';
-import { useNavigate } from 'react-router-dom';
+import { useRouter } from 'next/navigation';
 import TopicDifficulty from "@/components/TopicDifficulty";
 import config from '@/config';
 
-// Public assets helper respecting Vite base
-const companyIconSrc = (company: string) => `${import.meta.env.BASE_URL}assets/img/company/${company}.svg`;
+// Public assets helper for Next.js
+const companyIconSrc = (company: string) => `/assets/img/company/${company}.svg`;
 
 interface TopicContentProps {
   topic: ITopic;
@@ -28,12 +30,12 @@ export function TopicContent({ topic, category, onProgressUpdate, onFilterByTag,
   const [isBookmarked, setIsBookmarked] = useState(topic.isBookmarked || false);
   const [activeLanguage, setActiveLanguage] = useState<string | null>(null);
   const { user } = useAuth();
-  const navigate = useNavigate();
+  const router = useRouter();
   const [copied, setCopied] = useState(false);
 
   const toggleComplete = async () => {
     if (!user) {
-      navigate('/auth');
+      router.push('/auth');
       return;
     }
     const newCompleted = !isCompleted;
@@ -43,7 +45,7 @@ export function TopicContent({ topic, category, onProgressUpdate, onFilterByTag,
 
   const toggleBookmark = async () => {
     if (!user) {
-      navigate('/auth');
+      router.push('/auth');
       return;
     }
     const newBookmarked = !isBookmarked;
@@ -235,7 +237,7 @@ export function TopicContent({ topic, category, onProgressUpdate, onFilterByTag,
 
       {/* Content */}
       <Suspense fallback={<div className="mt-6 text-sm text-muted-foreground">Rendering content…</div>}>
-        <SimpleMDXRenderer content={topic.content} />
+        <SimpleMDXRenderer content={topic.content || ''} />
       </Suspense>
 
       {topic.examples && topic.examples.length > 0 && (

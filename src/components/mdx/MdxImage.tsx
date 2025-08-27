@@ -1,3 +1,5 @@
+"use client";
+
 import { useState } from 'react';
 
 interface MdxImageProps {
@@ -9,8 +11,8 @@ export function MdxImage({ src, alt }: MdxImageProps) {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   
-  // Construct the full image path
-  const imagePath = `${import.meta.env.BASE_URL}assets/img/${src}`;
+  // Construct the full image path for Next.js
+  const imagePath = `/assets/img/${src}`;
   
   const handleImageLoad = () => {
     setIsLoading(false);

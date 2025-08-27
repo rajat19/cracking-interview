@@ -1,3 +1,5 @@
+"use client";
+
 import React, { useState, useEffect, useMemo } from 'react';
 import { evaluate } from '@mdx-js/mdx';
 import * as prodRuntime from 'react/jsx-runtime';
@@ -29,12 +31,13 @@ export default function SimpleMDXRenderer({ content }: SimpleMDXRendererProps) {
         setError(null);
         
         // Evaluate the MDX content with React runtime
-        const runtime = import.meta.env.DEV ? devRuntime : prodRuntime;
+        const isDev = process.env.NODE_ENV === 'development';
+        const runtime = isDev ? devRuntime : prodRuntime;
         const { default: MDXComponent } = await evaluate(content, {
           ...runtime,
           useMDXComponents: () => components,
           // Use development mode only in development
-          development: import.meta.env.DEV,
+          development: isDev,
         });
         setMDXContent(() => MDXComponent);
       } catch (err) {

@@ -6,15 +6,8 @@ import { ISolutionEntry } from "@/types/topic";
  */
 const codeCache = new Map<string, Record<string, ISolutionEntry>>();
 
-// Create lazy loaders for system design code files (only created once at module load)
-const codeModules = import.meta.glob('/src/content/**/code/**/solution.{java,py,cpp,js,ts,c,go,kt,rs,rb,swift,php,sql}', { 
-  query: '?raw', 
-  import: 'default' 
-}) as unknown as Record<string, () => Promise<string>>;
-
-export async function loadMdxCodeSimple(path: string, languages: string[]): Promise<Record<string, ISolutionEntry>> {
-
-  const cacheKey = path;
+export async function loadMdxCodeSimple(contentPath: string, languages: string[]): Promise<Record<string, ISolutionEntry> | null> {
+  const cacheKey = contentPath;
   if (codeCache.has(cacheKey)) {
     return codeCache.get(cacheKey)!;
   }
@@ -23,24 +16,30 @@ export async function loadMdxCodeSimple(path: string, languages: string[]): Prom
   
   try {    
     for (const lang of languages) {
-      const expectedFileName = `solution.${LANGUAGES_MAP[lang].extension}`;
-      const expectedPath = `/src/content/${path}/${expectedFileName}`;
-      
-      // Find the matching module
-      const moduleLoader = codeModules[expectedPath];
-      
-      if (moduleLoader) {
-        try {
-          const rawCode = await moduleLoader();
+      try {
+        // Map language to file extension
+        const ext = LANGUAGES_MAP[lang as keyof typeof LANGUAGES_MAP]?.extension || lang;
+        
+        // Build the file path - contentPath should be the full path relative to /src/content/
+        // e.g., "system-design/code/library-management/books" -> "/src/content/system-design/code/library-management/books/solution.java"
+        const filePath = `/src/content/${contentPath}/solution.${ext}`;
+        
+        console.log(`Attempting to load: ${filePath}`); // Debug log
+        
+        // Use the API route to load the file
+        const response = await fetch(`/api/content?path=${encodeURIComponent(filePath)}`);
+        
+        if (response.ok) {
+          const code = await response.text();
           codeSolutions[lang] = {
             language: lang,
-            code: rawCode || '',
+            code: code.trim(),
           };
-        } catch(error) {
-          console.warn(`Failed to load code file ${expectedPath}`, error);
+        } else {
+          console.warn(`Code file not found: ${filePath}`);
         }
-      } else {
-        console.warn(`Code file not found: ${expectedPath}`);
+      } catch (error) {
+        console.warn(`Failed to load ${lang} solution for ${contentPath}:`, error);
       }
     }
 
@@ -50,11 +49,11 @@ export async function loadMdxCodeSimple(path: string, languages: string[]): Prom
       codeCache.set(cacheKey, codeSolutions);
       return codeSolutions;
     } else {
-      console.warn(`No code examples found for path: ${path}`);
+      console.warn(`No code examples found for path: ${contentPath}`);
       return null;
     }
   } catch (error) {
-    console.error(`Failed to load code for path ${path}:`, error);
+    console.error(`Failed to load code for path ${contentPath}:`, error);
     return null;
   }
 }

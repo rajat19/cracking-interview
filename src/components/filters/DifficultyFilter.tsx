@@ -1,3 +1,5 @@
+"use client";
+
 import { Button } from "@/components/ui/button";
 import { ITopicDifficulty } from "@/types/topic";
 import { Variant } from "@/types/variant";

@@ -1,0 +1,32 @@
+[
+  {
+    "id": "amazon-leadership-principles",
+    "title": "Amazon Leadership Principles",
+    "difficulty": "medium",
+    "description": "# Amazon Leadership Principles  Amazon's Leadership Principles are the foundation of their culture and guide how Amazonians make decisions, solve problems, and interact with customers and colleagues.…",
+    "companies": [
+      "amazon"
+    ],
+    "topics": [
+      "leadership",
+      "culture",
+      "principles",
+      "behavioral"
+    ]
+  },
+  {
+    "id": "atlassian-values",
+    "title": "Atlassian Values",
+    "difficulty": "medium",
+    "description": "# Atlassian Values  Atlassian's core values define who they are as a company and guide how they work together, make decisions, and treat customers and each other.  ---  ## 1. Open Company, No Bullshit…",
+    "companies": [
+      "atlassian"
+    ],
+    "topics": [
+      "values",
+      "culture",
+      "teamwork",
+      "behavioral"
+    ]
+  }
+]

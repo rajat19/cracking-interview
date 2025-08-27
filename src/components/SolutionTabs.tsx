@@ -1,3 +1,5 @@
+"use client";
+
 import { useEffect, useMemo, useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import useHighlight from '@/hooks/useHighlight';
@@ -10,7 +12,7 @@ interface SolutionTabsProps {
 }
 
 const getLanguageIcon = (language: string): string => {
-  return `${import.meta.env.BASE_URL}assets/img/lang/${language}.svg`;
+  return `/assets/img/lang/${language}.svg`;
 };
 
 export function SolutionTabs({ solutions, showHeader = true }: SolutionTabsProps) {

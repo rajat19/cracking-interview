@@ -17,7 +17,7 @@
     "features": {
       "solutionTabs": false,
       "mdxRenderer": true,
-      "index": false
+      "index": true
     },
     "contentType": "mdx",
     "difficulty": {
@@ -30,7 +30,7 @@
     "features": {
       "solutionTabs": false,
       "mdxRenderer": true,
-      "index": false
+      "index": true
     },
     "contentType": "mdx",
     "difficulty": {
@@ -43,7 +43,7 @@
     "features": {
       "solutionTabs": false,
       "mdxRenderer": true,
-      "index": false
+      "index": true
     },
     "contentType": "mdx",
     "difficulty": {

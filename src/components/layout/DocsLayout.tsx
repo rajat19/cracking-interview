@@ -1,5 +1,7 @@
+"use client";
+
 import { useState, useMemo, useEffect, useCallback } from "react";
-import { useSearchParams } from "react-router-dom";
+import { useSearchParams, useRouter } from "next/navigation";
 import { BookOpen, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import FiltersControls from "@/components/filters/FiltersControls";
@@ -8,7 +10,7 @@ import { TopicContent } from "@/components/TopicContent";
 import { useAuth } from "@/hooks/useAuth";
 import { loadTopicsList, loadTopic, getLocalProgress } from "@/lib/contentLoader";
 import { preloadUserProgress, getCachedCategoryProgress } from "@/lib/progressStore";
-import Navigation from "@/components/Navigation";
+
 import TopicListItem from "@/components/TopicListItem";
 import TopicDifficulty from "@/components/TopicDifficulty";
 import config from '@/config';
@@ -31,7 +33,8 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
   const [loading, setLoading] = useState(true);
   const [loadingTopic, setLoadingTopic] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
-  const [searchParams, setSearchParams] = useSearchParams();
+  const searchParams = useSearchParams();
+  const { replace } = useRouter();
 
   const fetchQuestions = useCallback(async (): Promise<void> => {
     try {
@@ -108,10 +111,10 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
     // Reflect selection in URL for shareability
     const next = new URLSearchParams(searchParams);
     next.set('t', topicId);
-    setSearchParams(next);
+    replace(`?${next.toString()}`);
     // Close sidebar on mobile after selection
     setSidebarOpen(false);
-  }, [selectedTopic?.id, loadFullTopic, searchParams, setSearchParams]);
+  }, [selectedTopic?.id, loadFullTopic, searchParams, replace]);
 
   const filteredTopics = useMemo(() => {
     return topicsWithProgress.filter(topic => {
@@ -140,7 +143,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
     // Keep empty values out of URL
     if (next.get('topic') === '') next.delete('topic');
     if (next.get('company') === '') next.delete('company');
-    setSearchParams(next);
+    replace(`?${next.toString()}`);
   };
 
   const handleSetTopicTagFilter = (value: string) => {
@@ -171,21 +174,16 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
 
   if (loading) {
     return (
-      <>
-        <Navigation />
-        <div className="min-h-screen flex items-center justify-center">
-          <div className="text-center">Loading questions...</div>
-        </div>
-      </>
+      <div className="min-h-screen flex items-center justify-center">
+        <div className="text-center">Loading questions...</div>
+      </div>
     );
   }
 
   return (
-    <>
-      <Navigation />
-      <div className="min-h-[calc(100vh-64px)] bg-background">
-        <div className="lg:hidden">
-          <div className="sticky top-0 z-50 bg-background border-b border-border p-3">
+    <div className="min-h-[calc(100vh-64px)] bg-background">
+      <div className="lg:hidden">
+        <div className="sticky top-16 z-40 bg-background border-b border-border p-3">
             <Button
               variant="outline"
               size="sm"
@@ -296,7 +294,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
         </div>
 
         {/* Desktop Layout */}
-            <div className="hidden lg:flex h-[calc(100vh-64px)] overflow-visible">
+        <div className="hidden lg:flex h-[calc(100vh-64px)] overflow-visible">
           {/* Desktop Sidebar */}
           <div className="w-80 border-r border-border bg-card/30 backdrop-blur-sm flex flex-col h-full overflow-visible">
             {/* Header */}
@@ -396,7 +394,6 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
             </div>
           </div>
         </div>
-      </div>
-    </>
+    </div>
   );
 }
