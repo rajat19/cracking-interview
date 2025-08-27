@@ -1,0 +1,14 @@
+{
+  "cpp": {
+    "language": "cpp",
+    "code": "class Solution {\npublic:\n    int ladderLength(string beginWord, string endWord, vector<string>& wordList) {\n        set<string> wordSet(wordList.begin(), wordList.end());\n        if (!wordSet.count(endWord)) {\n            return 0;\n        }\n        queue<string> q;\n        q.push(beginWord);\n        int steps = 0;\n        while(!q.empty()) {\n            int qs = q.size();\n            for(int i=0; i<qs; i++) {\n                string s = q.front();\n                q.pop();\n                if (s == endWord) return steps+1;\n                for(int j=0; j<s.length(); j++) {\n                    char orig = s[j];\n                    for(char k='a'; k<='z'; k++) {\n                        s[j] = k;\n                        if (wordSet.count(s)) {\n                            q.push(s);\n                            wordSet.erase(s);\n                        }\n                    }\n                    s[j] = orig;\n                }\n            }\n            steps++;\n        }\n        return 0;\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public int ladderLength(String beginWord, String endWord, List<String> wordList) {\n        Set<String> set = new HashSet<>(wordList);\n        if (!set.contains(endWord)) {\n            return 0;\n        }\n        Queue<String> q = new LinkedList<>();\n        q.offer(beginWord);\n        int steps = 0, n = beginWord.length();\n        while(!q.isEmpty()) {\n            int qs = q.size();\n            for(int i=0; i<qs; i++) {\n                StringBuilder sb = new StringBuilder(q.poll());\n                if (endWord.equals(sb.toString())) {\n                    return steps+1;\n                }\n                for(int j=0; j<n; j++) {\n                    char orig = sb.charAt(j);\n                    for(char k='a'; k<='z'; k++) {\n                        sb.setCharAt(j, k);\n                        if (set.contains(sb.toString())) {\n                            q.offer(sb.toString());\n                            set.remove(sb.toString());\n                        }\n                    }\n                    sb.setCharAt(j, orig);\n                }\n            }\n            steps++;\n        }\n        return 0;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  }
+}

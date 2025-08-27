@@ -1,0 +1,26 @@
+{
+  "cpp": {
+    "language": "cpp",
+    "code": "class Solution {\npublic:\n    int m, n;\n    int kthSmallest(vector<vector<int>>& matrix, int k) {\n        m = matrix.size(), n = matrix[0].size();\n        int left = matrix[0][0], right = matrix[m-1][n-1], ans = -1;\n        while (left <= right) {\n            int mid = (left + right) >> 1;\n            if (countLessOrEqual(matrix, mid) >= k) {\n                ans = mid;\n                right = mid - 1;\n            } else left = mid + 1;\n        }\n        return ans;\n    }\n    int countLessOrEqual(vector<vector<int>>& matrix, int x) {\n        int cnt = 0, c = n - 1;\n        for (int r = 0; r < m; ++r) {\n            while (c >= 0 && matrix[r][c] > x) --c;\n            cnt += (c + 1);\n        }\n        return cnt;\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    int m, n;\n    public int kthSmallest(int[][] matrix, int k) {\n        m = matrix.length; n = matrix[0].length;\n        int left = matrix[0][0], right = matrix[m-1][n-1], ans = -1;\n        while (left <= right) {\n            int mid = (left + right) >> 1;\n            if (countLessOrEqual(matrix, mid) >= k) {\n                ans = mid;\n                right = mid - 1;\n            } else left = mid + 1;\n        }\n        return ans;\n    }\n    int countLessOrEqual(int[][] matrix, int x) {\n        int cnt = 0, c = n - 1;\n        for (int r = 0; r < m; ++r) {\n            while (c >= 0 && matrix[r][c] > x) --c;\n            cnt += (c + 1);\n        }\n        return cnt;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "kt": {
+    "language": "kt",
+    "code": "class Solution {\n    fun kthSmallest(matrix: Array<IntArray>, k: Int): Int {\n        val m = matrix.size\n        val n = matrix[0].size\n        var left = matrix[0][0]\n        var right = matrix[m-1][n-1]\n        var ans = -1\n        while(left <= right) {\n            val mid = left + (right - left)/2\n            if (countLessAndEqual(matrix, m, n, mid) >= k) {\n                ans = mid\n                right = mid - 1\n            } else {\n                left = mid + 1\n            }\n        }\n        return ans\n    }\n\n    fun countLessAndEqual(matrix: Array<IntArray>, m: Int, n: Int, element: Int): Int {\n        var col = n-1\n        var count = 0\n        var row = 0\n        while (row < m) {\n            while(col >= 0 && matrix[row][col] > element) {\n                col--\n            }\n            count += col + 1\n            row++\n        }\n        return count\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.kt"
+  },
+  "py": {
+    "language": "py",
+    "code": "class Solution:\n    def kthSmallest(self, matrix, k):\n        m, n = len(matrix), len(matrix[0])\n\n        def countLessOrEqual(x):\n            cnt = 0\n            c = n - 1\n            for r in range(m):\n                while c >= 0 and matrix[r][c] > x:\n                    c -= 1\n                cnt += (c + 1)\n            return cnt\n\n        left, right = matrix[0][0], matrix[-1][-1]\n        ans = -1\n        while left <= right:\n            mid = (left + right) // 2\n            if countLessOrEqual(mid) >= k:\n                ans = mid\n                right = mid - 1\n            else:\n                left = mid + 1\n\n        return ans",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

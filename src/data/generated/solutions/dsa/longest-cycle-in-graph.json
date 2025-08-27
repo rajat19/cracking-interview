@@ -1,0 +1,8 @@
+{
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public int longestCycle(int[] edges) {\n        int longestCycleLen = -1;\n        int timeStep = 1;\n        int[] nodeVisitedAtTime = new int[edges.length];\n\n        for (int currentNode = 0; currentNode < edges.length; ++currentNode) {\n            if (nodeVisitedAtTime[currentNode] > 0)\n                continue;\n            final int startTime = timeStep;\n            int u = currentNode;\n            while (u != -1 && nodeVisitedAtTime[u] == 0) {\n                nodeVisitedAtTime[u] = timeStep++;\n                u = edges[u];\n            }\n            if (u != -1 && nodeVisitedAtTime[u] >= startTime)\n                longestCycleLen = Math.max(longestCycleLen, timeStep - nodeVisitedAtTime[u]);\n        }\n\n        return longestCycleLen;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  }
+}

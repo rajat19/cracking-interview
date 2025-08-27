@@ -1,3 +1,5 @@
+"use client";
+
 import { useState, useEffect, createContext, useContext } from 'react';
 import { auth } from '@/integrations/firebase/client';
 import { User } from 'firebase/auth';

@@ -1,0 +1,26 @@
+{
+  "c": {
+    "language": "c",
+    "code": "int* productExceptSelf(int* nums, int numsSize, int* returnSize) {\n    int countZero = 0, indexZero = -1;\n    int product = 1;\n    *returnSize = numsSize;\n\n    int* result = (int*) malloc(numsSize * sizeof(int));\n    if (!result) return NULL;  // handle malloc failure\n\n    // First pass: count zeros and compute product\n    for (int i = 0; i < numsSize; i++) {\n        if (nums[i] == 0) {\n            countZero++;\n            indexZero = i;\n        } else {\n            product *= nums[i];\n        }\n    }\n\n    if (countZero > 1) {\n        for (int i = 0; i < numsSize; i++) {\n            result[i] = 0;\n        }\n    } else if (countZero == 1) {\n        for (int i = 0; i < numsSize; i++) {\n            result[i] = (i == indexZero) ? product : 0;\n        }\n    } else {\n        for (int i = 0; i < numsSize; i++) {\n            result[i] = product / nums[i];\n        }\n    }\n\n    return result;\n}",
+    "subPath": "",
+    "fileName": "solution.c"
+  },
+  "cpp": {
+    "language": "cpp",
+    "code": "class Solution {\npublic:\n    vector<int> productExceptSelf(vector<int>& nums) {\n        int n = nums.size();\n        vector<int> output(n, 1);\n        for(int i=1; i<n; i++) {\n            output[i] = output[i-1]*nums[i-1];\n        }\n        int m = 1;\n        for(int i=n-1; i>=0; i--) {\n            output[i] = m*output[i];\n            m *= nums[i];\n        }\n        return output;\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public int[] productExceptSelf(int[] nums) {\n        int l = nums.length;\n        int[] out = new int[l];\n        out[0] = 1; out[l-1] = 1;\n        for(int i=1; i<l; i++) {\n            out[i] = nums[i-1]*out[i-1];\n        }\n        int m=1;\n        for(int i=l-1; i>=0; i--) {\n            out[i] = m*out[i];\n            m *= nums[i];\n        }\n        return out;\n    }\n}\n\n/**\n * Alternate solution that handles zeros:\n * class Solution {\n *     public int[] productExceptSelf(int[] nums) {\n *         int[] result = new int[nums.length];\n *         int countZero = 0, indexZero = 0, product = 1;\n *\n *         for (int i = 0; i < nums.length; i++) {\n *             if (nums[i] == 0) {\n *                 countZero++;\n *                 indexZero = i;\n *             } else {\n *                 product *= nums[i];\n *             }\n *         }\n *\n *         if (countZero > 1) {\n *             return result;\n *         } else if (countZero == 1) {\n *             result[indexZero] = product;\n *             return result;\n *         } else {\n *             for (int i = 0; i < nums.length; i++) {\n *                 result[i] = product / nums[i];\n *             }\n *         }\n *\n *         return result;\n *     }\n * }\n */",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "class Solution:\n    def productExceptSelf(self, nums: List[int]) -> List[int]:\n        res = [1 for _ in range(len(nums))]\n        prev = 1\n        for i in range(len(nums)):\n            res[i] = prev\n            prev *= nums[i]\n        prev = 1\n        for i in range(len(nums) - 1, -1, -1):\n            res[i] *= prev\n            prev *= nums[i]\n        return res",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

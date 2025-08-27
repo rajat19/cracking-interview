@@ -1,0 +1,26 @@
+{
+  "cpp": {
+    "language": "cpp",
+    "code": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    vector<vector<int>> zigzagLevelOrder(TreeNode* root) {\n        if (root == nullptr) return {};\n        bool ltr = true;\n        queue<TreeNode*> q;\n        vector<vector<int>> result;\n        q.push(root);\n        while(!q.empty()) {\n            vector<int> row;\n            int qs = q.size();\n            while(qs > 0) {\n                TreeNode *node = q.front();\n                q.pop();\n                if (ltr) {\n                    row.push_back(node->val);\n                } else {\n                    row.insert(row.begin(), node->val);\n                }\n\n                if (node->left != nullptr) q.push(node->left);\n                if (node->right != nullptr) q.push(node->right);\n                qs--;\n            }\n            result.push_back(row);\n            ltr = !ltr;\n        }\n        return result;\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "java": {
+    "language": "java",
+    "code": "/**\n * Definition for a binary tree node.\n * public class TreeNode {\n *     int val;\n *     TreeNode left;\n *     TreeNode right;\n *     TreeNode() {}\n *     TreeNode(int val) { this.val = val; }\n *     TreeNode(int val, TreeNode left, TreeNode right) {\n *         this.val = val;\n *         this.left = left;\n *         this.right = right;\n *     }\n * }\n */\nclass Solution {\n    public List<List<Integer>> zigzagLevelOrder(TreeNode root) {\n        List<List<Integer>> res = new ArrayList<>();\n        if(root == null) return res;\n\n        Queue<TreeNode> q = new LinkedList<>();\n        q.add(root);\n        boolean order = true;\n        int size = 1;\n\n        while(!q.isEmpty()) {\n            List<Integer> tmp = new ArrayList<>();\n            for(int i = 0; i < size; ++i) {\n                TreeNode n = q.poll();\n                if(order) {\n                    tmp.add(n.val);\n                } else {\n                    tmp.add(0, n.val);\n                }\n                if(n.left != null) q.add(n.left);\n                if(n.right != null) q.add(n.right);\n            }\n            res.add(tmp);\n            size = q.size();\n            order = order ? false : true;\n        }\n        return res;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "js": {
+    "language": "js",
+    "code": "/**\n * Definition for a binary tree node.\n */\nfunction TreeNode(val, left, right) {\n    this.val = (val===undefined ? 0 : val)\n    this.left = (left===undefined ? null : left)\n    this.right = (right===undefined ? null : right)\n}\n\n/**\n * @param {TreeNode} root\n * @return {number[][]}\n */\nvar zigzagLevelOrder = function(root) {\n    if (root === null) return [];\n    const queue = [root];\n    const res = [];\n    let order = true;\n    while (queue.length > 0) {\n        const list = [];\n        const size = queue.length;\n        for(let i=0; i<size; i++) {\n            const el = queue.shift();\n            if (order) list.push(el.val);\n            else list.unshift(el.val);\n            if (el.left !== null) queue.push(el.left);\n            if (el.right !== null) queue.push(el.right);\n        }\n        res.push(list);\n        order = !order;\n    }\n    return res;\n};",
+    "subPath": "",
+    "fileName": "solution.js"
+  },
+  "py": {
+    "language": "py",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, val=0, left=None, right=None):\n#         self.val = val\n#         self.left = left\n#         self.right = right\nclass Solution:\n    def zigzagLevelOrder(self, root: TreeNode) -> List[List[int]]:\n        if root is None: return root\n        q = [(root, 0)]\n        mp = {}\n        while len(q) > 0:\n            x, h = q.pop(0)\n            if h in mp:\n                mp[h].append(x.val)\n            else:\n                mp[h] = [x.val]\n            if x.left is not None: q.append((x.left, h+1))\n            if x.right is not None: q.append((x.right, h+1))\n        for k,v in mp.items():\n            if k%2==1:\n                mp[k] = mp[k][::-1]\n        return mp.values()",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

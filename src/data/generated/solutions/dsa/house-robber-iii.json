@@ -1,0 +1,20 @@
+{
+  "cpp": {
+    "language": "cpp",
+    "code": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode() : val(0), left(nullptr), right(nullptr) {}\n *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}\n *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}\n * };\n */\nclass Solution {\npublic:\n    int rob(TreeNode* root) {\n        vector<int> res = robSub(root);\n        return max(res[0], res[1]);\n    }\n\n    vector<int> robSub(TreeNode* root) {\n        vector<int> res(2, 0);\n        if (root == nullptr) {\n            return res;\n        }\n        vector<int> left = robSub(root->left);\n        vector<int> right = robSub(root->right);\n\n        res[0] = max(left[0], left[1]) + max(right[0], right[1]);\n        res[1] = root->val + left[0] + right[0];\n        return res;\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "java": {
+    "language": "java",
+    "code": "/**\n * Definition for a binary tree node.\n * public class TreeNode {\n *     int val;\n *     TreeNode left;\n *     TreeNode right;\n *     TreeNode() {}\n *     TreeNode(int val) { this.val = val; }\n *     TreeNode(int val, TreeNode left, TreeNode right) {\n *         this.val = val;\n *         this.left = left;\n *         this.right = right;\n *     }\n * }\n */\nclass Solution {\n    public int rob(TreeNode root) {\n        int[] res = robSub(root);\n        return Math.max(res[0], res[1]);\n    }\n\n    private int[] robSub(TreeNode root) {\n        if (root == null) return new int[2];\n\n        int[] left = robSub(root.left);\n        int[] right = robSub(root.right);\n        int[] res = new int[2];\n\n        res[0] = Math.max(left[0], left[1]) + Math.max(right[0], right[1]);\n        res[1] = root.val + left[0] + right[0];\n\n        return res;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "from typing import Optional\n\n\n# Definition for a binary tree node.\nclass TreeNode:\n    def __init__(self, val=0, left=None, right=None):\n        self.val = val\n        self.left = left\n        self.right = right\n\n\nclass Solution:\n    def rob(self, root: Optional[TreeNode]) -> int:\n        res = self.robsub(root)\n        return max(res[0], res[1])\n\n    def robsub(self, root):\n        if not root:\n            return [0, 0]\n        left = self.robsub(root.left)\n        right = self.robsub(root.right)\n        res = [0, 0]\n        res[0] = max(left[0], left[1]) + max(right[0], right[1])\n        res[1] = root.val + left[0] + right[0]\n        return res",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

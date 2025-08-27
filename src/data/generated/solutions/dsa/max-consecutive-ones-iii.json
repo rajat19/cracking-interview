@@ -1,0 +1,8 @@
+{
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public int longestOnes(int[] nums, int k) {\n        int windowLeft = 0, windowRight = 0;\n        int bestWindow = 0, bestLeft = 0;\n        int n = nums.length, zeroCount = 0;\n        while(windowRight < n) {\n            if (zeroCount <= k) {\n                if (nums[windowRight] == 0) zeroCount++;\n                windowRight++;\n            }\n            if (zeroCount > k) {\n                if (nums[windowLeft] == 0) zeroCount--;\n                windowLeft++;\n            }\n            if (windowRight-windowLeft > bestWindow && zeroCount <= k) {\n                bestWindow = windowRight-windowLeft;\n                bestLeft = windowLeft;\n            }\n        }\n        return bestWindow;\n\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  }
+}

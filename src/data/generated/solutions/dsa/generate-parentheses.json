@@ -1,0 +1,8 @@
+{
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public List<String> generateParenthesis(int n) {\n        List<String> res = new ArrayList<>();\n        backtrack(n, res, new StringBuilder(), 0, 0);\n        return res;\n    }\n\n    private void backtrack(int n, List<String> res, StringBuilder sb, int open, int close) {\n        if (sb.length() == n*2) {\n            res.add(sb.toString());\n            return;\n        }\n\n        if (open < n) {\n            sb.append('(');\n            backtrack(n, res, sb, open+1, close);\n            sb.deleteCharAt(sb.length() - 1);\n        }\n\n        if (close < open) {\n            sb.append(')');\n            backtrack(n, res, sb, open, close+1);\n            sb.deleteCharAt(sb.length() - 1);\n        }\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  }
+}

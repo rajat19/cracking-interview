@@ -1,0 +1,8 @@
+{
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public List<String> findWords(char[][] board, String[] words) {\n        List<String> res = new ArrayList<>();\n        TrieNode root = buildTrie(words);\n        for (int i = 0; i < board.length; i++) {\n            for (int j = 0; j < board[0].length; j++) {\n                dfs (board, i, j, root, res);\n            }\n        }\n        return res;\n    }\n\n    public void dfs(char[][] board, int i, int j, TrieNode p, List<String> res) {\n        char c = board[i][j];\n        if (c == '#' || p.next[c - 'a'] == null) return;\n        p = p.next[c - 'a'];\n        if (p.word != null) {   // found one\n            res.add(p.word);\n            p.word = null;     // de-duplicate\n        }\n\n        board[i][j] = '#';\n        if (i > 0) dfs(board, i - 1, j ,p, res);\n        if (j > 0) dfs(board, i, j - 1, p, res);\n        if (i < board.length - 1) dfs(board, i + 1, j, p, res);\n        if (j < board[0].length - 1) dfs(board, i, j + 1, p, res);\n        board[i][j] = c;\n    }\n\n    public TrieNode buildTrie(String[] words) {\n        TrieNode root = new TrieNode();\n        for (String w : words) {\n            TrieNode p = root;\n            for (char c : w.toCharArray()) {\n                int i = c - 'a';\n                if (p.next[i] == null) p.next[i] = new TrieNode();\n                p = p.next[i];\n            }\n            p.word = w;\n        }\n        return root;\n    }\n}\n\nclass TrieNode {\n    TrieNode[] next = new TrieNode[26];\n    String word;\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  }
+}

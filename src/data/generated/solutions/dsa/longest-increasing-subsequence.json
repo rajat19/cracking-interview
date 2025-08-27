@@ -1,0 +1,14 @@
+{
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public int lengthOfLIS(int[] nums) {\n        int n = nums.length;\n        int[] lis = new int[n];\n        int size = 0;\n        for(int i=0; i<n; i++) {\n            int start = 0, end = size;\n            while(start != end) {\n                int mid = start + (end-start)/2;\n                if (lis[mid] < nums[i]) {\n                    start = mid+1;\n                } else {\n                    end = mid;\n                }\n            }\n            lis[start] = nums[i];\n            if (start == size) ++size;\n        }\n        return size;\n    }\n}\n\n/*\nAlternate solution using DP\n\nclass Solution {\n    public int lengthOfLIS(int[] nums) {\n        if (nums.length == 0) {\n            return 0;\n        }\n\n        int n = nums.length;\n        int[] dp = new int[n];\n        Arrays.fill(dp, 1);\n\n        for (int i = 1; i < n; ++i) {\n            for (int j = 0; j < i; ++j) {\n                if (nums[i] > nums[j]) {\n                    dp[i] = Math.max(dp[i], dp[j] + 1);\n                }\n            }\n        }\n\n        int maxLen = Arrays.stream(dp).max().getAsInt();\n        return maxLen;\n    }\n}\n\n*/",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "class Solution:\n    def lengthOfLIS(self, nums: List[int]) -> int:\n        size, lis = 0, [0]*len(nums)\n        for num in nums:\n            start, end = 0, size\n            while start != end:\n                mid = start + (end-start)//2\n                if lis[mid] < num:\n                    start = mid+1\n                else:\n                    end = mid\n            lis[start] = num\n            if start == size:\n                size += 1\n        return size",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

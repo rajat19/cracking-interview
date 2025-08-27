@@ -1,0 +1,8 @@
+{
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public int maxEnvelopes(int[][] envelopes) {\n        Arrays.sort(envelopes, (a, b) -> a[0] != b[0] ? a[0]-b[0] : -a[1]+b[1]);\n        int n = envelopes.length;\n        int[] lis = new int[n];\n        int size = 0;\n        for(int i=0; i<n; i++) {\n            int start = 0, end = size;\n            while(start != end) {\n                int mid = start + (end-start)/2;\n                if (envelopes[i][1] > lis[mid]) {\n                    start = mid+1;\n                } else {\n                    end = mid;\n                }\n            }\n            lis[start] = envelopes[i][1];\n            if (start == size) ++size;\n        }\n        return size;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  }
+}

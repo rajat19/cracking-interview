@@ -1,0 +1,14 @@
+{
+  "java": {
+    "language": "java",
+    "code": "/**\n * Definition for singly-linked list.\n * public class ListNode {\n *     int val;\n *     ListNode next;\n *     ListNode() {}\n *     ListNode(int val) { this.val = val; }\n *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }\n * }\n */\nclass Solution {\n    public void reorderList(ListNode head) {\n        if (head == null || head.next == null) return;\n        ListNode prev = null, slow = head, fast = head, l1 = head;\n        while (fast != null && fast.next != null) {\n            prev = slow;\n            slow = slow.next;\n            fast = fast.next.next;\n        }\n        prev.next = null;\n        ListNode l2 = reverse(slow);\n        merge(l1, l2);\n    }\n\n    ListNode reverse(ListNode head) {\n        ListNode prev = null, curr = head, next = null;\n        while (curr != null) {\n            next = curr.next;\n            curr.next = prev;\n            prev = curr;\n            curr = next;\n        }\n        return prev;\n    }\n\n    void merge(ListNode l1, ListNode l2) {\n        while (l1 != null) {\n            ListNode n1 = l1.next, n2 = l2.next;\n            l1.next = l2;\n            if (n1 == null) break;\n            l2.next = n1;\n            l1 = n1;\n            l2 = n2;\n        }\n    }\n\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "# Definition for singly-linked list.\n# class ListNode:\n#     def __init__(self, val=0, next=None):\n#         self.val = val\n#         self.next = next\nclass Solution:\n    def reorderList(self, head: Optional[ListNode]) -> None:\n        \"\"\"\n        Do not return anything, modify head in-place instead.\n        \"\"\"\n        \n        slow, fast = head, head.next\n        while fast and fast.next:\n            slow = slow.next\n            fast = fast.next.next\n\n        second = slow.next\n        slow.next = None\n\n        prev = None\n        while second:\n            temp = second.next\n            second.next = prev\n            prev = second\n            second = temp\n\n        first = head\n        second = prev\n        while second:\n            temp1, temp2 = first.next, second.next\n            first.next = second\n            second.next = temp1\n            first = temp1\n            second = temp2",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

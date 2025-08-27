@@ -2,6 +2,26 @@ import fm from 'front-matter';
 import type { ISolutionEntry, ITopic, ITopicCategory, ITopicList } from '@/types/topic';
 import config from '@/config';
 
+// Import all index files statically for better reliability
+import dsaIndex from '@/data/dsa-index.json';
+import systemDesignIndex from '@/data/system-design-index.json';
+import oodIndex from '@/data/ood-index.json';
+import behavioralIndex from '@/data/behavioral-index.json';
+
+// Import pre-generated content maps statically
+import dsaContent from '@/data/generated/dsa-content.json';
+import systemDesignContent from '@/data/generated/system-design-content.json';
+import oodContent from '@/data/generated/ood-content.json';
+import behavioralContent from '@/data/generated/behavioral-content.json';
+
+// Static content maps for immediate access
+const CONTENT_MAPS: Record<string, any> = {
+  'dsa': dsaContent,
+  'system-design': systemDesignContent,
+  'ood': oodContent,
+  'behavioral': behavioralContent
+};
+
 // Universal frontmatter interface that covers all categories
 interface UniversalFrontmatterData {
   title?: string;
@@ -69,70 +89,56 @@ const getRelatedTopics = (fm: UniversalFrontmatterData): string[] | undefined =>
          Array.isArray(fm.tags) ? fm.tags : undefined;
 };
 
-// Extract common code loading logic
+// For static export, code loading is disabled
 const loadCodeForTopic = async (
   category: ITopicCategory, 
   topicId: string, 
-  codeModules: Record<string, () => Promise<string>>
+  codeModules: Record<string, () => Promise<string>>,
+  availableLanguages?: string[]
 ): Promise<Record<string, ISolutionEntry>> => {
-  const solutions: Record<string, ISolutionEntry> = {};
+  console.log(`Loading solutions for: ${category}/${topicId}`);
   
-  for (const [codePath, moduleLoader] of Object.entries(codeModules)) {
-    const normalized = codePath.replace(/\\/g, '/');
-    const parts = normalized.split('/');
-    const codeIndex = parts.findIndex(p => p === 'code');
-    if (codeIndex === -1 || codeIndex + 1 >= parts.length) continue;
-    
-    const problemDir = parts[codeIndex + 1];
-    if (problemDir !== topicId) continue;
-    
-    const fileName = parts[parts.length - 1];
-    const ext = (fileName.split('.').pop() || '').toLowerCase();
-    
-    try {
-      const raw = await moduleLoader();
-      
-      // Different key strategies for different categories
-      if (category === 'dsa') {
-        solutions[ext] = { language: ext, code: raw };
-      } else {
-        solutions[fileName] = { language: ext, code: raw };
-      }
-    } catch (error) {
-      console.warn(`Failed to load ${category} code ${codePath}:`, error);
-    }
+  // Get solutions from pre-generated content
+  const contentMap = CONTENT_MAPS[category];
+  
+  if (contentMap && contentMap[topicId] && contentMap[topicId].solutions) {
+    const solutions = contentMap[topicId].solutions;
+    console.log(`✅ Found ${Object.keys(solutions).length} pre-generated solutions for ${topicId}`);
+    return solutions;
   }
   
-  return solutions;
+  console.warn(`⚠️  No pre-generated solutions found for ${category}/${topicId}`);
+  return {};
 };
 
-// Dynamic module loaders for different content types
-const indexModules = import.meta.glob('/src/data/*-index.json', {
-  import: 'default',
-  query: 'raw',
-}) as unknown as Record<string, () => Promise<string>>;
-
-const contentModules = import.meta.glob('/src/content/**/*.mdx', {
-  import: 'default',
-  query: 'raw',
-}) as unknown as Record<string, () => Promise<string>>;
-
-const codeModules = import.meta.glob('/src/content/**/code/**/*.*', {
-  import: 'default',
-  query: 'raw',
-}) as unknown as Record<string, () => Promise<string>>;
-
+// For static export, use pre-generated content from SSG
 const dynamicLoader = async (modules: Record<string, () => Promise<string>>, path: string): Promise<string> => {
-  const moduleLoader = modules[path];
-  if (!moduleLoader) {
-    throw new Error(`Module not found: ${path}`);
+  const pathParts = path.split('/');
+  const fileName = pathParts[pathParts.length - 1].replace('.mdx', '');
+  const category = pathParts[3];
+  
+  console.log(`Loading content for: ${category}/${fileName}`);
+  
+  // Get the actual content from the pre-generated static maps
+  const contentMap = CONTENT_MAPS[category];
+  
+  if (contentMap && contentMap[fileName] && contentMap[fileName].content) {
+    console.log(`✅ Found pre-generated content for ${fileName}`);
+    return contentMap[fileName].content;
   }
-  return await moduleLoader();
+  
+  // If content not found, throw error instead of fallback
+  console.error(`❌ No pre-generated content found for ${category}/${fileName}`);
+  throw new Error(`Content not found: ${category}/${fileName}. Make sure to run 'npm run generate:content' before building.`);
 };
+
+// Placeholder functions removed - SSG should provide all content
 
 // Get appropriate modules based on category (now always MDX)
 const getContentModules = (category: ITopicCategory): Record<string, () => Promise<string>> => {
-  return contentModules;
+  // Since we're using API routes for content loading, return empty object
+  // Content will be loaded via dynamicLoader function instead
+  return {};
 };
 
 // Category-specific path builders (now always MDX)
@@ -173,17 +179,34 @@ const mapFrontmatterToTopic = (
   };
 };
 
-const loadFromCache = async (category: ITopicCategory): Promise<ITopicList[] | null> => {
-  const indexPath = `/src/data/${category}-index.json`;
+const indexMap = {
+  'dsa': dsaIndex,
+  'system-design': systemDesignIndex,
+  'ood': oodIndex,
+  'behavioral': behavioralIndex,
+} as const;
 
+const loadFromCache = async (category: ITopicCategory): Promise<ITopicList[] | null> => {
   try {
-    const rawData = await dynamicLoader(indexModules, indexPath);
-    const items = JSON.parse(rawData);
-    if (Array.isArray(items) && items.length >= 0) {
-      return items;
+    console.log(`Loading index for category: ${category}`);
+    const items = indexMap[category];
+    
+    if (!items) {
+      console.error(`No index data found for category: ${category}`);
+      return null;
     }
-  } catch {
-    // If index is missing or invalid, fall back to scanning markdown
+    
+    console.log(`Loaded ${items.length} items for category: ${category}`);
+    
+    if (Array.isArray(items) && items.length >= 0) {
+      return items.map((item: any) => ({
+        ...item,
+        isCompleted: false,
+        isBookmarked: false
+      }));
+    }
+  } catch (error) {
+    console.error(`Failed to load ${category} index from cache:`, error);
   }
   return null;
 };
@@ -259,25 +282,11 @@ export const loadTopic = async (category: ITopicCategory, topicId: string): Prom
   }
   
   try {
-    const contentModules = getContentModules(category);
+    // Construct the file path for this topic
+    const filePath = `/src/content/${category}/posts/${topicId}.mdx`;
     
-    // Find the correct module path for this topic
-    const modulePath = Object.keys(contentModules).find(path => {
-      if (!path.includes(`/content/${category}/posts/`)) {
-        return false; // Must be in the correct category posts folder
-      }
-      const id = generateSlugFromPath(path, category);
-      return id === topicId;
-    });
-    
-
-    
-    if (!modulePath) {
-      console.warn(`${category} topic ${topicId} not found`);
-      return null;
-    }
-    
-    const raw = await contentModules[modulePath]();
+    // Load content using the API route
+    const raw = await dynamicLoader({}, filePath);
     const parsed = fm<UniversalFrontmatterData>(raw);
     const data = parsed.attributes || {};
     const content = parsed.body || '';
@@ -286,7 +295,9 @@ export const loadTopic = async (category: ITopicCategory, topicId: string): Prom
     
     // Load solutions/code examples if the category supports them
     if (config.hasSolutions(category)) {
-      const solutions = await loadTopicSolution(category, topicId);
+      // Extract available languages from frontmatter
+      const availableLanguages = Array.isArray(data.langs) ? data.langs : undefined;
+      const solutions = await loadTopicSolution(category, topicId, availableLanguages);
       if (solutions) {
         topic.solutions = solutions;
       }
@@ -305,7 +316,8 @@ export const loadTopic = async (category: ITopicCategory, topicId: string): Prom
 // 3. Load solutions for a specific topic (category-dependent)
 export const loadTopicSolution = async (
   category: ITopicCategory, 
-  topicId: string
+  topicId: string,
+  availableLanguages?: string[]
 ): Promise<Record<string, ISolutionEntry> | null> => {
   const cacheKey = `${category}:${topicId}:solutions`;
   
@@ -320,8 +332,8 @@ export const loadTopicSolution = async (
   }
   
   try {
-    // Use the unified code loading function
-    const solutions = await loadCodeForTopic(category, topicId, codeModules);
+    // Use the unified code loading function with empty modules (API route approach)
+    const solutions = await loadCodeForTopic(category, topicId, {}, availableLanguages);
     
     // Cache the solutions if any were found
     if (Object.keys(solutions).length > 0) {

@@ -1,0 +1,20 @@
+{
+  "cpp": {
+    "language": "cpp",
+    "code": "class Solution {\npublic:\n    vector<vector<int> > combinationSum(vector<int> &candidates, int target) {\n        sort(candidates.begin(), candidates.end());\n        vector<vector<int> > res;\n        vector<int> combination;\n        combinationSum(candidates, target, res, combination, 0);\n        return res;\n    }\nprivate:\n    void combinationSum(vector<int> &candidates, int target, vector<vector<int> > &res, vector<int> &combination, int begin) {\n        if (!target) {\n            res.push_back(combination);\n            return;\n        }\n        for (int i = begin; i != candidates.size() && target >= candidates[i]; ++i) {\n            combination.push_back(candidates[i]);\n            combinationSum(candidates, target - candidates[i], res, combination, i);\n            combination.pop_back();\n        }\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public List<List<Integer>> combinationSum(int[] candidates, int target) {\n        List<List<Integer>> res = new ArrayList<>();\n        backtrack(candidates, target, 0, new ArrayList<>(), res);\n        return res;\n    }\n\n    private void backtrack(int[] candidates, int target, int pos, List<Integer> combo, List<List<Integer>> res) {\n        if (pos == candidates.length || target < 0) return;\n        if (target == 0) {\n            res.add(new ArrayList<>(combo));\n            return;\n        }\n        backtrack(candidates, target, pos+1, combo, res);\n        combo.add(candidates[pos]);\n        backtrack(candidates, target - candidates[pos], pos, combo, res);\n        combo.remove(combo.size() - 1);\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "class Solution:\n    def combinationSum(self, candidates: List[int], target: int) -> List[List[int]]:\n        res = []\n        def backtrack(sum: int, pos: int, arr: List[int]):\n            if sum <0 or pos >= len(candidates):\n                return\n            if sum == 0:\n                res.append(list(arr))\n                return\n            backtrack(sum, pos+1, arr)\n            arr.append(candidates[pos])\n            backtrack(sum-candidates[pos], pos, arr)\n            arr.pop()\n        backtrack(target, 0, [])\n        return res",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

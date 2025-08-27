@@ -27,15 +27,15 @@ not the k<sup>th</sup> distinct element.
 ### Algorithm
 - Start with `left = minOfMatrix = matrix[0][0]` and `right = maxOfMatrix = matrix[n-1][n-1]`. 
 - Find the `mid` of the `left` and the `right`. This middle number is **NOT necessarily** an element in the matrix. 
-- If `countLessOrEqual(mid) >= k`, we keep current `ans = mid` and try to find smaller value by searching on the left side. Otherwise, we search on the right side. 
-- Since `ans` is the smallest value which `countLessOrEqual(ans) >= k`, so it's the k<sup>th</sup> smallest element in the matrix.
+- If `countLessOrEqual(mid) &gt;= k`, we keep current `ans = mid` and try to find smaller value by searching on the left side. Otherwise, we search on the right side. 
+- Since `ans` is the smallest value which `countLessOrEqual(ans) &gt;= k`, so it's the k<sup>th</sup> smallest element in the matrix.
 
 ### How to count number of elements less or equal to x efficiently?
 - Since our `matrix` is sorted in ascending order by rows and columns. 
 - We use two pointers, one points to the rightmost column `c = n-1`, and one points to the lowest row `r = 0`.
-  - If `matrix[r][c] <= x` then the number of elements in row `r` less or equal to `x` is `(c+1)` (Because `row[r]` is sorted in ascending order, so if `matrix[r][c] <= x` then `matrix[r][c-1]` is also <= `x`). 
+  - If `matrix[r][c] &lt;= x` then the number of elements in row `r` less or equal to `x` is `(c+1)` (Because `row[r]` is sorted in ascending order, so if `matrix[r][c] &lt;= x` then `matrix[r][c-1]` is also &lt;= `x`). 
   Then we go to next row to continue counting.
-  - Else if `matrix[r][c] > x`, we decrease column c until `matrix[r][c] <= x` (Because column is sorted in ascending order, so if `matrix[r][c] > x` then `matrix[r+1][c]` is also > `x`). 
+  - Else if `matrix[r][c] &gt; x`, we decrease column c until `matrix[r][c] &lt;= x` (Because column is sorted in ascending order, so if `matrix[r][c] &gt; x` then `matrix[r+1][c]` is also &gt; `x`). 
 - Time complexity for counting: `O(M+N)`.
 
 ---

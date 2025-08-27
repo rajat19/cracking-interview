@@ -1,0 +1,20 @@
+{
+  "cpp": {
+    "language": "cpp",
+    "code": "class Solution {\npublic:\n    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {\n        int size=gas.size();\n    int sum=0;\n    int res=0;\n    int total=0;\n    for(int i=0; i<size; ++i){\n        sum+=gas[i]-cost[i];\n        if(sum<0){\n            total+=sum;\n            sum=0;\n            res=i+1;\n        }\n    }\n    total+=sum;\n    return total<0?-1:res;\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public int canCompleteCircuit(int[] gas, int[] cost) {\n        int total = 0, current = 0, start = 0;\n        for(int index = 0; index < gas.length; index++) {\n            total += gas[index] - cost[index];\n            current += gas[index] - cost[index];\n            if (current < 0) {\n                current = 0;\n                start = index+1;\n            }\n        }\n        if (total < 0) {\n            return -1;\n        }\n        return start;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "class Solution:\n    def canCompleteCircuit(self, gas: List[int], cost: List[int]) -> int:\n        total, current, start = 0, 0, 0\n        for i in range(len(gas)):\n            total += gas[i] - cost[i]\n            current += gas[i] - cost[i]\n            if current < 0:\n                current, start = 0, i+1\n        return start if total >= 0 else -1",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

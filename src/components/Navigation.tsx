@@ -1,4 +1,7 @@
-import { Link, useLocation } from 'react-router-dom';
+"use client";
+
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { useAuth } from '@/hooks/useAuth';
@@ -6,7 +9,7 @@ import { Bookmark, User, LogOut, Menu, X } from 'lucide-react';
 import { useState } from 'react';
 
 const Navigation = () => {
-  const location = useLocation();
+  const pathname = usePathname();
   const { user, signOut, loading } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -15,10 +18,10 @@ const Navigation = () => {
   }
 
   const navigationLinks = [
-    { to: '/dsa', label: 'DSA', active: location.pathname === '/dsa' },
-    { to: '/system-design', label: 'System Design', active: location.pathname === '/system-design' },
-    { to: '/ood', label: 'OOD', active: location.pathname === '/ood' },
-    { to: '/behavioral', label: 'Behavioral', active: location.pathname === '/behavioral' },
+    { to: '/dsa', label: 'DSA', active: pathname === '/dsa' },
+    { to: '/system-design', label: 'System Design', active: pathname === '/system-design' },
+    { to: '/ood', label: 'OOD', active: pathname === '/ood' },
+    { to: '/behavioral', label: 'Behavioral', active: pathname === '/behavioral' },
   ];
 
   return (
@@ -28,28 +31,34 @@ const Navigation = () => {
           <div className="flex justify-between items-center h-16">
             {/* Logo */}
             <div className="flex items-center">
-              <Link to="/" className="flex items-center space-x-2">
-                <span className="font-bold text-xl text-foreground">Interview Prep</span>
+              <Link href="/" className="flex items-center space-x-2">
+                <span className="font-bold text-lg sm:text-xl text-foreground">
+                  <span className="hidden sm:inline">Interview Prep</span>
+                  <span className="sm:hidden">Prep</span>
+                </span>
               </Link>
             </div>
 
-            {/* Desktop Navigation */}
-            <div className="hidden md:block">
-              <div className="flex items-center space-x-1">
-                {navigationLinks.map((link) => (
-                  <Link
-                    key={link.to}
-                    to={link.to}
-                    className={`px-3 py-2 rounded-md text-sm font-medium transition-colors duration-200 ${
-                      link.active
-                        ? 'bg-primary text-primary-foreground'
-                        : 'text-muted-foreground hover:text-foreground hover:bg-accent'
-                    }`}
-                  >
-                    {link.label}
-                  </Link>
-                ))}
-              </div>
+            {/* Navigation Links - Always Visible */}
+            <div className="flex items-center space-x-1">
+              {navigationLinks.map((link) => (
+                <Link
+                  key={link.to}
+                  href={link.to}
+                  className={`px-2 md:px-3 py-2 rounded-md text-xs md:text-sm font-medium transition-colors duration-200 ${
+                    link.active
+                      ? 'bg-primary text-primary-foreground'
+                      : 'text-muted-foreground hover:text-foreground hover:bg-accent'
+                  }`}
+                >
+                  <span className="hidden sm:inline">{link.label}</span>
+                  <span className="sm:hidden">
+                    {link.label === 'System Design' ? 'Design' : 
+                     link.label === 'Behavioral' ? 'Behav' :
+                     link.label}
+                  </span>
+                </Link>
+              ))}
             </div>
 
             {/* Desktop Right Side */}
@@ -57,14 +66,14 @@ const Navigation = () => {
               {user ? (
                 <>
                   <Link 
-                    to="/profile" 
+                    href="/profile" 
                     className="flex items-center space-x-1 px-3 py-2 rounded-md text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-200"
                   >
                     <Bookmark size={16} />
                     <span>Bookmarks</span>
                   </Link>
                   <div className="relative group">
-                    <Link to="/profile">
+                    <Link href="/profile">
                       <Button variant="ghost" size="sm" className="flex items-center space-x-1">
                         <User size={16} />
                       </Button>
@@ -72,7 +81,7 @@ const Navigation = () => {
                     <div className="absolute right-0 top-full mt-2 w-48 bg-card border border-border rounded-md shadow-lg opacity-0 invisible group-hover:opacity-100 group-hover:visible transition-all duration-200">
                       <div className="py-1">
                         <Link
-                          to="/profile"
+                          href="/profile"
                           className="flex items-center space-x-2 w-full px-4 py-2 text-sm text-muted-foreground hover:text-foreground hover:bg-accent"
                         >
                           <User size={16} />
@@ -90,88 +99,64 @@ const Navigation = () => {
                   </div>
                 </>
               ) : (
-                <Link to="/auth">
+                <Link href="/auth">
                   <Button size="sm">Sign In</Button>
                 </Link>
               )}
               <ThemeToggle />
             </div>
 
-            {/* Mobile menu button */}
+            {/* Mobile Right Side */}
             <div className="md:hidden flex items-center space-x-2">
+              {user ? (
+                <Button
+                  variant="ghost"
+                  size="sm"
+                  onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                  className="p-2"
+                >
+                  {mobileMenuOpen ? <X size={16} /> : <User size={16} />}
+                </Button>
+              ) : (
+                <Link href="/auth">
+                  <Button size="sm" className="text-xs px-2 py-1">Sign In</Button>
+                </Link>
+              )}
               <ThemeToggle />
-              <Button
-                variant="ghost"
-                size="sm"
-                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2"
-              >
-                {mobileMenuOpen ? <X size={20} /> : <Menu size={20} />}
-              </Button>
             </div>
           </div>
         </div>
 
-        {/* Mobile Navigation Menu */}
-        {mobileMenuOpen && (
+        {/* Mobile User Menu */}
+        {mobileMenuOpen && user && (
           <div className="md:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-card border-t border-border">
-              {navigationLinks.map((link) => (
-                <Link
-                  key={link.to}
-                  to={link.to}
-                  onClick={() => setMobileMenuOpen(false)}
-                  className={`block px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
-                    link.active
-                      ? 'bg-primary text-primary-foreground'
-                      : 'text-muted-foreground hover:text-foreground hover:bg-accent'
-                  }`}
-                >
-                  {link.label}
-                </Link>
-              ))}
-              
-              {/* Mobile User Section */}
-              <div className="border-t border-border pt-3 mt-3">
-                {user ? (
-                  <>
-                    <Link
-                      to="/profile"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-200"
-                    >
-                      <Bookmark size={16} />
-                      <span>Bookmarks</span>
-                    </Link>
-                    <Link
-                      to="/profile"
-                      onClick={() => setMobileMenuOpen(false)}
-                      className="flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-200"
-                    >
-                      <User size={16} />
-                      <span>Profile</span>
-                    </Link>
-                    <button
-                      onClick={() => {
-                        signOut();
-                        setMobileMenuOpen(false);
-                      }}
-                      className="flex items-center space-x-2 w-full px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-200"
-                    >
-                      <LogOut size={16} />
-                      <span>Sign Out</span>
-                    </button>
-                  </>
-                ) : (
-                  <Link
-                    to="/auth"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="block px-3 py-2 rounded-md text-base font-medium bg-primary text-primary-foreground text-center"
-                  >
-                    Sign In
-                  </Link>
-                )}
-              </div>
+              <Link
+                href="/profile"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-200"
+              >
+                <Bookmark size={16} />
+                <span>Bookmarks</span>
+              </Link>
+              <Link
+                href="/profile"
+                onClick={() => setMobileMenuOpen(false)}
+                className="flex items-center space-x-2 px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-200"
+              >
+                <User size={16} />
+                <span>Profile</span>
+              </Link>
+              <button
+                onClick={() => {
+                  signOut();
+                  setMobileMenuOpen(false);
+                }}
+                className="flex items-center space-x-2 w-full px-3 py-2 rounded-md text-base font-medium text-muted-foreground hover:text-foreground hover:bg-accent transition-colors duration-200"
+              >
+                <LogOut size={16} />
+                <span>Sign Out</span>
+              </button>
             </div>
           </div>
         )}

@@ -1,0 +1,20 @@
+{
+  "cpp": {
+    "language": "cpp",
+    "code": "class Solution {\npublic:\n    int maxProduct(vector<int>& nums) {\n        int n = nums.size(), l = 0, r = 0, res = nums[0];\n        for(int i=0; i<n; i++) {\n            l = (l==0 ? 1 : l) * nums[i];\n            r = (r==0 ? 1 : r) * nums[n-i-1];\n            res = max(res, max(l, r));\n        }\n        return res;\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public int maxProduct(int[] A) {\n        int n = A.length, res = A[0], l = 0, r = 0;\n        for (int i = 0; i < n; i++) {\n            l =  (l == 0 ? 1 : l) * A[i];\n            r =  (r == 0 ? 1 : r) * A[n - 1 - i];\n            res = Math.max(res, Math.max(l, r));\n        }\n        return res;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "class Solution:\n    def maxProduct(self, nums: List[int]) -> int:\n        rev = nums[::-1]\n        for i in range(1, len(nums)):\n            nums[i] *= nums[i-1] or 1\n            rev[i] *= rev[i-1] or 1\n        return max(nums + rev)",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

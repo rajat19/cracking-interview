@@ -1,0 +1,8 @@
+{
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public List<String> removeInvalidParentheses(String s) {\n        Queue<String> queue = new LinkedList<>();\n        Set<String> visited = new HashSet<>();\n        List<String> result = new ArrayList<>();\n        boolean found = false;\n\n        queue.offer(s);\n        visited.add(s);\n        while(!queue.isEmpty()) {\n            String current = queue.poll();\n            if (isValid(current)) {\n                result.add(current);\n                found = true;\n            }\n\n            if (found) {\n                continue;\n            }\n\n            for(int i=0; i<current.length(); i++) {\n                char c = current.charAt(i);\n                if (c != '(' && c != ')') {\n                    continue;\n                }\n                String next = current.substring(0, i) + current.substring(i+1);\n                if (!visited.contains(next)) {\n                    visited.add(next);\n                    queue.offer(next);\n                }\n            }\n        }\n        return result;\n    }\n\n    private boolean isValid(String s) {\n        int count = 0;\n        for(char c: s.toCharArray()) {\n            if (c == '(') {\n                count++;\n            }\n            else if (c == ')'){\n                if (count == 0) {\n                    return false;\n                }\n                count--;\n            }\n        }\n        return count == 0;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  }
+}

@@ -1,0 +1,58 @@
+[
+  {
+    "id": "activity-diagram",
+    "title": "Activity Diagrams",
+    "difficulty": "medium",
+    "description": "We use Activity Diagrams to illustrate the flow of control in a system. An activity diagram shows the flow of control for a system functionality; it emphasizes the condition of flow and the sequence i…",
+    "companies": [],
+    "topics": []
+  },
+  {
+    "id": "class-diagram",
+    "title": "Class Diagram",
+    "difficulty": "medium",
+    "description": "Class diagram is the backbone of object-oriented modeling - it shows how different entities (people, things, and data) relate to each other. In other words, it shows the static structures of the syste…",
+    "companies": [],
+    "topics": []
+  },
+  {
+    "id": "oo-analysis-design",
+    "title": "Object Oriented Analysis and Design",
+    "difficulty": "medium",
+    "description": "Object Oriented Analysis and Design is a structured method for analyzing and designing a system by applying object-oriented concepts. This design process consists of an investigation into the objects…",
+    "companies": [],
+    "topics": []
+  },
+  {
+    "id": "oops",
+    "title": "Object-Oriented Basics",
+    "difficulty": "medium",
+    "description": "Object-oriented programming (OOP) is a style of programming that focuses on using objects to design and build applications. Contrary to procedure-oriented programming where programs are designed as bl…",
+    "companies": [],
+    "topics": []
+  },
+  {
+    "id": "sequence-diagram",
+    "title": "Sequence diagram",
+    "difficulty": "medium",
+    "description": "Sequence diagrams describe interactions among classes in terms of an exchange of messages over time and are used to explore the logic of complex operations, functions or procedures. In this diagram, t…",
+    "companies": [],
+    "topics": []
+  },
+  {
+    "id": "uml",
+    "title": "What is UML?",
+    "difficulty": "medium",
+    "description": "UML stands for Unified Modeling Language and is used to model the Object-Oriented Analysis of a software system. UML is a way of visualizing and documenting a software system by using a collection of…",
+    "companies": [],
+    "topics": []
+  },
+  {
+    "id": "use-case",
+    "title": "Use Case Diagrams",
+    "difficulty": "medium",
+    "description": "Use case diagrams describe a set of actions (called use cases) that a system should or can perform in collaboration with one or more external users of the system (called actors). Each use case should…",
+    "companies": [],
+    "topics": []
+  }
+]

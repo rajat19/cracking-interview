@@ -1,0 +1,58 @@
+# Dependencies
+node_modules/
+pnpm-lock.yaml
+package-lock.json
+yarn.lock
+
+# Build outputs
+.next/
+out/
+dist/
+build/
+
+# Environment files
+.env
+.env.local
+.env.production
+.env.staging
+
+# Cache directories
+.turbo/
+.cache/
+
+# IDE files
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Generated files
+*.min.js
+*.min.css
+
+# MDX content files (preserve original formatting)
+src/content/**/*.mdx
+
+# Config files that should maintain specific formatting
+*.config.js
+*.config.mjs
+*.config.ts
+next.config.*
+tailwind.config.*
+
+# Public assets
+public/
+
+# Git
+.git/
+.gitignore

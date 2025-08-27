@@ -1,0 +1,26 @@
+{
+  "c": {
+    "language": "c",
+    "code": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     struct TreeNode *left;\n *     struct TreeNode *right;\n * };\n */\nstruct TreeNode* lowestCommonAncestor(struct TreeNode* root, struct TreeNode* p, struct TreeNode* q) {\n    if (!root || root == p || root == q) {\n        return root;\n    }\n\n    struct TreeNode *left = lowestCommonAncestor(root->left, p, q);\n    struct TreeNode *right = lowestCommonAncestor(root->right, p, q);\n    if (left && right) {\n        return root;\n    }\n    return left ? left : right;\n}",
+    "subPath": "",
+    "fileName": "solution.c"
+  },
+  "cpp": {
+    "language": "cpp",
+    "code": "/**\n * Definition for a binary tree node.\n * struct TreeNode {\n *     int val;\n *     TreeNode *left;\n *     TreeNode *right;\n *     TreeNode(int x) : val(x), left(NULL), right(NULL) {}\n * };\n */\nclass Solution {\npublic:\n    TreeNode* lowestCommonAncestor(TreeNode* root, TreeNode* p, TreeNode* q) {\n        if (!root || root == p || root == q) {\n            return root;\n        }\n\n        TreeNode *left = lowestCommonAncestor(root->left, p, q);\n        TreeNode *right = lowestCommonAncestor(root->right, p, q);\n        if (left && right) {\n            return root;\n        }\n        return left ? left : right;\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "java": {
+    "language": "java",
+    "code": "/**\n * Definition for a binary tree node.\n * public class TreeNode {\n *     int val;\n *     TreeNode left;\n *     TreeNode right;\n *     TreeNode(int x) { val = x; }\n * }\n */\nclass Solution {\n    public TreeNode lowestCommonAncestor(TreeNode root, TreeNode p, TreeNode q) {\n        if (root == null) return null;\n        if (root.val == p.val || root.val == q.val) return root;\n\n        TreeNode left = lowestCommonAncestor(root.left, p, q);\n        TreeNode right = lowestCommonAncestor(root.right, p, q);\n        if (left != null && right != null) return root;\n        if (left != null) return left;\n        if (right != null) return right;\n        return null;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "# Definition for a binary tree node.\n# class TreeNode:\n#     def __init__(self, x):\n#         self.val = x\n#         self.left = None\n#         self.right = None\n\nclass Solution:\n    def lowestCommonAncestor(self, root: 'TreeNode', p: 'TreeNode', q: 'TreeNode') -> 'TreeNode':\n        if root is None:\n            return None\n        if root.val == p.val or root.val == q.val:\n            return root\n        left = self.lowestCommonAncestor(root.left, p, q)\n        right = self.lowestCommonAncestor(root.right, p, q)\n        if left is not None and right is not None:\n            return root\n        if left is not None:\n            return left\n        if right is not None:\n            return right\n        return None",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

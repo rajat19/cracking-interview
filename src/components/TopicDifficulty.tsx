@@ -1,3 +1,5 @@
+"use client";
+
 import { ITopicDifficulty } from "@/types/topic";
 
 interface TopicDifficultyProps {
@@ -11,8 +13,12 @@ const TopicDifficulty = ({ difficulty }: TopicDifficultyProps) => {
         'hard': 'badge-error',
     };
 
+    if (difficulty === 'all') {
+        return null;
+    }
+
     return (
-        <div className={`badge badge-dash ${difficultyMap[difficulty]} p-2 rounded-md text-xs`}>
+        <div className={`badge badge-dash ${difficultyMap[difficulty as keyof typeof difficultyMap]} p-2 rounded-md text-xs`}>
             {difficulty}
         </div>
     );

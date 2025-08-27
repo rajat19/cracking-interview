@@ -1,0 +1,8 @@
+{
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public boolean isCycle(int V, ArrayList<ArrayList<Integer>> adj) {\n        Set<Integer> visited = new HashSet<>();\n        for(int i=0; i<V; i++) {\n            if (!visited.contains(i)) {\n                if (dfs(i, adj, visited, -1)) return true;\n            }\n        }\n        return false;\n    }\n\n    private boolean dfs(int v, ArrayList<ArrayList<Integer>> adj, Set<Integer> visited, int parent) {\n        visited.add(v);\n        for(Integer neigh: adj.get(v)) {\n            if (!visited.contains(neigh)) {\n                if (dfs(neigh, adj, visited, v)) return true;\n            } else if (neigh != parent) {\n                return true;\n            }\n        }\n        return false;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  }
+}

@@ -1,0 +1,32 @@
+{
+  "c": {
+    "language": "c",
+    "code": "char* minWindow(char* s, char* t) {\n    int i    = 0;\n    int j    = 0;\n    int tlen = strlen(t);\n    int slen = strlen(s);\n    int counts[256] = { 0 };\n    int win[2] = { 0, INT_MAX };\n\n    for (int i = 0; i < tlen; i++) {\n        counts[t[i]]++;\n    }\n    while (j < slen) {\n        if (counts[s[j]] > 0) {\n            tlen--;\n        }\n        counts[s[j]]--;\n        j++;\n        while (tlen == 0) {\n            if (j - i < win[1] - win[0]) {\n                win[0] = i; win[1] = j;\n            }\n            counts[s[i]]++;\n            if (counts[s[i]] > 0) {\n                tlen++;\n            }\n            i++;\n        }\n    }\n    return (win[1] != INT_MAX) \n           ? strndup(&s[win[0]], win[1] - win[0]) \n           : \"\";\n}",
+    "subPath": "",
+    "fileName": "solution.c"
+  },
+  "cpp": {
+    "language": "cpp",
+    "code": "class Solution {\npublic:\n    string minWindow(string s, string t) {\n        int tmap[256] = {0}, smap[256] = {0};\n        int requiredChars = 0, foundChars = 0;\n        int left = 0, right = 0, minlength = -1, start = 0, end=0;\n        char c;\n        for(int i=0; i<t.length(); i++) {\n            char c = t[i];\n            if (tmap[c] == 0) requiredChars++;\n            tmap[c]++;\n        }\n        while(right < s.length()) {\n            c = s[right];\n            smap[c]++;\n            if (tmap[c] > 0 && tmap[c] == smap[c]) {\n                foundChars++;\n            }\n            while(left <= right && foundChars == requiredChars) {\n                c = s[left];\n                if (minlength == -1 || minlength > right - left + 1) {\n                    minlength = right - left + 1;\n                    start = left;\n                    end = right;\n                }\n                smap[c]--;\n                if (tmap[c] > 0 && tmap[c] > smap[c]) {\n                    foundChars--;\n                }\n                left++;\n            }\n\n            right++;\n        }\n        return minlength == -1 ? \"\" : s.substr(start, minlength);\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public String minWindow(String s, String t) {\n        int[] smap = new int[256];\n        int[] tmap = new int[256];\n        int requiredChars = 0;\n        char c;\n        for(int i=0; i<t.length(); i++) {\n            c = t.charAt(i);\n            if (tmap[c] == 0) requiredChars++;\n            tmap[c]++;\n        }\n        int left = 0, right = 0;\n        int foundChars = 0;\n        int start = 0, end = 0, minlength = -1;\n        while(right < s.length()) {\n            c = s.charAt(right);\n            smap[c]++;\n            if (tmap[c] > 0 && tmap[c] == smap[c]) {\n                foundChars++;\n            }\n            while(left <= right && foundChars == requiredChars) {\n                c = s.charAt(left);\n                if (minlength == -1 || minlength > right - left + 1) {\n                    minlength = right - left + 1;\n                    start = left;\n                    end = right;\n                }\n                smap[c]--;\n                if (tmap[c] > 0 && tmap[c] > smap[c]) {\n                    foundChars--;\n                }\n                left++;\n            }\n\n            right++;\n        }\n\n        return minlength == -1 ? \"\" : s.substring(start, end+1);\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "kt": {
+    "language": "kt",
+    "code": "class Solution {\n    fun minWindow(s: String, t: String): String {\n        if (s.length < t.length) return \"\"\n\n        val tmap = IntArray(128)\n        val smap = IntArray(128)\n\n        for (c in t) {\n            tmap[c.code]++\n        }\n\n        var left = 0\n        var right = 0\n        var minLen = Int.MAX_VALUE\n        var minStart = 0\n        var formed = 0\n        val required = t.count { it.isLetterOrDigit() || it.isWhitespace() || true }.let {\n            tmap.count { it > 0 }\n        }\n\n        while (right < s.length) {\n            val rc = s[right].code\n            smap[rc]++\n            if (tmap[rc] > 0 && smap[rc] == tmap[rc]) {\n                formed++\n            }\n\n            while (formed == required) {\n                if (right - left + 1 < minLen) {\n                    minLen = right - left + 1\n                    minStart = left\n                }\n\n                val lc = s[left].code\n                smap[lc]--\n                if (tmap[lc] > 0 && smap[lc] < tmap[lc]) {\n                    formed--\n                }\n                left++\n            }\n\n            right++\n        }\n\n        return if (minLen == Int.MAX_VALUE) \"\" else s.substring(minStart, minStart + minLen)\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.kt"
+  },
+  "py": {
+    "language": "py",
+    "code": "class Solution:\n    def minWindow(self, s: str, t: str) -> str:\n        tmap, smap = [0]*256, [0]*256\n        requiredChars, foundChars = 0, 0\n        left, right, minlength, start, end = 0, 0, -1, 0, 0\n        for c in t:\n            if tmap[ord(c)] == 0:\n                requiredChars += 1\n            tmap[ord(c)]+=1\n        while right < len(s):\n            c = ord(s[right])\n            smap[c]+=1\n            if tmap[c] > 0 and tmap[c] == smap[c]:\n                foundChars += 1\n            while left <= right and foundChars == requiredChars:\n                c = ord(s[left])\n                if minlength == -1 or minlength > right - left + 1:\n                    minlength, start, end = right-left+1, left, right\n                smap[c]-=1\n                if tmap[c] > 0 and tmap[c] > smap[c]:\n                    foundChars-=1\n                left += 1\n            right += 1\n        return \"\" if minlength == -1 else s[start:end+1]",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

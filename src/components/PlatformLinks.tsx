@@ -1,3 +1,5 @@
+"use client";
+
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
 import { ITopic } from '@/types/topic';
@@ -81,7 +83,7 @@ const PlatformLink = ({ platform, topic }: { platform: Platform, topic: ITopic }
     >
       <div className="flex items-center gap-2 min-w-0">
         <img 
-          src={`${import.meta.env.BASE_URL}assets/img/platform/${platform.img}`} 
+          src={`/assets/img/platform/${platform.img}`} 
           alt={platform.name}
           className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0"
           onError={(e) => {

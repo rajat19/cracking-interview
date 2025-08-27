@@ -1,0 +1,32 @@
+{
+  "c": {
+    "language": "c",
+    "code": "void nextPermutation(int* nums, int numsSize){\n    int i = numsSize - 2;\n    while(i>=0 && nums[i] >= nums[i+1]) {\n        i--;\n    }\n    if (i >= 0) {\n        int j = numsSize - 1;\n        while(nums[j] <= nums[i]) {\n            j--;\n        }\n        swap(nums, i, j);\n    }\n    reverse(nums, numsSize, i+1);\n}\n\nvoid swap(int* nums, int i, int j) {\n    int temp = nums[i];\n    nums[i] = nums[j];\n    nums[j] = temp;\n}\n\nvoid reverse(int* nums, int numsSize, int start) {\n        int i = start, j = numsSize - 1;\n        while(i < j) {\n            swap(nums, i, j);\n            i++;\n            j--;\n        }\n    }",
+    "subPath": "",
+    "fileName": "solution.c"
+  },
+  "cpp": {
+    "language": "cpp",
+    "code": "class Solution {\npublic:\n    void nextPermutation(vector<int>& nums) {\n        int n = nums.size();\n        int i = n - 2;\n        while(i >= 0 && nums[i] >= nums[i+1]) {\n            i--;\n        }\n        if (i >= 0) {\n            int j = n - 1;\n            while(nums[j] <= nums[i]) {\n                j--;\n            }\n            swap(nums, i, j);\n        }\n        reverse(nums, i+1);\n    }\n\n    void swap(vector<int>& nums, int i, int j) {\n        int temp = nums[i];\n        nums[i] = nums[j];\n        nums[j] = temp;\n    }\n\n    void reverse(vector<int>& nums, int start) {\n        int i = start, j = nums.size() - 1;\n        while(i < j) {\n            swap(nums, i, j);\n            i++;\n            j--;\n        }\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "go": {
+    "language": "go",
+    "code": "package next_permutation\n\nfunc nextPermutation(nums []int)  {\n\ti := len(nums) - 2\n\tfor i>=0 && nums[i+1] <= nums[i] {\n\t\ti--\n\t}\n\tif i>=0 {\n\t\tj := len(nums) - 1\n\t\tfor nums[j] <= nums[i] {\n\t\t\tj--\n\t\t}\n\t\tswap(nums, i, j)\n\t}\n\treverse(nums, i+1)\n}\n\nfunc swap(nums [] int, x int, y int) {\n\ttemp := nums[x]\n\tnums[x] = nums[y]\n\tnums[y] = temp\n}\n\nfunc reverse(nums []int, start int) {\n\tleft, right := start, len(nums) - 1\n\tfor left < right {\n\t\tswap(nums, left, right)\n\t\tleft++\n\t\tright--\n\t}\n}",
+    "subPath": "",
+    "fileName": "solution.go"
+  },
+  "java": {
+    "language": "java",
+    "code": "public class Solution {\n    public void nextPermutation(int[] nums) {\n        int i = nums.length - 2;\n        while (i >= 0 && nums[i + 1] <= nums[i]) {\n            i--;\n        }\n        if (i >= 0) {\n            int j = nums.length - 1;\n            while (nums[j] <= nums[i]) {\n                j--;\n            }\n            swap(nums, i, j);\n        }\n        reverse(nums, i + 1);\n    }\n\n    private void reverse(int[] nums, int start) {\n        int i = start, j = nums.length - 1;\n        while (i < j) {\n            swap(nums, i, j);\n            i++;\n            j--;\n        }\n    }\n\n    private void swap(int[] nums, int i, int j) {\n        int temp = nums[i];\n        nums[i] = nums[j];\n        nums[j] = temp;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "from typing import List\n\n\nclass Solution:\n    def nextPermutation(self, arr: List[int]) -> None:\n        \"\"\"\n        Do not return anything, modify nums in-place instead.\n        \"\"\"\n        n = len(arr)\n        i, j = n - 2, 0\n        while i >= 0 and arr[i] >= arr[i + 1]:\n            i -= 1\n        j = i + 1\n        if i >= 0:\n            j = n - 1\n            while j >= 0 and arr[j] <= arr[i]:\n                j -= 1\n            arr[i], arr[j] = arr[j], arr[i]\n        start, end = i + 1, n - 1\n        while start < end:\n            arr[start], arr[end] = arr[end], arr[start]\n            start += 1\n            end -= 1",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}
