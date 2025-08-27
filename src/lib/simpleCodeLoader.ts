@@ -24,20 +24,8 @@ export async function loadMdxCodeSimple(contentPath: string, languages: string[]
         // e.g., "system-design/code/library-management/books" -> "/src/content/system-design/code/library-management/books/solution.java"
         const filePath = `/src/content/${contentPath}/solution.${ext}`;
         
-        console.log(`Attempting to load: ${filePath}`); // Debug log
-        
-        // Use the API route to load the file
-        const response = await fetch(`/api/content?path=${encodeURIComponent(filePath)}`);
-        
-        if (response.ok) {
-          const code = await response.text();
-          codeSolutions[lang] = {
-            language: lang,
-            code: code.trim(),
-          };
-        } else {
-          console.warn(`Code file not found: ${filePath}`);
-        }
+        // Static export: Dynamic code loading is disabled
+        console.log(`Code loading disabled for static export: ${filePath}`);
       } catch (error) {
         console.warn(`Failed to load ${lang} solution for ${contentPath}:`, error);
       }

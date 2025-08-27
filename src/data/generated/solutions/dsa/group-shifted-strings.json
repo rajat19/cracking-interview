@@ -1,0 +1,26 @@
+{
+  "cpp": {
+    "language": "cpp",
+    "code": "class Solution {\npublic:\n    vector<vector<string>> groupStrings(vector<string>& strings) {\n        unordered_map<string, vector<string>> mp;\n        for (auto& s : strings) {\n            int diff = s[0] - 'a';\n            string t = s;\n            for (int i = 0; i < t.size(); ++i) {\n                char d = t[i] - diff;\n                if (d < 'a') d += 26;\n                t[i] = d;\n            }\n            cout << t << endl;\n            mp[t].push_back(s);\n        }\n        vector<vector<string>> ans;\n        for (auto& e : mp)\n            ans.push_back(e.second);\n        return ans;\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "go": {
+    "language": "go",
+    "code": "func groupStrings(strings []string) [][]string {\n\tmp := make(map[string][]string)\n\tfor _, s := range strings {\n\t\tk := \"\"\n\t\tfor i := range s {\n\t\t\tk += string((s[i]-s[0]+26)%26 + 'a')\n\t\t}\n\t\tmp[k] = append(mp[k], s)\n\t}\n\tvar ans [][]string\n\tfor _, v := range mp {\n\t\tans = append(ans, v)\n\t}\n\treturn ans\n}",
+    "subPath": "",
+    "fileName": "solution.go"
+  },
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public List<List<String>> groupStrings(String[] strings) {\n        Map<String, List<String>> mp = new HashMap<>();\n        for (String s : strings) {\n            int diff = s.charAt(0) - 'a';\n            char[] t = s.toCharArray();\n            for (int i = 0; i < t.length; ++i) {\n                char d = (char) (t[i] - diff);\n                if (d < 'a') {\n                    d += 26;\n                }\n                t[i] = d;\n            }\n            String key = new String(t);\n            mp.computeIfAbsent(key, k -> new ArrayList<>()).add(s);\n        }\n        return new ArrayList<>(mp.values());\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "from collections import defaultdict\n\nclass Solution:\n    def groupStrings(self, strings: List[str]) -> List[List[str]]:\n        mp = defaultdict(list)\n        for s in strings:\n            t = []\n            diff = ord(s[0]) - ord('a')\n            for c in s:\n                d = ord(c) - diff\n                if d < ord('a'):\n                    d += 26\n                t.append(chr(d))\n            k = ''.join(t)\n            mp[k].append(s)\n        return list(mp.values())",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

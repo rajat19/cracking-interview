@@ -1,0 +1,8 @@
+{
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public void setZeroes(int[][] matrix) {\n        int n = matrix.length, m = matrix[0].length;\n        boolean rz = false, cz = false;\n        for(int i=0; i<n; i++) {\n            if (matrix[i][0] == 0) {\n                cz = true;\n                break;\n            }\n        }\n        for(int i=0; i<m; i++) {\n            if (matrix[0][i] == 0) {\n                rz = true;\n                break;\n            }\n        }\n        for(int i=1; i<n; i++) {\n            for(int j=1; j<m; j++) {\n                if (matrix[i][j] == 0) {\n                    matrix[i][0] = 0;\n                    matrix[0][j] = 0;\n                }\n            }\n        }\n        for(int i=1; i<n; i++) {\n            for(int j=1; j<m; j++) {\n                if (matrix[i][0] == 0 || matrix[0][j] == 0) {\n                    matrix[i][j] = 0;\n                }\n            }\n        }\n        for(int i=0; i<n; i++) {\n            if (cz) matrix[i][0] = 0;\n        }\n        for(int j=0; j<m; j++) {\n            if (rz) matrix[0][j] = 0;\n        }\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  }
+}

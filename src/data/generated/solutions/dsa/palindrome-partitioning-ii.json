@@ -1,0 +1,14 @@
+{
+  "cpp": {
+    "language": "cpp",
+    "code": "class Solution {\npublic:\n    int minCut(string s) {\n        int n =s.length();\n        bool dp[n][n];\n        memset(dp, 0, sizeof(dp));\n        int cut[n];\n        for(int i=0; i<n; i++) {\n            int mincut = i;\n            for(int j=0; j<=i; j++) {\n                if (s[i] == s[j] && (i-j < 2 || dp[j+1][i-1])) {\n                    dp[j][i] = true;\n                    mincut = min(mincut, j==0 ? 0 : cut[j-1]+1);\n                }\n            }\n            cut[i] = mincut;\n        }\n        return cut[n-1];\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public int minCut(String s) {\n        int n =s.length();\n        boolean[][] dp = new boolean[n][n];\n        int[] cut= new int[n];\n        for(int i=0; i<n; i++) {\n            int mincut = i;\n            for(int j=0; j<=i; j++) {\n                if (s.charAt(i) == s.charAt(j) && (i-j < 2 || dp[j+1][i-1])) {\n                    dp[j][i] = true;\n                    mincut = Math.min(mincut, j==0 ? 0 : cut[j-1]+1);\n                }\n            }\n            cut[i] = mincut;\n        }\n        return cut[n-1];\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  }
+}

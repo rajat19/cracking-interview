@@ -1,0 +1,14 @@
+{
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public int[] findOrder(int numCourses, int[][] prerequisites) {\n\n        boolean isPossible = true;\n        Map<Integer, List<Integer>> adjList = new HashMap<Integer, List<Integer>>();\n        int[] indegree = new int[numCourses];\n        int[] topologicalOrder = new int[numCourses];\n\n        for (int i = 0; i < prerequisites.length; i++) {\n            int dest = prerequisites[i][0];\n            int src = prerequisites[i][1];\n            List<Integer> lst = adjList.getOrDefault(src, new ArrayList<Integer>());\n            lst.add(dest);\n            adjList.put(src, lst);\n            indegree[dest] += 1;\n        }\n\n        Queue<Integer> q = new LinkedList<Integer>();\n        for (int i = 0; i < numCourses; i++) {\n            if (indegree[i] == 0) {\n                q.add(i);\n            }\n        }\n\n        int i = 0;\n        while (!q.isEmpty()) {\n            int node = q.remove();\n            topologicalOrder[i++] = node;\n            if (adjList.containsKey(node)) {\n                for (Integer neighbor : adjList.get(node)) {\n                    indegree[neighbor]--;\n                    if (indegree[neighbor] == 0) {\n                        q.add(neighbor);\n                    }\n                }\n            }\n        }\n        if (i == numCourses) {\n            return topologicalOrder;\n        }\n        return new int[0];\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "from collections import defaultdict, deque\n\n\nclass Solution:\n\n    def findOrder(self, numCourses, prerequisites):\n        \"\"\"\n        :type numCourses: int\n        :type prerequisites: List[List[int]]\n        :rtype: List[int]\n        \"\"\"\n        adj_list = defaultdict(list)\n        indegree = {}\n        for dest, src in prerequisites:\n            adj_list[src].append(dest)\n            indegree[dest] = indegree.get(dest, 0) + 1\n        zero_indegree_queue = deque([k for k in range(numCourses) if k not in indegree])\n\n        topological_sorted_order = []\n        while zero_indegree_queue:\n            vertex = zero_indegree_queue.popleft()\n            topological_sorted_order.append(vertex)\n            if vertex in adj_list:\n                for neighbor in adj_list[vertex]:\n                    indegree[neighbor] -= 1\n                    if indegree[neighbor] == 0:\n                        zero_indegree_queue.append(neighbor)\n\n        return topological_sorted_order if len(topological_sorted_order) == numCourses else []",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

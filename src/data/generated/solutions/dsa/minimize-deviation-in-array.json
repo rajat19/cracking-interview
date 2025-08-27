@@ -1,0 +1,8 @@
+{
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public int minimumDeviation(int[] nums) {\n        PriorityQueue<Integer> pq = new PriorityQueue<>((a, b) -> b-a);\n        int min = Integer.MAX_VALUE, res = Integer.MAX_VALUE;\n        for(int a: nums) {\n            if (a%2 == 1) a*=2;\n            pq.offer(a);\n            min = Math.min(min, a);\n        }\n        while(true) {\n            int max = pq.poll();\n            res = Math.min(res, max - min);\n            if (max%2 == 1) break;\n            pq.offer(max/2);\n            min = Math.min(min, max/2);\n        }\n        return res;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  }
+}

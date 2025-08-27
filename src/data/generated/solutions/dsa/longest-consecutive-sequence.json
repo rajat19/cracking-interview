@@ -1,0 +1,20 @@
+{
+  "cpp": {
+    "language": "cpp",
+    "code": "class Solution {\npublic:\n    int longestConsecutive(vector<int>& nums) {\n        set<int> numSet;\n        for(int n: nums) numSet.insert(n);\n\n        int longest = 0;\n        for(int n: numSet) {\n            if (!numSet.count(n-1)) {\n                int currentStreak = 1;\n                int currentNum = n;\n                while(numSet.count(currentNum+1)) {\n                    currentNum += 1;\n                    currentStreak += 1;\n                }\n                longest = max(longest, currentStreak);\n            }\n        }\n        return longest;\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public int longestConsecutive(int[] nums) {\n        Set<Integer> set = new HashSet<>();\n        for(int n: nums) set.add(n);\n\n        int longest = 0;\n        for(int n: set) {\n            if (!set.contains(n-1)) {\n                int currentStreak = 1;\n                int currentNum = n;\n                while(set.contains(currentNum+1)) {\n                    currentNum += 1;\n                    currentStreak += 1;\n                }\n                longest = Math.max(longest, currentStreak);\n            }\n        }\n        return longest;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "from typing import List\n\n\nclass Solution:\n    def longestConsecutive(self, nums: List[int]) -> int:\n        st = set(nums)\n        longest = 0\n        for num in st:\n            if num-1 not in st:\n                currentStreak = 1\n                currentNum = num\n                while (currentNum+1) in st:\n                    currentNum += 1\n                    currentStreak += 1\n                longest = max(longest, currentStreak)\n        return longest",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

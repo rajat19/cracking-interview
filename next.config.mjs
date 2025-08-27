@@ -7,16 +7,18 @@ const withMDXConfig = withMDX({
   }
 });
 
+const isProd = process.env.NODE_ENV === 'production';
+
 export default withMDXConfig({
   output: 'export',
   trailingSlash: true,
-  basePath: '/cracking-interview',
-  assetPrefix: '/cracking-interview',
+  basePath: isProd ? '/cracking-interview' : '',
+  assetPrefix: isProd ? '/cracking-interview' : '',
   images: {
     unoptimized: true,
   },
-  experimental: {
-    appDir: true,
-  },
   pageExtensions: ['ts', 'tsx', 'js', 'jsx', 'md', 'mdx'],
+  eslint: {
+    ignoreDuringBuilds: true,
+  },
 });

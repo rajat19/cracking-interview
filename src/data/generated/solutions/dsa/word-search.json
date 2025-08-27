@@ -1,0 +1,20 @@
+{
+  "cpp": {
+    "language": "cpp",
+    "code": "class Solution {\npublic:\n    bool exist(vector<vector<char>>& board, string word) {\n        int n = board.size(), m = board[0].size();\n        for(int i=0; i<n; i++) {\n            for(int j=0; j<m; j++) {\n                if (exist(board, word, i, j, 0)) return true;\n            }\n        }\n        return false;\n    }\n\n    bool exist(vector<vector<char>> &board, string word, int x, int y, int w) {\n        if (w == word.length()) return true;\n        if (x < 0 || y < 0 || x == board.size() || y == board[0].size()) return false;\n        if (board[x][y] != word[w]) return false;\n        char c = board[x][y];\n        board[x][y] = '*';\n        bool res = exist(board, word, x+1, y, w+1)\n            || exist(board, word, x, y+1, w+1)\n            || exist(board, word, x-1, y, w+1)\n            || exist(board, word, x, y-1, w+1);\n        board[x][y] = c;\n        return res;\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public boolean exist(char[][] board, String word) {\n        char[] w = word.toCharArray();\n        for (int y=0; y<board.length; y++) {\n            for (int x=0; x<board[y].length; x++) {\n                if (exist(board, y, x, w, 0)) return true;\n            }\n        }\n        return false;\n    }\n\n    private boolean exist(char[][] board, int y, int x, char[] word, int i) {\n        if (i == word.length) return true;\n        if (y<0 || x<0 || y == board.length || x == board[y].length) return false;\n        if (board[y][x] != word[i]) return false;\n        board[y][x] ^= 256;\n        boolean exist = exist(board, y, x+1, word, i+1)\n                || exist(board, y, x-1, word, i+1)\n                || exist(board, y+1, x, word, i+1)\n                || exist(board, y-1, x, word, i+1);\n        board[y][x] ^= 256;\n        return exist;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "from typing import List\n\n\nclass Solution:\n    def exist(self, board: List[List[str]], word: str) -> bool:\n        for i in range(len(board)):\n            for j in range(len(board[0])):\n                if self.check(board, word, i, j, 0):\n                    return True\n        return False\n\n    def check(self, board: List[List[str]], word: str, r: int, c: int, pos: int):\n        if pos == len(word):\n            return True\n        if r < 0 or r == len(board) or c < 0 or c == len(board[0]):\n            return False\n        if board[r][c] != word[pos]:\n            return False\n        board[r][c], orig = '0', board[r][c]\n        res = self.check(board, word, r + 1, c, pos + 1) or self.check(board, word, r - 1, c, pos + 1) or self.check(\n            board, word, r, c + 1, pos + 1) or self.check(board, word, r, c - 1, pos + 1)\n        board[r][c] = orig\n        return res",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

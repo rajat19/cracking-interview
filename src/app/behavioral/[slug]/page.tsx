@@ -8,9 +8,9 @@ import { MdxImage } from '@/components/mdx/MdxImage';
 import { MdxLink } from '@/components/mdx/MdxLink';
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 async function getTopicContent(slug: string): Promise<string | null> {

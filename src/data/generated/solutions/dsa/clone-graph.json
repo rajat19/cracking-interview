@@ -1,0 +1,20 @@
+{
+  "cpp": {
+    "language": "cpp",
+    "code": "/*\n// Definition for a Node.\nclass Node {\npublic:\n    int val;\n    vector<Node*> neighbors;\n    Node() {\n        val = 0;\n        neighbors = vector<Node*>();\n    }\n    Node(int _val) {\n        val = _val;\n        neighbors = vector<Node*>();\n    }\n    Node(int _val, vector<Node*> _neighbors) {\n        val = _val;\n        neighbors = _neighbors;\n    }\n};\n*/\n\nclass Solution {\npublic:\n    Node* arr[101];\n    Node* cloneGraph(Node* node) {\n        if (node == nullptr) {\n            return nullptr;\n        }\n        if (arr[node->val] != 0) {\n            return arr[node->val];\n        }\n        arr[node->val] = new Node(node->val);\n        int ns = node->neighbors.size();\n        for(int i=0; i<ns; i++) {\n            Node* cloned = cloneGraph(node->neighbors[i]);\n            arr[node->val]->neighbors.push_back(cloned);\n        }\n        return arr[node->val];\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "java": {
+    "language": "java",
+    "code": "class Node {\n    public int val;\n    public List<Node> neighbors;\n    public Node() {\n        val = 0;\n        neighbors = new ArrayList<Node>();\n    }\n    public Node(int _val) {\n        val = _val;\n        neighbors = new ArrayList<Node>();\n    }\n    public Node(int _val, ArrayList<Node> _neighbors) {\n        val = _val;\n        neighbors = _neighbors;\n    }\n}\n\nclass Solution {\n    public HashMap<Integer, Node> map = new HashMap<>();\n\n    public Node cloneGraph(Node node) {\n        return clone(node);\n    }\n\n    public Node clone(Node node) {\n        if (node == null) return null;\n\n        if (map.containsKey(node.val))\n            return map.get(node.val);\n\n        Node newNode = new Node(node.val, new ArrayList<Node>());\n        map.put(newNode.val, newNode);\n        for (Node neighbor : node.neighbors)\n            newNode.neighbors.add(clone(neighbor));\n        return newNode;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "\"\"\"\n# Definition for a Node.\nclass Node:\n    def __init__(self, val = 0, neighbors = None):\n        self.val = val\n        self.neighbors = neighbors if neighbors is not None else []\n\"\"\"\n\nfrom typing import Optional\nclass Solution:\n    def cloneGraph(self, node: Optional['Node']) -> Optional['Node']:\n        visited = dict()\n        if node is None:\n            return None\n        if len(node.neighbors) == 0:\n            return Node(node.val)\n        return self.traverse(node, visited)\n\n    def traverse(self, old: Optional['Node'], visited: dict) -> Optional['Node']:\n        if old is None:\n            return None\n        if old in visited:\n            return visited[old]\n        new = Node(old.val)\n        visited[old] = new\n        for neigh in old.neighbors:\n            newneigh = self.traverse(neigh, visited)\n            new.neighbors.append(newneigh)\n        return new",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

@@ -1,0 +1,14 @@
+{
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public List<String> wordBreak(String s, List<String> wordDict) {\n        Set<String> wordSet = new HashSet<>(wordDict);\n        return dfs(s, wordSet, new HashMap<String, List<String>>());\n    }\n\n    private List<String> dfs(String s, Set<String> wordDict, Map<String, List<String>> map) {\n        if (map.containsKey(s)) {\n            return map.get(s);\n        }\n\n        List<String> res = new ArrayList<String>();\n        if (s.length() == 0) {\n            res.add(\"\");\n            return res;\n        }\n        for (String word : wordDict) {\n            int wlen = word.length();\n            if (s.length() < wlen) continue;\n            boolean match = true;\n            for(int i=0; i<wlen; i++) {\n                if (s.charAt(i) != word.charAt(i)) {\n                    match = false;\n                    break;\n                }\n            }\n            if (match) {\n                List<String>sublist = dfs(s.substring(word.length()), wordDict, map);\n                for (String sub : sublist)\n                    res.add(word + (sub.isEmpty() ? \"\" : \" \") + sub);\n            }\n        }\n        map.put(s, res);\n        return res;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "class Solution:\n    def wordBreak(self, s: str, wordDict: List[str]) -> List[str]:\n        size = len(s)\n        memo = [None for _ in range(size + 1)]\n\n        def dfs(start):\n            if start > size - 1:\n                return [[]]\n            if memo[start]:\n                return memo[start]\n            res = []\n            for i in range(start, size):\n                word = s[start: i + 1]\n                if word in wordDict:\n                    rest_res = dfs(i + 1)\n                    for item in rest_res:\n                        res.append([word] + item)\n            memo[start] = res\n            return res\n        res = dfs(0)\n        ans = []\n        for item in res:\n            ans.append(\" \".join(item))\n        return ans",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

@@ -19,9 +19,9 @@ interface Problem {
 }
 
 interface PageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 async function getProblem(slug: string): Promise<Problem | null> {

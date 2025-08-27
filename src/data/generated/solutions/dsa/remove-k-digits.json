@@ -1,0 +1,14 @@
+{
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public String removeKdigits(String num, int k) {\n        if(num.length()==k) {\n            return \"0\";\n        }\n        int top = 0;\n        char[] ca = new char[num.length()];\n        for(char c: num.toCharArray()){\n            while(k>0 && top>0 && ca[top-1]>c){\n                top--;\n                k--;\n            }\n            ca[top++] = c;\n        }\n        int i = 0, len = top-k;\n        while(i < len-1 && ca[i] == '0') {\n            i++;\n        }\n        return String.valueOf(ca, i, len-i);\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "class Solution:\n    def removeKdigits(self, num: str, k: int) -> str:\n        if k == len(num):\n            return '0'\n        top = 0\n        arr = ['']*len(num)\n        for c in num:\n            while k>0 and top>0 and arr[top-1] > c:\n                top -= 1\n                k -= 1\n            arr[top] = c\n            top += 1\n        i = 0\n        while i < top-k-1 and arr[i] == '0':\n            i += 1\n        return ''.join(arr[i:top-k])",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

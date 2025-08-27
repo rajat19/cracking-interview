@@ -1,0 +1,32 @@
+{
+  "c": {
+    "language": "c",
+    "code": "bool searchMatrix(int** matrix, int matrixSize, int* matrixColSize, int target){\n    int row = 0, col = *matrixColSize-1;\n    while(row < matrixSize && col >= 0) {\n        int cell = matrix[row][col];\n        if (cell == target) return true;\n        if (cell < target) {\n            row++;\n        } else {\n            col--;\n        }\n    }\n    return false;\n}",
+    "subPath": "",
+    "fileName": "solution.c"
+  },
+  "cpp": {
+    "language": "cpp",
+    "code": "class Solution {\npublic:\n    bool searchMatrix(vector<vector<int>>& matrix, int target) {\n        int n = matrix.size(), m = matrix[0].size();\n        int row = 0, col = m-1;\n        while(row < n && col >= 0) {\n            int cell = matrix[row][col];\n            if (cell == target) return true;\n            if (cell < target) {\n                row++;\n            } else {\n                col--;\n            }\n        }\n        return false;\n    }\n};",
+    "subPath": "",
+    "fileName": "solution.cpp"
+  },
+  "go": {
+    "language": "go",
+    "code": "package search_a_2d_matrix\n\nfunc searchMatrix(matrix [][]int, target int) bool {\n\tn := len(matrix)\n\tm := len(matrix[0])\n\trow := 0\n\tcol := m-1\n\tfor row < n && col >=0 {\n\t\tcell := matrix[row][col]\n\t\tif cell == target {\n\t\t\treturn true\n\t\t}\n\t\tif cell < target {\n\t\t\trow++\n\t\t} else {\n\t\t\tcol--\n\t\t}\n\t}\n\treturn false\n}",
+    "subPath": "",
+    "fileName": "solution.go"
+  },
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public boolean searchMatrix(int[][] matrix, int target) {\n        int n = matrix.length, m = matrix[0].length;\n        int row = 0, col = m-1;\n        while(row < n && col >= 0) {\n            int cell = matrix[row][col];\n            if (cell == target) return true;\n            if (cell < target) {\n                row++;\n            } else {\n                col--;\n            }\n        }\n        return false;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  },
+  "py": {
+    "language": "py",
+    "code": "from typing import List\n\n\nclass Solution:\n    def searchMatrix(self, matrix: List[List[int]], target: int) -> bool:\n        n, m = len(matrix), len(matrix[0])\n        row, col = 0, m - 1\n        while row < n and col >= 0:\n            cell = matrix[row][col]\n            if cell == target:\n                return True\n            if cell < target:\n                row += 1\n            else:\n                col -= 1\n        return False",
+    "subPath": "",
+    "fileName": "solution.py"
+  }
+}

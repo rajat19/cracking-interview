@@ -2,6 +2,26 @@ import fm from 'front-matter';
 import type { ISolutionEntry, ITopic, ITopicCategory, ITopicList } from '@/types/topic';
 import config from '@/config';
 
+// Import all index files statically for better reliability
+import dsaIndex from '@/data/dsa-index.json';
+import systemDesignIndex from '@/data/system-design-index.json';
+import oodIndex from '@/data/ood-index.json';
+import behavioralIndex from '@/data/behavioral-index.json';
+
+// Import pre-generated content maps statically
+import dsaContent from '@/data/generated/dsa-content.json';
+import systemDesignContent from '@/data/generated/system-design-content.json';
+import oodContent from '@/data/generated/ood-content.json';
+import behavioralContent from '@/data/generated/behavioral-content.json';
+
+// Static content maps for immediate access
+const CONTENT_MAPS: Record<string, any> = {
+  'dsa': dsaContent,
+  'system-design': systemDesignContent,
+  'ood': oodContent,
+  'behavioral': behavioralContent
+};
+
 // Universal frontmatter interface that covers all categories
 interface UniversalFrontmatterData {
   title?: string;
@@ -69,50 +89,50 @@ const getRelatedTopics = (fm: UniversalFrontmatterData): string[] | undefined =>
          Array.isArray(fm.tags) ? fm.tags : undefined;
 };
 
-// Extract common code loading logic using API route
+// For static export, code loading is disabled
 const loadCodeForTopic = async (
   category: ITopicCategory, 
   topicId: string, 
   codeModules: Record<string, () => Promise<string>>,
   availableLanguages?: string[]
 ): Promise<Record<string, ISolutionEntry>> => {
-  const solutions: Record<string, ISolutionEntry> = {};
+  console.log(`Loading solutions for: ${category}/${topicId}`);
   
-  // Use languages specified in MDX frontmatter or fallback to common ones
-  const languagesToTry = availableLanguages || ['java', 'py', 'cpp', 'c', 'js', 'ts', 'go', 'cs'];
+  // Get solutions from pre-generated content
+  const contentMap = CONTENT_MAPS[category];
   
-  for (const ext of languagesToTry) {
-    try {
-      const filePath = `/src/content/${category}/code/${topicId}/solution.${ext}`;
-      const response = await fetch(`/api/content?path=${encodeURIComponent(filePath)}`);
-      
-      if (response.ok) {
-        const code = await response.text();
-        solutions[ext] = { language: ext, code: code.trim() };
-      }
-    } catch (error) {
-      // Silently continue - not all problems have all languages
-    }
+  if (contentMap && contentMap[topicId] && contentMap[topicId].solutions) {
+    const solutions = contentMap[topicId].solutions;
+    console.log(`✅ Found ${Object.keys(solutions).length} pre-generated solutions for ${topicId}`);
+    return solutions;
   }
   
-  return solutions;
+  console.warn(`⚠️  No pre-generated solutions found for ${category}/${topicId}`);
+  return {};
 };
 
-// File system based loader for Next.js
+// For static export, use pre-generated content from SSG
 const dynamicLoader = async (modules: Record<string, () => Promise<string>>, path: string): Promise<string> => {
-  // For Next.js, we'll use direct file system access or API routes
-  // This is a simplified approach - in production you'd want proper API endpoints
-  try {
-    const response = await fetch(`/api/content?path=${encodeURIComponent(path)}`);
-    if (!response.ok) {
-      throw new Error(`Failed to load content: ${response.statusText}`);
-    }
-    return await response.text();
-  } catch (error) {
-    console.error(`Failed to load content from ${path}:`, error);
-    throw error;
+  const pathParts = path.split('/');
+  const fileName = pathParts[pathParts.length - 1].replace('.mdx', '');
+  const category = pathParts[3];
+  
+  console.log(`Loading content for: ${category}/${fileName}`);
+  
+  // Get the actual content from the pre-generated static maps
+  const contentMap = CONTENT_MAPS[category];
+  
+  if (contentMap && contentMap[fileName] && contentMap[fileName].content) {
+    console.log(`✅ Found pre-generated content for ${fileName}`);
+    return contentMap[fileName].content;
   }
+  
+  // If content not found, throw error instead of fallback
+  console.error(`❌ No pre-generated content found for ${category}/${fileName}`);
+  throw new Error(`Content not found: ${category}/${fileName}. Make sure to run 'npm run generate:content' before building.`);
 };
+
+// Placeholder functions removed - SSG should provide all content
 
 // Get appropriate modules based on category (now always MDX)
 const getContentModules = (category: ITopicCategory): Record<string, () => Promise<string>> => {
@@ -159,14 +179,25 @@ const mapFrontmatterToTopic = (
   };
 };
 
+const indexMap = {
+  'dsa': dsaIndex,
+  'system-design': systemDesignIndex,
+  'ood': oodIndex,
+  'behavioral': behavioralIndex,
+} as const;
+
 const loadFromCache = async (category: ITopicCategory): Promise<ITopicList[] | null> => {
   try {
-    // Direct import for Next.js
-    const indexData = await import(`@/data/${category}-index.json`);
-    if (!indexData) {
-      throw new Error(`Unable to load ${category} index`);
+    console.log(`Loading index for category: ${category}`);
+    const items = indexMap[category];
+    
+    if (!items) {
+      console.error(`No index data found for category: ${category}`);
+      return null;
     }
-    const items = indexData.default || indexData;
+    
+    console.log(`Loaded ${items.length} items for category: ${category}`);
+    
     if (Array.isArray(items) && items.length >= 0) {
       return items.map((item: any) => ({
         ...item,
@@ -175,7 +206,7 @@ const loadFromCache = async (category: ITopicCategory): Promise<ITopicList[] | n
       }));
     }
   } catch (error) {
-    console.warn(`Failed to load ${category} index from cache:`, error);
+    console.error(`Failed to load ${category} index from cache:`, error);
   }
   return null;
 };

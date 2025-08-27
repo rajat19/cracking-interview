@@ -1,0 +1,8 @@
+{
+  "java": {
+    "language": "java",
+    "code": "class Solution {\n    public int leastInterval(char[] tasks, int n) {\n        Map<Character, Task> map = new HashMap<>();\n        for(char c: tasks) {\n            map.putIfAbsent(c, new Task(0));\n            map.get(c).freq++;\n        }\n\n        PriorityQueue<Task> pq = new PriorityQueue<>((a, b) -> b.freq - a.freq);\n        Queue<Task> cooling = new LinkedList<>();\n        pq.addAll(map.values());\n        int timer = 0;\n        while(!pq.isEmpty() || !cooling.isEmpty()) {\n            if (pq.isEmpty()) timer = cooling.peek().lastUsed + n + 1;\n            while(!cooling.isEmpty() && cooling.peek().lastUsed + n < timer) {\n                pq.offer(cooling.poll());\n            }\n            Task task = pq.poll();\n            task.lastUsed = timer++;\n            task.freq--;\n\n            if (task.freq > 0) cooling.offer(task);\n        }\n        return timer;\n    }\n}\n\nclass Task {\n    int freq;\n    int lastUsed;\n    Task(int freq) {\n        this.freq = freq;\n        lastUsed = -1;\n    }\n}",
+    "subPath": "",
+    "fileName": "solution.java"
+  }
+}
