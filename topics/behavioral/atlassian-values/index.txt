@@ -1,0 +1,227 @@
+1:"$Sreact.fragment"
+2:I[10961,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","6334","static/chunks/6334-d195304efa533649.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7177","static/chunks/app/layout-25227c6113fa4794.js"],"ThemeProvider"]
+3:I[37752,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","6334","static/chunks/6334-d195304efa533649.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7177","static/chunks/app/layout-25227c6113fa4794.js"],"AuthProvider"]
+4:I[37462,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","6334","static/chunks/6334-d195304efa533649.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7177","static/chunks/app/layout-25227c6113fa4794.js"],"default"]
+5:I[95079,[],""]
+6:I[81019,[],""]
+8:I[96590,[],"OutletBoundary"]
+a:I[47875,[],"AsyncMetadataOutlet"]
+c:I[96590,[],"ViewportBoundary"]
+e:I[96590,[],"MetadataBoundary"]
+f:"$Sreact.suspense"
+11:I[69741,[],""]
+:HL["/cracking-interview/_next/static/media/569ce4b8f30dc480-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/cracking-interview/_next/static/media/93f479601ee12b01-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/cracking-interview/_next/static/css/ff78c3bf1dd6c987.css","style"]
+:HL["/cracking-interview/_next/static/css/34937f2da1ffdcf9.css","style"]
+0:{"P":null,"b":"3ddzafj3y1iV8DPtiYwP4","p":"/cracking-interview","c":["","topics","behavioral","atlassian-values",""],"i":false,"f":[[["",{"children":["topics",{"children":[["category","behavioral","d"],{"children":[["topicId","atlassian-values","oc"],{"children":["__PAGE__",{}]}]}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/cracking-interview/_next/static/css/ff78c3bf1dd6c987.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/cracking-interview/_next/static/css/34937f2da1ffdcf9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"className":"__variable_68ab41 __variable_8cef05 antialiased","children":["$","$L2",null,{"children":["$","$L3",null,{"children":[["$","$L4",null,{}],["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]]}]}]}]}]]}],{"children":["topics",["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["category","behavioral","d"],["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["topicId","atlassian-values","oc"],["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$L7",null,["$","$L8",null,{"children":["$L9",["$","$La",null,{"promise":"$@b"}]]}]]}],{},null,false]},null,false]},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,[["$","$Lc",null,{"children":"$Ld"}],["$","meta",null,{"name":"next-size-adjust","content":""}]],["$","$Le",null,{"children":["$","div",null,{"hidden":true,"children":["$","$f",null,{"fallback":null,"children":"$L10"}]}]}]]}],false]],"m":"$undefined","G":["$11",[]],"s":false,"S":true}
+d:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+9:null
+b:{"metadata":[["$","title","0",{"children":"Atlassian Values - Behavioral Questions"}],["$","meta","1",{"name":"description","content":"Learn about Atlassian Values with detailed explanations and code solutions."}]],"error":null,"digest":"$undefined"}
+10:"$b:metadata"
+12:I[72314,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","3459","static/chunks/b2e9d811-56ea87cd42344413.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7317","static/chunks/7317-999ff3800f1bd958.js","9165","static/chunks/9165-9113c84c8a01dde3.js","2175","static/chunks/2175-dece1948dd7b5e7b.js","9643","static/chunks/9643-fb2991eb2bf04407.js","7870","static/chunks/7870-e27d15cf7b4d7d3c.js","2717","static/chunks/2717-6c387102824d202d.js","4893","static/chunks/app/topics/%5Bcategory%5D/%5B%5B...topicId%5D%5D/page-3b416c1bcaa633d7.js"],"DocsLayoutSSG"]
+13:T175b,# Atlassian Values
+
+Atlassian's core values define who they are as a company and guide how they work together, make decisions, and treat customers and each other.
+
+---
+
+## 1. Open Company, No Bullshit
+
+Openness is root level for us. Information is open internally by default and sharing is a first principle. We understand that speaking your mind requires equal parts brains, thoughtfulness, and caring.
+
+**What this means:**
+- Default to transparency
+- Share information openly
+- Speak your mind thoughtfully
+- Be honest and direct
+- No hidden agendas
+
+**In practice:**
+- Share knowledge freely across teams
+- Give honest feedback
+- Admit when you don't know something
+- Challenge ideas constructively
+- Be transparent about mistakes
+
+*Tags: #Openness #Transparency #Honesty #DirectCommunication #Sharing*
+
+---
+
+## 2. Build with Heart and Balance
+
+Passion and urgency infuse everything we do, alongside the wisdom to consider options fully and with care. Then we make the cut, and we get to work.
+
+**What this means:**
+- Bring passion to your work
+- Balance urgency with thoughtfulness
+- Consider all options carefully
+- Make decisive cuts when needed
+- Execute with commitment
+
+**In practice:**
+- Show enthusiasm for your projects
+- Think through decisions thoroughly
+- Don't let perfectionism paralyze action
+- Prioritize ruthlessly
+- Commit fully once decisions are made
+
+*Tags: #Passion #Balance #Thoughtfulness #DecisionMaking #Execution*
+
+---
+
+## 3. Don't #@!% the Customer
+
+Customers are our lifeblood. Without happy customers, we're doomed. So considering the customer perspective—collectively, not just a handful—comes first.
+
+**What this means:**
+- Put customers first in all decisions
+- Consider the broader customer base
+- Understand customer pain points
+- Deliver value to customers
+- Build trust through reliability
+
+**In practice:**
+- Ask "How does this help our customers?"
+- Listen to customer feedback
+- Test solutions with real users
+- Fix customer issues quickly
+- Build products customers love
+
+*Tags: #CustomerFirst #CustomerFocus #Value #Trust #UserExperience*
+
+---
+
+## 4. Play, as a Team
+
+We spend a huge amount of our time at work. So the more that time doesn't feel like "work," the better. We can be serious, without taking ourselves too seriously. We strive to put what's right for the team first.
+
+**What this means:**
+- Make work enjoyable
+- Don't take yourself too seriously
+- Prioritize team success over individual glory
+- Support your teammates
+- Create a positive work environment
+
+**In practice:**
+- Help teammates when they're struggling
+- Celebrate team wins together
+- Share credit generously
+- Have fun while working hard
+- Build strong relationships
+
+*Tags: #TeamWork #Collaboration #Fun #Support #TeamFirst*
+
+---
+
+## 5. Be the Change You Seek
+
+All Atlassians should have the courage and resourcefulness to spark change—to make better our products, our people, our place. Continuous improvement is a shared responsibility. Action is an independent one.
+
+**What this means:**
+- Take initiative to drive change
+- Don't wait for permission to improve things
+- Be resourceful in finding solutions
+- Own continuous improvement
+- Act independently when needed
+
+**In practice:**
+- Identify problems and propose solutions
+- Experiment with new approaches
+- Learn from failures and iterate
+- Take ownership of improvements
+- Lead by example
+
+*Tags: #Initiative #Change #ContinuousImprovement #Ownership #Leadership*
+
+---
+
+## How Atlassian Values Show Up in Interviews
+
+### Common Behavioral Questions
+
+1. **Open Company, No Bullshit**
+   - "Tell me about a time you had to give difficult feedback"
+   - "Describe a situation where transparency was important"
+
+2. **Build with Heart and Balance**
+   - "How do you balance speed and quality?"
+   - "Tell me about a time you were passionate about a project"
+
+3. **Don't #@!% the Customer**
+   - "Describe a time you advocated for a customer"
+   - "How do you prioritize customer needs?"
+
+4. **Play, as a Team**
+   - "Tell me about a time you put team success before personal recognition"
+   - "How do you handle conflict within a team?"
+
+5. **Be the Change You Seek**
+   - "Describe a time you initiated a significant change"
+   - "Tell me about a process you improved"
+
+### Interview Tips
+
+**Preparation:**
+- Research Atlassian's products and mission
+- Prepare STAR method examples for each value
+- Think about times you've lived these values
+- Consider examples from different contexts (work, school, personal)
+
+**During the Interview:**
+- Be authentic and genuine
+- Show enthusiasm for collaboration
+- Demonstrate customer empathy
+- Highlight your growth mindset
+- Ask thoughtful questions about team culture
+
+**What Atlassian Looks For:**
+- Collaborative mindset
+- Customer empathy
+- Growth orientation
+- Transparency and honesty
+- Initiative and ownership
+
+*Tags: #InterviewTips #Behavioral #STAR #Preparation #Culture*
+
+---
+
+## Living the Values Daily
+
+### For Individual Contributors
+- Share knowledge proactively
+- Seek feedback regularly
+- Put customer needs first
+- Collaborate effectively
+- Drive improvements
+
+### For Leaders
+- Model transparency
+- Make thoughtful decisions
+- Champion customer voice
+- Build strong teams
+- Enable change
+
+### For Teams
+- Create psychological safety
+- Focus on customer outcomes
+- Balance individual and team goals
+- Embrace experimentation
+- Celebrate learning from failures
+
+*Tags: #DailyPractice #Leadership #Teams #Growth #Culture*
+
+---
+
+## Key Differentiators
+
+Atlassian's values emphasize:
+
+1. **Transparency over Politics** - Open communication and information sharing
+2. **Team Success over Individual Glory** - Collective achievement matters most
+3. **Customer Obsession** - Similar to Amazon but with Atlassian's unique flavor
+4. **Fun and Balance** - Work should be enjoyable, not just productive
+5. **Proactive Change** - Don't wait for permission to make things better
+
+*Tags: #Differentiators #Culture #Philosophy #WorkStyle #Values*
+7:["$","$L12",null,{"title":"Behavioral Questions","description":"Prepare for behavioral interviews with proven frameworks","category":"behavioral","allTopics":[{"id":"amazon-leadership-principles","title":"Amazon Leadership Principles","difficulty":"medium","description":"# Amazon Leadership Principles  Amazon's Leadership Principles are the foundation of their culture and guide how Amazonians make decisions, solve problems, and interact with customers and colleagues.…","companies":["amazon"],"topics":["leadership","culture","principles","behavioral"]},{"id":"atlassian-values","title":"Atlassian Values","difficulty":"medium","description":"# Atlassian Values  Atlassian's core values define who they are as a company and guide how they work together, make decisions, and treat customers and each other.  ---  ## 1. Open Company, No Bullshit…","companies":["atlassian"],"topics":["values","culture","teamwork","behavioral"]}],"selectedTopic":{"id":"atlassian-values","title":"Atlassian Values","difficulty":"medium","description":"Atlassian's core values define who they are as a company and guide how they work together, make decisions, and treat customers and each other.","companies":["atlassian"],"topics":["values","culture","teamwork","behavioral"],"content":"$13","solutions":{},"relatedTopics":["values","culture","teamwork","behavioral"]}}]

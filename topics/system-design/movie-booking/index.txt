@@ -1,0 +1,278 @@
+1:"$Sreact.fragment"
+2:I[10961,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","6334","static/chunks/6334-d195304efa533649.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7177","static/chunks/app/layout-25227c6113fa4794.js"],"ThemeProvider"]
+3:I[37752,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","6334","static/chunks/6334-d195304efa533649.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7177","static/chunks/app/layout-25227c6113fa4794.js"],"AuthProvider"]
+4:I[37462,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","6334","static/chunks/6334-d195304efa533649.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7177","static/chunks/app/layout-25227c6113fa4794.js"],"default"]
+5:I[95079,[],""]
+6:I[81019,[],""]
+8:I[96590,[],"OutletBoundary"]
+a:I[47875,[],"AsyncMetadataOutlet"]
+c:I[96590,[],"ViewportBoundary"]
+e:I[96590,[],"MetadataBoundary"]
+f:"$Sreact.suspense"
+11:I[69741,[],""]
+:HL["/cracking-interview/_next/static/media/569ce4b8f30dc480-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/cracking-interview/_next/static/media/93f479601ee12b01-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/cracking-interview/_next/static/css/ff78c3bf1dd6c987.css","style"]
+:HL["/cracking-interview/_next/static/css/34937f2da1ffdcf9.css","style"]
+0:{"P":null,"b":"3ddzafj3y1iV8DPtiYwP4","p":"/cracking-interview","c":["","topics","system-design","movie-booking",""],"i":false,"f":[[["",{"children":["topics",{"children":[["category","system-design","d"],{"children":[["topicId","movie-booking","oc"],{"children":["__PAGE__",{}]}]}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/cracking-interview/_next/static/css/ff78c3bf1dd6c987.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/cracking-interview/_next/static/css/34937f2da1ffdcf9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"className":"__variable_68ab41 __variable_8cef05 antialiased","children":["$","$L2",null,{"children":["$","$L3",null,{"children":[["$","$L4",null,{}],["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]]}]}]}]}]]}],{"children":["topics",["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["category","system-design","d"],["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["topicId","movie-booking","oc"],["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$L7",null,["$","$L8",null,{"children":["$L9",["$","$La",null,{"promise":"$@b"}]]}]]}],{},null,false]},null,false]},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,[["$","$Lc",null,{"children":"$Ld"}],["$","meta",null,{"name":"next-size-adjust","content":""}]],["$","$Le",null,{"children":["$","div",null,{"hidden":true,"children":["$","$f",null,{"fallback":null,"children":"$L10"}]}]}]]}],false]],"m":"$undefined","G":["$11",[]],"s":false,"S":true}
+d:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+9:null
+b:{"metadata":[["$","title","0",{"children":"Design a Movie Ticket Booking System - System Design"}],["$","meta","1",{"name":"description","content":"Learn about Design a Movie Ticket Booking System with detailed explanations and code solutions."}]],"error":null,"digest":"$undefined"}
+10:"$b:metadata"
+12:I[72314,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","3459","static/chunks/b2e9d811-56ea87cd42344413.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7317","static/chunks/7317-999ff3800f1bd958.js","9165","static/chunks/9165-9113c84c8a01dde3.js","2175","static/chunks/2175-dece1948dd7b5e7b.js","9643","static/chunks/9643-fb2991eb2bf04407.js","7870","static/chunks/7870-e27d15cf7b4d7d3c.js","2717","static/chunks/2717-6c387102824d202d.js","4893","static/chunks/app/topics/%5Bcategory%5D/%5B%5B...topicId%5D%5D/page-3b416c1bcaa633d7.js"],"DocsLayoutSSG"]
+13:T1c3e,An online movie ticket booking system facilitates the purchasing of movie tickets to its customers. E-ticketing systems allow customers to browse through movies currently playing and book seats, anywhere and anytime.
+
+---
+## System Requirements
+Our ticket booking service should meet the following requirements:
+1. It should be able to list the cities where affiliate cinemas are located.
+2. Each cinema can have multiple halls and each hall can run one movie show at a time.
+3. Each Movie will have multiple shows.
+4. Customers should be able to search movies by their title, language, genre, release date, and city name.
+5. Once the customer selects a movie, the service should display the cinemas running that movie and its available shows.
+6. The customer should be able to select a show at a particular cinema and book their tickets.
+7. The service should show the customer the seating arrangement of the cinema hall. The customer should be able to select multiple seats according to their preference.
+8. The customer should be able to distinguish between available seats and booked ones.
+9. The system should send notifications whenever there is a new movie, as well as when a booking is made or canceled.
+10. Customers of our system should be able to pay with credit cards or cash.
+11. The system should ensure that no two customers can reserve the same seat.
+12. Customers should be able to add a discount coupon to their payment.
+
+---
+## Use Case Diagrams
+We have five main Actors in our system:
+
+- **Admin:** Responsible for adding new movies and their shows, canceling any movie or show, blocking/unblocking customers, etc.
+- **FrontDeskOfficer:** Can book/cancel tickets.
+- **Customer:** Can view movie schedules, book, and cancel tickets.
+- **Guest:** All guests can search movies but to book seats they have to become a registered member.
+- **System:** Mainly responsible for sending notifications for new movies, bookings, cancellations, etc.
+
+Here are the top use cases of the Movie Ticket Booking System:
+
+- **Search movies:** To search movies by title, genre, language, release date, and city name.
+- **Create/Modify/View booking:** To book a movie show ticket, cancel it or view details about the show.
+- **Make payment for booking:** To pay for the booking.
+- **Add a coupon to the payment:** To add a discount coupon to the payment.
+- **Assign Seat:** Customers will be shown a seat map to let them select seats for their booking.
+- **Refund payment:** Upon cancellation, customers will be refunded the payment amount as long as the cancellation occurs within the allowed time frame.
+
+<MdxImage 
+  src="design/movie-booking/use-case.svg" 
+  alt="Usecase Diagram for Movie Booking System"
+/>
+
+---
+## Class Diagrams
+Here are the main classes of the Movie Ticket Booking System:
+
+- **Account:** Admin will be able to add/remove movies and shows, as well as block/unblock accounts. Customers can search for movies and make bookings for shows. FrontDeskOffice can book tickets for movie shows
+- **Guest:** Guests can search and view movies descriptions. To make a booking for a show they have to become a registered member.
+- **Cinema:** The main part of the organization for which this software has been designed. It has attributes like ‘name’ to distinguish it from other cinemas.
+- **CinemaHall:** Each cinema will have multiple halls containing multiple seats.
+- **City:** Each city can have multiple cinemas.
+- **Movie:** The main entity of the system. Movies have attributes like title, description, language, genre, release date, city name, etc.
+- **Show:** Each movie can have many shows; each show will be played in a cinema hall.
+- **CinemaHallSeat:** Each cinema hall will have many seats.
+- **ShowSeat:** Each ShowSeat will correspond to a movie Show and a CinemaHallSeat. Customers will make a booking against a ShowSeat.
+- **Booking:** A booking is against a movie show and has attributes like a unique booking number, number of seats, and status.
+- **Payment:** Responsible for collecting payments from customers.
+- **Notification:** Will take care of sending notifications to customers.
+
+<MdxImage 
+  src="design/movie-booking/class-diagram.png" 
+  alt="Class Diagram for Movie Booking System"
+/>
+
+<MdxImage 
+  src="design/concepts/uml.svg" 
+  alt="Uml"
+/>
+
+---
+## Activity Diagram
+**Make a booking:** Any customer can perform this activity. Here are the steps to book a ticket for a show:
+
+<MdxImage 
+  src="design/movie-booking/activity-book.svg" 
+  alt="Activity Diagram for Movie Booking System"
+/>
+
+**Cancel a booking:** Customer can cancel their bookings. Here are the steps to cancel a booking:
+
+<MdxImage 
+  src="design/movie-booking/activity-cancel.svg" 
+  alt="Activity Diagram for Movie Booking System"
+/>
+
+---
+## Code
+Here is the high-level definition for the classes described above.
+
+- **Enums and Constants:** Here are the required enums, data types, and constants:
+
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/movie-booking/enums"
+/>
+
+- **Account, Customer, Admin, FrontDeskOfficer, and Guest:** These classes represent the different people that interact with our system:
+
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/movie-booking/accounts"
+/>
+
+- **Show and Movie:**  A movie will have many shows:
+
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/movie-booking/show"
+/>
+
+- **Booking, ShowSeat, and Payment:** Customers will reserve seats with a booking and make a payment:
+
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/movie-booking/booking"
+/>
+
+- **City, Cinema, and CinemaHall:** Each city can have many cinemas and each cinema can have many cinema halls:
+
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/movie-booking/cinema"
+/>
+
+- **Search interface and Catalog:** Catalog will implement Search to facilitate searching of products.
+
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/movie-booking/search"
+/>
+
+---
+## Concurrency
+**How to handle concurrency; such that no two users are able to book the same seat?**
+We can use transactions in SQL databases to avoid any clashes. For example, if we are using SQL server we can utilize Transaction Isolation Levels to lock the rows before we update them. Note: within a transaction, if we read rows we get a write-lock on them so that they can’t be updated by anyone else. Here is the sample code:
+
+<MdxCodeTabs
+  langs={["sql"]}
+  path="system-design/code/movie-booking/concurrency"
+/>
+
+
+'Serializable' is the highest isolation level and guarantees safety from <MdxLink href="https://en.wikipedia.org/wiki/Isolation_(database_systems)#Dirty_reads">Dirty Reads</MdxLink>, <MdxLink href="https://en.wikipedia.org/wiki/Isolation_(database_systems)#Non-repeatable_reads">Nonrepeatable</MdxLink>, and <MdxLink href="https://en.wikipedia.org/wiki/Isolation_(database_systems)#Phantom_reads">Phantoms reads</MdxLink>.
+
+Once the above database transaction is successful, we can safely assume that the reservation has been marked successfully and no two customers will be able to reserve the same seat.
+
+Here is the sample Java code:
+
+<MdxCodeTabs
+  langs={["java"]}
+  path="system-design/code/movie-booking/concurrency"
+/>14:T436,# For simplicity, we are not defining getter and setter functions. The reader can
+# assume that all class attributes are private and accessed through their respective
+# public getter methods and modified only through their public methods function.
+
+
+class Account:
+  def __init__(self, id, password, status=AccountStatus.Active):
+    self.__id = id
+    self.__password = password
+    self.__status = status
+
+  def reset_password(self):
+    None
+
+
+# from abc import ABC, abstractmethod
+class Person(ABC):
+  def __init__(self, name, address, email, phone, account):
+    self.__name = name
+    self.__address = address
+    self.__email = email
+    self.__phone = phone
+    self.__account = account
+
+
+class Customer(Person):
+  def make_booking(self, booking):
+    None
+
+  def get_bookings(self):
+    None
+
+
+class Admin(Person):
+  def add_movie(self, movie):
+    None
+
+  def add_show(self, show):
+    None
+
+  def block_user(self, customer):
+    None
+
+
+class FrontDeskOfficer(Person):
+  def create_booking(self, booking):
+    None
+
+
+class Guest:
+  def register_account(self):
+    None15:T826,import java.sql.DriverManager;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
+import java.sql.ResultSet;
+
+public class Customer extends Person {
+
+  public boolean makeBooking(Booking booking) {
+    List<ShowSeat> seats = booking.getSeats();
+    Integer seatIds[] = new Integer[seats.size()];
+    int index = 0;
+    for(ShowSeat seat : seats) {
+      seatIds[index++] = seat.getShowSeatId();
+    }
+
+    Connection dbConnection = null;
+    try {
+      dbConnection = getDBConnection();
+      dbConnection.setAutoCommit(false);
+      // ‘Serializable’ is the highest isolation level and guarantees safety from
+      // Dirty, Nonrepeatable, and Phantoms reads
+      dbConnection.setTransactionIsolation(Connection.TRANSACTION_SERIALIZABLE);
+
+      Statement st = dbConnection.createStatement();
+      String selectSQL = "Select * From ShowSeat where ShowID=? && ShowSeatID in (?) && isReserved=0";
+      PreparedStatement preparedStatement = dbConnection.prepareStatement(selectSQL);
+      preparedStatement.setInt(1, booking.getShow().getShowId());
+      Array array = dbConnection.createArrayOf("INTEGER", seatIds);
+      preparedStatement.setArray(2, array);
+
+      ResultSet rs = preparedStatement.executeQuery();
+      // With TRANSACTION_SERIALIZABLE all the read rows will have the write lock, so we can
+      // safely assume that no one else is modifying them.
+      if (rs.next()) {
+        rs.last(); // move to the last row, to calculate the row count
+        int rowCount = rs.getRow();
+        // check if we have expected number of rows, if not, this means another process is
+        // trying to process at least one of the same row, if that is the case we
+        // should not process this booking.
+        if(rowCount == seats.size()) {
+          // update ShowSeat table...
+          // update Booking table ...
+          dbConnection.commit();
+          return true;
+        }
+      }
+    } catch (SQLException e) {
+      dbConnection.rollback();
+      System.out.println(e.getMessage());
+    }
+    return false;
+  }
+}7:["$","$L12",null,{"title":"System Design","description":"Learn to design scalable systems and architectures","category":"system-design","allTopics":[{"id":"library-management","title":"Design a Library Management System","difficulty":"medium","description":"A Library Management System is a software built to handle the primary housekeeping functions of a library. Libraries rely on library management systems to manage asset collections as well as relations…","companies":[],"topics":[]},{"id":"movie-booking","title":"Design a Movie Ticket Booking System","difficulty":"medium","description":"An online movie ticket booking system facilitates the purchasing of movie tickets to its customers. E-ticketing systems allow customers to browse through movies currently playing and book seats, anywh…","companies":[],"topics":[]},{"id":"online-shopping","title":"Design Amazon - Online Shopping System","difficulty":"medium","description":"<MdxLink href=\"https://amazon.com\">Amazon</MdxLink> is the world's largest online retailer. The company was originally a bookseller but has expanded to sell a wide variety of consumer goods and digita…","companies":[],"topics":[]},{"id":"parking-lot","title":"Design a Parking Lot","difficulty":"medium","description":"A parking lot or car park is a dedicated cleared area that is intended for parking vehicles. In most countries where cars are a major mode of transportation, parking lots are a feature of every city a…","companies":[],"topics":[]},{"id":"stack-overflow","title":"Design Stack Overflow","difficulty":"medium","description":"Stack Overflow is one of the largest online communities for developers to learn and share their knowledge. The website provides a platform for its users to ask and answer questions, and through member…","companies":[],"topics":[]}],"selectedTopic":{"id":"movie-booking","title":"Design a Movie Ticket Booking System","difficulty":"medium","description":"System design concepts and patterns","companies":[],"topics":[],"content":"$13","solutions":{"accounts_java":{"language":"java","code":"// For simplicity, we are not defining getter and setter functions. The reader can\n// assume that all class attributes are private and accessed through their respective\n// public getter method and modified only through their public setter method.\n\npublic class Account {\n  private String id;\n  private String password;\n  private AccountStatus status;\n\n  public boolean resetPassword();\n}\n\npublic abstract class Person {\n  private String name;\n  private Address address;\n  private String email;\n  private String phone;\n\n  private Account account;\n}\n\npublic class Customer extends Person {\n  public boolean makeBooking(Booking booking);\n  public List<Booking> getBookings();\n}\n\npublic class Admin extends Person {\n  public boolean addMovie(Movie movie);\n  public boolean addShow(Show show);\n  public boolean blockUser(Customer customer);\n}\n\npublic class FrontDeskOfficer extends Person {\n  public boolean createBooking(Booking booking);\n}\n\npublic class Guest {\n  public bool registerAccount();\n}"},"accounts_py":{"language":"py","code":"$14"},"booking_java":{"language":"java","code":"public class Booking {\n  private String bookingNumber;\n  private int numberOfSeats;\n  private Date createdOn;\n  private BookingStatus status;\n\n  private Show show;\n  private List<ShowSeat> seats;\n  private Payment payment;\n\n  public boolean makePayment(Payment payment);\n  public boolean cancel();\n  public boolean assignSeats(List<ShowSeat> seats);\n}\n\npublic class ShowSeat extends CinemaHallSeat{\n  private int showSeatId;\n  private boolean isReserved;\n  private double price;\n}\n\npublic class Payment {\n  private double amount;\n  private Date createdOn;\n  private int transactionId;\n  private PaymentStatus status;\n}"},"booking_py":{"language":"py","code":"class Booking:\n  def __init__(self, booking_number, number_of_seats, status, show, show_seats, payment):\n    self.__booking_number = booking_number\n    self.__number_of_seats = number_of_seats\n    self.__created_on = datetime.date.today()\n    self.__status = status\n    self.__show = show\n    self.__seats = show_seats\n    self.__payment = payment\n\n  def make_payment(self, payment):\n    None\n\n  def cancel(self):\n    None\n\n  def assign_seats(self, seats):\n    None\n\n\nclass ShowSeat(CinemaHallSeat):\n  def __init__(self, id, is_reserved, price):\n    self.__show_seat_id = id\n    self.__is_reserved = is_reserved\n    self.__price = price\n\n\nclass Payment:\n  def __init__(self, amount, transaction_id, payment_status):\n    self.__amount = amount\n    self.__created_on = datetime.date.today()\n    self.__transaction_id = transaction_id\n    self.__status = payment_status"},"cinema_java":{"language":"java","code":"public class City {\n  private String name;\n  private String state;\n  private String zipCode;\n}\n\npublic class Cinema {\n  private String name;\n  private int totalCinemaHalls;\n  private Address location;\n\n  private List<CinemaHall> halls;\n}\n\npublic class CinemaHall {\n  private String name;\n  private int totalSeats;\n\n  private List<CinemaHallSeat> seats;\n  private List<Show> shows;\n}"},"cinema_py":{"language":"py","code":"class City:\n  def __init__(self, name, state, zip_code):\n    self.__name = name\n    self.__state = state\n    self.__zip_code = zip_code\n\n\nclass Cinema:\n  def __init__(self, name, total_cinema_halls, address, halls):\n    self.__name = name\n    self.__total_cinema_halls = total_cinema_halls\n    self.__location = address\n\n    self.__halls = halls\n\n\nclass CinemaHall:\n  def __init__(self, name, total_seats, seats, shows):\n    self.__name = name\n    self.__total_seats = total_seats\n\n    self.__seats = seats\n    self.__shows = shows"},"concurrency_java":{"language":"java","code":"$15"},"concurrency_sql":{"language":"sql","code":"SET TRANSACTION ISOLATION LEVEL SERIALIZABLE;\n \nBEGIN TRANSACTION;\n \n    -- Suppose we intend to reserve three seats (IDs: 54, 55, 56) for ShowID=99 \n    Select * From ShowSeat where ShowID=99 && ShowSeatID in (54, 55, 56) && isReserved=0 \n \n    -- if the number of rows returned by the above statement is NOT three, we can return failure to the user.\n    update ShowSeat table...\n    update Booking table ...\n \nCOMMIT TRANSACTION;"},"enums_java":{"language":"java","code":"public enum BookingStatus {\n    REQUESTED, PENDING, CONFIRMED, CHECKED_IN, CANCELED, ABANDONED\n}\n  \npublic enum SeatType {\n    REGULAR, PREMIUM, ACCESSIBLE, SHIPPED, EMERGENCY_EXIT, OTHER\n}\n\npublic enum AccountStatus {\n    ACTIVE, BLOCKED, BANNED, COMPROMISED, ARCHIVED, UNKNOWN\n}\n\npublic enum PaymentStatus {\n    UNPAID, PENDING, COMPLETED, FILLED, DECLINED, CANCELLED, ABANDONED, SETTLING, SETTLED, REFUNDED\n}\n\npublic class Address {\n    private String streetAddress;\n    private String city;\n    private String state;\n    private String zipCode;\n    private String country;\n}"},"enums_py":{"language":"py","code":"class BookingStatus(Enum):\n  REQUESTED, PENDING, CONFIRMED, CHECKED_IN, CANCELED, ABANDONED = 1, 2, 3, 4, 5, 6\n\n\nclass SeatType(Enum):\n  REGULAR, PREMIUM, ACCESSIBLE, SHIPPED, EMERGENCY_EXIT, OTHER = 1, 2, 3, 4, 5, 6\n\n\nclass AccountStatus(Enum):\n  ACTIVE, BLOCKED, BANNED, COMPROMISED, ARCHIVED, UNKNOWN = 1, 2, 3, 4, 5, 6\n\n\nclass PaymentStatus(Enum):\n  UNPAID, PENDING, COMPLETED, FILLED, DECLINED, CANCELLED, ABANDONED, SETTLING, SETTLED, REFUNDED = 1, 2, 3, 4, 5, 6, 7, 8, 9, 10\n\n\nclass Address:\n  def __init__(self, street, city, state, zip_code, country):\n    self.__street_address = street\n    self.__city = city\n    self.__state = state\n    self.__zip_code = zip_code\n    self.__country = country"},"search_java":{"language":"java","code":"public interface Search {\n  public List<Movie> searchByTitle(String title);\n  public List<Movie> searchByLanguage(String language);\n  public List<Movie> searchByGenre(String genre);\n  public List<Movie> searchByReleaseDate(Date relDate);\n  public List<Movie> searchByCity(String cityName);\n}\n\npublic class Catalog implements Search {\n   HashMap<String, List<Movie>> movieTitles;\n   HashMap<String, List<Movie>> movieLanguages;\n   HashMap<String, List<Movie>> movieGenres;\n   HashMap<Date, List<Movie>> movieReleaseDates;\n   HashMap<String, List<Movie>> movieCities;\n\n  public List<Movie> searchByTitle(String title) {\n    return movieTitles.get(title);\n  }\n\n  public List<Movie> searchByLanguage(String language) {\n    return movieLanguages.get(language);\n  }\n\n  //...\n\n  public List<Movie> searchByCity(String cityName) {\n    return movieCities.get(cityName);\n  }\n}"},"search_py":{"language":"py","code":"from abc import ABC, abstractmethod\n\nclass Search(ABC):\n  def search_by_title(self, title):\n    None\n\n  def search_by_language(self, language):\n    None\n\n  def search_by_genre(self, genre):\n    None\n\n  def search_by_release_date(self, rel_date):\n    None\n\n  def search_by_city(self, city_name):\n    None\n\n\nclass Catalog(Search):\n  def __init__(self):\n    self.__movie_titles = {}\n    self.__movie_languages = {}\n    self.__movie_genres = {}\n    self.__movie_release_dates = {}\n    self.__movie_cities = {}\n\n    def search_by_title(self, title):\n      return self.__movie_titles.get(title)\n\n    def search_by_language(self, language):\n      return self.__movie_languages.get(language)\n\n    # ...\n\n    def search_by_city(self, city_name):\n      return self.__movie_cities.get(city_name)"},"show_java":{"language":"java","code":"public class Show {\n  private int showId;\n  private Date createdOn;\n  private Date startTime;\n  private Date endTime;\n  private CinemaHall playedAt;\n  private Movie movie;\n}\n\npublic class Movie {\n  private String title;\n  private String description;\n  private int durationInMins;\n  private String language;\n  private Date releaseDate;\n  private String country;\n  private String genre;\n  private Admin movieAddedBy;\n\n  private List<Show> shows;\n  public List<Show> getShows();\n}"},"show_py":{"language":"py","code":"class Show:\n  def __init__(self, id, played_at, movie, start_time, end_time):\n    self.__show_id = id\n    self.__created_on = datetime.date.today()\n    self.__start_time = start_time\n    self.__end_time = end_time\n    self.__played_at = played_at\n    self.__movie = movie\n\n\nclass Movie:\n  def __init__(self, title, description, duration_in_mins, language, release_date, country, genre, added_by):\n    self.__title = title\n    self.__description = description\n    self.__duration_in_mins = duration_in_mins\n    self.__language = language\n    self.__release_date = release_date\n    self.__country = country\n    self.__genre = genre\n    self.__movie_added_by = added_by\n\n    self.__shows = []\n\n  def get_shows(self):\n    None"}},"relatedTopics":[]}}]

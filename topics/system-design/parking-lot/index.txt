@@ -1,0 +1,694 @@
+1:"$Sreact.fragment"
+2:I[10961,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","6334","static/chunks/6334-d195304efa533649.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7177","static/chunks/app/layout-25227c6113fa4794.js"],"ThemeProvider"]
+3:I[37752,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","6334","static/chunks/6334-d195304efa533649.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7177","static/chunks/app/layout-25227c6113fa4794.js"],"AuthProvider"]
+4:I[37462,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","6334","static/chunks/6334-d195304efa533649.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7177","static/chunks/app/layout-25227c6113fa4794.js"],"default"]
+5:I[95079,[],""]
+6:I[81019,[],""]
+8:I[96590,[],"OutletBoundary"]
+a:I[47875,[],"AsyncMetadataOutlet"]
+c:I[96590,[],"ViewportBoundary"]
+e:I[96590,[],"MetadataBoundary"]
+f:"$Sreact.suspense"
+11:I[69741,[],""]
+:HL["/cracking-interview/_next/static/media/569ce4b8f30dc480-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/cracking-interview/_next/static/media/93f479601ee12b01-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/cracking-interview/_next/static/css/ff78c3bf1dd6c987.css","style"]
+:HL["/cracking-interview/_next/static/css/34937f2da1ffdcf9.css","style"]
+0:{"P":null,"b":"3ddzafj3y1iV8DPtiYwP4","p":"/cracking-interview","c":["","topics","system-design","parking-lot",""],"i":false,"f":[[["",{"children":["topics",{"children":[["category","system-design","d"],{"children":[["topicId","parking-lot","oc"],{"children":["__PAGE__",{}]}]}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/cracking-interview/_next/static/css/ff78c3bf1dd6c987.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/cracking-interview/_next/static/css/34937f2da1ffdcf9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"className":"__variable_68ab41 __variable_8cef05 antialiased","children":["$","$L2",null,{"children":["$","$L3",null,{"children":[["$","$L4",null,{}],["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]]}]}]}]}]]}],{"children":["topics",["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["category","system-design","d"],["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["topicId","parking-lot","oc"],["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$L7",null,["$","$L8",null,{"children":["$L9",["$","$La",null,{"promise":"$@b"}]]}]]}],{},null,false]},null,false]},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,[["$","$Lc",null,{"children":"$Ld"}],["$","meta",null,{"name":"next-size-adjust","content":""}]],["$","$Le",null,{"children":["$","div",null,{"hidden":true,"children":["$","$f",null,{"fallback":null,"children":"$L10"}]}]}]]}],false]],"m":"$undefined","G":["$11",[]],"s":false,"S":true}
+d:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+9:null
+b:{"metadata":[["$","title","0",{"children":"Design a Parking Lot - System Design"}],["$","meta","1",{"name":"description","content":"Learn about Design a Parking Lot with detailed explanations and code solutions."}]],"error":null,"digest":"$undefined"}
+10:"$b:metadata"
+12:I[72314,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","3459","static/chunks/b2e9d811-56ea87cd42344413.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7317","static/chunks/7317-999ff3800f1bd958.js","9165","static/chunks/9165-9113c84c8a01dde3.js","2175","static/chunks/2175-dece1948dd7b5e7b.js","9643","static/chunks/9643-fb2991eb2bf04407.js","7870","static/chunks/7870-e27d15cf7b4d7d3c.js","2717","static/chunks/2717-6c387102824d202d.js","4893","static/chunks/app/topics/%5Bcategory%5D/%5B%5B...topicId%5D%5D/page-3b416c1bcaa633d7.js"],"DocsLayoutSSG"]
+13:T1d93,A parking lot or car park is a dedicated cleared area that is intended for parking vehicles. In most countries where cars are a major mode of transportation, parking lots are a feature of every city and suburban area. Shopping malls, sports stadiums, megachurches, and similar venues often feature parking lots over large areas.
+
+---
+## System Requirements
+We will focus on the following set of requirements while designing the parking lot:
+1. The parking lot should have multiple floors where customers can park their cars.
+2. The parking lot should have multiple entry and exit points.
+3. Customers can collect a parking ticket from the entry points and can pay the parking fee at the exit points on their way out.
+4. Customers can pay the tickets at the automated exit panel or to the parking attendant.
+5. Customers can pay via both cash and credit cards.
+6. Customers should also be able to pay the parking fee at the customer’s info portal on each floor. If the customer has paid at the info portal, they don’t have to pay at the exit.
+7. The system should not allow more vehicles than the maximum capacity of the parking lot. If the parking is full, the system should be able to show a message at the entrance panel and on the parking display board on the ground floor.
+8. Each parking floor will have many parking spots. The system should support multiple types of parking spots such as Compact, Large, Handicapped, Motorcycle, etc.
+9. The Parking lot should have some parking spots specified for electric cars. These spots should have an electric panel through which customers can pay and charge their vehicles.
+10. The system should support parking for different types of vehicles like car, truck, van, motorcycle, etc.
+11. Each parking floor should have a display board showing any free parking spot for each spot type.
+12. The system should support a per-hour parking fee model. For example, customers have to pay $4 for the first hour, $3.5 for the second and third hours, and $2.5 for all the remaining hours.
+
+---
+## Use Case Diagrams
+Here are the main Actors in our system:
+
+- **Admin:** Mainly responsible for adding and modifying parking floors, parking spots, entrance, and exit panels, adding/removing parking attendants, etc.
+- **Customer:** All customers can get a parking ticket and pay for it.
+- **Parking attendant:** Parking attendants can do all the activities on the customer’s behalf, and can take cash for ticket payment.
+- **System:** To display messages on different info panels, as well as assigning and removing a vehicle from a parking spot.
+
+Here are the top use cases for Parking Lot:
+
+- **Add/Remove/Edit parking floor:** To add, remove or modify a parking floor from the system. Each floor can have its own display board to show free parking spots.
+- **Add/Remove/Edit parking spot:** To add, remove or modify a parking spot on a parking floor.
+- **Add/Remove a parking attendant:** To add or remove a parking attendant from the system.
+- **Take ticket:** To provide customers with a new parking ticket when entering the parking lot.
+- **Scan ticket:** To scan a ticket to find out the total charge.
+- **Credit card payment:** To pay the ticket fee with credit card.
+- **Cash payment:** To pay the parking ticket through cash.
+- **Add/Modify parking rate:** To allow admin to add or modify the hourly parking rate.
+
+<MdxImage 
+  src="design/parking-lot/use-case.svg" 
+  alt="Usecase Diagram for Parking Lot"
+/>
+
+---
+## Class Diagrams
+Here are the main classes of our Parking Lot System:
+
+- **ParkingLot:** The central part of the organization for which this software has been designed. It has attributes like ‘Name’ to distinguish it from any other parking lots and ‘Address’ to define its location.
+- **ParkingFloor:** The parking lot will have many parking floors.
+- **ParkingSpot:** Each parking floor will have many parking spots. Our system will support different parking spots 1) Handicapped, 2) Compact, 3) Large, 4) Motorcycle, and 5) Electric.
+- **Account:** We will have two types of accounts in the system: one for an Admin, and the other for a parking attendant.
+- **Parking ticket:** This class will encapsulate a parking ticket. Customers will take a ticket when they enter the parking lot.
+- **Vehicle:** Vehicles will be parked in the parking spots. Our system will support different types of vehicles 1) Car, 2) Truck, 3) Electric, 4) Van and 5) Motorcycle.
+- **EntrancePanel and ExitPanel:** EntrancePanel will print tickets, and ExitPanel will facilitate payment of the ticket fee.
+- **Payment:** This class will be responsible for making payments. The system will support credit card and cash transactions.
+- **ParkingRate:** This class will keep track of the hourly parking rates. It will specify a dollar amount for each hour. For example, for a two hour parking ticket, this class will define the cost for the first and the second hour.
+- **ParkingDisplayBoard:** Each parking floor will have a display board to show available parking spots for each spot type. This class will be responsible for displaying the latest availability of free parking spots to the customers.
+- **ParkingAttendantPortal:** This class will encapsulate all the operations that an attendant can perform, like scanning tickets and processing payments.
+- **CustomerInfoPortal:** This class will encapsulate the info portal that customers use to pay for the parking ticket. Once paid, the info portal will update the ticket to keep track of the payment.
+- **ElectricPanel:** Customers will use the electric panels to pay and charge their electric vehicles.
+
+<MdxImage 
+  src="design/parking-lot/class-diagram.png" 
+  alt="Class Diagram for Parking Lot"
+/>
+
+<MdxImage 
+  src="design/concepts/uml.svg" 
+  alt="Uml"
+/>
+
+---
+## Activity diagrams
+
+- **Customer paying for parking ticket:** Any customer can perform this activity. Here are the set of steps:
+
+<MdxImage 
+  src="design/parking-lot/activity-paying.svg" 
+  alt="Activity Diagram for Parking Lot"
+/>
+
+---
+## Code
+Following is the skeleton code for our parking lot system:
+
+- **Enums and Constants:** Here are the required enums, data types, and constants:
+
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/parking-lot/enums"
+/>
+
+- **Account, Admin, and ParkingAttendant:** These classes represent various people that interact with our system:
+
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/parking-lot/accounts"
+/>
+
+- **ParkingSpot:** Here is the definition of ParkingSpot and all of its children classes:
+
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/parking-lot/parkingSpot"
+/>
+
+- **Vehicle:** Here is the definition for Vehicle and all of its child classes:
+
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/parking-lot/vehicle"
+/>
+
+- **ParkingFloor:** This class encapsulates a parking floor:
+
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/parking-lot/parkingFloor"
+/>
+
+- **ParkingDisplayBoard:** This class encapsulates a parking display board:
+
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/parking-lot/parkingDisplay"
+/>
+
+- **ParkingLot:** Our system will have only one object of this class. This can be enforced by using the <MdxLink href="https://en.wikipedia.org/wiki/Singleton_pattern">Singleton</MdxLink> pattern. In software engineering, the singleton pattern is a software design pattern that restricts the instantiation of a class to only one object.
+
+<MdxCodeTabs
+  langs={["java", "py"]}
+  path="system-design/code/parking-lot/parkingLot"
+/>14:T514,public class ParkingDisplayBoard {
+  private String id;
+  private HandicappedSpot handicappedFreeSpot;
+  private CompactSpot compactFreeSpot;
+  private LargeSpot largeFreeSpot;
+  private MotorbikeSpot motorbikeFreeSpot;
+  private ElectricSpot electricFreeSpot;
+
+  public void showEmptySpotNumber() {
+    String message = "";
+    if(handicappedFreeSpot.IsFree()){
+      message += "Free Handicapped: " + handicappedFreeSpot.getNumber();
+    } else {
+      message += "Handicapped is full";
+    }
+    message += System.lineSeparator();
+
+    if(compactFreeSpot.IsFree()){
+      message += "Free Compact: " + compactFreeSpot.getNumber();
+    } else {
+      message += "Compact is full";
+    }
+    message += System.lineSeparator();
+
+    if(largeFreeSpot.IsFree()){
+      message += "Free Large: " + largeFreeSpot.getNumber();
+    } else {
+      message += "Large is full";
+    }
+    message += System.lineSeparator();
+
+    if(motorbikeFreeSpot.IsFree()){
+      message += "Free Motorbike: " + motorbikeFreeSpot.getNumber();
+    } else {
+      message += "Motorbike is full";
+    }
+    message += System.lineSeparator();
+
+    if(electricFreeSpot.IsFree()){
+      message += "Free Electric: " + electricFreeSpot.getNumber();
+    } else {
+      message += "Electric is full";
+    }
+
+    Show(message);
+  }
+}15:T4dc,class ParkingDisplayBoard:
+  def __init__(self, id):
+    self.__id = id
+    self.__handicapped_free_spot = None
+    self.__compact_free_spot = None
+    self.__large_free_spot = None
+    self.__motorbike_free_spot = None
+    self.__electric_free_spot = None
+
+  def show_empty_spot_number(self):
+    message = ""
+    if self.__handicapped_free_spot.is_free():
+      message += "Free Handicapped: " + self.__handicapped_free_spot.get_number()
+    else:
+      message += "Handicapped is full"
+    message += "\n"
+
+    if self.__compact_free_spot.is_free():
+      message += "Free Compact: " + self.__compact_free_spot.get_number()
+    else:
+      message += "Compact is full"
+    message += "\n"
+
+    if self.__large_free_spot.is_free():
+      message += "Free Large: " + self.__large_free_spot.get_number()
+    else:
+      message += "Large is full"
+    message += "\n"
+
+    if self.__motorbike_free_spot.is_free():
+      message += "Free Motorbike: " + self.__motorbike_free_spot.get_number()
+    else:
+      message += "Motorbike is full"
+    message += "\n"
+
+    if self.__electric_free_spot.is_free():
+      message += "Free Electric: " + self.__electric_free_spot.get_number()
+    else:
+      message += "Electric is full"
+
+    print(message)16:Tcd0,public class ParkingFloor {
+  private String name;
+  private HashMap<String, HandicappedSpot> handicappedSpots;
+  private HashMap<String, CompactSpot> compactSpots;
+  private HashMap<String, LargeSpot> largeSpots;
+  private HashMap<String, MotorbikeSpot> motorbikeSpots;
+  private HashMap<String, ElectricSpot> electricSpots;
+  private HashMap<String, CustomerInfoPortal> infoPortals;
+  private ParkingDisplayBoard displayBoard;
+
+  public ParkingFloor(String name) {
+    this.name = name;
+  }
+
+  public void addParkingSpot(ParkingSpot spot) {
+    switch (spot.getType()) {
+    case ParkingSpotType.HANDICAPPED:
+      handicappedSpots.put(spot.getNumber(), spot);
+      break;
+    case ParkingSpotType.COMPACT:
+      compactSpots.put(spot.getNumber(), spot);
+      break;
+    case ParkingSpotType.LARGE:
+      largeSpots.put(spot.getNumber(), spot);
+      break;
+    case ParkingSpotType.MOTORBIKE:
+      motorbikeSpots.put(spot.getNumber(), spot);
+      break;
+    case ParkingSpotType.ELECTRIC:
+      electricSpots.put(spot.getNumber(), spot);
+      break;
+    default:
+      print("Wrong parking spot type!");
+    }
+  }
+
+  public void assignVehicleToSpot(Vehicle vehicle, ParkingSpot spot) {
+    spot.assignVehicle(vehicle);
+    switch (spot.getType()) {
+    case ParkingSpotType.HANDICAPPED:
+      updateDisplayBoardForHandicapped(spot);
+      break;
+    case ParkingSpotType.COMPACT:
+      updateDisplayBoardForCompact(spot);
+      break;
+    case ParkingSpotType.LARGE:
+      updateDisplayBoardForLarge(spot);
+      break;
+    case ParkingSpotType.MOTORBIKE:
+      updateDisplayBoardForMotorbike(spot);
+      break;
+    case ParkingSpotType.ELECTRIC:
+      updateDisplayBoardForElectric(spot);
+      break;
+    default:
+      print("Wrong parking spot type!");
+    }
+  }
+
+  private void updateDisplayBoardForHandicapped(ParkingSpot spot) {
+    if (this.displayBoard.getHandicappedFreeSpot().getNumber() == spot.getNumber()) {
+      // find another free handicapped parking and assign to displayBoard
+      for (String key : handicappedSpots.keySet()) {
+        if (handicappedSpots.get(key).isFree()) {
+          this.displayBoard.setHandicappedFreeSpot(handicappedSpots.get(key));
+        }
+      }
+      this.displayBoard.showEmptySpotNumber();
+    }
+  }
+
+  private void updateDisplayBoardForCompact(ParkingSpot spot) {
+    if (this.displayBoard.getCompactFreeSpot().getNumber() == spot.getNumber()) {
+      // find another free compact parking and assign to displayBoard
+      for (String key : compactSpots.keySet()) {
+        if (compactSpots.get(key).isFree()) {
+          this.displayBoard.setCompactFreeSpot(compactSpots.get(key));
+        }
+      }
+      this.displayBoard.showEmptySpotNumber();
+    }
+  }
+
+  public void freeSpot(ParkingSpot spot) {
+    spot.removeVehicle();
+    switch (spot.getType()) {
+    case ParkingSpotType.HANDICAPPED:
+      freeHandicappedSpotCount++;
+      break;
+    case ParkingSpotType.COMPACT:
+      freeCompactSpotCount++;
+      break;
+    case ParkingSpotType.LARGE:
+      freeLargeSpotCount++;
+      break;
+    case ParkingSpotType.MOTORBIKE:
+      freeMotorbikeSpotCount++;
+      break;
+    case ParkingSpotType.ELECTRIC:
+      freeElectricSpotCount++;
+      break;
+    default:
+      print("Wrong parking spot type!");
+    }
+  }
+}17:Taf6,class ParkingFloor:
+  def __init__(self, name):
+    self.__name = name
+    self.__handicapped_spots = {}
+    self.__compact_spots = {}
+    self.__large_spots = {}
+    self.__motorbike_spots = {}
+    self.__electric_spots = {}
+    self.__info_portals = {}
+    self.__display_board = ParkingDisplayBoard()
+
+  def add_parking_spot(self, spot):
+    switcher = {
+      ParkingSpotType.HANDICAPPED: self.__handicapped_spots.put(spot.get_number(), spot),
+      ParkingSpotType.COMPACT: __compact_spots.put(spot.get_number(), spot),
+      ParkingSpotType.LARGE: __large_spots.put(spot.get_number(), spot),
+      ParkingSpotType.MOTORBIKE: __motorbike_spots.put(spot.get_number(), spot),
+      ParkingSpotType.ELECTRIC: __electric_spots.put(spot.get_number(), spot),
+    }
+    switcher.get(spot.get_type(), 'Wrong parking spot type')
+
+  def assign_vehicleToSpot(self, vehicle, spot):
+    spot.assign_vehicle(vehicle)
+    switcher = {
+      ParkingSpotType.HANDICAPPED: self.update_display_board_for_handicapped(spot),
+      ParkingSpotType.COMPACT: self.update_display_board_for_compact(spot),
+      ParkingSpotType.LARGE: self.update_display_board_for_large(spot),
+      ParkingSpotType.MOTORBIKE: self.update_display_board_for_motorbike(spot),
+      ParkingSpotType.ELECTRIC: self.update_display_board_for_electric(spot),
+    }
+    switcher(spot.get_type(), 'Wrong parking spot type!')
+
+  def update_display_board_for_handicapped(self, spot):
+    if self.__display_board.get_handicapped_free_spot().get_number() == spot.get_number():
+      # find another free handicapped parking and assign to display_board
+      for key in self.__handicapped_spots:
+        if self.__handicapped_spots.get(key).is_free():
+          self.__display_board.set_handicapped_free_spot(
+            self.__handicapped_spots.get(key))
+
+      self.__display_board.show_empty_spot_number()
+
+  def update_display_board_for_compact(self, spot):
+    if self.__display_board.get_compact_free_spot().get_number() == spot.get_number():
+      # find another free compact parking and assign to display_board
+      for key in self.__compact_spots.key_set():
+        if self.__compact_spots.get(key).is_free():
+          self.__display_board.set_compact_free_spot(
+            self.__compact_spots.get(key))
+
+      self.__display_board.show_empty_spot_number()
+
+  def free_spot(self, spot):
+    spot.remove_vehicle()
+    switcher = {
+      ParkingSpotType.HANDICAPPED: self.__free_handicapped_spot_count += 1,
+      ParkingSpotType.COMPACT: self.__free_compact_spot_count += 1,
+      ParkingSpotType.LARGE: self.__free_large_spot_count += 1,
+      ParkingSpotType.MOTORBIKE: self.__free_motorbike_spot_count += 1,
+      ParkingSpotType.ELECTRIC: self.__free_electric_spot_count += 1,
+    }
+
+    switcher(spot.get_type(), 'Wrong parking spot type!')18:T10d7,public class ParkingLot {
+  private String name;
+  private Location address;
+  private ParkingRate parkingRate;
+
+  private int compactSpotCount;
+  private int largeSpotCount;
+  private int motorbikeSpotCount;
+  private int electricSpotCount;
+  private final int maxCompactCount;
+  private final int maxLargeCount;
+  private final int maxMotorbikeCount;
+  private final int maxElectricCount;
+
+  private HashMap<String, EntrancePanel> entrancePanels;
+  private HashMap<String, ExitPanel> exitPanels;
+  private HashMap<String, ParkingFloor> parkingFloors;
+
+  // all active parking tickets, identified by their ticketNumber
+  private HashMap<String, ParkingTicket> activeTickets;
+
+  // singleton ParkingLot to ensure only one object of ParkingLot in the system,
+  // all entrance panels will use this object to create new parking ticket: getNewParkingTicket(),
+  // similarly exit panels will also use this object to close parking tickets
+  private static ParkingLot parkingLot = null;
+
+  // private constructor to restrict for singleton
+  private ParkingLot() {
+    // 1. initialize variables: read name, address and parkingRate from database
+    // 2. initialize parking floors: read the parking floor map from database,
+    //  this map should tell how many parking spots are there on each floor. This
+    //  should also initialize max spot counts too.
+    // 3. initialize parking spot counts by reading all active tickets from database
+    // 4. initialize entrance and exit panels: read from database
+  }
+
+  // static method to get the singleton instance of StockExchange
+  public static ParkingLot getInstance() {
+    if (parkingLot == null) {
+      parkingLot = new ParkingLot();
+    }
+    return parkingLot;
+  }
+
+  // note that the following method is 'synchronized' to allow multiple entrances
+  // panels to issue a new parking ticket without interfering with each other
+  public synchronized ParkingTicket getNewParkingTicket(Vehicle vehicle) throws ParkingFullException {
+    if (this.isFull(vehicle.getType())) {
+      throw new ParkingFullException();
+    }
+    ParkingTicket ticket = new ParkingTicket();
+    vehicle.assignTicket(ticket);
+    ticket.saveInDB();
+    // if the ticket is successfully saved in the database, we can increment the parking spot count
+    this.incrementSpotCount(vehicle.getType());
+    this.activeTickets.put(ticket.getTicketNumber(), ticket);
+    return ticket;
+  }
+
+  public boolean isFull(VehicleType type) {
+    // trucks and vans can only be parked in LargeSpot
+    if (type == VehicleType.Truck || type == VehicleType.Van) {
+      return largeSpotCount >= maxLargeCount;
+    }
+
+    // motorbikes can only be parked at motorbike spots
+    if (type == VehicleType.Motorbike) {
+      return motorbikeSpotCount >= maxMotorbikeCount;
+    }
+
+    // cars can be parked at compact or large spots
+    if (type == VehicleType.Car) {
+      return (compactSpotCount + largeSpotCount) >= (maxCompactCount + maxLargeCount);
+    }
+
+    // electric car can be parked at compact, large or electric spots
+    return (compactSpotCount + largeSpotCount + electricSpotCount) >= (maxCompactCount + maxLargeCount
+        + maxElectricCount);
+  }
+
+  // increment the parking spot count based on the vehicle type
+  private boolean incrementSpotCount(VehicleType type) {
+    if (type == VehicleType.Truck || type == VehicleType.Van) {
+      largeSpotCount++;
+    } else if (type == VehicleType.Motorbike) {
+      motorbikeSpotCount++;
+    } else if (type == VehicleType.Car) {
+      if (compactSpotCount < maxCompactCount) {
+        compactSpotCount++;
+      } else {
+        largeSpotCount++;
+      }
+    } else { // electric car
+      if (electricSpotCount < maxElectricCount) {
+        electricSpotCount++;
+      } else if (compactSpotCount < maxCompactCount) {
+        compactSpotCount++;
+      } else {
+        largeSpotCount++;
+      }
+    }
+  }
+
+  public boolean isFull() {
+    for (String key : parkingFloors.keySet()) {
+      if (!parkingFloors.get(key).isFull()) {
+        return false;
+      }
+    }
+    return true;
+  }
+
+  public void addParkingFloor(ParkingFloor floor) {
+    /* store in database */ }
+
+  public void addEntrancePanel(EntrancePanel entrancePanel) {
+    /* store in database */ }
+
+  public void addExitPanel(ExitPanel exitPanel) {
+    /* store in database */ }
+}19:T10bd,import threading
+
+class ParkingLot:
+  # singleton ParkingLot to ensure only one object of ParkingLot in the system,
+  # all entrance panels will use this object to create new parking ticket: get_new_parking_ticket(),
+  # similarly exit panels will also use this object to close parking tickets
+  instance = None
+
+  class __OnlyOne:
+    def __init__(self, name, address):
+      # 1. initialize variables: read name, address and parking_rate from database
+      # 2. initialize parking floors: read the parking floor map from database,
+      #    this map should tell how many parking spots are there on each floor. This
+      #    should also initialize max spot counts too.
+      # 3. initialize parking spot counts by reading all active tickets from database
+      # 4. initialize entrance and exit panels: read from database
+
+      self.__name = name
+      self.__address = address
+      self.__parking_rate = ParkingRate()
+
+      self.__compact_spot_count = 0
+      self.__large_spot_count = 0
+      self.__motorbike_spot_count = 0
+      self.__electric_spot_count = 0
+      self.__max_compact_count = 0
+      self.__max_large_count = 0
+      self.__max_motorbike_count = 0
+      self.__max_electric_count = 0
+
+      self.__entrance_panels = {}
+      self.__exit_panels = {}
+      self.__parking_floors = {}
+
+      # all active parking tickets, identified by their ticket_number
+      self.__active_tickets = {}
+
+      self.__lock = threading.Lock()
+
+  def __init__(self, name, address):
+    if not ParkingLot.instance:
+      ParkingLot.instance = ParkingLot.__OnlyOne(name, address)
+    else:
+      ParkingLot.instance.__name = name
+      ParkingLot.instance.__address = address
+
+  def __getattr__(self, name):
+    return getattr(self.instance, name)
+
+  def get_new_parking_ticket(self, vehicle):
+    if self.is_full(vehicle.get_type()):
+      raise Exception('Parking full!')
+    # synchronizing to allow multiple entrances panels to issue a new
+    # parking ticket without interfering with each other
+    self.__lock.acquire()
+    ticket = ParkingTicket()
+    vehicle.assign_ticket(ticket)
+    ticket.save_in_DB()
+    # if the ticket is successfully saved in the database, we can increment the parking spot count
+    self.__increment_spot_count(vehicle.get_type())
+    self.__active_tickets.put(ticket.get_ticket_number(), ticket)
+    self.__lock.release()
+    return ticket
+
+  def is_full(self, type):
+    # trucks and vans can only be parked in LargeSpot
+    if type == VehicleType.Truck or type == VehicleType.Van:
+      return self.__large_spot_count >= self.__max_large_count
+
+    # motorbikes can only be parked at motorbike spots
+    if type == VehicleType.Motorbike:
+      return self.__motorbike_spot_count >= self.__max_motorbike_count
+
+    # cars can be parked at compact or large spots
+    if type == VehicleType.Car:
+      return (self.__compact_spot_count + self.__large_spot_count) >= (self.__max_compact_count + self.__max_large_count)
+
+    # electric car can be parked at compact, large or electric spots
+    return (self.__compact_spot_count + self.__large_spot_count + self.__electric_spot_count) >= (self.__max_compact_count + self.__max_large_count + self.__max_electric_count)
+
+  # increment the parking spot count based on the vehicle type
+  def increment_spot_count(self, type):
+    if type == VehicleType.Truck or type == VehicleType.Van:
+      large_spot_count += 1
+    elif type == VehicleType.Motorbike:
+      motorbike_spot_count += 1
+    elif type == VehicleType.Car:
+      if self.__compact_spot_count < self.__max_compact_count:
+        compact_spot_count += 1
+      else:
+        large_spot_count += 1
+    else:  # electric car
+      if self.__electric_spot_count < self.__max_electric_count:
+        electric_spot_count += 1
+      elif self.__compact_spot_count < self.__max_compact_count:
+        compact_spot_count += 1
+      else:
+        large_spot_count += 1
+
+  def is_full(self):
+    for key in self.__parking_floors:
+      if not self.__parking_floors.get(key).is_full():
+        return False
+    return True
+
+  def add_parking_floor(self, floor):
+    # store in database
+    None
+
+  def add_entrance_panel(self, entrance_panel):
+    # store in database
+    None
+
+  def add_exit_panel(self,  exit_panel):
+    # store in database
+    None1a:T400,public abstract class ParkingSpot {
+  private String number;
+  private boolean free;
+  private Vehicle vehicle;
+  private final ParkingSpotType type;
+
+  public boolean IsFree();
+
+  public ParkingSpot(ParkingSpotType type) {
+    this.type = type;
+  }
+
+  public boolean assignVehicle(Vehicle vehicle) {
+    this.vehicle = vehicle;
+    free = false;
+  }
+
+  public boolean removeVehicle() {
+    this.vehicle = null;
+    free = true;
+  }
+}
+
+public class HandicappedSpot extends ParkingSpot {
+  public HandicappedSpot() {
+    super(ParkingSpotType.HANDICAPPED);
+  }
+}
+
+public class CompactSpot extends ParkingSpot {
+  public CompactSpot() {
+    super(ParkingSpotType.COMPACT);
+  }
+}
+
+public class LargeSpot extends ParkingSpot {
+  public LargeSpot() {
+    super(ParkingSpotType.LARGE);
+  }
+}
+
+public class MotorbikeSpot extends ParkingSpot {
+  public MotorbikeSpot() {
+    super(ParkingSpotType.MOTORBIKE);
+  }
+}
+
+public class ElectricSpot extends ParkingSpot {
+  public ElectricSpot() {
+    super(ParkingSpotType.ELECTRIC);
+  }
+}7:["$","$L12",null,{"title":"System Design","description":"Learn to design scalable systems and architectures","category":"system-design","allTopics":[{"id":"library-management","title":"Design a Library Management System","difficulty":"medium","description":"A Library Management System is a software built to handle the primary housekeeping functions of a library. Libraries rely on library management systems to manage asset collections as well as relations…","companies":[],"topics":[]},{"id":"movie-booking","title":"Design a Movie Ticket Booking System","difficulty":"medium","description":"An online movie ticket booking system facilitates the purchasing of movie tickets to its customers. E-ticketing systems allow customers to browse through movies currently playing and book seats, anywh…","companies":[],"topics":[]},{"id":"online-shopping","title":"Design Amazon - Online Shopping System","difficulty":"medium","description":"<MdxLink href=\"https://amazon.com\">Amazon</MdxLink> is the world's largest online retailer. The company was originally a bookseller but has expanded to sell a wide variety of consumer goods and digita…","companies":[],"topics":[]},{"id":"parking-lot","title":"Design a Parking Lot","difficulty":"medium","description":"A parking lot or car park is a dedicated cleared area that is intended for parking vehicles. In most countries where cars are a major mode of transportation, parking lots are a feature of every city a…","companies":[],"topics":[]},{"id":"stack-overflow","title":"Design Stack Overflow","difficulty":"medium","description":"Stack Overflow is one of the largest online communities for developers to learn and share their knowledge. The website provides a platform for its users to ask and answer questions, and through member…","companies":[],"topics":[]}],"selectedTopic":{"id":"parking-lot","title":"Design a Parking Lot","difficulty":"medium","description":"System design concepts and patterns","companies":[],"topics":[],"content":"$13","solutions":{"accounts_java":{"language":"java","code":"// For simplicity, we are not defining getter and setter functions. The reader can\n// assume that all class attributes are private and accessed through their respective\n// public getter methods and modified only through their public methods function.\n\npublic abstract class Account {\n  private String userName;\n  private String password;\n  private AccountStatus status;\n  private Person person;\n\n  public boolean resetPassword();\n}\n\npublic class Admin extends Account {\n  public bool addParkingFloor(ParkingFloor floor);\n  public bool addParkingSpot(String floorName, ParkingSpot spot);\n  public bool addParkingDisplayBoard(String floorName, ParkingDisplayBoard displayBoard);\n  public bool addCustomerInfoPanel(String floorName, CustomerInfoPanel infoPanel);\n\n  public bool addEntrancePanel(EntrancePanel entrancePanel);\n  public bool addExitPanel(ExitPanel exitPanel);\n}\n\npublic class ParkingAttendant extends Account {\n  public bool processTicket(string TicketNumber);\n}"},"accounts_py":{"language":"py","code":"class Account:\n  def __init__(self, user_name, password, person, status=AccountStatus.Active):\n    self.__user_name = user_name\n    self.__password = password\n    self.__person = person\n    self.__status = status\n\n  def reset_password(self):\n    None\n\n\nclass Admin(Account):\n  def __init__(self, user_name, password, person, status=AccountStatus.Active):\n    super().__init__(user_name, password, person, status)\n\n  def add_parking_floor(self, floor):\n    None\n\n  def add_parking_spot(self, floor_name, spot):\n    None\n\n  def add_parking_display_board(self, floor_name, display_board):\n    None\n\n  def add_customer_info_panel(self, floor_name, info_panel):\n    None\n\n  def add_entrance_panel(self, entrance_panel):\n    None\n\n  def add_exit_panel(self, exit_panel):\n    None\n\n\nclass ParkingAttendant(Account):\n  def __init__(self, user_name, password, person, status=AccountStatus.Active):\n    super().__init__(user_name, password, person, status)\n\n  def process_ticket(self, ticket_number):\n    None"},"enums_java":{"language":"java","code":"public enum VehicleType {\n  CAR, TRUCK, ELECTRIC, VAN, MOTORBIKE\n}\n\npublic enum ParkingSpotType {\n  HANDICAPPED, COMPACT, LARGE, MOTORBIKE, ELECTRIC\n}\n\npublic enum AccountStatus {\n  ACTIVE, BLOCKED, BANNED, COMPROMISED, ARCHIVED, UNKNOWN\n}\n\npublic enum ParkingTicketStatus {\n  ACTIVE, PAID, LOST\n}\n\npublic class Address {\n  private String streetAddress;\n  private String city;\n  private String state;\n  private String zipCode;\n  private String country;\n}\n\npublic class Person {\n  private String name;\n  private Address address;\n  private String email;\n  private String phone;\n}"},"enums_py":{"language":"py","code":"class VehicleType(Enum):\n  CAR, TRUCK, ELECTRIC, VAN, MOTORBIKE = 1, 2, 3, 4, 5\n\n\nclass ParkingSpotType(Enum):\n  HANDICAPPED, COMPACT, LARGE, MOTORBIKE, ELECTRIC = 1, 2, 3, 4, 5\n\n\nclass AccountStatus(Enum):\n  ACTIVE, BLOCKED, BANNED, COMPROMISED, ARCHIVED, UNKNOWN = 1, 2, 3, 4, 5, 6\n\n\nclass ParkingTicketStatus(Enum):\n  ACTIVE, PAID, LOST = 1, 2, 3\n\n\nclass Address:\n  def __init__(self, street, city, state, zip_code, country):\n    self.__street_address = street\n    self.__city = city\n    self.__state = state\n    self.__zip_code = zip_code\n    self.__country = country\n\n\nclass Person():\n  def __init__(self, name, address, email, phone):\n    self.__name = name\n    self.__address = address\n    self.__email = email\n    self.__phone = phone"},"parkingDisplay_java":{"language":"java","code":"$14"},"parkingDisplay_py":{"language":"py","code":"$15"},"parkingFloor_java":{"language":"java","code":"$16"},"parkingFloor_py":{"language":"py","code":"$17"},"parkingLot_java":{"language":"java","code":"$18"},"parkingLot_py":{"language":"py","code":"$19"},"parkingSpot_java":{"language":"java","code":"$1a"},"parkingSpot_py":{"language":"py","code":"class ParkingSpot(ABC):\n  def __init__(self, number, parking_spot_type):\n    self.__number = number\n    self.__free = True\n    self.__vehicle = None\n    self.__parking_spot_type = parking_spot_type\n\n  def is_free(self):\n    return self.__free\n\n  def assign_vehicle(self, vehicle):\n    self.__vehicle = vehicle\n    free = False\n\n  def remove_vehicle(self):\n    self.__vehicle = None\n    free = True\n\n\nclass HandicappedSpot(ParkingSpot):\n  def __init__(self, number):\n    super().__init__(number, ParkingSpotType.HANDICAPPED)\n\n\nclass CompactSpot(ParkingSpot):\n  def __init__(self, number):\n    super().__init__(number, ParkingSpotType.COMPACT)\n\n\nclass LargeSpot(ParkingSpot):\n  def __init__(self, number):\n    super().__init__(number, ParkingSpotType.LARGE)\n\n\nclass MotorbikeSpot(ParkingSpot):\n  def __init__(self, number):\n    super().__init__(number, ParkingSpotType.MOTORBIKE)\n\n\nclass ElectricSpot(ParkingSpot):\n  def __init__(self, number):\n    super().__init__(number, ParkingSpotType.ELECTRIC)"},"vehicle_java":{"language":"java","code":"public abstract class Vehicle {\n  private String licenseNumber;\n  private final VehicleType type;\n  private ParkingTicket ticket;\n\n  public Vehicle(VehicleType type) {\n    this.type = type;\n  }\n\n  public void assignTicket(ParkingTicket ticket) {\n    this.ticket = ticket;\n  }\n}\n\npublic class Car extends Vehicle {\n  public Car() {\n    super(VehicleType.CAR);\n  }\n}\n\npublic class Van extends Vehicle {\n  public Van() {\n    super(VehicleType.VAN);\n  }\n}\n\npublic class Truck extends Vehicle {\n  public Truck() {\n    super(VehicleType.TRUCK);\n  }\n}\n\n// Similarly we can define classes for Motorcycle and Electric vehicles"},"vehicle_py":{"language":"py","code":"from abc import ABC, abstractmethod\n\nclass Vehicle(ABC):\n  def __init__(self, license_number, vehicle_type, ticket=None):\n    self.__license_number = license_number\n    self.__type = vehicle_type\n    self.__ticket = ticket\n\n  def assign_ticket(self, ticket):\n    self.__ticket = ticket\n\n\nclass Car(Vehicle):\n  def __init__(self, license_number, ticket=None):\n    super().__init__(license_number, VehicleType.CAR, ticket)\n\n\nclass Van(Vehicle):\n  def __init__(self, license_number, ticket=None):\n    super().__init__(license_number, VehicleType.VAN, ticket)\n\n\nclass Truck(Vehicle):\n  def __init__(self, license_number, ticket=None):\n    super().__init__(license_number, VehicleType.TRUCK, ticket)\n\n# Similarly we can define classes for Motorcycle and Electric vehicles"}},"relatedTopics":[]}}]

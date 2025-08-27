@@ -1,0 +1,63 @@
+1:"$Sreact.fragment"
+2:I[10961,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","6334","static/chunks/6334-d195304efa533649.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7177","static/chunks/app/layout-25227c6113fa4794.js"],"ThemeProvider"]
+3:I[37752,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","6334","static/chunks/6334-d195304efa533649.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7177","static/chunks/app/layout-25227c6113fa4794.js"],"AuthProvider"]
+4:I[37462,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","6334","static/chunks/6334-d195304efa533649.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7177","static/chunks/app/layout-25227c6113fa4794.js"],"default"]
+5:I[95079,[],""]
+6:I[81019,[],""]
+8:I[96590,[],"OutletBoundary"]
+a:I[47875,[],"AsyncMetadataOutlet"]
+c:I[96590,[],"ViewportBoundary"]
+e:I[96590,[],"MetadataBoundary"]
+f:"$Sreact.suspense"
+11:I[69741,[],""]
+:HL["/cracking-interview/_next/static/media/569ce4b8f30dc480-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/cracking-interview/_next/static/media/93f479601ee12b01-s.p.woff2","font",{"crossOrigin":"","type":"font/woff2"}]
+:HL["/cracking-interview/_next/static/css/ff78c3bf1dd6c987.css","style"]
+:HL["/cracking-interview/_next/static/css/34937f2da1ffdcf9.css","style"]
+0:{"P":null,"b":"3ddzafj3y1iV8DPtiYwP4","p":"/cracking-interview","c":["","topics","ood","uml",""],"i":false,"f":[[["",{"children":["topics",{"children":[["category","ood","d"],{"children":[["topicId","uml","oc"],{"children":["__PAGE__",{}]}]}]}]},"$undefined","$undefined",true],["",["$","$1","c",{"children":[[["$","link","0",{"rel":"stylesheet","href":"/cracking-interview/_next/static/css/ff78c3bf1dd6c987.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}],["$","link","1",{"rel":"stylesheet","href":"/cracking-interview/_next/static/css/34937f2da1ffdcf9.css","precedence":"next","crossOrigin":"$undefined","nonce":"$undefined"}]],["$","html",null,{"lang":"en","children":["$","body",null,{"className":"__variable_68ab41 __variable_8cef05 antialiased","children":["$","$L2",null,{"children":["$","$L3",null,{"children":[["$","$L4",null,{}],["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":[[["$","title",null,{"children":"404: This page could not be found."}],["$","div",null,{"style":{"fontFamily":"system-ui,\"Segoe UI\",Roboto,Helvetica,Arial,sans-serif,\"Apple Color Emoji\",\"Segoe UI Emoji\"","height":"100vh","textAlign":"center","display":"flex","flexDirection":"column","alignItems":"center","justifyContent":"center"},"children":["$","div",null,{"children":[["$","style",null,{"dangerouslySetInnerHTML":{"__html":"body{color:#000;background:#fff;margin:0}.next-error-h1{border-right:1px solid rgba(0,0,0,.3)}@media (prefers-color-scheme:dark){body{color:#fff;background:#000}.next-error-h1{border-right:1px solid rgba(255,255,255,.3)}}"}}],["$","h1",null,{"className":"next-error-h1","style":{"display":"inline-block","margin":"0 20px 0 0","padding":"0 23px 0 0","fontSize":24,"fontWeight":500,"verticalAlign":"top","lineHeight":"49px"},"children":404}],["$","div",null,{"style":{"display":"inline-block"},"children":["$","h2",null,{"style":{"fontSize":14,"fontWeight":400,"lineHeight":"49px","margin":0},"children":"This page could not be found."}]}]]}]}]],[]],"forbidden":"$undefined","unauthorized":"$undefined"}]]}]}]}]}]]}],{"children":["topics",["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["category","ood","d"],["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":[["topicId","uml","oc"],["$","$1","c",{"children":[null,["$","$L5",null,{"parallelRouterKey":"children","error":"$undefined","errorStyles":"$undefined","errorScripts":"$undefined","template":["$","$L6",null,{}],"templateStyles":"$undefined","templateScripts":"$undefined","notFound":"$undefined","forbidden":"$undefined","unauthorized":"$undefined"}]]}],{"children":["__PAGE__",["$","$1","c",{"children":["$L7",null,["$","$L8",null,{"children":["$L9",["$","$La",null,{"promise":"$@b"}]]}]]}],{},null,false]},null,false]},null,false]},null,false]},null,false],["$","$1","h",{"children":[null,[["$","$Lc",null,{"children":"$Ld"}],["$","meta",null,{"name":"next-size-adjust","content":""}]],["$","$Le",null,{"children":["$","div",null,{"hidden":true,"children":["$","$f",null,{"fallback":null,"children":"$L10"}]}]}]]}],false]],"m":"$undefined","G":["$11",[]],"s":false,"S":true}
+d:[["$","meta","0",{"charSet":"utf-8"}],["$","meta","1",{"name":"viewport","content":"width=device-width, initial-scale=1"}]]
+9:null
+b:{"metadata":[["$","title","0",{"children":"What is UML? - Object-Oriented Design"}],["$","meta","1",{"name":"description","content":"Learn about What is UML? with detailed explanations and code solutions."}]],"error":null,"digest":"$undefined"}
+10:"$b:metadata"
+12:I[72314,["8609","static/chunks/b321d78c-7a062717568e9902.js","9696","static/chunks/26d1fef7-ee766bdebc2771f4.js","3459","static/chunks/b2e9d811-56ea87cd42344413.js","1959","static/chunks/1959-5ce2d9e80376f08d.js","7317","static/chunks/7317-999ff3800f1bd958.js","9165","static/chunks/9165-9113c84c8a01dde3.js","2175","static/chunks/2175-dece1948dd7b5e7b.js","9643","static/chunks/9643-fb2991eb2bf04407.js","7870","static/chunks/7870-e27d15cf7b4d7d3c.js","2717","static/chunks/2717-6c387102824d202d.js","4893","static/chunks/app/topics/%5Bcategory%5D/%5B%5B...topicId%5D%5D/page-3b416c1bcaa633d7.js"],"DocsLayoutSSG"]
+13:T8ae,UML stands for Unified Modeling Language and is used to model the Object-Oriented Analysis of a software system. UML is a way of visualizing and documenting a software system by using a collection of diagrams, which helps engineers, businesspeople, and system architects understand the behavior and structure of the system being designed.
+
+Benefits of using UML:
+
+1. Helps develop a quick understanding of a software system.
+2. UML modeling helps in breaking a complex system into discrete pieces that can be easily understood.
+3. UML’s graphical notations can be used to communicate design decisions.
+4. Since UML is independent of any specific platform or language or technology, it is easier to abstract out concepts.
+5. It becomes easier to hand the system over to a new team.
+
+<MdxImage src="design/concepts/uml.svg" />
+
+**Types of UML Diagrams:** The current UML standards call for 14 different kinds of diagrams. These diagrams are organized into two distinct groups: structural diagrams and behavioral or interaction diagrams. As the names suggest, some UML diagrams analyze and depict the structure of a system or process, whereas others describe the behavior of the system, its actors, and its building components. The different types are broken down as follows:
+
+**Structural UML diagrams**
+- Class diagram
+- Object diagram
+- Package diagram
+- Component diagram
+- Composite structure diagram
+- Deployment diagram
+- Profile diagram
+
+**Behavioral UML diagrams**
+- Use case diagram
+- Activity diagram
+- Sequence diagram
+- State diagram
+- Communication diagram
+- Interaction overview diagram
+- Timing diagram
+
+In this course, we will be focusing on the following UML diagrams:
+
+- **Use Case Diagram:** Used to describe a set of user scenarios, this diagram, illustrates the functionality provided by the system.
+
+- **Class Diagram:** Used to describe structure and behavior in the use cases, this diagram provides a conceptual model of the system in terms of entities and their relationships.
+
+- **Activity Diagram:** Used to model the functional flow-of-control between two or more class objects.
+
+- **Sequence Diagram:** Used to describe interactions among classes in terms of an exchange of messages over time.7:["$","$L12",null,{"title":"Object-Oriented Design","description":"Master object-oriented design principles and patterns","category":"ood","allTopics":[{"id":"activity-diagram","title":"Activity Diagrams","difficulty":"medium","description":"We use Activity Diagrams to illustrate the flow of control in a system. An activity diagram shows the flow of control for a system functionality; it emphasizes the condition of flow and the sequence i…","companies":[],"topics":[]},{"id":"class-diagram","title":"Class Diagram","difficulty":"medium","description":"Class diagram is the backbone of object-oriented modeling - it shows how different entities (people, things, and data) relate to each other. In other words, it shows the static structures of the syste…","companies":[],"topics":[]},{"id":"oo-analysis-design","title":"Object Oriented Analysis and Design","difficulty":"medium","description":"Object Oriented Analysis and Design is a structured method for analyzing and designing a system by applying object-oriented concepts. This design process consists of an investigation into the objects…","companies":[],"topics":[]},{"id":"oops","title":"Object-Oriented Basics","difficulty":"medium","description":"Object-oriented programming (OOP) is a style of programming that focuses on using objects to design and build applications. Contrary to procedure-oriented programming where programs are designed as bl…","companies":[],"topics":[]},{"id":"sequence-diagram","title":"Sequence diagram","difficulty":"medium","description":"Sequence diagrams describe interactions among classes in terms of an exchange of messages over time and are used to explore the logic of complex operations, functions or procedures. In this diagram, t…","companies":[],"topics":[]},{"id":"uml","title":"What is UML?","difficulty":"medium","description":"UML stands for Unified Modeling Language and is used to model the Object-Oriented Analysis of a software system. UML is a way of visualizing and documenting a software system by using a collection of…","companies":[],"topics":[]},{"id":"use-case","title":"Use Case Diagrams","difficulty":"medium","description":"Use case diagrams describe a set of actions (called use cases) that a system should or can perform in collaboration with one or more external users of the system (called actors). Each use case should…","companies":[],"topics":[]}],"selectedTopic":{"id":"uml","title":"What is UML?","difficulty":"medium","description":"System design concepts and patterns","companies":[],"topics":[],"content":"$13","solutions":{},"relatedTopics":[]}}]
