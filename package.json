@@ -4,15 +4,16 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
-    "build": "npm run generate:content && next build --turbopack",
+    "build": "pnpm generate:content && next build --turbopack",
+    "build:analyze": "ANALYZE=true pnpm run build",
     "start": "next start",
     "lint": "eslint",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "format:staged": "prettier --write --ignore-unknown",
     "generate:content": "node scripts/generate-content.js",
-    "export": "npm run generate:content && next build && touch out/.nojekyll",
-    "deploy": "npm run generate:content && next build && touch out/.nojekyll"
+    "export": "pnpm generate:content && next build && touch out/.nojekyll",
+    "deploy": "pnpm generate:content && next build && touch out/.nojekyll"
   },
   "dependencies": {
     "@mdx-js/mdx": "^3.1.0",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@next/bundle-analyzer": "^15.5.0",
     "@tailwindcss/postcss": "^4",
     "@tailwindcss/typography": "^0.5.16",
     "@types/node": "^20",
