@@ -3,6 +3,7 @@
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
 import { ITopic } from '@/types/topic';
+import Image from 'next/image';
 
 interface Platform {
   name: string;
@@ -82,9 +83,11 @@ const PlatformLink = ({ platform, topic }: { platform: Platform, topic: ITopic }
       className="inline-flex items-center gap-2 px-3 lg:px-4 py-2 bg-card border border-border rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors duration-200 group min-w-0"
     >
       <div className="flex items-center gap-2 min-w-0">
-        <img 
+        <Image 
           src={`/assets/img/platform/${platform.img}`} 
           alt={platform.name}
+          width={20}
+          height={20}
           className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0"
           onError={(e) => {
             // Fallback if image doesn't exist

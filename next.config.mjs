@@ -12,11 +12,16 @@ const bundleAnalyzer = withBundleAnalyzer({
   enabled: process.env.ANALYZE === 'true',
 });
 
+const isProd = process.env.NODE_ENV === 'production';
+
 export default bundleAnalyzer(withMDXConfig({
   output: 'export',
   trailingSlash: true,
-  basePath: '/cracking-interview',
-  assetPrefix: '/cracking-interview',
+  basePath: isProd ? '/cracking-interview' : '',
+  assetPrefix: isProd ? '/cracking-interview' : '',
+  env: {
+    NEXT_PUBLIC_BASE_PATH: isProd ? '/cracking-interview' : '',
+  },
   images: {
     unoptimized: true,
   },

@@ -13,6 +13,8 @@ import { getUserProgress, upsertUserProgress } from '@/lib/progressStore';
 import { useRouter } from 'next/navigation';
 import TopicDifficulty from "@/components/TopicDifficulty";
 import config from '@/config';
+import Image from "next/image";
+import { formatComplexity } from '@/lib/complexityFormatter';
 
 // Public assets helper for Next.js
 const companyIconSrc = (company: string) => `/assets/img/company/${company}.svg`;
@@ -176,7 +178,7 @@ export function TopicContent({ topic, category, onProgressUpdate, onFilterByTag,
               <div className="flex items-center space-x-2">
                 <Clock className="w-4 h-4 text-primary" />
                 <span className="text-sm">
-                  <strong>Time:</strong> {topic.timeComplexity}
+                  <strong>Time:</strong> {formatComplexity(topic.timeComplexity)}
                 </span>
               </div>
             )}
@@ -184,7 +186,7 @@ export function TopicContent({ topic, category, onProgressUpdate, onFilterByTag,
               <div className="flex items-center space-x-2">
                 <Code className="w-4 h-4 text-primary" />
                 <span className="text-sm">
-                  <strong>Space:</strong> {topic.spaceComplexity}
+                  <strong>Space:</strong> {formatComplexity(topic.spaceComplexity)}
                 </span>
               </div>
             )}
@@ -224,7 +226,7 @@ export function TopicContent({ topic, category, onProgressUpdate, onFilterByTag,
                   onClick={() => onFilterByCompany?.(company)}
                   title={`Filter by ${company}`}
                 >
-                  <img src={companyIconSrc(company)} alt={company} className="w-3 h-3 lg:w-4 lg:h-4" />
+                  <Image src={companyIconSrc(company)} alt={company} width={16} height={16} className="w-3 h-3 lg:w-4 lg:h-4" />
                   {company}
                 </button>
               );

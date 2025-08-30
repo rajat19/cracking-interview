@@ -5,6 +5,7 @@ import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import useHighlight from '@/hooks/useHighlight';
 import { LANGUAGES_MAP } from "@/types/language";
 import { ISolutionEntry } from "@/types/topic";
+import Image from "next/image";
 
 interface SolutionTabsProps {
   solutions: Record<string, ISolutionEntry>;
@@ -53,9 +54,11 @@ export function SolutionTabs({ solutions, showHeader = true }: SolutionTabsProps
               }`}
               onClick={() => setActiveLanguage(solutionKey)}
             >
-              <img 
+              <Image 
                 src={getLanguageIcon(sol.language)} 
                 alt={`${sol.language} icon`}
+                width={16}
+                height={16}
                 className={`w-4 h-4 transition-all duration-200 ${
                   activeLanguage === solutionKey ? 'drop-shadow-sm brightness-110' : 'opacity-100'
                 }`}

@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from 'react';
+import Image from 'next/image';
 
 interface MdxImageProps {
   src: string;
@@ -10,9 +11,6 @@ interface MdxImageProps {
 export function MdxImage({ src, alt }: MdxImageProps) {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  
-  // Construct the full image path for Next.js
-  const imagePath = `/assets/img/${src}`;
   
   const handleImageLoad = () => {
     setIsLoading(false);
@@ -30,7 +28,7 @@ export function MdxImage({ src, alt }: MdxImageProps) {
           Failed to load image: <code className="bg-destructive/10 px-1 rounded">{src}</code>
         </p>
         <p className="text-muted-foreground text-xs mt-1">
-          Expected path: <code className="bg-muted px-1 rounded">{imagePath}</code>
+          Expected path: <code className="bg-muted px-1 rounded">/assets/img/{src}</code>
         </p>
       </div>
     );
@@ -44,9 +42,11 @@ export function MdxImage({ src, alt }: MdxImageProps) {
             <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
           </div>
         )}
-        <img
-          src={imagePath}
+        <Image
+          src={`/assets/img/${src}`}
           alt={alt}
+          width={800}
+          height={600}
           className="max-w-full h-auto rounded-lg border border-border shadow-sm mx-auto"
           onLoad={handleImageLoad}
           onError={handleImageError}

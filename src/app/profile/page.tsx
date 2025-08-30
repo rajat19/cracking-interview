@@ -11,6 +11,7 @@ import Link from 'next/link';
 import { Bookmark, ExternalLink, CheckCircle, UserCircle, LogOut } from 'lucide-react';
 import TopicDifficulty from '@/components/TopicDifficulty';
 import { ITopicCategory } from '@/types/topic';
+import Image from 'next/image';
 
 interface ProgressItem {
   id: string;
@@ -130,7 +131,7 @@ const Profile = () => {
         <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-8">
           <div className="flex flex-col items-center">
             {user?.photoURL ? (
-              <img 
+              <Image
                 src={user.photoURL} 
                 alt="Profile" 
                 className="w-24 h-24 rounded-full border-2 border-primary shadow-lg"
