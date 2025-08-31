@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import Image from 'next/image';
+import assetPath from '@/lib/assetPath';
 
 interface MdxImageProps {
   src: string;
@@ -43,7 +44,7 @@ export function MdxImage({ src, alt }: MdxImageProps) {
           </div>
         )}
         <Image
-          src={`/assets/img/${src}`}
+          src={assetPath(`/assets/img/${src}`)}
           alt={alt}
           width={800}
           height={600}

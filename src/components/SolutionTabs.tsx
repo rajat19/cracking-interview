@@ -12,8 +12,10 @@ interface SolutionTabsProps {
   showHeader?: boolean;
 }
 
+import assetPath from '@/lib/assetPath';
+
 const getLanguageIcon = (language: string): string => {
-  return `/assets/img/lang/${language}.svg`;
+  return assetPath(`/assets/img/lang/${language}.svg`);
 };
 
 export function SolutionTabs({ solutions, showHeader = true }: SolutionTabsProps) {

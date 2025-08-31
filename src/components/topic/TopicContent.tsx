@@ -17,7 +17,8 @@ import Image from 'next/image';
 import { formatComplexity } from '@/lib/complexityFormatter';
 
 // Public assets helper for Next.js
-const companyIconSrc = (company: string) => `/assets/img/company/${company}.svg`;
+import assetPath from '@/lib/assetPath';
+const companyIconSrc = (company: string) => assetPath(`/assets/img/company/${company}.svg`);
 
 interface TopicContentProps {
   topic: ITopic;
