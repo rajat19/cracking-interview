@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import React, { useState, useEffect, useMemo } from 'react';
 import { evaluate } from '@mdx-js/mdx';
@@ -18,18 +18,21 @@ export default function SimpleMDXRenderer({ content }: SimpleMDXRendererProps) {
   const [loading, setLoading] = useState(true);
 
   // MDX components that can be used in the content
-  const components = useMemo(() => ({
-    MdxImage,
-    MdxCodeTabs,
-    MdxLink,
-  }), []);
+  const components = useMemo(
+    () => ({
+      MdxImage,
+      MdxCodeTabs,
+      MdxLink,
+    }),
+    []
+  );
 
   useEffect(() => {
     const compileMDX = async () => {
       try {
         setLoading(true);
         setError(null);
-        
+
         // Evaluate the MDX content with React runtime
         const isDev = process.env.NODE_ENV === 'development';
         const runtime = isDev ? devRuntime : prodRuntime;
@@ -53,7 +56,7 @@ export default function SimpleMDXRenderer({ content }: SimpleMDXRendererProps) {
 
   if (loading) {
     return (
-      <div className="prose prose-slate dark:prose-invert max-w-none font-sans">
+      <div className="prose prose-slate max-w-none font-sans dark:prose-invert">
         <div className="text-sm text-muted-foreground">Rendering content…</div>
       </div>
     );
@@ -61,8 +64,8 @@ export default function SimpleMDXRenderer({ content }: SimpleMDXRendererProps) {
 
   if (error) {
     return (
-      <div className="prose prose-slate dark:prose-invert max-w-none font-sans">
-        <div className="text-red-600 text-sm">
+      <div className="prose prose-slate max-w-none font-sans dark:prose-invert">
+        <div className="text-sm text-red-600">
           <strong>MDX Error:</strong> {error}
         </div>
       </div>
@@ -71,14 +74,14 @@ export default function SimpleMDXRenderer({ content }: SimpleMDXRendererProps) {
 
   if (!MDXContent) {
     return (
-      <div className="prose prose-slate dark:prose-invert max-w-none font-sans">
+      <div className="prose prose-slate max-w-none font-sans dark:prose-invert">
         <div className="text-sm text-muted-foreground">No content to render</div>
       </div>
     );
   }
 
   return (
-    <div className="prose prose-slate dark:prose-invert max-w-none font-sans">
+    <div className="prose prose-slate max-w-none font-sans dark:prose-invert">
       <MDXContent />
     </div>
   );

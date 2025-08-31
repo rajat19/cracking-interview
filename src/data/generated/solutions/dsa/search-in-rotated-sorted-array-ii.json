@@ -1,8 +1,0 @@
-{
-  "java": {
-    "language": "java",
-    "code": "class Solution {\n    public boolean search(int[] nums, int target) {\n        int low = 0, high = nums.length-1;\n        while(low <= high) {\n            int mid = low + (high-low)/2;\n            if (nums[mid] == target) return true;\n            if (nums[low] == nums[mid] && nums[mid] == nums[high]) {\n                low++;\n                high--;\n            }\n            else if (nums[low] <= nums[mid]) {\n                if (nums[low] <= target && target < nums[mid]) {\n                    high = mid-1;\n                } else {\n                    low = mid+1;\n                }\n            } else {\n                if (nums[mid] < target && target <= nums[high]) {\n                    low = mid+1;\n                } else {\n                    high = mid-1;\n                }\n            }\n        }\n        return false;\n    }\n}",
-    "subPath": "",
-    "fileName": "solution.java"
-  }
-}

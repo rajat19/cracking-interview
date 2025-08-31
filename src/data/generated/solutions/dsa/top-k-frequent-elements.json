@@ -1,8 +1,0 @@
-{
-  "java": {
-    "language": "java",
-    "code": "class Solution {\n    public int[] topKFrequent(int[] nums, int k) {\n        Map<Integer, Integer> count = new HashMap<>();\n        PriorityQueue<Integer> pq = new PriorityQueue((a, b) -> count.getOrDefault(b,0) - count.getOrDefault(a, 0));\n        for(int n: nums) {\n            if (!count.containsKey(n)) {\n                pq.offer(n);\n            }\n            count.put(n, count.getOrDefault(n, 0) + 1);\n        }\n        int[] result = new int[k];\n        int i = 0;\n        while(!pq.isEmpty() && i<k) {\n            result[i++] = pq.poll();\n        }\n        return result;\n    }\n}",
-    "subPath": "",
-    "fileName": "solution.java"
-  }
-}

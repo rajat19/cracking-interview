@@ -1,8 +1,0 @@
-{
-  "java": {
-    "language": "java",
-    "code": "class Solution {\n    public boolean isScramble(String s1, String s2) {\n        Map<String, Boolean> map = new HashMap<>();\n        return isScramble(s1, s2, map);\n    }\n\n    public boolean isScramble(String s1, String s2, Map<String, Boolean> map) {\n        StringBuilder sb = new StringBuilder();\n        sb.append(s1).append(s2);\n        String key = sb.toString();\n        if (map.containsKey(key)) return map.get(key);\n        if (s1.equals(s2)) {\n            map.put(key, true);\n            return true;\n        }\n        int[] count = new int[26];\n        int l = s1.length();\n        for(int i=0; i<l; i++) {\n            count[s1.charAt(i) - 'a']++;\n            count[s2.charAt(i) - 'a']--;\n        }\n        for(int i=0; i<26; i++) {\n            if (count[i] != 0) {\n                map.put(key, false);\n                return false;\n            }\n        }\n        for(int i=1; i<=l-1; i++) {\n            if (isScramble(s1.substring(0, i), s2.substring(0, i), map) &&\n                    isScramble(s1.substring(i), s2.substring(i), map)) {\n                map.put(key, true);\n                return true;\n            }\n            if (isScramble(s1.substring(0, i), s2.substring(l-i), map) &&\n                    isScramble(s1.substring(i), s2.substring(0, l-i), map)) {\n                map.put(key, true);\n                return true;\n            }\n        }\n        map.put(key, false);\n        return false;\n    }\n}",
-    "subPath": "",
-    "fileName": "solution.java"
-  }
-}

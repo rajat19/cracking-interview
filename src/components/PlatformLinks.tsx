@@ -1,75 +1,22 @@
-"use client";
+'use client';
 
 import React from 'react';
 import { ExternalLink } from 'lucide-react';
 import { ITopic } from '@/types/topic';
 import Image from 'next/image';
-
-interface Platform {
-  name: string;
-  base: string;
-  suffix: string;
-  identifier: string;
-  img: string;
-}
-
-const PLATFORMS: Platform[] = [
-  {
-    name: 'Leetcode',
-    base: 'https://leetcode.com/problems/',
-    suffix: '/',
-    identifier: 'leetcode',
-    img: 'leetcode.svg'
-  },
-  {
-    name: 'GeeksForGeeks',
-    base: 'https://www.geeksforgeeks.org/',
-    suffix: '/',
-    identifier: 'gfg',
-    img: 'gfg.svg'
-  },
-  {
-    name: 'InterviewBit',
-    base: 'https://www.interviewbit.com/problems/',
-    suffix: '/',
-    identifier: 'interviewbit',
-    img: 'interviewbit.svg'
-  },
-  {
-    name: 'Hackerrank',
-    base: 'https://www.hackerrank.com/challenges/',
-    suffix: '/problem',
-    identifier: 'hackerrank',
-    img: 'hackerrank.svg',
-  },
-  {
-    name: 'Youtube',
-    base: 'https://www.youtube.com/results?search_query=',
-    suffix: '',
-    identifier: 'title',
-    img: 'youtube.svg',
-  },
-  {
-    name: 'Metacareers',
-    base: 'https://www.metacareers.com/profile/coding_practice_question/?problem_id=',
-    suffix: '',
-    identifier: 'metacareers',
-    img: 'meta.svg',
-  },
-  {
-    name: 'HelloInterview',
-    base: 'https://www.hellointerview.com/learn/',
-    suffix: '',
-    identifier: 'hellointerview',
-    img: 'hellointerview.svg'
-  }
-];
+import PLATFORMS from '@/config/platforms';
 
 interface PlatformLinksProps {
   topic: ITopic;
 }
 
-const PlatformLink = ({ platform, topic }: { platform: Platform, topic: ITopic }) => {
+const PlatformLink = ({
+  platform,
+  topic,
+}: {
+  platform: (typeof PLATFORMS)[number];
+  topic: ITopic;
+}) => {
   const identifier = platform.identifier as keyof ITopic;
   const problemId = topic[identifier] as string;
   const url = `${platform.base}${problemId}${platform.suffix}`;
@@ -80,22 +27,22 @@ const PlatformLink = ({ platform, topic }: { platform: Platform, topic: ITopic }
       href={url}
       target="_blank"
       rel="noopener noreferrer"
-      className="inline-flex items-center gap-2 px-3 lg:px-4 py-2 bg-card border border-border rounded-lg hover:bg-accent hover:text-accent-foreground transition-colors duration-200 group min-w-0"
+      className="group inline-flex min-w-0 items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 transition-colors duration-200 hover:bg-accent hover:text-accent-foreground lg:px-4"
     >
-      <div className="flex items-center gap-2 min-w-0">
-        <Image 
-          src={`/assets/img/platform/${platform.img}`} 
+      <div className="flex min-w-0 items-center gap-2">
+        <Image
+          src={`/assets/img/platform/${platform.img}`}
           alt={platform.name}
           width={20}
           height={20}
-          className="w-4 h-4 lg:w-5 lg:h-5 flex-shrink-0"
-          onError={(e) => {
+          className="h-4 w-4 flex-shrink-0 lg:h-5 lg:w-5"
+          onError={e => {
             // Fallback if image doesn't exist
             (e.target as HTMLImageElement).style.display = 'none';
           }}
         />
-        <span className="font-medium text-xs lg:text-sm truncate">{platform.name}</span>
-        <ExternalLink className="w-3 h-3 lg:w-4 lg:h-4 opacity-60 group-hover:opacity-100 transition-opacity flex-shrink-0" />
+        <span className="truncate text-xs font-medium lg:text-sm">{platform.name}</span>
+        <ExternalLink className="h-3 w-3 flex-shrink-0 opacity-60 transition-opacity group-hover:opacity-100 lg:h-4 lg:w-4" />
       </div>
     </a>
   );
@@ -114,16 +61,14 @@ export const PlatformLinks: React.FC<PlatformLinksProps> = ({ topic }) => {
 
   return (
     <div className="my-6 lg:my-8">
-      <h3 className="text-lg lg:text-xl font-medium mb-1 text-foreground">Practice on Platforms</h3>
+      <h3 className="mb-1 text-lg font-medium text-foreground lg:text-xl">Practice on Platforms</h3>
       {/* Additional info */}
-      <p className="text-xs text-muted-foreground mb-3">
+      <p className="mb-3 text-xs text-muted-foreground">
         Click on any platform to view this problem on their website
       </p>
       <div className="flex flex-wrap gap-2 lg:gap-3">
-        {availablePlatforms.map((platform) => {
-          return (
-            <PlatformLink key={platform.identifier} platform={platform} topic={topic} />
-          );
+        {availablePlatforms.map(platform => {
+          return <PlatformLink key={platform.identifier} platform={platform} topic={topic} />;
         })}
       </div>
     </div>

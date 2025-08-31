@@ -6,7 +6,7 @@ const fm = require('front-matter');
 const categories = ['dsa', 'system-design', 'ood', 'behavioral'];
 
 // Output directory for generated content
-const outputDir = path.join(process.cwd(), 'src/data/generated');
+const outputDir = path.join(process.cwd(), 'src/generated');
 
 // Ensure output directory exists
 if (!fs.existsSync(outputDir)) {
@@ -17,27 +17,27 @@ if (!fs.existsSync(outputDir)) {
 function loadCodeSolutions(category, topicId) {
   const codeDir = path.join(process.cwd(), `src/content/${category}/code/${topicId}`);
   const solutions = {};
-  
+
   if (!fs.existsSync(codeDir)) {
     return solutions;
   }
-  
+
   // Recursive function to scan directories for solution files
   function scanDirectory(dir, subPath = '') {
     try {
       const items = fs.readdirSync(dir);
-      
+
       for (const item of items) {
         const itemPath = path.join(dir, item);
         const stat = fs.statSync(itemPath);
-        
+
         if (stat.isDirectory()) {
           // Recursively scan subdirectories
           scanDirectory(itemPath, path.join(subPath, item));
         } else if (stat.isFile()) {
           const ext = path.extname(item).slice(1); // Remove the dot
           const baseName = path.basename(item, path.extname(item));
-          
+
           // Only process solution files
           if (baseName === 'solution' && ext) {
             try {
@@ -47,7 +47,7 @@ function loadCodeSolutions(category, topicId) {
                 language: ext,
                 code: code.trim(),
                 subPath: subPath || '', // Track which subdirectory this came from
-                fileName: item
+                fileName: item,
               };
             } catch (error) {
               console.warn(`⚠️  Failed to read code file: ${itemPath}`, error.message);
@@ -59,43 +59,43 @@ function loadCodeSolutions(category, topicId) {
       console.warn(`⚠️  Error reading directory: ${dir}`, error.message);
     }
   }
-  
+
   scanDirectory(codeDir);
   return solutions;
 }
 
 async function generateStaticContent() {
   console.log('🚀 Starting static content generation...');
-  
+
   const allContent = {};
-  
+
   for (const category of categories) {
     console.log(`📁 Processing ${category} category...`);
-    
+
     const postsDir = path.join(process.cwd(), `src/content/${category}/posts`);
-    
+
     if (!fs.existsSync(postsDir)) {
       console.log(`⚠️  Directory not found: ${postsDir}`);
       continue;
     }
-    
+
     const files = fs.readdirSync(postsDir).filter(file => file.endsWith('.mdx'));
     console.log(`📄 Found ${files.length} MDX files in ${category}`);
-    
+
     allContent[category] = {};
-    
+
     for (const file of files) {
       const filePath = path.join(postsDir, file);
       const topicId = path.basename(file, '.mdx');
-      
+
       try {
         const content = fs.readFileSync(filePath, 'utf-8');
         const parsed = fm(content);
-        
+
         // Load code solutions for this topic
         const solutions = loadCodeSolutions(category, topicId);
         const solutionCount = Object.keys(solutions).length;
-        
+
         // Store both metadata and full content
         allContent[category][topicId] = {
           id: topicId,
@@ -114,21 +114,21 @@ async function generateStaticContent() {
           // Store just the body (without frontmatter)
           body: parsed.body,
           // Store code solutions
-          solutions: solutions
+          solutions: solutions,
         };
-        
+
         console.log(`✅ Processed: ${category}/${topicId} (${solutionCount} solutions)`);
       } catch (error) {
         console.error(`❌ Error processing ${category}/${file}:`, error.message);
       }
     }
   }
-  
+
   // Write the complete content map
   const contentMapPath = path.join(outputDir, 'content-map.json');
   fs.writeFileSync(contentMapPath, JSON.stringify(allContent, null, 2));
   console.log(`📦 Generated content map: ${contentMapPath}`);
-  
+
   // Create individual category files (without solutions for smaller size)
   for (const category of categories) {
     if (allContent[category]) {
@@ -136,16 +136,41 @@ async function generateStaticContent() {
       for (const [topicId, topic] of Object.entries(allContent[category])) {
         categoryContentWithoutSolutions[topicId] = {
           ...topic,
-          solutions: {} // Remove solutions to keep files small
+          solutions: {}, // Remove solutions to keep files small
         };
       }
-      
+
       const categoryPath = path.join(outputDir, `${category}-content.json`);
       fs.writeFileSync(categoryPath, JSON.stringify(categoryContentWithoutSolutions, null, 2));
-      console.log(`📦 Generated ${category} content: ${categoryPath} (${Object.keys(allContent[category]).length} topics)`);
+      console.log(
+        `📦 Generated ${category} content: ${categoryPath} (${Object.keys(allContent[category]).length} topics)`
+      );
+
+      // Also generate an index file (array form) for fast listing
+      const categoryIndex = Object.entries(allContent[category]).map(([topicId, topic]) => ({
+        id: topicId,
+        title: topic.title,
+        difficulty: topic.difficulty,
+        timeComplexity: topic.tc,
+        spaceComplexity: topic.sc,
+        description: topic.content
+          ? String(topic.body || '')
+              .replace(/```[\s\S]*?```/g, '')
+              .replace(/[#>*_`>-]/g, ' ')
+              .replace(/\s+/g, ' ')
+              .trim()
+              .slice(0, 200) + '…'
+          : '',
+        companies: Array.isArray(topic.companies) ? topic.companies : [],
+        relatedTopics: Array.isArray(topic.topics) ? topic.topics : [],
+      }));
+
+      const indexPath = path.join(outputDir, `${category}-index.json`);
+      fs.writeFileSync(indexPath, JSON.stringify(categoryIndex, null, 2));
+      console.log(`📦 Generated ${category} index: ${indexPath}`);
     }
   }
-  
+
   // Create individual solution files for better performance
   for (const category of categories) {
     if (allContent[category]) {
@@ -153,27 +178,29 @@ async function generateStaticContent() {
       if (!fs.existsSync(solutionsDir)) {
         fs.mkdirSync(solutionsDir, { recursive: true });
       }
-      
+
       for (const [topicId, topic] of Object.entries(allContent[category])) {
         if (topic.solutions && Object.keys(topic.solutions).length > 0) {
           const solutionPath = path.join(solutionsDir, `${topicId}.json`);
           fs.writeFileSync(solutionPath, JSON.stringify(topic.solutions, null, 2));
-          console.log(`🔧 Generated solutions for ${category}/${topicId}: ${Object.keys(topic.solutions).length} solutions`);
+          console.log(
+            `🔧 Generated solutions for ${category}/${topicId}: ${Object.keys(topic.solutions).length} solutions`
+          );
         }
       }
     }
   }
-  
+
   // Generate summary stats
   const stats = {};
   for (const category of categories) {
     stats[category] = Object.keys(allContent[category] || {}).length;
   }
-  
+
   const statsPath = path.join(outputDir, 'content-stats.json');
   fs.writeFileSync(statsPath, JSON.stringify(stats, null, 2));
   console.log(`📊 Generated stats: ${statsPath}`);
-  
+
   console.log('🎉 Static content generation completed!');
   console.log('📈 Summary:', stats);
 }

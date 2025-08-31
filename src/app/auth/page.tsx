@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -28,9 +28,9 @@ export default function AuthPage() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="text-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary mx-auto mb-4"></div>
+          <div className="mx-auto mb-4 h-8 w-8 animate-spin rounded-full border-b-2 border-primary"></div>
           <p className="text-muted-foreground">Loading...</p>
         </div>
       </div>
@@ -39,7 +39,7 @@ export default function AuthPage() {
 
   if (user) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-background">
+      <div className="flex min-h-screen items-center justify-center bg-background">
         <div className="text-center">
           <p className="text-muted-foreground">Redirecting...</p>
         </div>
@@ -48,16 +48,16 @@ export default function AuthPage() {
   }
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-background">
-      <div className="max-w-md w-full mx-4">
-        <div className="bg-card border border-border rounded-lg shadow-lg p-8">
+    <div className="flex min-h-screen items-center justify-center bg-background">
+      <div className="mx-4 w-full max-w-md">
+        <div className="rounded-lg border border-border bg-card p-8 shadow-lg">
           {/* Logo/Header */}
-          <div className="text-center mb-8">
-            <div className="flex items-center justify-center space-x-2 mb-4">
-              <div className="w-10 h-10 bg-gradient-to-r from-primary to-accent rounded flex items-center justify-center">
-                <BookOpen className="w-6 h-6 text-white" />
+          <div className="mb-8 text-center">
+            <div className="mb-4 flex items-center justify-center space-x-2">
+              <div className="flex h-10 w-10 items-center justify-center rounded bg-gradient-to-r from-primary to-accent">
+                <BookOpen className="h-6 w-6 text-white" />
               </div>
-              <h1 className="text-2xl font-bold gradient-text">Interview Prep</h1>
+              <h1 className="gradient-text text-2xl font-bold">Interview Prep</h1>
             </div>
             <p className="text-muted-foreground">
               Sign in to track your progress and bookmark problems
@@ -65,29 +65,29 @@ export default function AuthPage() {
           </div>
 
           {/* Sign In Button */}
-          <Button 
+          <Button
             onClick={handleSignIn}
-            className="w-full flex items-center justify-center space-x-2 py-3"
+            className="flex w-full items-center justify-center space-x-2 py-3"
             size="lg"
           >
-            <LogIn className="w-5 h-5" />
+            <LogIn className="h-5 w-5" />
             <span>Continue with Google</span>
           </Button>
 
           {/* Features */}
-          <div className="mt-8 pt-6 border-t border-border">
-            <h3 className="text-sm font-medium text-foreground mb-3">With an account, you can:</h3>
+          <div className="mt-8 border-t border-border pt-6">
+            <h3 className="mb-3 text-sm font-medium text-foreground">With an account, you can:</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li className="flex items-center space-x-2">
-                <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
                 <span>Track your progress across all categories</span>
               </li>
               <li className="flex items-center space-x-2">
-                <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
                 <span>Bookmark important problems and concepts</span>
               </li>
               <li className="flex items-center space-x-2">
-                <div className="w-1.5 h-1.5 bg-primary rounded-full"></div>
+                <div className="h-1.5 w-1.5 rounded-full bg-primary"></div>
                 <span>Sync your data across devices</span>
               </li>
             </ul>
@@ -95,8 +95,8 @@ export default function AuthPage() {
 
           {/* Guest Access */}
           <div className="mt-6 text-center">
-            <Button 
-              variant="ghost" 
+            <Button
+              variant="ghost"
               onClick={() => router.push('/')}
               className="text-sm text-muted-foreground hover:text-foreground"
             >

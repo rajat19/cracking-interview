@@ -6,511 +6,562 @@
 All colors MUST be HSL.
 */
 
-
 @layer base {
-    :root {
-        /* Light theme colors */
-        --background: 0 0% 100%;
-        --foreground: 222.2 84% 4.9%;
+  :root {
+    /* Light theme colors */
+    --background: 0 0% 100%;
+    --foreground: 222.2 84% 4.9%;
 
-        --card: 0 0% 100%;
-        --card-foreground: 222.2 84% 4.9%;
+    --card: 0 0% 100%;
+    --card-foreground: 222.2 84% 4.9%;
 
-        --popover: 0 0% 100%;
-        --popover-foreground: 222.2 84% 4.9%;
+    --popover: 0 0% 100%;
+    --popover-foreground: 222.2 84% 4.9%;
 
-        --primary: 263.4 70% 50.4%;
-        --primary-foreground: 210 40% 98%;
+    --primary: 263.4 70% 50.4%;
+    --primary-foreground: 210 40% 98%;
 
-        --secondary: 210 40% 98%;
-        --secondary-foreground: 222.2 47.4% 11.2%;
+    --secondary: 210 40% 98%;
+    --secondary-foreground: 222.2 47.4% 11.2%;
 
-        --muted: 210 40% 98%;
-        --muted-foreground: 215.4 16.3% 46.9%;
+    --muted: 210 40% 98%;
+    --muted-foreground: 215.4 16.3% 46.9%;
 
-        --accent: 142 76% 36%;
-        --accent-foreground: 210 40% 98%;
+    --accent: 142 76% 36%;
+    --accent-foreground: 210 40% 98%;
 
-        --destructive: 0 84.2% 60.2%;
-        --destructive-foreground: 210 40% 98%;
+    --destructive: 0 84.2% 60.2%;
+    --destructive-foreground: 210 40% 98%;
 
-        --border: 214.3 31.8% 91.4%;
-        --input: 214.3 31.8% 91.4%;
-        --ring: 263.4 70% 50.4%;
+    --border: 214.3 31.8% 91.4%;
+    --input: 214.3 31.8% 91.4%;
+    --ring: 263.4 70% 50.4%;
 
-        --radius: 0.75rem;
+    --radius: 0.75rem;
 
-        --success: 142 76% 36%;
-        --warning: 38 92% 50%;
-        --info: 217.2 91.2% 59.8%;
+    --success: 142 76% 36%;
+    --warning: 38 92% 50%;
+    --info: 217.2 91.2% 59.8%;
 
-        --sidebar-background: 0 0% 100%;
-        --sidebar-foreground: 222.2 84% 4.9%;
-        --sidebar-primary: 263.4 70% 50.4%;
-        --sidebar-primary-foreground: 210 40% 98%;
-        --sidebar-accent: 210 40% 98%;
-        --sidebar-accent-foreground: 222.2 47.4% 11.2%;
-        --sidebar-border: 214.3 31.8% 91.4%;
-        --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 0 0% 100%;
+    --sidebar-foreground: 222.2 84% 4.9%;
+    --sidebar-primary: 263.4 70% 50.4%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 210 40% 98%;
+    --sidebar-accent-foreground: 222.2 47.4% 11.2%;
+    --sidebar-border: 214.3 31.8% 91.4%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
 
-        /* Custom gradients */
-        --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
-        --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(210 20% 98%));
-        --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 100%);
+    /* Custom gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(var(--primary)), hsl(var(--accent)));
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(210 20% 98%));
+    --gradient-hero: linear-gradient(135deg, hsl(0 0% 100%) 0%, hsl(210 40% 98%) 100%);
 
-        /* Shadows */
-        --shadow-glow: 0 0 30px hsl(var(--primary) / 0.2);
-        --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.1);
-    }
+    /* Shadows */
+    --shadow-glow: 0 0 30px hsl(var(--primary) / 0.2);
+    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.1);
+  }
 
-    .dark {
-        /* Dark theme colors */
-        --background: 222.2 84% 4.9%;
-        --foreground: 210 40% 98%;
+  .dark {
+    /* Dark theme colors */
+    --background: 222.2 84% 4.9%;
+    --foreground: 210 40% 98%;
 
-        --card: 222.2 84% 4.9%;
-        --card-foreground: 210 40% 98%;
+    --card: 222.2 84% 4.9%;
+    --card-foreground: 210 40% 98%;
 
-        --popover: 222.2 84% 4.9%;
-        --popover-foreground: 210 40% 98%;
+    --popover: 222.2 84% 4.9%;
+    --popover-foreground: 210 40% 98%;
 
-        --primary: 263.4 70% 50.4%;
-        --primary-foreground: 210 40% 98%;
+    --primary: 263.4 70% 50.4%;
+    --primary-foreground: 210 40% 98%;
 
-        --secondary: 217.2 32.6% 17.5%;
-        --secondary-foreground: 210 40% 98%;
+    --secondary: 217.2 32.6% 17.5%;
+    --secondary-foreground: 210 40% 98%;
 
-        --muted: 217.2 32.6% 17.5%;
-        --muted-foreground: 215 20.2% 65.1%;
+    --muted: 217.2 32.6% 17.5%;
+    --muted-foreground: 215 20.2% 65.1%;
 
-        --accent: 142 76% 36%;
-        --accent-foreground: 210 40% 98%;
+    --accent: 142 76% 36%;
+    --accent-foreground: 210 40% 98%;
 
-        --destructive: 0 62.8% 30.6%;
-        --destructive-foreground: 210 40% 98%;
+    --destructive: 0 62.8% 30.6%;
+    --destructive-foreground: 210 40% 98%;
 
-        --border: 217.2 32.6% 17.5%;
-        --input: 217.2 32.6% 17.5%;
-        --ring: 263.4 70% 50.4%;
+    --border: 217.2 32.6% 17.5%;
+    --input: 217.2 32.6% 17.5%;
+    --ring: 263.4 70% 50.4%;
 
-        --sidebar-background: 222.2 84% 4.9%;
-        --sidebar-foreground: 210 40% 98%;
-        --sidebar-primary: 263.4 70% 50.4%;
-        --sidebar-primary-foreground: 210 40% 98%;
-        --sidebar-accent: 217.2 32.6% 17.5%;
-        --sidebar-accent-foreground: 210 40% 98%;
-        --sidebar-border: 217.2 32.6% 17.5%;
-        --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-background: 222.2 84% 4.9%;
+    --sidebar-foreground: 210 40% 98%;
+    --sidebar-primary: 263.4 70% 50.4%;
+    --sidebar-primary-foreground: 210 40% 98%;
+    --sidebar-accent: 217.2 32.6% 17.5%;
+    --sidebar-accent-foreground: 210 40% 98%;
+    --sidebar-border: 217.2 32.6% 17.5%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
 
-        /* Dark theme gradients */
-        --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(217 32% 20%));
-        --gradient-hero: linear-gradient(135deg, hsl(222.2 84% 4.9%) 0%, hsl(217.2 32.6% 17.5%) 100%);
-        --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.3);
-    }
+    /* Dark theme gradients */
+    --gradient-card: linear-gradient(145deg, hsl(var(--card)), hsl(217 32% 20%));
+    --gradient-hero: linear-gradient(135deg, hsl(222.2 84% 4.9%) 0%, hsl(217.2 32.6% 17.5%) 100%);
+    --shadow-card: 0 4px 20px hsl(0 0% 0% / 0.3);
+  }
 
-    /* Smooth transitions for navigation */
-    .page-transition {
-        animation: fade-in 0.3s ease-out;
-    }
+  /* Smooth transitions for navigation */
+  .page-transition {
+    animation: fade-in 0.3s ease-out;
+  }
 
-    /* Custom scrollbar for theme selector */
-    .dropdown-content::-webkit-scrollbar {
-        width: 6px;
-    }
+  /* Custom scrollbar for theme selector */
+  .dropdown-content::-webkit-scrollbar {
+    width: 6px;
+  }
 
-    .dropdown-content::-webkit-scrollbar-track {
-        @apply bg-muted rounded;
-    }
+  .dropdown-content::-webkit-scrollbar-track {
+    @apply rounded bg-muted;
+  }
 
-    .dropdown-content::-webkit-scrollbar-thumb {
-        @apply bg-border rounded;
-    }
+  .dropdown-content::-webkit-scrollbar-thumb {
+    @apply rounded bg-border;
+  }
 
-    .dropdown-content::-webkit-scrollbar-thumb:hover {
-        @apply bg-muted-foreground rounded;
-    }
+  .dropdown-content::-webkit-scrollbar-thumb:hover {
+    @apply rounded bg-muted-foreground;
+  }
 
-    .dropdown .menu { flex-direction: column; }
-    .dropdown .menu > li { display: flex; width: 100%; }
+  .dropdown .menu {
+    flex-direction: column;
+  }
+  .dropdown .menu > li {
+    display: flex;
+    width: 100%;
+  }
 }
 
 @layer base {
-    * {
-        @apply border-border;
-    }
+  * {
+    @apply border-border;
+  }
 
-    body {
-        @apply bg-background text-foreground overflow-x-hidden;
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-        font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-        font-variant-numeric: oldstyle-nums;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-    }
+  body {
+    @apply overflow-x-hidden bg-background text-foreground;
+    font-family:
+      'Inter',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      'Roboto',
+      sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-variant-numeric: oldstyle-nums;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
 
-    /* Scrollbar styling */
-    ::-webkit-scrollbar {
-        width: 6px;
-    }
+  /* Scrollbar styling */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
 
-    ::-webkit-scrollbar-track {
-        @apply bg-muted;
-    }
+  ::-webkit-scrollbar-track {
+    @apply bg-muted;
+  }
 
-    ::-webkit-scrollbar-thumb {
-        @apply bg-primary rounded-full;
-    }
+  ::-webkit-scrollbar-thumb {
+    @apply rounded-full bg-primary;
+  }
 
-    ::-webkit-scrollbar-thumb:hover {
-        @apply bg-primary/80;
-    }
+  ::-webkit-scrollbar-thumb:hover {
+    @apply bg-primary/80;
+  }
 }
 
 @layer components {
-    .gradient-text {
-        @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
-    }
+  .gradient-text {
+    @apply bg-gradient-to-r from-primary to-accent bg-clip-text text-transparent;
+  }
 
-    .glass-effect {
-        @apply backdrop-blur-md bg-card/10 border border-border/50;
-    }
+  .glass-effect {
+    @apply border border-border/50 bg-card/10 backdrop-blur-md;
+  }
 
-    .hover-glow {
-        transition: all 0.3s ease;
-    }
+  .hover-glow {
+    transition: all 0.3s ease;
+  }
 
-    .hover-glow:hover {
-        box-shadow: var(--shadow-glow);
-        transform: translateY(-2px);
-    }
+  .hover-glow:hover {
+    box-shadow: var(--shadow-glow);
+    transform: translateY(-2px);
+  }
 
-    .topic-card {
-        @apply bg-card border border-border rounded-lg p-6 hover-glow cursor-pointer;
-        background: var(--gradient-card);
-    }
+  .topic-card {
+    @apply hover-glow cursor-pointer rounded-lg border border-border bg-card p-6;
+    background: var(--gradient-card);
+  }
 
-    .difficulty-easy {
-        @apply text-accent bg-accent/10 border-accent/20;
-    }
+  .difficulty-easy {
+    @apply border-accent/20 bg-accent/10 text-accent;
+  }
 
-    .difficulty-medium {
-        @apply text-warning bg-warning/10 border-warning/20;
-    }
+  .difficulty-medium {
+    @apply border-warning/20 bg-warning/10 text-warning;
+  }
 
-    .difficulty-hard {
-        @apply text-destructive bg-destructive/10 border-destructive/20;
-    }
+  .difficulty-hard {
+    @apply border-destructive/20 bg-destructive/10 text-destructive;
+  }
 
-    .progress-indicator {
-        @apply h-2 bg-muted rounded-full overflow-hidden;
-    }
+  .progress-indicator {
+    @apply h-2 overflow-hidden rounded-full bg-muted;
+  }
 
-    .progress-fill {
-        @apply h-full bg-gradient-to-r from-primary to-accent transition-all duration-500 ease-out;
-    }
+  .progress-fill {
+    @apply h-full bg-gradient-to-r from-primary to-accent transition-all duration-500 ease-out;
+  }
 
-    .topic-list-item {
-        @apply p-3 rounded-md border border-transparent hover:border-border hover:bg-muted/50 transition-all duration-200 cursor-pointer;
-    }
+  .topic-list-item {
+    @apply cursor-pointer rounded-md border border-transparent p-3 transition-all duration-200 hover:border-border hover:bg-muted/50;
+  }
 
-    .topic-list-item.active {
-        @apply border-primary bg-primary/10;
-    }
+  .topic-list-item.active {
+    @apply border-primary bg-primary/10;
+  }
 
-    /* Calendar styling for daisyUI integration */
-    .rbc-calendar {
-        @apply bg-base-100 text-base-content;
-    }
+  /* Calendar styling for daisyUI integration */
+  .rbc-calendar {
+    @apply bg-base-100 text-base-content;
+  }
 
-    .rbc-toolbar {
-        @apply bg-base-200 p-4 rounded-t-lg border-b border-base-300;
-    }
+  .rbc-toolbar {
+    @apply rounded-t-lg border-b border-base-300 bg-base-200 p-4;
+  }
 
-    .rbc-toolbar button {
-        @apply btn btn-sm btn-ghost text-base-content;
-    }
+  .rbc-toolbar button {
+    @apply btn btn-ghost btn-sm text-base-content;
+  }
 
-    .rbc-toolbar button.rbc-active {
-        @apply btn-primary;
-    }
+  .rbc-toolbar button.rbc-active {
+    @apply btn-primary;
+  }
 
-    .rbc-month-view, .rbc-time-view {
-        @apply bg-base-100;
-    }
+  .rbc-month-view,
+  .rbc-time-view {
+    @apply bg-base-100;
+  }
 
-    .rbc-header {
-        @apply bg-base-200 text-base-content font-semibold p-2 border-b border-base-300;
-    }
+  .rbc-header {
+    @apply border-b border-base-300 bg-base-200 p-2 font-semibold text-base-content;
+  }
 
-    .rbc-date-cell {
-        @apply text-base-content;
-    }
+  .rbc-date-cell {
+    @apply text-base-content;
+  }
 
-    .rbc-event {
-        @apply bg-primary text-primary-content rounded;
-    }
+  .rbc-event {
+    @apply rounded bg-primary text-primary-content;
+  }
 
-    .rbc-selected {
-        @apply bg-primary/20;
-    }
+  .rbc-selected {
+    @apply bg-primary/20;
+  }
 
-    .rbc-today {
-        @apply bg-accent/10;
-    }
+  .rbc-today {
+    @apply bg-accent/10;
+  }
 
-    /* MDX Content Styling */
-    .prose {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-        -webkit-font-smoothing: antialiased;
-        -moz-osx-font-smoothing: grayscale;
-        --tw-prose-body: hsl(var(--foreground)) !important;
-        --tw-prose-headings: hsl(var(--foreground)) !important;
-        --tw-prose-lead: hsl(var(--foreground)) !important;
-        --tw-prose-links: hsl(var(--primary)) !important;
-        --tw-prose-bold: hsl(var(--foreground)) !important;
-        --tw-prose-counters: hsl(var(--foreground)) !important;
-        --tw-prose-bullets: hsl(var(--foreground)) !important;
-        --tw-prose-hr: hsl(var(--border)) !important;
-        --tw-prose-quotes: hsl(var(--foreground)) !important;
-        --tw-prose-quote-borders: hsl(var(--border)) !important;
-        --tw-prose-captions: hsl(var(--muted-foreground)) !important;
-        --tw-prose-code: hsl(var(--foreground)) !important;
-        --tw-prose-pre-code: hsl(var(--foreground)) !important;
-        --tw-prose-pre-bg: hsl(var(--muted)) !important;
-        --tw-prose-th-borders: hsl(var(--border)) !important;
-        --tw-prose-td-borders: hsl(var(--border)) !important;
-    }
+  /* MDX Content Styling */
+  .prose {
+    font-family:
+      'Inter',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      'Roboto',
+      sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    --tw-prose-body: hsl(var(--foreground)) !important;
+    --tw-prose-headings: hsl(var(--foreground)) !important;
+    --tw-prose-lead: hsl(var(--foreground)) !important;
+    --tw-prose-links: hsl(var(--primary)) !important;
+    --tw-prose-bold: hsl(var(--foreground)) !important;
+    --tw-prose-counters: hsl(var(--foreground)) !important;
+    --tw-prose-bullets: hsl(var(--foreground)) !important;
+    --tw-prose-hr: hsl(var(--border)) !important;
+    --tw-prose-quotes: hsl(var(--foreground)) !important;
+    --tw-prose-quote-borders: hsl(var(--border)) !important;
+    --tw-prose-captions: hsl(var(--muted-foreground)) !important;
+    --tw-prose-code: hsl(var(--foreground)) !important;
+    --tw-prose-pre-code: hsl(var(--foreground)) !important;
+    --tw-prose-pre-bg: hsl(var(--muted)) !important;
+    --tw-prose-th-borders: hsl(var(--border)) !important;
+    --tw-prose-td-borders: hsl(var(--border)) !important;
+  }
 
-    .prose h1, .prose h2, .prose h3, .prose h4, .prose h5, .prose h6 {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-        font-weight: 600;
-        line-height: 1.3;
-        letter-spacing: -0.025em;
-        color: hsl(var(--foreground)) !important;
-    }
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    font-family:
+      'Inter',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      'Roboto',
+      sans-serif;
+    font-weight: 600;
+    line-height: 1.3;
+    letter-spacing: -0.025em;
+    color: hsl(var(--foreground)) !important;
+  }
 
-    .prose p {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-        font-weight: 400;
-        line-height: 1.6;
-        color: hsl(var(--foreground)) !important;
-    }
+  .prose p {
+    font-family:
+      'Inter',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      'Roboto',
+      sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    color: hsl(var(--foreground)) !important;
+  }
 
-    .prose li {
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-        font-weight: 400;
-        line-height: 1.6;
-        color: hsl(var(--foreground)) !important;
-    }
+  .prose li {
+    font-family:
+      'Inter',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      'Roboto',
+      sans-serif;
+    font-weight: 400;
+    line-height: 1.6;
+    color: hsl(var(--foreground)) !important;
+  }
 
-    .prose ul li, .prose ol li {
-        color: hsl(var(--foreground)) !important;
-    }
+  .prose ul li,
+  .prose ol li {
+    color: hsl(var(--foreground)) !important;
+  }
 
-    .prose ul li::marker, .prose ol li::marker {
-        color: hsl(var(--foreground)) !important;
-    }
+  .prose ul li::marker,
+  .prose ol li::marker {
+    color: hsl(var(--foreground)) !important;
+  }
 
-    .prose code {
-        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-        font-weight: 500;
-        font-size: 0.875em;
-        color: hsl(var(--foreground)) !important;
-        background-color: hsl(var(--muted)) !important;
-        padding: 0.125rem 0.25rem;
-        border-radius: 0.25rem;
-    }
+  .prose code {
+    font-family:
+      'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    font-weight: 500;
+    font-size: 0.875em;
+    color: hsl(var(--foreground)) !important;
+    background-color: hsl(var(--muted)) !important;
+    padding: 0.125rem 0.25rem;
+    border-radius: 0.25rem;
+  }
 
-    .prose pre {
-        font-family: 'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
-        color: hsl(var(--foreground)) !important;
-        background-color: hsl(var(--muted)) !important;
-        border: 1px solid hsl(var(--border));
-        border-radius: 0.5rem;
-        padding: 1rem;
-        overflow-x: auto;
-    }
+  .prose pre {
+    font-family:
+      'SF Mono', Monaco, 'Cascadia Code', 'Roboto Mono', Consolas, 'Courier New', monospace;
+    color: hsl(var(--foreground)) !important;
+    background-color: hsl(var(--muted)) !important;
+    border: 1px solid hsl(var(--border));
+    border-radius: 0.5rem;
+    padding: 1rem;
+    overflow-x: auto;
+  }
 
-    /* Code inside pre blocks should not have additional background/padding */
-    .prose pre code {
-        background-color: transparent !important;
-        padding: 0 !important;
-        border-radius: 0 !important;
-        color: hsl(var(--foreground)) !important;
-    }
+  /* Code inside pre blocks should not have additional background/padding */
+  .prose pre code {
+    background-color: transparent !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    color: hsl(var(--foreground)) !important;
+  }
 
-    /* Better text rendering for all content */
-    .prose * {
-        text-rendering: optimizeLegibility;
-    }
+  /* Better text rendering for all content */
+  .prose * {
+    text-rendering: optimizeLegibility;
+  }
 
-    /* Force all prose content to use proper colors */
-    .prose > * {
-        color: hsl(var(--foreground)) !important;
-    }
+  /* Force all prose content to use proper colors */
+  .prose > * {
+    color: hsl(var(--foreground)) !important;
+  }
 
-    /* Override any syntax highlighting that might interfere with theme colors */
-    .prose pre code.hljs,
-    .prose pre code[class*="language-"],
-    .prose pre [class*="token"],
-    .prose .hljs,
-    .prose [class*="language-"] {
-        background: transparent !important;
-        color: hsl(var(--foreground)) !important;
-    }
+  /* Override any syntax highlighting that might interfere with theme colors */
+  .prose pre code.hljs,
+  .prose pre code[class*='language-'],
+  .prose pre [class*='token'],
+  .prose .hljs,
+  .prose [class*='language-'] {
+    background: transparent !important;
+    color: hsl(var(--foreground)) !important;
+  }
 
-    /* Ensure all nested elements in code blocks use proper colors */
-    .prose pre *,
-    .prose code *,
-    .prose pre code *,
-    .prose .hljs *,
-    .prose [class*="language-"] * {
-        color: hsl(var(--foreground)) !important;
-    }
+  /* Ensure all nested elements in code blocks use proper colors */
+  .prose pre *,
+  .prose code *,
+  .prose pre code *,
+  .prose .hljs *,
+  .prose [class*='language-'] * {
+    color: hsl(var(--foreground)) !important;
+  }
 
-    /* Prose styles for MDX content */
-    .prose {
-        /* Force Tailwind Typography vars to use foreground for list markers */
-        --tw-prose-body: hsl(var(--foreground));
-        --tw-prose-headings: hsl(var(--card-foreground));
-        --tw-prose-counters: hsl(var(--foreground));
-        font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', sans-serif;
-        font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
-        font-variant-numeric: oldstyle-nums;
-        line-height: 1.6;
-    }
+  /* Prose styles for MDX content */
+  .prose {
+    /* Force Tailwind Typography vars to use foreground for list markers */
+    --tw-prose-body: hsl(var(--foreground));
+    --tw-prose-headings: hsl(var(--card-foreground));
+    --tw-prose-counters: hsl(var(--foreground));
+    font-family:
+      'Inter',
+      -apple-system,
+      BlinkMacSystemFont,
+      'Segoe UI',
+      'Roboto',
+      sans-serif;
+    font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
+    font-variant-numeric: oldstyle-nums;
+    line-height: 1.6;
+  }
 
-    /* Ensure list items are not overly muted by typography defaults */
-    .prose p,
-    .prose li {
-        color: hsl(var(--foreground));
-    }
+  /* Ensure list items are not overly muted by typography defaults */
+  .prose p,
+  .prose li {
+    color: hsl(var(--foreground));
+  }
 
-    /* Force list items to use proper foreground color */
-    .prose ol li,
-    .prose ul li {
-        color: hsl(var(--foreground)) !important;
-    }
+  /* Force list items to use proper foreground color */
+  .prose ol li,
+  .prose ul li {
+    color: hsl(var(--foreground)) !important;
+  }
 
-    /* List markers/numbers styling */
-    .prose ol > li::marker,
-    .prose ul > li::marker {
-        color: hsl(var(--foreground));
-        opacity: 1;
-        font-weight: 600;
-    }
+  /* List markers/numbers styling */
+  .prose ol > li::marker,
+  .prose ul > li::marker {
+    color: hsl(var(--foreground));
+    opacity: 1;
+    font-weight: 600;
+  }
 
-    /* Ensure numbered lists are clearly visible */
-    .prose ol {
-        color: hsl(var(--foreground));
-    }
+  /* Ensure numbered lists are clearly visible */
+  .prose ol {
+    color: hsl(var(--foreground));
+  }
 
-    .prose ol li::marker {
-        color: hsl(var(--foreground)) !important;
-        font-weight: 700;
-    }
+  .prose ol li::marker {
+    color: hsl(var(--foreground)) !important;
+    font-weight: 700;
+  }
 
-    /* Override Tailwind Typography prose defaults for better visibility */
-    .prose li {
-        color: hsl(var(--foreground)) !important;
-    }
+  /* Override Tailwind Typography prose defaults for better visibility */
+  .prose li {
+    color: hsl(var(--foreground)) !important;
+  }
 
-    /* Ensure proper contrast for all text elements */
-    .prose p {
-        color: hsl(var(--foreground));
-    }
+  /* Ensure proper contrast for all text elements */
+  .prose p {
+    color: hsl(var(--foreground));
+  }
 
-    /* Additional overrides for list content in light theme */
-    .prose ol li p,
-    .prose ul li p {
-        color: hsl(var(--foreground)) !important;
-        margin: 0.25rem 0;
-    }
+  /* Additional overrides for list content in light theme */
+  .prose ol li p,
+  .prose ul li p {
+    color: hsl(var(--foreground)) !important;
+    margin: 0.25rem 0;
+  }
 
-    /* Ensure all nested content in lists uses proper color */
-    .prose li * {
-        color: inherit;
-    }
+  /* Ensure all nested content in lists uses proper color */
+  .prose li * {
+    color: inherit;
+  }
 
-    /* Reduce spacing between elements */
-    .prose h1,
-    .prose h2,
-    .prose h3,
-    .prose h4,
-    .prose h5,
-    .prose h6 {
-        margin-top: 1.5rem;
-        margin-bottom: 0.75rem;
-    }
+  /* Reduce spacing between elements */
+  .prose h1,
+  .prose h2,
+  .prose h3,
+  .prose h4,
+  .prose h5,
+  .prose h6 {
+    margin-top: 1.5rem;
+    margin-bottom: 0.75rem;
+  }
 
-    .prose h1:first-child,
-    .prose h2:first-child,
-    .prose h3:first-child {
-        margin-top: 0;
-    }
+  .prose h1:first-child,
+  .prose h2:first-child,
+  .prose h3:first-child {
+    margin-top: 0;
+  }
 
-    .prose p {
-        margin-top: 0.75rem;
-        margin-bottom: 0.75rem;
-    }
+  .prose p {
+    margin-top: 0.75rem;
+    margin-bottom: 0.75rem;
+  }
 
-    .prose p:first-child {
-        margin-top: 0;
-    }
+  .prose p:first-child {
+    margin-top: 0;
+  }
 
-    .prose hr {
-        margin-top: 1.5rem;
-        margin-bottom: 1.5rem;
-    }
+  .prose hr {
+    margin-top: 1.5rem;
+    margin-bottom: 1.5rem;
+  }
 
-    /* Tighter spacing for consecutive elements */
-    .prose p + pre,
-    .prose pre + p,
-    .prose h3 + p,
-    .prose h4 + p {
-        margin-top: 0.5rem;
-    }
+  /* Tighter spacing for consecutive elements */
+  .prose p + pre,
+  .prose pre + p,
+  .prose h3 + p,
+  .prose h4 + p {
+    margin-top: 0.5rem;
+  }
 
-    /* Special spacing for test case patterns */
-    .prose p:has(strong) + pre {
-        margin-top: 0.25rem;
-    }
+  /* Special spacing for test case patterns */
+  .prose p:has(strong) + pre {
+    margin-top: 0.25rem;
+  }
 
-    /* Reduce spacing around strong elements (like Input:, Output:) */
-    .prose p strong:only-child {
-        display: block;
-        margin-bottom: 0.25rem;
-    }
+  /* Reduce spacing around strong elements (like Input:, Output:) */
+  .prose p strong:only-child {
+    display: block;
+    margin-bottom: 0.25rem;
+  }
 
-    /* Ensure proper spacing and readability for pre blocks */
-    .prose pre {
-        line-height: 1.5;
-        font-family: ui-monospace, SFMono-Regular, "SF Mono", Consolas, "Liberation Mono", Menlo, monospace;
-        margin-top: 1rem;
-        margin-bottom: 1rem;
-    }
+  /* Ensure proper spacing and readability for pre blocks */
+  .prose pre {
+    line-height: 1.5;
+    font-family:
+      ui-monospace, SFMono-Regular, 'SF Mono', Consolas, 'Liberation Mono', Menlo, monospace;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+  }
 
-    /* Fix image margins in tab buttons */
-    .tab img,
-    .tabs img,
-    button img {
-        margin: 0 !important;
-    }
+  /* Fix image margins in tab buttons */
+  .tab img,
+  .tabs img,
+  button img {
+    margin: 0 !important;
+  }
 
-    /* Proper styling for superscript and subscript */
-    .prose sup,
-    .prose sub {
-        font-size: 0.75em;
-        line-height: 0;
-        position: relative;
-        vertical-align: baseline;
-    }
+  /* Proper styling for superscript and subscript */
+  .prose sup,
+  .prose sub {
+    font-size: 0.75em;
+    line-height: 0;
+    position: relative;
+    vertical-align: baseline;
+  }
 
-    .prose sup {
-        top: -0.5em;
-    }
+  .prose sup {
+    top: -0.5em;
+  }
 
-    .prose sub {
-        bottom: -0.25em;
-    }
+  .prose sub {
+    bottom: -0.25em;
+  }
 }

@@ -14,7 +14,10 @@ function makeCategoryCacheKey(userId: string, category: ITopicCategory): string 
   return `${PROGRESS_CACHE_PREFIX}:${userId}:${category}`;
 }
 
-function readCategoryCache(userId: string, category: ITopicCategory): Record<string, UserProgressDoc> {
+function readCategoryCache(
+  userId: string,
+  category: ITopicCategory
+): Record<string, UserProgressDoc> {
   try {
     const raw = localStorage.getItem(makeCategoryCacheKey(userId, category));
     return raw ? (JSON.parse(raw) as Record<string, UserProgressDoc>) : {};
@@ -74,8 +77,12 @@ export async function upsertUserProgress(
   };
   const next: UserProgressDoc = {
     ...(existing.exists() ? (existing.data() as UserProgressDoc) : base),
-    is_completed: updates.isCompleted ?? (existing.exists() ? (existing.data() as UserProgressDoc).is_completed : base.is_completed),
-    is_bookmarked: updates.isBookmarked ?? (existing.exists() ? (existing.data() as UserProgressDoc).is_bookmarked : base.is_bookmarked),
+    is_completed:
+      updates.isCompleted ??
+      (existing.exists() ? (existing.data() as UserProgressDoc).is_completed : base.is_completed),
+    is_bookmarked:
+      updates.isBookmarked ??
+      (existing.exists() ? (existing.data() as UserProgressDoc).is_bookmarked : base.is_bookmarked),
     updated_at: Date.now(),
   };
   await setDoc(ref, next);
@@ -94,7 +101,7 @@ export async function preloadUserProgress(
   const colRef = collection(db, 'users', userId, 'progress');
   const snapshot = await getDocs(colRef);
   const result: Record<string, UserProgressDoc> = {};
-  snapshot.forEach((docSnap) => {
+  snapshot.forEach(docSnap => {
     const id = docSnap.id; // `${category}:${topicId}`
     if (!id.startsWith(`${category}:`)) return;
     const topicId = id.slice(category.length + 1);
@@ -110,5 +117,3 @@ export function getCachedCategoryProgress(
 ): Record<string, UserProgressDoc> {
   return readCategoryCache(userId, category);
 }
-
-

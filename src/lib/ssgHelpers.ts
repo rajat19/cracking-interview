@@ -21,30 +21,33 @@ export async function getAllTopicIds(category: ITopicCategory): Promise<string[]
 }
 
 // Load code solutions for a topic (handles subdirectories)
-function loadCodeSolutions(category: ITopicCategory, topicId: string): Record<string, ISolutionEntry> {
+function loadCodeSolutions(
+  category: ITopicCategory,
+  topicId: string
+): Record<string, ISolutionEntry> {
   const codeDir = path.join(process.cwd(), `src/content/${category}/code/${topicId}`);
   const solutions: Record<string, ISolutionEntry> = {};
-  
+
   if (!require('fs').existsSync(codeDir)) {
     return solutions;
   }
-  
+
   // Recursive function to scan directories for solution files
   function scanDirectory(dir: string, subPath = '') {
     try {
       const items = require('fs').readdirSync(dir);
-      
+
       for (const item of items) {
         const itemPath = path.join(dir, item);
         const stat = require('fs').statSync(itemPath);
-        
+
         if (stat.isDirectory()) {
           // Recursively scan subdirectories
           scanDirectory(itemPath, path.join(subPath, item));
         } else if (stat.isFile()) {
           const ext = path.extname(item).slice(1); // Remove the dot
           const baseName = path.basename(item, path.extname(item));
-          
+
           // Only process solution files
           if (baseName === 'solution' && ext) {
             try {
@@ -52,7 +55,7 @@ function loadCodeSolutions(category: ITopicCategory, topicId: string): Record<st
               const solutionKey = subPath ? `${subPath.replace(/\//g, '_')}_${ext}` : ext;
               solutions[solutionKey] = {
                 language: ext,
-                code: code.trim()
+                code: code.trim(),
               };
             } catch (error: any) {
               console.warn(`⚠️  Failed to read code file: ${itemPath}`, error.message);
@@ -64,12 +67,15 @@ function loadCodeSolutions(category: ITopicCategory, topicId: string): Record<st
       console.warn(`⚠️  Error reading directory: ${dir}`, error.message);
     }
   }
-  
+
   scanDirectory(codeDir);
   return solutions;
 }
 
-export async function getTopicWithContent(category: ITopicCategory, topicId: string): Promise<ITopic | null> {
+export async function getTopicWithContent(
+  category: ITopicCategory,
+  topicId: string
+): Promise<ITopic | null> {
   try {
     // Load topic metadata
     const topics = await getAllTopicsForCategory(category);
@@ -113,20 +119,22 @@ export async function getTopicWithContent(category: ITopicCategory, topicId: str
 }
 
 // Generate all possible topic combinations for static params
-export async function generateAllTopicParams(): Promise<Array<{ category: string; topicId?: string }>> {
+export async function generateAllTopicParams(): Promise<
+  Array<{ category: string; topicId?: string }>
+> {
   const categories: ITopicCategory[] = ['dsa', 'system-design', 'ood', 'behavioral'];
   const params: Array<{ category: string; topicId?: string }> = [];
-  
+
   for (const category of categories) {
     // Add category-only params (for the main category pages)
     params.push({ category });
-    
+
     // Add category + topic params (for specific topic pages)
     const topicIds = await getAllTopicIds(category);
     for (const topicId of topicIds) {
       params.push({ category, topicId });
     }
   }
-  
+
   return params;
 }

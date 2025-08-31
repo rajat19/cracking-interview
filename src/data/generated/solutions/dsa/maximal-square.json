@@ -1,8 +1,0 @@
-{
-  "java": {
-    "language": "java",
-    "code": "class Solution {\n    public int maximalSquare(char[][] matrix) {\n        int n = matrix.length, m = matrix[0].length;\n        int[][] dp = new int[n+1][m+1];\n        int max = 0;\n        for(int i=1; i<=n; i++) {\n            for(int j=1; j<=m; j++) {\n                if (matrix[i-1][j-1] == '1') {\n                    dp[i][j] = Math.min(dp[i-1][j-1], Math.min(dp[i-1][j], dp[i][j-1])) + 1;\n                    max = Math.max(max, dp[i][j]);\n                }\n            }\n        }\n        return max*max;\n    }\n}",
-    "subPath": "",
-    "fileName": "solution.java"
-  }
-}

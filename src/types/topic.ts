@@ -1,4 +1,4 @@
-export type ITopicDifficulty = 'all' | "easy" | "medium" | "hard";
+export type ITopicDifficulty = 'all' | 'easy' | 'medium' | 'hard';
 export type ITopicCategory = 'dsa' | 'system-design' | 'behavioral' | 'ood';
 
 export interface ITopic {
@@ -28,12 +28,18 @@ export interface ITopic {
   solutions?: Record<string, ISolutionEntry>;
 }
 
-export type ITopicList = Pick<ITopic, 
-    'id' | 'title' | 'difficulty' 
-    | 'timeComplexity' | 'spaceComplexity'
-    | 'companies' | 'relatedTopics'
-    | 'isBookmarked' | 'isCompleted'
-  >
+export type ITopicList = Pick<
+  ITopic,
+  | 'id'
+  | 'title'
+  | 'difficulty'
+  | 'timeComplexity'
+  | 'spaceComplexity'
+  | 'companies'
+  | 'relatedTopics'
+  | 'isBookmarked'
+  | 'isCompleted'
+>;
 
 export interface ISolutionEntry {
   language: string;

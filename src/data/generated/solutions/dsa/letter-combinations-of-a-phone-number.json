@@ -1,8 +1,0 @@
-{
-  "java": {
-    "language": "java",
-    "code": "class Solution {\n    public List<String> letterCombinations(String digits) {\n        Map<Integer, List<Character>> phone = new HashMap<>();\n        phone.put(2, Arrays.asList('a', 'b', 'c'));\n        phone.put(3, Arrays.asList('d', 'e', 'f'));\n        phone.put(4, Arrays.asList('g', 'h', 'i'));\n        phone.put(5, Arrays.asList('j', 'k', 'l'));\n        phone.put(6, Arrays.asList('m', 'n', 'o'));\n        phone.put(7, Arrays.asList('p', 'q', 'r', 's'));\n        phone.put(8, Arrays.asList('t', 'u', 'v'));\n        phone.put(9, Arrays.asList('w', 'x', 'y', 'z'));\n        List<String> result = new ArrayList<>();\n        if (digits.length() == 0) return result;\n        generate(digits, 0, phone, result, new StringBuilder());\n        return result;\n    }\n\n    private void generate(String digits, int pos, Map<Integer, List<Character>> phone, List<String> result, StringBuilder sb) {\n        if (sb.length() == digits.length()) {\n            result.add(sb.toString());\n            return;\n        }\n        int digit = digits.charAt(pos) - '0';\n        for(Character c: phone.get(digit)) {\n            sb.append(c);\n            generate(digits, pos+1, phone, result, sb);\n            sb.deleteCharAt(sb.length() - 1);\n        }\n    }\n}",
-    "subPath": "",
-    "fileName": "solution.java"
-  }
-}

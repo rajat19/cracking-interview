@@ -3,23 +3,25 @@ import type { ISolutionEntry, ITopic, ITopicCategory, ITopicList } from '@/types
 import config from '@/config';
 
 // Import all index files statically for better reliability
-import dsaIndex from '@/data/dsa-index.json';
-import systemDesignIndex from '@/data/system-design-index.json';
-import oodIndex from '@/data/ood-index.json';
-import behavioralIndex from '@/data/behavioral-index.json';
+import dsaIndex from '@/generated/dsa-index.json';
+import systemDesignIndex from '@/generated/system-design-index.json';
+import oodIndex from '@/generated/ood-index.json';
+import behavioralIndex from '@/generated/behavioral-index.json';
 
 // Import pre-generated content maps statically
-import dsaContent from '@/data/generated/dsa-content.json';
-import systemDesignContent from '@/data/generated/system-design-content.json';
-import oodContent from '@/data/generated/ood-content.json';
-import behavioralContent from '@/data/generated/behavioral-content.json';
+import dsaContent from '@/generated/dsa-content.json';
+import systemDesignContent from '@/generated/system-design-content.json';
+import oodContent from '@/generated/ood-content.json';
+import behavioralContent from '@/generated/behavioral-content.json';
+// Full content map (contains solutions per topic)
+import fullContentMap from '@/generated/content-map.json';
 
 // Static content maps for immediate access
 const CONTENT_MAPS: Record<string, any> = {
-  'dsa': dsaContent,
+  dsa: dsaContent,
   'system-design': systemDesignContent,
-  'ood': oodContent,
-  'behavioral': behavioralContent
+  ood: oodContent,
+  behavioral: behavioralContent,
 };
 
 // Universal frontmatter interface that covers all categories
@@ -68,68 +70,76 @@ const createExcerpt = (markdown: string, maxLength = 200): string => {
 };
 
 // Extract common difficulty logic using configuration
-const getDifficultyForCategory = (category: ITopicCategory, frontmatterDifficulty?: string): ITopic['difficulty'] => {
+const getDifficultyForCategory = (
+  category: ITopicCategory,
+  frontmatterDifficulty?: string
+): ITopic['difficulty'] => {
   // Only process difficulty if it's enabled for this category
   if (!config.showDifficulty(category)) {
     return 'medium'; // Default for categories without difficulty
   }
-  
+
   // For categories with difficulty enabled, parse from frontmatter
   if (frontmatterDifficulty) {
     const diff = frontmatterDifficulty.toLowerCase();
     return diff === 'easy' || diff === 'hard' ? diff : 'medium';
   }
-  
+
   return 'medium'; // Default fallback
 };
 
 // Extract common related topics logic
 const getRelatedTopics = (fm: UniversalFrontmatterData): string[] | undefined => {
-  return Array.isArray(fm.topics) ? fm.topics : 
-         Array.isArray(fm.tags) ? fm.tags : undefined;
+  return Array.isArray(fm.topics) ? fm.topics : Array.isArray(fm.tags) ? fm.tags : undefined;
 };
 
 // For static export, code loading is disabled
 const loadCodeForTopic = async (
-  category: ITopicCategory, 
-  topicId: string, 
+  category: ITopicCategory,
+  topicId: string,
   codeModules: Record<string, () => Promise<string>>,
   availableLanguages?: string[]
 ): Promise<Record<string, ISolutionEntry>> => {
-  console.log(`Loading solutions for: ${category}/${topicId}`);
-  
-  // Get solutions from pre-generated content
-  const contentMap = CONTENT_MAPS[category];
-  
-  if (contentMap && contentMap[topicId] && contentMap[topicId].solutions) {
-    const solutions = contentMap[topicId].solutions;
-    console.log(`✅ Found ${Object.keys(solutions).length} pre-generated solutions for ${topicId}`);
-    return solutions;
+  // console.log(`Loading solutions for: ${category}/${topicId}`);
+
+  // Prefer solutions from the full content map (includes solutions)
+  const categoryMap: any = (fullContentMap as any)[category];
+  if (categoryMap && categoryMap[topicId] && categoryMap[topicId].solutions) {
+    const solutions = categoryMap[topicId].solutions as Record<string, ISolutionEntry>;
+    if (solutions && Object.keys(solutions).length > 0) {
+      // console.log(`Found ${Object.keys(solutions).length} pre-generated solutions for ${topicId}`);
+      return solutions;
+    }
   }
-  
-  console.warn(`⚠️  No pre-generated solutions found for ${category}/${topicId}`);
+
+  // console.warn(`No pre-generated solutions found for ${category}/${topicId}`);
   return {};
 };
 
 // For static export, use pre-generated content from SSG
-const dynamicLoader = async (modules: Record<string, () => Promise<string>>, path: string): Promise<string> => {
+const dynamicLoader = async (
+  modules: Record<string, () => Promise<string>>,
+  path: string
+): Promise<string> => {
   const pathParts = path.split('/');
   const fileName = pathParts[pathParts.length - 1].replace('.mdx', '');
   const category = pathParts[3];
-  
-  console.log(`Loading content for: ${category}/${fileName}`);
-  
+
+  // console.log(`Loading content for: ${category}/${fileName}`);
+
   // Get the actual content from the pre-generated static maps
   const contentMap = CONTENT_MAPS[category];
-  
+
   if (contentMap && contentMap[fileName] && contentMap[fileName].content) {
-    console.log(`✅ Found pre-generated content for ${fileName}`);
+    // console.log(`Found pre-generated content for ${fileName}`);
     return contentMap[fileName].content;
   }
-  
+
   // If content not found, throw error instead of fallback
-  console.error(`❌ No pre-generated content found for ${category}/${fileName}`);
-  throw new Error(`Content not found: ${category}/${fileName}. Make sure to run 'npm run generate:content' before building.`);
+  console.error(`Content not found for ${category}/${fileName}`);
+  throw new Error(
+    `Content not found: ${category}/${fileName}. Make sure to run 'npm run generate:content' before building.`
+  );
 };
 
 // Placeholder functions removed - SSG should provide all content
@@ -156,7 +166,7 @@ const mapFrontmatterToTopic = (
 ): ITopic => {
   const difficulty = getDifficultyForCategory(category, fm.difficulty);
   const relatedTopics = getRelatedTopics(fm);
-  
+
   return {
     id,
     title: fm.title || id,
@@ -180,29 +190,29 @@ const mapFrontmatterToTopic = (
 };
 
 const indexMap = {
-  'dsa': dsaIndex,
+  dsa: dsaIndex,
   'system-design': systemDesignIndex,
-  'ood': oodIndex,
-  'behavioral': behavioralIndex,
+  ood: oodIndex,
+  behavioral: behavioralIndex,
 } as const;
 
 const loadFromCache = async (category: ITopicCategory): Promise<ITopicList[] | null> => {
   try {
-    console.log(`Loading index for category: ${category}`);
+    // console.log(`Loading index for category: ${category}`);
     const items = indexMap[category];
-    
+
     if (!items) {
       console.error(`No index data found for category: ${category}`);
       return null;
     }
-    
-    console.log(`Loaded ${items.length} items for category: ${category}`);
-    
+
+    // console.log(`Loaded ${items.length} items for category: ${category}`);
+
     if (Array.isArray(items) && items.length >= 0) {
       return items.map((item: any) => ({
         ...item,
         isCompleted: false,
-        isBookmarked: false
+        isBookmarked: false,
       }));
     }
   } catch (error) {
@@ -214,12 +224,12 @@ const loadFromCache = async (category: ITopicCategory): Promise<ITopicList[] | n
 // 1. Load topics list for a specific category
 export const loadTopicsList = async (category: ITopicCategory): Promise<ITopicList[]> => {
   const cacheKey = `${category}-topics-list`;
-  
+
   // Check memory cache first
   if (topicsListCache.has(cacheKey)) {
     return topicsListCache.get(cacheKey)!;
   }
-  
+
   // Try to load from prebuilt index if available
   if (config.hasIndex(category)) {
     const cacheResult = await loadFromCache(category);
@@ -233,13 +243,11 @@ export const loadTopicsList = async (category: ITopicCategory): Promise<ITopicLi
   const topics: ITopicList[] = [];
   const contentModules = getContentModules(category);
   const contentPath = getContentPath(category);
-  
+
   // Filter modules that match our category path pattern
   const relevantModules = Object.entries(contentModules).filter(([path]) => {
     return path.includes(`/content/${category}/posts/`);
   });
-
-
 
   for (const [path, moduleLoader] of relevantModules) {
     try {
@@ -247,10 +255,10 @@ export const loadTopicsList = async (category: ITopicCategory): Promise<ITopicLi
       const parsed = fm<UniversalFrontmatterData>(raw);
       const data = parsed.attributes || {};
       const id = generateSlugFromPath(path, category);
-      
+
       const difficulty = getDifficultyForCategory(category, data.difficulty);
       const related = getRelatedTopics(data);
-      
+
       topics.push({
         id,
         title: data.title || id,
@@ -264,35 +272,38 @@ export const loadTopicsList = async (category: ITopicCategory): Promise<ITopicLi
       console.warn(`Failed to load ${category} topic metadata for ${path}:`, error);
     }
   }
-  
+
   topics.sort((a, b) => a.title.localeCompare(b.title));
-  
+
   // Cache the result
   topicsListCache.set(cacheKey, topics);
   return topics;
 };
 
 // 2. Load a specific topic with full content
-export const loadTopic = async (category: ITopicCategory, topicId: string): Promise<ITopic | null> => {
+export const loadTopic = async (
+  category: ITopicCategory,
+  topicId: string
+): Promise<ITopic | null> => {
   const cacheKey = `${category}:${topicId}`;
-  
+
   // Check cache first
   if (topicCache.has(cacheKey)) {
     return topicCache.get(cacheKey)!;
   }
-  
+
   try {
     // Construct the file path for this topic
     const filePath = `/src/content/${category}/posts/${topicId}.mdx`;
-    
+
     // Load content using the API route
     const raw = await dynamicLoader({}, filePath);
     const parsed = fm<UniversalFrontmatterData>(raw);
     const data = parsed.attributes || {};
     const content = parsed.body || '';
-    
+
     const topic = mapFrontmatterToTopic(topicId, data, content, category);
-    
+
     // Load solutions/code examples if the category supports them
     if (config.hasSolutions(category)) {
       // Extract available languages from frontmatter
@@ -302,10 +313,10 @@ export const loadTopic = async (category: ITopicCategory, topicId: string): Prom
         topic.solutions = solutions;
       }
     }
-    
+
     // Cache the loaded topic
     topicCache.set(cacheKey, topic);
-    
+
     return topic;
   } catch (error) {
     console.error(`Failed to load ${category} topic ${topicId}:`, error);
@@ -315,32 +326,32 @@ export const loadTopic = async (category: ITopicCategory, topicId: string): Prom
 
 // 3. Load solutions for a specific topic (category-dependent)
 export const loadTopicSolution = async (
-  category: ITopicCategory, 
+  category: ITopicCategory,
   topicId: string,
   availableLanguages?: string[]
 ): Promise<Record<string, ISolutionEntry> | null> => {
   const cacheKey = `${category}:${topicId}:solutions`;
-  
+
   // Check cache first
   if (solutionsCache.has(cacheKey)) {
     return solutionsCache.get(cacheKey)!;
   }
-  
+
   // Only certain categories have solutions
   if (!config.hasSolutions(category)) {
     return null;
   }
-  
+
   try {
     // Use the unified code loading function with empty modules (API route approach)
     const solutions = await loadCodeForTopic(category, topicId, {}, availableLanguages);
-    
+
     // Cache the solutions if any were found
     if (Object.keys(solutions).length > 0) {
       solutionsCache.set(cacheKey, solutions);
       return solutions;
     }
-    
+
     return null;
   } catch (error) {
     console.error(`Failed to load ${category} solutions for topic ${topicId}:`, error);
@@ -353,25 +364,25 @@ export const clearTopicCache = (category?: ITopicCategory) => {
   if (category) {
     // Clear cache for specific category
     const keysToDelete: string[] = [];
-    
+
     topicCache.forEach((_, key) => {
       if (key.startsWith(`${category}:`)) {
         keysToDelete.push(key);
       }
     });
-    
+
     topicsListCache.forEach((_, key) => {
       if (key.startsWith(`${category}-`)) {
         keysToDelete.push(key);
       }
     });
-    
+
     solutionsCache.forEach((_, key) => {
       if (key.startsWith(`${category}:`)) {
         keysToDelete.push(key);
       }
     });
-    
+
     keysToDelete.forEach(key => {
       topicCache.delete(key);
       topicsListCache.delete(key);

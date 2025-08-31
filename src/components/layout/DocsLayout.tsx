@@ -1,19 +1,21 @@
-"use client";
+'use client';
 
-import { useState, useMemo, useEffect, useCallback } from "react";
-import { useSearchParams, useRouter } from "next/navigation";
-import { BookOpen, Menu, X } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import FiltersControls from "@/components/filters/FiltersControls";
-import { ITopicDifficulty, ITopic, ITopicList, ITopicCategory } from "@/types/topic";
-import { TopicContent } from "@/components/TopicContent";
-import { useAuth } from "@/hooks/useAuth";
-import { loadTopicsList, loadTopic, getLocalProgress } from "@/lib/contentLoader";
-import { preloadUserProgress, getCachedCategoryProgress } from "@/lib/progressStore";
+import { useState, useMemo, useEffect, useCallback } from 'react';
+import { useSearchParams, useRouter } from 'next/navigation';
+import { BookOpen, Menu, X } from 'lucide-react';
+import { Button } from '@/components/ui/button';
+import FiltersControls from '@/components/filters/FiltersControls';
+import { ITopicDifficulty, ITopic, ITopicList, ITopicCategory } from '@/types/topic';
+import { TopicContent } from '@/components/topic/TopicContent';
+import { useAuth } from '@/hooks/useAuth';
+import { loadTopicsList, loadTopic, getLocalProgress } from '@/lib/contentLoader';
+import { preloadUserProgress, getCachedCategoryProgress } from '@/lib/progressStore';
 
-import TopicListItem from "@/components/TopicListItem";
-import TopicDifficulty from "@/components/TopicDifficulty";
+import TopicListItem from '@/components/TopicListItem';
+import TopicDifficulty from '@/components/TopicDifficulty';
 import config from '@/config';
+import TopicDefault from '../topic/TopicDefault';
+import TopicLoading from '../topic/TopicLoading';
 
 interface DocsLayoutProps {
   title: string;
@@ -24,12 +26,14 @@ interface DocsLayoutProps {
 export function DocsLayout({ title, description, category }: DocsLayoutProps) {
   const { user } = useAuth();
   const [topics, setTopics] = useState<ITopicList[]>([]);
-  const [userProgress, setUserProgress] = useState<Record<string, { is_completed: boolean; is_bookmarked: boolean }>>({});
+  const [userProgress, setUserProgress] = useState<
+    Record<string, { is_completed: boolean; is_bookmarked: boolean }>
+  >({});
   const [selectedTopic, setSelectedTopic] = useState<ITopic | null>(null);
-  const [searchQuery, setSearchQuery] = useState("");
-  const [difficultyFilter, setDifficultyFilter] = useState<ITopicDifficulty>("all");
-  const [topicTagFilter, setTopicTagFilter] = useState<string>("");
-  const [companyFilter, setCompanyFilter] = useState<string>("");
+  const [searchQuery, setSearchQuery] = useState('');
+  const [difficultyFilter, setDifficultyFilter] = useState<ITopicDifficulty>('all');
+  const [topicTagFilter, setTopicTagFilter] = useState<string>('');
+  const [companyFilter, setCompanyFilter] = useState<string>('');
   const [loading, setLoading] = useState(true);
   const [loadingTopic, setLoadingTopic] = useState(false);
   const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -37,6 +41,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
   const { replace } = useRouter();
 
   const fetchQuestions = useCallback(async (): Promise<void> => {
+    setLoading(true);
     try {
       const loaded = await loadTopicsList(category);
       setTopics(loaded);
@@ -47,31 +52,34 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
     }
   }, [category]);
 
-  const loadFullTopic = useCallback(async (topicId: string): Promise<void> => {
-    setLoadingTopic(true);
-    try {
-      const fullTopic = await loadTopic(category, topicId);
-      if (fullTopic) {
-        setSelectedTopic(fullTopic);
+  const loadFullTopic = useCallback(
+    async (topicId: string): Promise<void> => {
+      setLoadingTopic(true);
+      try {
+        const fullTopic = await loadTopic(category, topicId);
+        if (fullTopic) {
+          setSelectedTopic(fullTopic);
+        }
+      } catch (error) {
+        console.error('Error loading topic:', error);
+      } finally {
+        setLoadingTopic(false);
       }
-    } catch (error) {
-      console.error('Error loading topic:', error);
-    } finally {
-      setLoadingTopic(false);
-    }
-  }, [category]);
+    },
+    [category]
+  );
 
   const fetchUserProgress = useCallback(async (): Promise<void> => {
     if (user) {
-      const cached = getCachedCategoryProgress(user.uid, category as 'dsa' | 'system-design' | 'behavioral');
+      const cached = getCachedCategoryProgress(user.uid, category);
       if (Object.keys(cached).length > 0) {
         setUserProgress(cached);
       } else {
-        const loaded = await preloadUserProgress(user.uid, category as 'dsa' | 'system-design' | 'behavioral');
+        const loaded = await preloadUserProgress(user.uid, category);
         setUserProgress(loaded);
       }
     } else {
-      const progress = getLocalProgress(category as 'dsa' | 'system-design' | 'behavioral');
+      const progress = getLocalProgress(category);
       setUserProgress(progress);
     }
   }, [category, user]);
@@ -101,27 +109,36 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
     return topics.map(topic => ({
       ...topic,
       isCompleted: userProgress[topic.id]?.is_completed || false,
-      isBookmarked: userProgress[topic.id]?.is_bookmarked || false
+      isBookmarked: userProgress[topic.id]?.is_bookmarked || false,
     }));
   }, [topics, userProgress]);
 
-  const handleTopicSelect = useCallback(async (topicId: string) => {
-    if (selectedTopic?.id === topicId) return;
-    await loadFullTopic(topicId);
-    // Reflect selection in URL for shareability
-    const next = new URLSearchParams(searchParams);
-    next.set('t', topicId);
-    replace(`?${next.toString()}`);
-    // Close sidebar on mobile after selection
-    setSidebarOpen(false);
-  }, [selectedTopic?.id, loadFullTopic, searchParams, replace]);
+  const handleTopicSelect = useCallback(
+    async (topicId: string) => {
+      if (selectedTopic?.id === topicId) return;
+      await loadFullTopic(topicId);
+      // Reflect selection in URL for shareability
+      const next = new URLSearchParams(searchParams);
+      next.set('t', topicId);
+      replace(`?${next.toString()}`);
+      // Close sidebar on mobile after selection
+      setSidebarOpen(false);
+    },
+    [selectedTopic?.id, loadFullTopic, searchParams, replace]
+  );
 
   const filteredTopics = useMemo(() => {
     return topicsWithProgress.filter(topic => {
       const matchesSearch = topic.title.toLowerCase().includes(searchQuery.toLowerCase());
-      const matchesDifficulty = difficultyFilter === "all" || topic.difficulty === difficultyFilter;
-      const matchesTopicTag = !topicTagFilter || (topic.relatedTopics || []).map(t => t.toLowerCase()).includes(topicTagFilter.toLowerCase());
-      const matchesCompany = !companyFilter || (topic.companies || []).map(c => c.toLowerCase()).includes(companyFilter.toLowerCase());
+      const matchesDifficulty = difficultyFilter === 'all' || topic.difficulty === difficultyFilter;
+      const matchesTopicTag =
+        !topicTagFilter ||
+        (topic.relatedTopics || [])
+          .map(t => t.toLowerCase())
+          .includes(topicTagFilter.toLowerCase());
+      const matchesCompany =
+        !companyFilter ||
+        (topic.companies || []).map(c => c.toLowerCase()).includes(companyFilter.toLowerCase());
       return matchesSearch && matchesDifficulty && matchesTopicTag && matchesCompany;
     });
   }, [topicsWithProgress, searchQuery, difficultyFilter, topicTagFilter, companyFilter]);
@@ -149,14 +166,16 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
   const handleSetTopicTagFilter = (value: string) => {
     setTopicTagFilter(value);
     const next = new URLSearchParams(searchParams);
-    if (value) next.set('topic', value); else next.delete('topic');
+    if (value) next.set('topic', value);
+    else next.delete('topic');
     updateSearchParams(next);
   };
 
   const handleSetCompanyFilter = (value: string) => {
     setCompanyFilter(value);
     const next = new URLSearchParams(searchParams);
-    if (value) next.set('company', value); else next.delete('company');
+    if (value) next.set('company', value);
+    else next.delete('company');
     updateSearchParams(next);
   };
 
@@ -170,11 +189,14 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
   };
 
   const completedCount = topicsWithProgress.filter(t => t.isCompleted).length;
-  const progressPercentage = topicsWithProgress.length > 0 ? Math.round((completedCount / topicsWithProgress.length) * 100) : 0;
+  const progressPercentage =
+    topicsWithProgress.length > 0
+      ? Math.round((completedCount / topicsWithProgress.length) * 100)
+      : 0;
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center">
+      <div className="flex min-h-screen items-center justify-center">
         <div className="text-center">Loading questions...</div>
       </div>
     );
@@ -183,217 +205,186 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
   return (
     <div className="min-h-[calc(100vh-64px)] bg-background">
       <div className="lg:hidden">
-        <div className="sticky top-16 z-40 bg-background border-b border-border p-3">
-            <Button
-              variant="outline"
-              size="sm"
-              onClick={() => setSidebarOpen(!sidebarOpen)}
-              className="bg-background shadow-sm"
-            >
-              {sidebarOpen ? <X className="w-4 h-4" /> : <Menu className="w-4 h-4" />}
-              <span className="ml-2 text-sm">{sidebarOpen ? 'Close' : 'Topics'}</span>
-            </Button>
-          </div>
-
-          {sidebarOpen && (
-            <>
-              <div 
-                className="fixed inset-0 bg-black/50 z-40"
-                onClick={() => setSidebarOpen(false)}
-              />
-              <div className="fixed top-0 left-0 w-80 h-full bg-card border-r border-border z-50 flex flex-col overflow-visible">
-                <div className="p-4 border-b border-border">
-                  <div className="flex items-center justify-between mb-4">
-                    <h1 className="text-xl font-bold text-foreground">{title}</h1>
-                    <Button
-                      variant="ghost"
-                      size="sm"
-                      onClick={() => setSidebarOpen(false)}
-                    >
-                      <X className="w-4 h-4" />
-                    </Button>
-                  </div>
-                  <p className="text-xs text-muted-foreground mb-3">{description}</p>
-                  
-                  {/* Progress */}
-                  <div className="space-y-2">
-                    <div className="flex justify-between text-sm">
-                      <span className="text-muted-foreground">Progress</span>
-                      <span className="text-foreground font-medium">{completedCount}/{topicsWithProgress.length}</span>
-                    </div>
-                    <div className="progress-indicator">
-                      <div 
-                        className="progress-fill" 
-                        style={{ width: `${progressPercentage}%` }}
-                      />
-                    </div>
-                  </div>
-                </div>
-                <FiltersControls
-                  variant="mobile"
-                  searchQuery={searchQuery}
-                  onChangeSearch={setSearchQuery}
-                  difficultyFilter={difficultyFilter}
-                  onChangeDifficulty={setDifficultyFilter}
-                  topicTagFilter={topicTagFilter}
-                  companyFilter={companyFilter}
-                  allTags={allTags}
-                  allCompanies={allCompanies}
-                  onChangeTopic={handleSetTopicTagFilter}
-                  onChangeCompany={handleSetCompanyFilter}
-                  onClear={handleClearFilters}
-                />
-
-                <div className="flex-1 overflow-y-auto">
-                  {filteredTopics.map((topic) => (
-                    <TopicListItem
-                      key={topic.id}
-                      topic={topic}
-                      isActive={selectedTopic?.id === topic.id}
-                      onClick={() => handleTopicSelect(topic.id)}
-                    />
-                  ))}
-                </div>
-              </div>
-            </>
-          )}
-
-          {/* Mobile Content */}
-          <div className="w-full">
-            {loadingTopic ? (
-              <div className="flex items-center justify-center h-64">
-                <div className="flex flex-col items-center space-y-4">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                  <p className="text-muted-foreground">Loading topic...</p>
-                </div>
-              </div>
-            ) : selectedTopic ? (
-              <TopicContent 
-                topic={selectedTopic} 
-                category={category}
-                onProgressUpdate={fetchUserProgress}
-                onFilterByTag={(tag) => {
-                  handleSetTopicTagFilter(tag);
-                  setSidebarOpen(true);
-                }}
-                onFilterByCompany={(comp) => {
-                  handleSetCompanyFilter(comp);
-                  setSidebarOpen(true);
-                }}
-              />
-            ) : (
-              <div className="flex items-center justify-center h-64 text-muted-foreground">
-                <div className="text-center">
-                  <BookOpen className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                  <h3 className="text-lg font-medium mb-2">Select a topic to get started</h3>
-                  <p>Choose from the topics to begin your learning journey.</p>
-                </div>
-              </div>
-            )}
-          </div>
+        <div className="sticky top-16 z-40 border-b border-border bg-background p-3">
+          <Button
+            variant="outline"
+            size="sm"
+            onClick={() => setSidebarOpen(!sidebarOpen)}
+            className="bg-background shadow-sm"
+          >
+            {sidebarOpen ? <X className="h-4 w-4" /> : <Menu className="h-4 w-4" />}
+            <span className="ml-2 text-sm">{sidebarOpen ? 'Close' : 'Topics'}</span>
+          </Button>
         </div>
 
-        {/* Desktop Layout */}
-        <div className="hidden lg:flex h-[calc(100vh-64px)] overflow-visible">
-          {/* Desktop Sidebar */}
-          <div className="w-80 border-r border-border bg-card/30 backdrop-blur-sm flex flex-col h-full overflow-visible">
-            {/* Header */}
-            <div className="p-6 border-b border-border">
-              <h1 className="text-2xl font-bold text-foreground mb-2">{title}</h1>
-              <p className="text-sm text-muted-foreground mb-4">{description}</p>
-          
-          {/* Progress */}
-          <div className="space-y-2">
-            <div className="flex justify-between text-sm">
-              <span className="text-muted-foreground">Progress</span>
-              <span className="text-foreground font-medium">{completedCount}/{topicsWithProgress.length}</span>
-            </div>
-            <div className="progress-indicator">
-              <div 
-                className="progress-fill" 
-                style={{ width: `${progressPercentage}%` }}
+        {sidebarOpen && (
+          <>
+            <div className="fixed inset-0 z-40 bg-black/50" onClick={() => setSidebarOpen(false)} />
+            <div className="fixed left-0 top-0 z-50 flex h-full w-80 flex-col overflow-visible border-r border-border bg-card">
+              <div className="border-b border-border p-4">
+                <div className="mb-4 flex items-center justify-between">
+                  <h1 className="text-xl font-bold text-foreground">{title}</h1>
+                  <Button variant="ghost" size="sm" onClick={() => setSidebarOpen(false)}>
+                    <X className="h-4 w-4" />
+                  </Button>
+                </div>
+                <p className="mb-3 text-xs text-muted-foreground">{description}</p>
+
+                {/* Progress */}
+                <div className="space-y-2">
+                  <div className="flex justify-between text-sm">
+                    <span className="text-muted-foreground">Progress</span>
+                    <span className="font-medium text-foreground">
+                      {completedCount}/{topicsWithProgress.length}
+                    </span>
+                  </div>
+                  <div className="progress-indicator">
+                    <div className="progress-fill" style={{ width: `${progressPercentage}%` }} />
+                  </div>
+                </div>
+              </div>
+              <FiltersControls
+                variant="mobile"
+                searchQuery={searchQuery}
+                onChangeSearch={setSearchQuery}
+                difficultyFilter={difficultyFilter}
+                onChangeDifficulty={setDifficultyFilter}
+                topicTagFilter={topicTagFilter}
+                companyFilter={companyFilter}
+                allTags={allTags}
+                allCompanies={allCompanies}
+                onChangeTopic={handleSetTopicTagFilter}
+                onChangeCompany={handleSetCompanyFilter}
+                onClear={handleClearFilters}
               />
+
+              <div className="flex-1 overflow-y-auto">
+                {filteredTopics.map(topic => (
+                  <TopicListItem
+                    key={topic.id}
+                    topic={topic}
+                    isActive={selectedTopic?.id === topic.id}
+                    onClick={() => handleTopicSelect(topic.id)}
+                  />
+                ))}
+              </div>
             </div>
-          </div>
-        </div>
+          </>
+        )}
 
-        {/* Search and Filters */}
-        <FiltersControls
-          variant="desktop"
-          searchQuery={searchQuery}
-          onChangeSearch={setSearchQuery}
-          difficultyFilter={difficultyFilter}
-          onChangeDifficulty={setDifficultyFilter}
-          topicTagFilter={topicTagFilter}
-          companyFilter={companyFilter}
-          allTags={allTags}
-          allCompanies={allCompanies}
-          onChangeTopic={handleSetTopicTagFilter}
-          onChangeCompany={handleSetCompanyFilter}
-          onClear={handleClearFilters}
-        />
-
-        {/* Topics List */}
-        <div className="flex-1 overflow-y-auto">
-          {filteredTopics.map((topic) => (
-            <TopicListItem
-              key={topic.id}
-              topic={topic}
-              isActive={selectedTopic?.id === topic.id}
-              onClick={() => handleTopicSelect(topic.id)}
+        {/* Mobile Content */}
+        <div className="w-full">
+          {loadingTopic ? (
+            <TopicLoading />
+          ) : selectedTopic ? (
+            <TopicContent
+              topic={selectedTopic}
+              category={category}
+              onProgressUpdate={fetchUserProgress}
+              onFilterByTag={tag => {
+                handleSetTopicTagFilter(tag);
+                setSidebarOpen(true);
+              }}
+              onFilterByCompany={comp => {
+                handleSetCompanyFilter(comp);
+                setSidebarOpen(true);
+              }}
             />
-          ))}
-          </div>
-          </div>
+          ) : (
+            <TopicDefault />
+          )}
+        </div>
+      </div>
 
-          {/* Desktop Main Content */}
-          <div className="flex-1 flex flex-col h-full overflow-hidden">
-            {/* Top Bar */}
-            <div className="border-b border-border bg-card/30 backdrop-blur-sm p-4 flex justify-between items-center">
-              <div className="flex items-center space-x-2">
-                <h2 className="font-semibold text-foreground text-xl">
-                  {selectedTopic?.title || "Select a topic"}
-                </h2>
-                {selectedTopic && config.showDifficulty(category) && (
-                  <TopicDifficulty difficulty={selectedTopic.difficulty} />
-                )}
+      {/* Desktop Layout */}
+      <div className="hidden h-[calc(100vh-64px)] overflow-visible lg:flex">
+        {/* Desktop Sidebar */}
+        <div className="flex h-full w-80 flex-col overflow-visible border-r border-border bg-card/30 backdrop-blur-sm">
+          {/* Header */}
+          <div className="border-b border-border p-6">
+            <h1 className="mb-2 text-2xl font-bold text-foreground">{title}</h1>
+            <p className="mb-4 text-sm text-muted-foreground">{description}</p>
+
+            {/* Progress */}
+            <div className="space-y-2">
+              <div className="flex justify-between text-sm">
+                <span className="text-muted-foreground">Progress</span>
+                <span className="font-medium text-foreground">
+                  {completedCount}/{topicsWithProgress.length}
+                </span>
+              </div>
+              <div className="progress-indicator">
+                <div className="progress-fill" style={{ width: `${progressPercentage}%` }} />
               </div>
             </div>
+          </div>
 
-            {/* Content */}
-            <div className="flex-1 overflow-y-auto page-transition">
-              {loadingTopic ? (
-                <div className="flex items-center justify-center h-full">
-                  <div className="flex flex-col items-center space-y-4">
-                    <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
-                    <p className="text-muted-foreground">Loading topic...</p>
-                  </div>
-                </div>
-              ) : selectedTopic ? (
-                <TopicContent 
-                  topic={selectedTopic} 
-                  category={category}
-                  onProgressUpdate={fetchUserProgress}
-                  onFilterByTag={(tag) => {
-                    handleSetTopicTagFilter(tag);
-                    // Keep sidebar closed on desktop, user can see list filtered
-                  }}
-                  onFilterByCompany={(comp) => {
-                    handleSetCompanyFilter(comp);
-                  }}
-                />
-              ) : (
-                <div className="flex items-center justify-center h-full text-muted-foreground">
-                  <div className="text-center">
-                    <BookOpen className="w-16 h-16 mx-auto mb-4 opacity-50" />
-                    <h3 className="text-lg font-medium mb-2">Select a topic to get started</h3>
-                    <p>Choose from the topics in the sidebar to begin your learning journey.</p>
-                  </div>
-                </div>
+          {/* Search and Filters */}
+          <FiltersControls
+            variant="desktop"
+            searchQuery={searchQuery}
+            onChangeSearch={setSearchQuery}
+            difficultyFilter={difficultyFilter}
+            onChangeDifficulty={setDifficultyFilter}
+            topicTagFilter={topicTagFilter}
+            companyFilter={companyFilter}
+            allTags={allTags}
+            allCompanies={allCompanies}
+            onChangeTopic={handleSetTopicTagFilter}
+            onChangeCompany={handleSetCompanyFilter}
+            onClear={handleClearFilters}
+          />
+
+          {/* Topics List */}
+          <div className="flex-1 overflow-y-auto">
+            {filteredTopics.map(topic => (
+              <TopicListItem
+                key={topic.id}
+                topic={topic}
+                isActive={selectedTopic?.id === topic.id}
+                onClick={() => handleTopicSelect(topic.id)}
+              />
+            ))}
+          </div>
+        </div>
+
+        {/* Desktop Main Content */}
+        <div className="flex h-full flex-1 flex-col overflow-hidden">
+          {/* Top Bar */}
+          <div className="flex items-center justify-between border-b border-border bg-card/30 p-4 backdrop-blur-sm">
+            <div className="flex items-center space-x-2">
+              <h2 className="text-xl font-semibold text-foreground">
+                {selectedTopic?.title || 'Select a topic'}
+              </h2>
+              {selectedTopic && config.showDifficulty(category) && (
+                <TopicDifficulty difficulty={selectedTopic.difficulty} />
               )}
             </div>
           </div>
+
+          {/* Content */}
+          <div className="page-transition flex-1 overflow-y-auto">
+            {loadingTopic ? (
+              <TopicLoading />
+            ) : selectedTopic ? (
+              <TopicContent
+                topic={selectedTopic}
+                category={category}
+                onProgressUpdate={fetchUserProgress}
+                onFilterByTag={tag => {
+                  handleSetTopicTagFilter(tag);
+                  // Keep sidebar closed on desktop, user can see list filtered
+                }}
+                onFilterByCompany={comp => {
+                  handleSetCompanyFilter(comp);
+                }}
+              />
+            ) : (
+              <TopicDefault />
+            )}
+          </div>
         </div>
+      </div>
     </div>
   );
 }

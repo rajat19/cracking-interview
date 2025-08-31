@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState, useEffect, createContext, useContext } from 'react';
 import { auth } from '@/integrations/firebase/client';
@@ -32,7 +32,7 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((currentUser) => {
+    const unsubscribe = auth.onAuthStateChanged(currentUser => {
       setUser(currentUser);
       setLoading(false);
     });

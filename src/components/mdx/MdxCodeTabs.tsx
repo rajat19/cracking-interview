@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import SolutionTabs from '@/components/SolutionTabs';
 import { ISolutionEntry } from '@/types/topic';
-import { LANGUAGES_MAP } from '@/types/language';
+import LANGUAGES_MAP from '@/config/languages';
 
 interface MdxCodeTabsProps {
   langs: string[];
@@ -24,46 +24,50 @@ export function MdxCodeTabs({ langs, path }: MdxCodeTabsProps) {
         // path format: "system-design/code/library-management" or "system-design/code/movie-booking/enums"
         const pathParts = path.split('/');
         const category = pathParts[0];
-        
+
         // Find the topic ID and subdirectory from the path
         // Path format: "system-design/code/movie-booking/enums" or "dsa/code/basic-calculator"
         const codeIndex = pathParts.indexOf('code');
-        const topicId = codeIndex >= 0 && codeIndex + 1 < pathParts.length ? pathParts[codeIndex + 1] : pathParts[pathParts.length - 1];
-        const subDirectory = codeIndex >= 0 && codeIndex + 2 < pathParts.length ? pathParts[codeIndex + 2] : null;
+        const topicId =
+          codeIndex >= 0 && codeIndex + 1 < pathParts.length
+            ? pathParts[codeIndex + 1]
+            : pathParts[pathParts.length - 1];
+        const subDirectory =
+          codeIndex >= 0 && codeIndex + 2 < pathParts.length ? pathParts[codeIndex + 2] : null;
 
         try {
           // Load individual solution file for better performance
-          const solutionsModule = await import(`@/data/generated/solutions/${category}/${topicId}.json`);
+          const solutionsModule = await import(`@/generated/solutions/${category}/${topicId}.json`);
           const allSolutions = solutionsModule.default as Record<string, any>;
-          
+
           let filteredSolutions = allSolutions;
-          
+
           // If we have a subdirectory, filter solutions to only show those from that subdirectory
           if (subDirectory) {
             filteredSolutions = Object.fromEntries(
-              Object.entries(allSolutions).filter(([key, solution]) => 
+              Object.entries(allSolutions).filter(([key, solution]) =>
                 key.startsWith(`${subDirectory}_`)
               )
             );
           }
-          
+
           setSolutions(filteredSolutions);
         } catch (error) {
           // Fallback: try loading from the category file (legacy support)
           try {
-            const contentMap = await import(`@/data/generated/${category}-content.json`);
+            const contentMap = await import(`@/generated/${category}-content.json`);
             const topicContent = (contentMap.default as any)[topicId];
             if (topicContent && topicContent.solutions) {
               let filteredSolutions = topicContent.solutions;
-              
+
               if (subDirectory) {
                 filteredSolutions = Object.fromEntries(
-                  Object.entries(topicContent.solutions).filter(([key, solution]) => 
+                  Object.entries(topicContent.solutions).filter(([key, solution]) =>
                     key.startsWith(`${subDirectory}_`)
                   )
                 );
               }
-              
+
               setSolutions(filteredSolutions);
             } else {
               setSolutions({});
@@ -82,9 +86,9 @@ export function MdxCodeTabs({ langs, path }: MdxCodeTabsProps) {
 
   if (loading) {
     return (
-      <div className="my-6 p-6 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800">
+      <div className="my-6 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
         <div className="flex items-center space-x-2">
-          <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-blue-600"></div>
+          <div className="h-4 w-4 animate-spin rounded-full border-b-2 border-blue-600"></div>
           <span className="text-sm text-gray-600 dark:text-gray-400">Loading code examples...</span>
         </div>
       </div>
@@ -94,17 +98,17 @@ export function MdxCodeTabs({ langs, path }: MdxCodeTabsProps) {
   // Check if we have any solutions
   if (!solutions || Object.keys(solutions).length === 0) {
     return (
-      <div className="my-6 p-6 border border-gray-200 dark:border-gray-700 rounded-lg bg-gray-50 dark:bg-gray-800">
+      <div className="my-6 rounded-lg border border-gray-200 bg-gray-50 p-6 dark:border-gray-700 dark:bg-gray-800">
         <div className="text-sm text-gray-600 dark:text-gray-400">
           <p>💻 Code examples available in repository</p>
-          <p className="text-xs mt-2 font-mono bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded">
+          <p className="mt-2 rounded bg-gray-200 px-2 py-1 font-mono text-xs dark:bg-gray-700">
             src/content/{path}/solution.{'{'}ext{'}'}
           </p>
-          <p className="text-xs mt-1">Languages: {langs.join(', ')}</p>
-          <p className="text-xs mt-2 text-blue-600 dark:text-blue-400">
-            <a 
+          <p className="mt-1 text-xs">Languages: {langs.join(', ')}</p>
+          <p className="mt-2 text-xs text-blue-600 dark:text-blue-400">
+            <a
               href={`https://github.com/your-username/cracking-interview/tree/nextjs/src/content/${path}`}
-              target="_blank" 
+              target="_blank"
               rel="noopener noreferrer"
               className="hover:underline"
             >

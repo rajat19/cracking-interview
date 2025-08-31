@@ -17,6 +17,9 @@
 /.next/
 /out/
 
+# generated data
+/src/**/generated/
+
 # production
 /build
 

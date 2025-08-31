@@ -24,17 +24,11 @@ The file is searched in the `path` field passed as prop to the component
 Examples:
 
 ```mdx
-<MdxCodeTabs
-  langs={["java", "py"]}
-  path="dsa/solutions/basic-calculator"
-/>
+<MdxCodeTabs langs={['java', 'py']} path="dsa/solutions/basic-calculator" />
 ```
 
 ```mdx
-<MdxCodeTabs
-  langs={["java", "py", "c"]}
-  path="system-design/code/library-management/accounts"
-/>
+<MdxCodeTabs langs={['java', 'py', 'c']} path="system-design/code/library-management/accounts" />
 ```
 
 ## MdxImage
@@ -46,17 +40,14 @@ When you want to load images inside `.mdx` components
 ### How to use
 
 ```mdx
-<MdxImage 
-  src="<PATH_TO_IMAGE_IN_PUBLIC_DIR>" 
-  alt="<ALT_IF_IMAGE_NOT_LOADED>"
-/>
+<MdxImage src="<PATH_TO_IMAGE_IN_PUBLIC_DIR>" alt="<ALT_IF_IMAGE_NOT_LOADED>" />
 ```
 
 Example:
 
 ```mdx
-<MdxImage 
-  src="design/library-management/activity-renew.svg" 
+<MdxImage
+  src="design/library-management/activity-renew.svg"
   alt="Activity Diagram for Library Management System"
 />
 ```

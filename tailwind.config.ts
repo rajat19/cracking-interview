@@ -11,6 +11,12 @@ export default {
 		"./app/**/*.{ts,tsx}",
 		"./src/**/*.{ts,tsx}",
 	],
+	safelist: [
+		'from-blue-500', 'to-cyan-500',
+		'from-purple-500', 'to-pink-500',
+		'from-orange-500', 'to-red-500',
+		'from-green-500', 'to-emerald-500',
+	],
 	prefix: "",
 	theme: {
 		container: {

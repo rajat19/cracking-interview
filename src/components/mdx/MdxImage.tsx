@@ -1,4 +1,4 @@
-"use client";
+'use client';
 
 import { useState } from 'react';
 import Image from 'next/image';
@@ -11,35 +11,35 @@ interface MdxImageProps {
 export function MdxImage({ src, alt }: MdxImageProps) {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   const handleImageLoad = () => {
     setIsLoading(false);
   };
-  
+
   const handleImageError = () => {
     setImageError(true);
     setIsLoading(false);
   };
-  
+
   if (imageError) {
     return (
-      <div className="my-6 p-4 border border-destructive/20 rounded-lg bg-destructive/5">
-        <p className="text-destructive text-sm">
-          Failed to load image: <code className="bg-destructive/10 px-1 rounded">{src}</code>
+      <div className="my-6 rounded-lg border border-destructive/20 bg-destructive/5 p-4">
+        <p className="text-sm text-destructive">
+          Failed to load image: <code className="rounded bg-destructive/10 px-1">{src}</code>
         </p>
-        <p className="text-muted-foreground text-xs mt-1">
-          Expected path: <code className="bg-muted px-1 rounded">/assets/img/{src}</code>
+        <p className="mt-1 text-xs text-muted-foreground">
+          Expected path: <code className="rounded bg-muted px-1">/assets/img/{src}</code>
         </p>
       </div>
     );
   }
-  
+
   return (
     <figure className="my-8">
       <div className="relative">
         {isLoading && (
-          <div className="absolute inset-0 flex items-center justify-center bg-muted/20 rounded-lg">
-            <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+          <div className="absolute inset-0 flex items-center justify-center rounded-lg bg-muted/20">
+            <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-primary"></div>
           </div>
         )}
         <Image
@@ -47,7 +47,7 @@ export function MdxImage({ src, alt }: MdxImageProps) {
           alt={alt}
           width={800}
           height={600}
-          className="max-w-full h-auto rounded-lg border border-border shadow-sm mx-auto"
+          className="mx-auto h-auto max-w-full rounded-lg border border-border shadow-sm"
           onLoad={handleImageLoad}
           onError={handleImageError}
         />

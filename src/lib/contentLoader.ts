@@ -2,7 +2,7 @@ import type { ITopic, ITopicCategory, ITopicList } from '@/types/topic';
 import {
   loadTopicsList as loadUnifiedTopicsList,
   loadTopic as loadUnifiedTopic,
-  clearTopicCache
+  clearTopicCache,
 } from './topicLoader';
 
 // Load topic metadata (title, difficulty, etc.) without full content
@@ -16,7 +16,9 @@ export async function loadTopic(category: ITopicCategory, topicId: string): Prom
 }
 
 // Progress management functions
-export function getLocalProgress(category: ITopicCategory): Record<string, { is_completed: boolean; is_bookmarked: boolean }> {
+export function getLocalProgress(
+  category: ITopicCategory
+): Record<string, { is_completed: boolean; is_bookmarked: boolean }> {
   try {
     const raw = localStorage.getItem(`progress:${category}`);
     return raw ? JSON.parse(raw) : {};
@@ -37,7 +39,7 @@ export function updateLocalProgress(
     [topicId]: {
       is_completed: updates.isCompleted ?? existing.is_completed,
       is_bookmarked: updates.isBookmarked ?? existing.is_bookmarked,
-    }
+    },
   };
   localStorage.setItem(`progress:${category}`, JSON.stringify(next));
 }

@@ -1,8 +1,0 @@
-{
-  "java": {
-    "language": "java",
-    "code": "class Solution {\n    public boolean isValidSudoku(char[][] board) {\n        boolean[][] col = new boolean[9][9];\n        boolean[][] row = new boolean[9][9];\n        boolean[][] block = new boolean[9][9];\n        for (int i = 0; i < 9; i++) {\n            for (int j = 0; j < 9; j++) {\n                if (board[i][j] == '.') {\n                    continue;\n                }\n                int digit = board[i][j] - '1';\n                int blockId = i / 3 * 3 + j / 3;\n                if (row[i][digit]) return false;\n                if (col[j][digit]) return false;\n                if (block[blockId][digit]) return false;\n                row[i][digit] = true;\n                col[j][digit] = true;\n                block[blockId][digit] = true;\n            }\n        }\n        return true;\n    }\n}",
-    "subPath": "",
-    "fileName": "solution.java"
-  }
-}

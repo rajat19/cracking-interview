@@ -1,8 +1,0 @@
-{
-  "java": {
-    "language": "java",
-    "code": "class Solution {\n    private static final String[] LESS_THAN_20 = {\n            \"\", \"One\", \"Two\", \"Three\", \"Four\", \"Five\", \"Six\", \"Seven\", \"Eight\", \"Nine\",\n            \"Ten\", \"Eleven\", \"Twelve\", \"Thirteen\", \"Fourteen\", \"Fifteen\",\n            \"Sixteen\", \"Seventeen\", \"Eighteen\", \"Nineteen\"\n    };\n\n    private static final String[] TENS = {\n            \"\", \"Ten\", \"Twenty\", \"Thirty\", \"Forty\", \"Fifty\", \"Sixty\", \"Seventy\", \"Eighty\", \"Ninety\"\n    };\n\n    private static final String[] THOUSANDS = {\n            \"\", \"Thousand\", \"Million\", \"Billion\"\n    };\n\n    public String numberToWords(int num) {\n        if (num == 0) return \"Zero\";\n\n        StringBuilder sb = new StringBuilder();\n        int i = 0;\n\n        while (num > 0) {\n            int chunk = num % 1000;\n            if (chunk != 0) {\n                StringBuilder part = new StringBuilder();\n                helper(chunk, part);\n                if (!THOUSANDS[i].isEmpty()) part.append(THOUSANDS[i]).append(\" \");\n                sb.insert(0, part);\n            }\n            num /= 1000;\n            i++;\n        }\n\n        return sb.toString().trim();\n    }\n\n    private void helper(int num, StringBuilder sb) {\n        if (num == 0) return;\n\n        if (num < 20) {\n            sb.append(LESS_THAN_20[num]).append(\" \");\n        } else if (num < 100) {\n            sb.append(TENS[num / 10]).append(\" \");\n            helper(num % 10, sb);\n        } else {\n            sb.append(LESS_THAN_20[num / 100]).append(\" Hundred \");\n            helper(num % 100, sb);\n        }\n    }\n}",
-    "subPath": "",
-    "fileName": "solution.java"
-  }
-}

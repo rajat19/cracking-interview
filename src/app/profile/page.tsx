@@ -1,11 +1,15 @@
-"use client";
+'use client';
 
 import { useState, useEffect, useCallback } from 'react';
 import { useAuth } from '@/hooks/useAuth';
 import { useRouter } from 'next/navigation';
 import Navigation from '@/components/Navigation';
 import { loadTopicsList } from '@/lib/contentLoader';
-import { getCachedCategoryProgress, preloadUserProgress, upsertUserProgress } from '@/lib/progressStore';
+import {
+  getCachedCategoryProgress,
+  preloadUserProgress,
+  upsertUserProgress,
+} from '@/lib/progressStore';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Bookmark, ExternalLink, CheckCircle, UserCircle, LogOut } from 'lucide-react';
@@ -102,7 +106,9 @@ const Profile = () => {
     if (!user) return;
     try {
       await upsertUserProgress(user.uid, questionType, questionId, { isBookmarked: false });
-      setBookmarks(prev => prev.filter(b => !(b.id === questionId && b.question_type === questionType)));
+      setBookmarks(prev =>
+        prev.filter(b => !(b.id === questionId && b.question_type === questionType))
+      );
     } catch (error) {
       console.error('Error removing bookmark:', error);
     }
@@ -110,10 +116,16 @@ const Profile = () => {
 
   const getQuestionRoute = (questionType: ITopicCategory) => {
     switch (questionType) {
-      case 'dsa': return '/dsa';
-      case 'system-design': return '/system-design';
-      case 'behavioral': return '/behavioral';
-      default: return '/';
+      case 'dsa':
+        return '/topics/dsa';
+      case 'system-design':
+        return '/topics/system-design';
+      case 'behavioral':
+        return '/topics/behavioral';
+      case 'ood':
+        return '/topics/ood';
+      default:
+        return '/';
     }
   };
 
@@ -128,46 +140,42 @@ const Profile = () => {
   return (
     <>
       <div className="container mx-auto px-4 py-8">
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-8 mb-8">
+        <div className="mb-8 flex flex-col items-center gap-8 md:flex-row md:items-start">
           <div className="flex flex-col items-center">
             {user?.photoURL ? (
               <Image
-                src={user.photoURL} 
-                alt="Profile" 
-                className="w-24 h-24 rounded-full border-2 border-primary shadow-lg"
+                src={user.photoURL}
+                alt="Profile"
+                className="h-24 w-24 rounded-full border-2 border-primary shadow-lg"
               />
             ) : (
               <UserCircle size={96} className="text-primary" />
             )}
-            <h1 className="text-2xl font-bold mt-4">{user?.displayName || 'User'}</h1>
+            <h1 className="mt-4 text-2xl font-bold">{user?.displayName || 'User'}</h1>
             <p className="text-muted-foreground">{user?.email}</p>
-            <Button 
-              variant="ghost" 
-              onClick={signOut} 
-              className="mt-4 flex items-center gap-2"
-            >
+            <Button variant="ghost" onClick={signOut} className="mt-4 flex items-center gap-2">
               <LogOut size={16} />
               Sign Out
             </Button>
           </div>
-          
-          <div className="flex-1 w-full">
-            <div className="flex border-b border-border mb-6">
-              <button 
-                className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
-                  activeTab === 'bookmarks' 
-                    ? 'border-primary text-primary bg-primary/10' 
-                    : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
+
+          <div className="w-full flex-1">
+            <div className="mb-6 flex border-b border-border">
+              <button
+                className={`border-b-2 px-4 py-2 text-sm font-medium transition-colors ${
+                  activeTab === 'bookmarks'
+                    ? 'border-primary bg-primary/10 text-primary'
+                    : 'border-transparent text-muted-foreground hover:border-border hover:text-foreground'
                 }`}
                 onClick={() => setActiveTab('bookmarks')}
               >
                 Bookmarks ({bookmarks.length})
               </button>
-              <button 
-                className={`px-4 py-2 font-medium text-sm border-b-2 transition-colors ${
-                  activeTab === 'completed' 
-                    ? 'border-primary text-primary bg-primary/10' 
-                    : 'border-transparent text-muted-foreground hover:text-foreground hover:border-border'
+              <button
+                className={`border-b-2 px-4 py-2 text-sm font-medium transition-colors ${
+                  activeTab === 'completed'
+                    ? 'border-primary bg-primary/10 text-primary'
+                    : 'border-transparent text-muted-foreground hover:border-border hover:text-foreground'
                 }`}
                 onClick={() => setActiveTab('completed')}
               >
@@ -176,26 +184,28 @@ const Profile = () => {
             </div>
 
             <div className="grid gap-4">
-              {(activeTab === 'bookmarks' ? bookmarks : completed).map((item) => (
+              {(activeTab === 'bookmarks' ? bookmarks : completed).map(item => (
                 <div
                   key={`${item.question_type}-${item.id}`}
-                  className="p-6 bg-card rounded-lg border border-border shadow-sm"
+                  className="rounded-lg border border-border bg-card p-6 shadow-sm"
                 >
-                  <div className="flex justify-between items-start">
+                  <div className="flex items-start justify-between">
                     <div className="flex-1">
                       <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
-                      <p className="text-muted-foreground mt-2">{item.description}</p>
-                      <div className="flex items-center gap-2 mt-4">
-                        <TopicDifficulty difficulty={item.difficulty as "easy" | "medium" | "hard"} />
-                        <div className="badge badge-info capitalize p-2 rounded-md text-xs">
+                      <p className="mt-2 text-muted-foreground">{item.description}</p>
+                      <div className="mt-4 flex items-center gap-2">
+                        <TopicDifficulty
+                          difficulty={item.difficulty as 'easy' | 'medium' | 'hard'}
+                        />
+                        <div className="badge badge-info rounded-md p-2 text-xs capitalize">
                           {item.question_type.replace('_', ' ')}
                         </div>
                       </div>
                     </div>
                     <div className="flex gap-2">
-                      <Link 
+                      <Link
                         href={getQuestionRoute(item.question_type)}
-                        className="btn btn-sm btn-primary"
+                        className="btn btn-primary btn-sm"
                       >
                         <ExternalLink size={16} />
                         View
@@ -216,23 +226,29 @@ const Profile = () => {
               ))}
             </div>
 
-            { (activeTab === 'bookmarks' ? bookmarks : completed).length === 0 && (
-              <div className="text-center py-12">
-                {activeTab === 'bookmarks' ?
-                    <Bookmark size={64} className="mx-auto text-base-300 mb-4" />
-                    :
-                    <CheckCircle size={64} className="mx-auto text-base-300 mb-4 text-success" />
-                }
-                <h2 className="text-xl mb-2">No {activeTab} yet</h2>
+            {(activeTab === 'bookmarks' ? bookmarks : completed).length === 0 && (
+              <div className="py-12 text-center">
+                {activeTab === 'bookmarks' ? (
+                  <Bookmark size={64} className="mx-auto mb-4 text-base-300" />
+                ) : (
+                  <CheckCircle size={64} className="mx-auto mb-4 text-base-300 text-success" />
+                )}
+                <h2 className="mb-2 text-xl">No {activeTab} yet</h2>
                 <p className="text-base-content/70 mb-6">
-                  {activeTab === 'bookmarks' 
-                    ? 'Start bookmarking questions you want to review later!' 
+                  {activeTab === 'bookmarks'
+                    ? 'Start bookmarking questions you want to review later!'
                     : 'Start completing questions to track your progress!'}
                 </p>
                 <div className="space-x-4">
-                  <Link href="/dsa" className="btn btn-primary">Browse DSA</Link>
-                  <Link href="/system-design" className="btn btn-primary">Browse System Design</Link>
-                  <Link href="/behavioral" className="btn btn-primary">Browse Behavioral</Link>
+                  <Link href="/topics/dsa" className="btn btn-primary">
+                    Browse DSA
+                  </Link>
+                  <Link href="/topics/system-design" className="btn btn-primary">
+                    Browse System Design
+                  </Link>
+                  <Link href="/topics/behavioral" className="btn btn-primary">
+                    Browse Behavioral
+                  </Link>
                 </div>
               </div>
             )}

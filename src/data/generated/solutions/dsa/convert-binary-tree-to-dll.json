@@ -1,8 +1,0 @@
-{
-  "java": {
-    "language": "java",
-    "code": "class TreeNode {\n    int val;\n    TreeNode left, right;\n    TreeNode(int val) { this.val = val; }\n}\n\nclass Solution {\n    TreeNode prev = null;\n    TreeNode head = null;\n\n    public TreeNode convertToDLL(TreeNode root) {\n        if (root == null) return null;\n        inOrder(root);\n        return head;\n    }\n\n    private void inOrder(TreeNode node) {\n        if (node == null) return;\n\n        inOrder(node.left);\n\n        if (prev == null) {\n            head = node;\n        } else {\n            prev.right = node;\n            node.left = prev;\n        }\n        prev = node;\n\n        inOrder(node.right);\n    }\n}",
-    "subPath": "",
-    "fileName": "solution.java"
-  }
-}

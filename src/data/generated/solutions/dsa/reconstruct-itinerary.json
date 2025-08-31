@@ -1,8 +1,0 @@
-{
-  "java": {
-    "language": "java",
-    "code": "class Solution {\n    public List<String> findItinerary(List<List<String>> tickets) {\n        Map<String, PriorityQueue<String>> map = new HashMap<>();\n        for(List<String> ticket: tickets) {\n            String src = ticket.get(0);\n            String dst = ticket.get(1);\n            PriorityQueue<String> pq = map.getOrDefault(src, new PriorityQueue<>());\n            pq.offer(dst);\n            map.put(src, pq);\n        }\n        Stack<String> stack = new Stack<>();\n        stack.push(\"JFK\");\n        List<String> res = new ArrayList<>();\n        while(!stack.isEmpty()) {\n            while (map.containsKey(stack.peek()) && !map.get(stack.peek()).isEmpty()) {\n                stack.push(map.get(stack.peek()).poll());\n            }\n            res.add(0, stack.pop());\n        }\n        return res;\n    }\n}",
-    "subPath": "",
-    "fileName": "solution.java"
-  }
-}

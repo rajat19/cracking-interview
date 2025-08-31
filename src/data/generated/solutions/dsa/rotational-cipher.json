@@ -1,8 +1,0 @@
-{
-  "java": {
-    "language": "java",
-    "code": "class Solution {\n    String rotationalCipher(String input, int rotationFactor) {\n        StringBuilder sb = new StringBuilder();\n        int n = input.length();\n        for(int i=0; i<n; i++) {\n            char c = input.charAt(i);\n            if ('a' <= c && c <= 'z') {\n                sb.append((char)('a' + (c - 'a' + rotationFactor)%26));\n            }\n            else if ('A' <= c && c <= 'Z') {\n                sb.append((char)('A' + (c - 'A' + rotationFactor)%26));\n            }\n            else if ('0' <= c && c <= '9') {\n                sb.append((char)('0' + (c - '0' + rotationFactor)%10));\n            } else {\n                sb.append(c);\n            }\n\n        }\n        return sb.toString();\n    }\n}",
-    "subPath": "",
-    "fileName": "solution.java"
-  }
-}

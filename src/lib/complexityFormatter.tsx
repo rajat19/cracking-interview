@@ -7,7 +7,7 @@ import React from 'react';
 export function formatComplexity(complexity: string): React.ReactElement {
   // Split the string by <sup> and </sup> tags
   const parts = complexity.split(/(<sup>.*?<\/sup>)/g);
-  
+
   return (
     <>
       {parts.map((part: string, index: number) => {
