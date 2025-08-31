@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import SolutionTabs from '@/components/SolutionTabs';
 import { ISolutionEntry } from '@/types/topic';
-import LANGUAGES_MAP from '@/config/languages';
+import LANGUAGES_MAP from '@/config/language';
 
 interface MdxCodeTabsProps {
   langs: string[];

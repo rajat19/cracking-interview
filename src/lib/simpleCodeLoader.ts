@@ -1,4 +1,4 @@
-import { LANGUAGES_MAP } from '@/types/language';
+import { LANGUAGES_MAP } from '@/config/language';
 import { ISolutionEntry } from '@/types/topic';
 
 /**

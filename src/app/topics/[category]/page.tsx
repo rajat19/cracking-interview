@@ -4,9 +4,7 @@ import { getConfig } from '@/config/categoryConfig';
 import type { ITopicCategory } from '@/types/topic';
 
 interface PageProps {
-  params: {
-    category: string;
-  };
+  params: Promise<{ category: string }>;
 }
 
 export function generateStaticParams() {

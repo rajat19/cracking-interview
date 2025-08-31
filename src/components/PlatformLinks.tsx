@@ -4,7 +4,7 @@ import React from 'react';
 import { ExternalLink } from 'lucide-react';
 import { ITopic } from '@/types/topic';
 import Image from 'next/image';
-import PLATFORMS from '@/config/platforms';
+import PLATFORMS from '@/config/platform';
 
 interface PlatformLinksProps {
   topic: ITopic;

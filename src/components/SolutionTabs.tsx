@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import { Prism as SyntaxHighlighter } from 'react-syntax-highlighter';
 import useHighlight from '@/hooks/useHighlight';
-import { LANGUAGES_MAP } from '@/config/languages';
+import { LANGUAGES_MAP } from '@/config/language';
 import { ISolutionEntry } from '@/types/topic';
 import Image from 'next/image';
 
