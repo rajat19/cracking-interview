@@ -393,25 +393,6 @@ All colors MUST be HSL.
     color: hsl(var(--foreground)) !important;
   }
 
-  /* Override any syntax highlighting that might interfere with theme colors */
-  .prose pre code.hljs,
-  .prose pre code[class*='language-'],
-  .prose pre [class*='token'],
-  .prose .hljs,
-  .prose [class*='language-'] {
-    background: transparent !important;
-    color: hsl(var(--foreground)) !important;
-  }
-
-  /* Ensure all nested elements in code blocks use proper colors */
-  .prose pre *,
-  .prose code *,
-  .prose pre code *,
-  .prose .hljs *,
-  .prose [class*='language-'] * {
-    color: hsl(var(--foreground)) !important;
-  }
-
   /* Prose styles for MDX content */
   .prose {
     /* Force Tailwind Typography vars to use foreground for list markers */

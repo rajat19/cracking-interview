@@ -7,12 +7,14 @@ import dsaIndex from '@/generated/dsa-index.json';
 import systemDesignIndex from '@/generated/system-design-index.json';
 import oodIndex from '@/generated/ood-index.json';
 import behavioralIndex from '@/generated/behavioral-index.json';
+import designPatternIndex from '@/generated/design-pattern-index.json';
 
 // Import pre-generated content maps statically
 import dsaContent from '@/generated/dsa-content.json';
 import systemDesignContent from '@/generated/system-design-content.json';
 import oodContent from '@/generated/ood-content.json';
 import behavioralContent from '@/generated/behavioral-content.json';
+import designPatternContent from '@/generated/design-pattern-content.json';
 // Full content map (contains solutions per topic)
 import fullContentMap from '@/generated/content-map.json';
 
@@ -22,6 +24,7 @@ const CONTENT_MAPS: Record<string, any> = {
   'system-design': systemDesignContent,
   ood: oodContent,
   behavioral: behavioralContent,
+  'design-pattern': designPatternContent,
 };
 
 // Universal frontmatter interface that covers all categories
@@ -42,6 +45,8 @@ interface UniversalFrontmatterData {
   hackerrank?: string;
   hellointerview?: string;
   metacareers?: string;
+  sourcemaking?: string;
+  refactoring?: string;
   [key: string]: unknown;
 }
 
@@ -169,22 +174,14 @@ const mapFrontmatterToTopic = (
 
   return {
     id,
+    ...fm,
     title: fm.title || id,
-    author: fm.author || undefined,
     difficulty,
-    timeComplexity: fm.tc || undefined,
-    spaceComplexity: fm.sc || undefined,
+    timeComplexity: fm.tc,
+    spaceComplexity: fm.sc,
     description: fm.description || createExcerpt(content),
     content: content.trim(),
-    examples: undefined,
     relatedTopics,
-    companies: fm.companies || undefined,
-    leetcode: category === 'dsa' ? fm.leetcode : undefined,
-    gfg: category === 'dsa' ? fm.gfg : undefined,
-    interviewbit: category === 'dsa' ? fm.interviewbit : undefined,
-    hackerrank: category === 'dsa' ? fm.hackerrank : undefined,
-    hellointerview: category === 'dsa' ? fm.hellointerview : undefined,
-    metacareers: category === 'dsa' ? fm.metacareers : undefined,
     solutions: undefined,
   };
 };
@@ -194,6 +191,7 @@ const indexMap = {
   'system-design': systemDesignIndex,
   ood: oodIndex,
   behavioral: behavioralIndex,
+  'design-pattern': designPatternIndex,
 } as const;
 
 const loadFromCache = async (category: ITopicCategory): Promise<ITopicList[] | null> => {

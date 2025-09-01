@@ -13,6 +13,7 @@ export function generateStaticParams() {
     { category: 'system-design' },
     { category: 'ood' },
     { category: 'behavioral' },
+    { category: 'design-pattern' },
   ];
 }
 

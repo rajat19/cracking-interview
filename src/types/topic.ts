@@ -1,5 +1,5 @@
 export type ITopicDifficulty = 'all' | 'easy' | 'medium' | 'hard';
-export type ITopicCategory = 'dsa' | 'system-design' | 'behavioral' | 'ood';
+export type ITopicCategory = 'dsa' | 'system-design' | 'behavioral' | 'ood' | 'design-pattern';
 
 export interface ITopic {
   id: string;
@@ -21,6 +21,10 @@ export interface ITopic {
   hackerrank?: string;
   hellointerview?: string;
   metacareers?: string;
+
+  // Design pattern platform identifiers
+  sourcemaking?: string;
+  refactoring?: string;
 
   // Progress tracking
   isCompleted?: boolean;

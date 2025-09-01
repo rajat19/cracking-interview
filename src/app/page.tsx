@@ -16,6 +16,7 @@ export default function Home() {
     systemDesignQuestions: 0,
     oodQuestions: 0,
     behavioralQuestions: 0,
+    designPatternQuestions: 0,
   });
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
@@ -23,17 +24,19 @@ export default function Home() {
     const fetchStats = async () => {
       try {
         // Load only topic metadata for faster stats calculation
-        const [dsa, systemDesign, ood, behavioral] = await Promise.all([
+        const [dsa, systemDesign, ood, behavioral, designPattern] = await Promise.all([
           loadTopicsList('dsa'),
           loadTopicsList('system-design'),
           loadTopicsList('ood'),
           loadTopicsList('behavioral'),
+          loadTopicsList('design-pattern'),
         ]);
         setStats({
           dsaQuestions: dsa.length,
           systemDesignQuestions: systemDesign.length,
           oodQuestions: ood.length,
           behavioralQuestions: behavioral.length,
+          designPatternQuestions: designPattern.length,
         });
       } catch (error) {
         console.error('Error fetching stats:', error);
@@ -61,7 +64,7 @@ export default function Home() {
   return (
     <div className="min-h-screen bg-background">
       {/* Hero Section */}
-      <section className="px-6 py-10">
+      <section className="px-6 py-6">
         <div className="container mx-auto text-center">
           <h2 className="mb-6 text-5xl font-bold">
             Master Your Next <span className="gradient-text">Tech Interview</span>
@@ -72,7 +75,7 @@ export default function Home() {
           </p>
 
           {/* Mock Interview CTA */}
-          <div className="mx-auto max-w-2xl">
+          {/* <div className="mx-auto max-w-2xl">
             <div className="card border border-primary/20 bg-gradient-to-r from-primary/10 to-secondary/10">
               <div className="card-body text-center">
                 <Video className="mx-auto mb-4 h-12 w-12 text-primary" />
@@ -90,7 +93,7 @@ export default function Home() {
                 </Link>
               </div>
             </div>
-          </div>
+          </div> */}
         </div>
       </section>
 

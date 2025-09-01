@@ -12,6 +12,7 @@ interface MdxImageProps {
 export function MdxImage({ src, alt }: MdxImageProps) {
   const [imageError, setImageError] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
+  const imageSrc = /^(https?:)?\/\//.test(src) ? src : assetPath(`/assets/img/${src}`);
 
   const handleImageLoad = () => {
     setIsLoading(false);
@@ -44,8 +45,8 @@ export function MdxImage({ src, alt }: MdxImageProps) {
           </div>
         )}
         <Image
-          src={assetPath(`/assets/img/${src}`)}
-          alt={alt}
+          src={imageSrc}
+          alt={alt ?? 'Image'}
           width={800}
           height={600}
           className="mx-auto h-auto max-w-full rounded-lg border border-border shadow-sm"

@@ -61,7 +61,7 @@ export const PlatformLinks: React.FC<PlatformLinksProps> = ({ topic }) => {
 
   return (
     <div className="my-6 lg:my-8">
-      <h3 className="mb-1 text-lg font-medium text-foreground lg:text-xl">Practice on Platforms</h3>
+      <h3 className="mb-1 text-lg font-medium text-foreground lg:text-xl">Associated Platforms</h3>
       {/* Additional info */}
       <p className="mb-3 text-xs text-muted-foreground">
         Click on any platform to view this problem on their website

@@ -3,7 +3,7 @@ const path = require('path');
 const fm = require('front-matter');
 
 // Categories to process
-const categories = ['dsa', 'system-design', 'ood', 'behavioral'];
+const categories = ['dsa', 'system-design', 'ood', 'behavioral', 'design-pattern'];
 
 // Output directory for generated content
 const outputDir = path.join(process.cwd(), 'src/generated');

@@ -53,6 +53,8 @@ next-env.d.ts
 *.njsproj
 *.sln
 *.sw?
+*.iml
+.idea/
 
 # build
 dist

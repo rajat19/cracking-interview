@@ -56,6 +56,34 @@ export const PLATFORMS: Platform[] = [
     identifier: 'hellointerview',
     img: 'hellointerview.svg',
   },
+  {
+    name: 'Refactoring Guru',
+    base: 'https://refactoring.guru/design-patterns/',
+    suffix: '',
+    identifier: 'refactoring',
+    img: 'refactoring.png',
+  },
+  {
+    name: 'SourceMaking',
+    base: 'https://sourcemaking.com/design_patterns/',
+    suffix: '',
+    identifier: 'sourcemaking',
+    img: 'sourcemaking.png',
+  },
+  {
+    name: 'Wikipedia',
+    base: 'https://en.wikipedia.org/wiki/',
+    suffix: '',
+    identifier: 'wikipedia',
+    img: 'wikipedia.svg',
+  },
+  {
+    name: 'Scaler',
+    base: 'https://www.scaler.com/topics/',
+    suffix: '',
+    identifier: 'scaler',
+    img: 'scaler.png',
+  },
 ];
 
 export default PLATFORMS;

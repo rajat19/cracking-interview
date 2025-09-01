@@ -7,7 +7,7 @@ import { ITopic, ITopicCategory } from '@/types/topic';
 import { updateLocalProgress } from '@/lib/contentLoader';
 const SimpleMDXRenderer = lazy(() => import('@/components/SimpleMDXRenderer'));
 const SolutionTabs = lazy(() => import('@/components/SolutionTabs'));
-import { PlatformLinks } from '@/components/PlatformLinks';
+import { PlatformLinks } from '@/components/topic/PlatformLinks';
 import { useAuth } from '@/hooks/useAuth';
 import { getUserProgress, upsertUserProgress } from '@/lib/progressStore';
 import { useRouter } from 'next/navigation';

@@ -44,16 +44,18 @@ const Profile = () => {
   const fetchProgress = useCallback(async () => {
     if (!user) return;
     try {
-      const [dsa, system, behavioral] = await Promise.all([
+      const [dsa, system, behavioral, designPattern] = await Promise.all([
         loadTopicsList('dsa'),
         loadTopicsList('system-design'),
         loadTopicsList('behavioral'),
+        loadTopicsList('design-pattern'),
       ]);
 
       const categories = [
         { id: 'dsa' as ITopicCategory, topics: dsa },
         { id: 'system-design' as ITopicCategory, topics: system },
         { id: 'behavioral' as ITopicCategory, topics: behavioral },
+        { id: 'design-pattern' as ITopicCategory, topics: designPattern },
       ];
 
       const allBookmarks: ProgressItem[] = [];

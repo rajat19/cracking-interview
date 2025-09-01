@@ -122,7 +122,7 @@ export async function getTopicWithContent(
 export async function generateAllTopicParams(): Promise<
   Array<{ category: string; topicId?: string }>
 > {
-  const categories: ITopicCategory[] = ['dsa', 'system-design', 'ood', 'behavioral'];
+  const categories: ITopicCategory[] = ['dsa', 'system-design', 'ood', 'behavioral', 'design-pattern'];
   const params: Array<{ category: string; topicId?: string }> = [];
 
   for (const category of categories) {

@@ -37,8 +37,8 @@ const Navigation = () => {
             <div className="flex items-center">
               <Link href="/" className="flex items-center space-x-2">
                 <span className="text-lg font-bold text-foreground sm:text-xl">
-                  <span className="hidden sm:inline">Interview Prep</span>
-                  <span className="sm:hidden">Prep</span>
+                  <span className="hidden sm:inline">Cracking Interview</span>
+                  <span className="sm:hidden">Cracking Interview</span>
                 </span>
               </Link>
             </div>

@@ -19,7 +19,7 @@ export interface CategoryConfig {
     icon: React.ElementType;
     gradient: string;
     statsLabel: string;
-    statsKey: 'dsaQuestions' | 'systemDesignQuestions' | 'oodQuestions' | 'behavioralQuestions';
+    statsKey: 'dsaQuestions' | 'systemDesignQuestions' | 'oodQuestions' | 'behavioralQuestions' | 'designPatternQuestions';
   };
   features: CategoryFeatures;
   contentType: 'markdown' | 'mdx';
@@ -107,6 +107,26 @@ export const categoryConfig: CategoryConfigMap = {
     difficulty: {
       enabled: false,
       levels: [],
+    },
+  },
+  'design-pattern': {
+    title: 'Design Patterns',
+    description: 'Master design patterns and their implementations',
+    display: {
+      icon: Brain,
+      gradient: 'from-green-500 to-emerald-500',
+      statsLabel: 'Patterns',
+      statsKey: 'designPatternQuestions',
+    },
+    features: {
+      solutionTabs: true,
+      mdxRenderer: true,
+      index: true,
+    },
+    contentType: 'mdx',
+    difficulty: {
+      enabled: true,
+      levels: ['all', 'easy', 'medium', 'hard'],
     },
   },
 };
