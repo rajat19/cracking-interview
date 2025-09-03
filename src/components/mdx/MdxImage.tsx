@@ -1,7 +1,9 @@
-'use client';
+"use client";
 
 import { useState } from 'react';
 import Image from 'next/image';
+import Zoom from 'react-medium-image-zoom';
+import 'react-medium-image-zoom/dist/styles.css';
 import assetPath from '@/lib/assetPath';
 
 interface MdxImageProps {
@@ -44,15 +46,17 @@ export function MdxImage({ src, alt }: MdxImageProps) {
             <div className="h-8 w-8 animate-spin rounded-full border-b-2 border-primary"></div>
           </div>
         )}
-        <Image
-          src={imageSrc}
-          alt={alt ?? 'Image'}
-          width={800}
-          height={600}
-          className="mx-auto h-auto max-w-full rounded-lg border border-border shadow-sm"
-          onLoad={handleImageLoad}
-          onError={handleImageError}
-        />
+        <Zoom>
+          <Image
+            src={imageSrc}
+            alt={alt ?? 'Image'}
+            width={400}
+            height={300}
+            className="mx-auto h-auto max-w-full rounded-lg border border-border shadow-sm"
+            onLoad={handleImageLoad}
+            onError={handleImageError}
+          />
+        </Zoom>
       </div>
     </figure>
   );

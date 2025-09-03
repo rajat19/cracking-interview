@@ -16,6 +16,7 @@
     "deploy": "pnpm generate:content && next build && touch out/.nojekyll"
   },
   "dependencies": {
+    "@mdx-js/loader": "^3.1.0",
     "@mdx-js/mdx": "^3.1.0",
     "@mdx-js/react": "^3.1.0",
     "@next/mdx": "^15.5.0",
@@ -31,6 +32,7 @@
     "next-mdx-remote": "^5.0.0",
     "react": "19.1.0",
     "react-dom": "19.1.0",
+    "react-medium-image-zoom": "^5.3.0",
     "react-syntax-highlighter": "^15.6.3",
     "sonner": "^2.0.7",
     "tailwind-merge": "^3.3.1"
