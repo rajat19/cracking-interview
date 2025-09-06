@@ -110,7 +110,7 @@ export async function getTopicWithContent(
       title: frontmatter.title || topicMeta.title,
       difficulty: frontmatter.difficulty || topicMeta.difficulty,
       companies: frontmatter.companies || topicMeta.companies || [],
-      relatedTopics: frontmatter.topics || topicMeta.relatedTopics || [],
+      tags: frontmatter.tags || topicMeta.tags || [],
     };
   } catch (error) {
     console.error(`Error loading topic ${category}/${topicId}:`, error);

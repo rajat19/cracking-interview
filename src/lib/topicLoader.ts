@@ -94,8 +94,8 @@ const getDifficultyForCategory = (
 };
 
 // Extract common related topics logic
-const getRelatedTopics = (fm: UniversalFrontmatterData): string[] | undefined => {
-  return Array.isArray(fm.topics) ? fm.topics : Array.isArray(fm.tags) ? fm.tags : undefined;
+const getRelatedTags = (fm: UniversalFrontmatterData): string[] | undefined => {
+  return Array.isArray(fm.tags) ? fm.tags : undefined;
 };
 
 // For static export, code loading is disabled
@@ -170,7 +170,7 @@ const mapFrontmatterToTopic = (
   category: ITopicCategory
 ): ITopic => {
   const difficulty = getDifficultyForCategory(category, fm.difficulty);
-  const relatedTopics = getRelatedTopics(fm);
+  const tags = getRelatedTags(fm);
 
   return {
     id,
@@ -181,7 +181,7 @@ const mapFrontmatterToTopic = (
     spaceComplexity: fm.sc,
     description: fm.description || createExcerpt(content),
     content: content.trim(),
-    relatedTopics,
+    tags,
     solutions: undefined,
   };
 };
@@ -255,7 +255,7 @@ export const loadTopicsList = async (category: ITopicCategory): Promise<ITopicLi
       const id = generateSlugFromPath(path, category);
 
       const difficulty = getDifficultyForCategory(category, data.difficulty);
-      const related = getRelatedTopics(data);
+      const tags = getRelatedTags(data);
 
       topics.push({
         id,
@@ -264,7 +264,7 @@ export const loadTopicsList = async (category: ITopicCategory): Promise<ITopicLi
         timeComplexity: data.tc || undefined,
         spaceComplexity: data.sc || undefined,
         companies: data.companies || undefined,
-        relatedTopics: related,
+        tags,
       });
     } catch (error) {
       console.warn(`Failed to load ${category} topic metadata for ${path}:`, error);

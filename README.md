@@ -107,7 +107,7 @@ pnpm dev
    title: Problem Title
    langs: [java, py, cpp]
    difficulty: medium
-   topics: [array, string]
+   tags: [array, string]
    companies: [google, microsoft]
    ---
    ```

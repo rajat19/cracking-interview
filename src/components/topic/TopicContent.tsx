@@ -193,11 +193,11 @@ export function TopicContent({
       </div>
 
       {/* Related Topics */}
-      {topic.relatedTopics && topic.relatedTopics.length > 0 && (
+      {topic.tags && topic.tags.length > 0 && (
         <div className="my-8">
           <h3 className="mb-4 text-xl font-medium text-foreground">Related Topics</h3>
           <div className="flex flex-wrap gap-2">
-            {topic.relatedTopics.map((relatedTopic, index) => (
+            {topic.tags.map((relatedTopic, index) => (
               <button
                 key={index}
                 className="btn border-[#e5e5e5] bg-white px-2 py-1 text-xs text-black lg:px-3 lg:py-2 lg:text-sm"

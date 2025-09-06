@@ -1,6 +1,8 @@
 'use client';
 
+import { useMemo, useState } from 'react';
 import { Button } from '@/components/ui/button';
+import { Input } from '@/components/ui/input';
 
 interface DropdownFilterProps {
   label: string;
@@ -19,10 +21,10 @@ const DropdownFilterItem = ({
   onChange: (value: string) => void;
 }) => {
   return (
-    <li key={option}>
+    <li key={option} className="w-full">
       <Button
         variant="ghost"
-        className="w-full rounded p-2 text-left"
+        className="w-full rounded p-2 text-left justify-start"
         onClick={() => onChange(option)}
       >
         {label}
@@ -32,6 +34,14 @@ const DropdownFilterItem = ({
 };
 
 const DropdownFilter = ({ label, value, onChange, options }: DropdownFilterProps) => {
+  const [query, setQuery] = useState('');
+
+  const filteredOptions = useMemo(() => {
+    const normalizedQuery = query.trim().toLowerCase();
+    if (!normalizedQuery) return options;
+    return options.filter(option => option.toLowerCase().includes(normalizedQuery));
+  }, [options, query]);
+
   return (
     <div className="relative">
       <div className="dropdown w-full">
@@ -46,18 +56,31 @@ const DropdownFilter = ({ label, value, onChange, options }: DropdownFilterProps
           tabIndex={0}
           className="dropdown-content z-[1000] mt-1 rounded-box border border-base-300 bg-card shadow-lg"
         >
-          <div className="max-h-64 overflow-y-auto overscroll-contain">
-            <ul className="menu space-y-1 p-2">
-              <DropdownFilterItem label={`All ${label}`} option="" onChange={onChange} />
-              {options.map(option => (
-                <DropdownFilterItem
-                  key={option}
-                  label={option}
-                  option={option}
-                  onChange={onChange}
-                />
-              ))}
-            </ul>
+          <div className="w-64 max-w-[calc(100vw-2rem)]">
+            <div className="sticky top-0 z-[1] border-b border-base-300 bg-card p-2">
+              <Input
+                value={query}
+                onChange={e => setQuery(e.target.value)}
+                placeholder={`Filter ${label.toLowerCase()}...`}
+                className="h-9 text-sm"
+              />
+            </div>
+            <div className="max-h-64 overflow-y-auto overscroll-contain">
+              <ul className="space-y-1 p-2 w-full">
+                <DropdownFilterItem label={`All ${label}`} option="" onChange={onChange} />
+                {filteredOptions.length === 0 && (
+                  <li className="px-2 py-1 text-sm text-muted-foreground">No options</li>
+                )}
+                {filteredOptions.map(option => (
+                  <DropdownFilterItem
+                    key={option}
+                    label={option}
+                    option={option}
+                    onChange={onChange}
+                  />
+                ))}
+              </ul>
+            </div>
           </div>
         </div>
       </div>

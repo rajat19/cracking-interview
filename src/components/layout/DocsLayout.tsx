@@ -14,8 +14,9 @@ import { preloadUserProgress, getCachedCategoryProgress } from '@/lib/progressSt
 import TopicListItem from '@/components/TopicListItem';
 import TopicDifficulty from '@/components/TopicDifficulty';
 import config from '@/config';
-import TopicDefault from '../topic/TopicDefault';
-import TopicLoading from '../topic/TopicLoading';
+import TopicDefault from '@/components/topic/TopicDefault';
+import TopicLoading from '@/components/topic/TopicLoading';
+import SearchSuggest from '@/components/filters/SearchSuggest';
 
 interface DocsLayoutProps {
   title: string;
@@ -133,7 +134,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
       const matchesDifficulty = difficultyFilter === 'all' || topic.difficulty === difficultyFilter;
       const matchesTopicTag =
         !topicTagFilter ||
-        (topic.relatedTopics || [])
+        (topic.tags || [])
           .map(t => t.toLowerCase())
           .includes(topicTagFilter.toLowerCase());
       const matchesCompany =
@@ -143,11 +144,22 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
     });
   }, [topicsWithProgress, searchQuery, difficultyFilter, topicTagFilter, companyFilter]);
 
+  const searchSuggestions = useMemo(
+    () =>
+      searchQuery.trim() === ''
+        ? []
+        : topicsWithProgress
+            .filter(t => t.title.toLowerCase().includes(searchQuery.toLowerCase()))
+            .slice(0, 20)
+            .map(t => ({ id: t.id, title: t.title })),
+    [topicsWithProgress, searchQuery]
+  );
+
   const { allTags, allCompanies } = useMemo(() => {
     const tagSet = new Set<string>();
     const companySet = new Set<string>();
     for (const t of topics) {
-      (t.relatedTopics || []).forEach(tag => tag && tagSet.add(tag));
+      (t.tags || []).forEach(tag => tag && tagSet.add(tag));
       (t.companies || []).forEach(comp => comp && companySet.add(comp));
     }
     return {
@@ -291,7 +303,15 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
               }}
             />
           ) : (
-            <TopicDefault />
+            <div className="space-y-4 p-4">
+              <SearchSuggest
+                searchQuery={searchQuery}
+                onChangeSearch={setSearchQuery}
+                suggestions={searchSuggestions}
+                onSelectSuggestion={id => handleTopicSelect(id)}
+              />
+              <TopicDefault />
+            </div>
           )}
         </div>
       </div>

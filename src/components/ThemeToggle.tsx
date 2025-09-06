@@ -13,7 +13,7 @@ export function ThemeToggle() {
       aria-label={`Switch to ${theme === 'light' ? 'dark' : 'light'} mode`}
     >
       {theme === 'light' ? <Moon className="h-4 w-4" /> : <Sun className="h-4 w-4" />}
-      <span className="hidden sm:inline">{theme === 'light' ? 'Dark' : 'Light'}</span>
+      <span className="inline">{theme === 'light' ? 'Dark' : 'Light'}</span>
     </button>
   );
 }

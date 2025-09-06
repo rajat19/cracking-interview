@@ -102,7 +102,7 @@ async function generateStaticContent() {
           title: parsed.attributes.title || topicId,
           difficulty: parsed.attributes.difficulty || 'medium',
           companies: parsed.attributes.companies || [],
-          topics: parsed.attributes.topics || [],
+          tags: parsed.attributes.tags || [],
           langs: parsed.attributes.langs || [],
           tc: parsed.attributes.tc,
           sc: parsed.attributes.sc,
@@ -162,7 +162,7 @@ async function generateStaticContent() {
               .slice(0, 200) + '…'
           : '',
         companies: Array.isArray(topic.companies) ? topic.companies : [],
-        relatedTopics: Array.isArray(topic.topics) ? topic.topics : [],
+        tags: Array.isArray(topic.tags) ? topic.tags : [],
       }));
 
       const indexPath = path.join(outputDir, `${category}-index.json`);

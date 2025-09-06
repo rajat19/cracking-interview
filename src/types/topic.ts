@@ -11,7 +11,7 @@ export interface ITopic {
   description: string;
   content?: string;
   examples?: string[];
-  relatedTopics?: string[];
+  tags?: string[];
   companies?: string[];
 
   // Platform identifiers
@@ -40,7 +40,7 @@ export type ITopicList = Pick<
   | 'timeComplexity'
   | 'spaceComplexity'
   | 'companies'
-  | 'relatedTopics'
+  | 'tags'
   | 'isBookmarked'
   | 'isCompleted'
 >;
