@@ -6,28 +6,26 @@ import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { useAuth } from '@/hooks/useAuth';
 import { Bookmark, User, LogOut, Menu, X } from 'lucide-react';
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
+import { categoryConfig } from '@/config/categoryConfig';
 
 const Navigation = () => {
   const pathname = usePathname();
   const { user, signOut, loading } = useAuth();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const navigationLinks = useMemo(
+    () =>
+      Object.values(categoryConfig).map(category => ({
+        to: category.navigation.path,
+        label: category.navigation.label,
+        active: pathname === category.navigation.path,
+      })),
+    [pathname]
+  );
 
   if (loading) {
     return null;
   }
-
-  const navigationLinks = [
-    { to: '/topics/dsa', label: 'DSA', active: pathname === '/topics/dsa' },
-    {
-      to: '/topics/system-design',
-      label: 'System Design',
-      active: pathname === '/topics/system-design',
-    },
-    { to: '/topics/ood', label: 'OOD', active: pathname === '/topics/ood' },
-    { to: '/topics/design-pattern', label: 'Design Patterns', active: pathname === '/topics/design-pattern' },
-    { to: '/topics/behavioral', label: 'Behavioral', active: pathname === '/topics/behavioral' },
-  ];
 
   return (
     <>

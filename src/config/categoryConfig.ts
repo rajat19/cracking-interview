@@ -1,5 +1,5 @@
 import { ITopicCategory } from '@/types/topic';
-import { Brain, Code, Layers, Users } from 'lucide-react';
+import { Brain, Code, Layers, Puzzle, Users } from 'lucide-react';
 
 export interface CategoryFeatures {
   solutionTabs: boolean;
@@ -10,6 +10,11 @@ export interface CategoryFeatures {
 export interface CategoryDifficulty {
   enabled: boolean;
   levels: string[];
+}
+
+export interface CategoryNavigation {
+  label: string;
+  path: string;
 }
 
 export interface CategoryConfig {
@@ -24,6 +29,7 @@ export interface CategoryConfig {
   features: CategoryFeatures;
   contentType: 'markdown' | 'mdx';
   difficulty: CategoryDifficulty;
+  navigation: CategoryNavigation;
 }
 
 export type CategoryConfigMap = Record<ITopicCategory, CategoryConfig>;
@@ -48,6 +54,10 @@ export const categoryConfig: CategoryConfigMap = {
       enabled: true,
       levels: ['all', 'easy', 'medium', 'hard'],
     },
+    navigation: {
+      label: 'DSA',
+      path: '/topics/dsa',
+    }
   },
   'system-design': {
     title: 'System Design',
@@ -68,6 +78,10 @@ export const categoryConfig: CategoryConfigMap = {
       enabled: false,
       levels: [],
     },
+    navigation: {
+      label: 'System Design',
+      path: '/topics/system-design',
+    }
   },
   behavioral: {
     title: 'Behavioral',
@@ -88,6 +102,10 @@ export const categoryConfig: CategoryConfigMap = {
       enabled: false,
       levels: [],
     },
+    navigation: {
+      label: 'Behavioral',
+      path: '/topics/behavioral',
+    }
   },
   ood: {
     title: 'Object-Oriented Design',
@@ -108,13 +126,17 @@ export const categoryConfig: CategoryConfigMap = {
       enabled: false,
       levels: [],
     },
+    navigation: {
+      label: 'OOD',
+      path: '/topics/ood',
+    }
   },
   'design-pattern': {
     title: 'Design Patterns',
     description: 'Master design patterns and their implementations',
     display: {
-      icon: Brain,
-      gradient: 'from-green-500 to-emerald-500',
+      icon: Puzzle,
+      gradient: 'from-blue-500 to-emerald-500',
       statsLabel: 'Patterns',
       statsKey: 'designPatternQuestions',
     },
@@ -128,6 +150,10 @@ export const categoryConfig: CategoryConfigMap = {
       enabled: true,
       levels: ['all', 'easy', 'medium', 'hard'],
     },
+    navigation: {
+      label: 'Design Patterns',
+      path: '/topics/design-pattern',
+    }
   },
 };
 
@@ -165,4 +191,8 @@ export function isDifficultyEnabled(categoryId: ITopicCategory): boolean {
 
 export function getDifficultyLevels(categoryId: ITopicCategory): string[] {
   return getConfig(categoryId).difficulty.levels;
+}
+
+export function getNavigation(categoryId: ITopicCategory): CategoryNavigation {
+  return getConfig(categoryId).navigation;
 }
