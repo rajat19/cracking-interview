@@ -14,7 +14,7 @@ import { useRouter } from 'next/navigation';
 import TopicDifficulty from '@/components/TopicDifficulty';
 import config from '@/config';
 import Image from 'next/image';
-import { formatComplexity } from '@/lib/complexityFormatter';
+import { Complexity } from '@/components/Complexity';
 
 // Public assets helper for Next.js
 import assetPath from '@/lib/assetPath';
@@ -176,7 +176,7 @@ export function TopicContent({
               <div className="flex items-center space-x-2">
                 <Clock className="h-4 w-4 text-primary" />
                 <span className="text-sm">
-                  <strong>Time:</strong> {formatComplexity(topic.timeComplexity)}
+                  <strong>Time:</strong> {Complexity(topic.timeComplexity)}
                 </span>
               </div>
             )}
@@ -184,7 +184,7 @@ export function TopicContent({
               <div className="flex items-center space-x-2">
                 <Code className="h-4 w-4 text-primary" />
                 <span className="text-sm">
-                  <strong>Space:</strong> {formatComplexity(topic.spaceComplexity)}
+                  <strong>Space:</strong> {Complexity(topic.spaceComplexity)}
                 </span>
               </div>
             )}

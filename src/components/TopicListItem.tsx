@@ -3,7 +3,7 @@
 import { CheckCircle, Bookmark, BookmarkCheck, Clock, Code } from 'lucide-react';
 import type { ITopicList } from '@/types/topic';
 import TopicDifficulty from '@/components/TopicDifficulty';
-import { formatComplexity } from '@/lib/complexityFormatter';
+import { Complexity } from '@/components/Complexity';
 
 interface TopicListItemProps {
   topic: ITopicList;
@@ -33,13 +33,13 @@ export function TopicListItem({ topic, isActive, onClick }: TopicListItemProps) 
             {topic.timeComplexity && (
               <span className="flex items-center">
                 <Clock className="mr-1 h-3 w-3" />
-                {formatComplexity(topic.timeComplexity)}
+                {Complexity(topic.timeComplexity)}
               </span>
             )}
             {topic.spaceComplexity && (
               <span className="flex items-center">
                 <Code className="mr-1 h-3 w-3" />
-                {formatComplexity(topic.spaceComplexity)}
+                {Complexity(topic.spaceComplexity)}
               </span>
             )}
           </div>

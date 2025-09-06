@@ -4,7 +4,7 @@ import React from 'react';
  * Formats complexity notation to display superscripts properly
  * Converts <sup>X</sup> tags to proper superscript formatting
  */
-export function formatComplexity(complexity: string): React.ReactElement {
+export function Complexity(complexity: string): React.ReactElement {
   // Split the string by <sup> and </sup> tags
   const parts = complexity.split(/(<sup>.*?<\/sup>)/g);
 
