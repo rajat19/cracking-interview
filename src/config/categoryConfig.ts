@@ -24,7 +24,12 @@ export interface CategoryConfig {
     icon: React.ElementType;
     gradient: string;
     statsLabel: string;
-    statsKey: 'dsaQuestions' | 'systemDesignQuestions' | 'oodQuestions' | 'behavioralQuestions' | 'designPatternQuestions';
+    statsKey:
+      | 'dsaQuestions'
+      | 'systemDesignQuestions'
+      | 'oodQuestions'
+      | 'behavioralQuestions'
+      | 'designPatternQuestions';
   };
   features: CategoryFeatures;
   contentType: 'markdown' | 'mdx';
@@ -57,7 +62,7 @@ export const categoryConfig: CategoryConfigMap = {
     navigation: {
       label: 'DSA',
       path: '/topics/dsa',
-    }
+    },
   },
   'system-design': {
     title: 'System Design',
@@ -81,7 +86,7 @@ export const categoryConfig: CategoryConfigMap = {
     navigation: {
       label: 'System Design',
       path: '/topics/system-design',
-    }
+    },
   },
   behavioral: {
     title: 'Behavioral',
@@ -105,7 +110,7 @@ export const categoryConfig: CategoryConfigMap = {
     navigation: {
       label: 'Behavioral',
       path: '/topics/behavioral',
-    }
+    },
   },
   ood: {
     title: 'Object-Oriented Design',
@@ -129,7 +134,7 @@ export const categoryConfig: CategoryConfigMap = {
     navigation: {
       label: 'OOD',
       path: '/topics/ood',
-    }
+    },
   },
   'design-pattern': {
     title: 'Design Patterns',
@@ -153,7 +158,7 @@ export const categoryConfig: CategoryConfigMap = {
     navigation: {
       label: 'Design Patterns',
       path: '/topics/design-pattern',
-    }
+    },
   },
 };
 

@@ -7,5 +7,3 @@ export function assetPath(p: string): string {
 }
 
 export default assetPath;
-
-

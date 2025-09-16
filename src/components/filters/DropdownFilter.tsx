@@ -24,7 +24,7 @@ const DropdownFilterItem = ({
     <li key={option} className="w-full">
       <Button
         variant="ghost"
-        className="w-full rounded p-2 text-left justify-start"
+        className="w-full justify-start rounded p-2 text-left"
         onClick={() => onChange(option)}
       >
         {label}
@@ -66,7 +66,7 @@ const DropdownFilter = ({ label, value, onChange, options }: DropdownFilterProps
               />
             </div>
             <div className="max-h-64 overflow-y-auto overscroll-contain">
-              <ul className="space-y-1 p-2 w-full">
+              <ul className="w-full space-y-1 p-2">
                 <DropdownFilterItem label={`All ${label}`} option="" onChange={onChange} />
                 {filteredOptions.length === 0 && (
                   <li className="px-2 py-1 text-sm text-muted-foreground">No options</li>

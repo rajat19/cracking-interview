@@ -30,8 +30,8 @@ const PlatformLink = ({
       className="group inline-flex min-w-0 items-center gap-2 rounded-lg border border-border bg-card px-3 py-2 transition-colors duration-200 hover:bg-accent hover:text-accent-foreground lg:px-4"
     >
       <div className="flex min-w-0 items-center gap-2">
-        <Image 
-          src={require('@/lib/assetPath').default(`/assets/img/platform/${platform.img}`)} 
+        <Image
+          src={require('@/lib/assetPath').default(`/assets/img/platform/${platform.img}`)}
           alt={platform.name}
           width={20}
           height={20}

@@ -33,7 +33,7 @@ export function SolutionTabs({ solutions, showHeader = true }: SolutionTabsProps
       {showHeader && (
         <>
           <hr />
-          <h2 className="text-2xl font-large font-bold text-foreground">Solutions</h2>
+          <h2 className="font-large text-2xl font-bold text-foreground">Solutions</h2>
         </>
       )}
 

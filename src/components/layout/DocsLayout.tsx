@@ -134,9 +134,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
       const matchesDifficulty = difficultyFilter === 'all' || topic.difficulty === difficultyFilter;
       const matchesTopicTag =
         !topicTagFilter ||
-        (topic.tags || [])
-          .map(t => t.toLowerCase())
-          .includes(topicTagFilter.toLowerCase());
+        (topic.tags || []).map(t => t.toLowerCase()).includes(topicTagFilter.toLowerCase());
       const matchesCompany =
         !companyFilter ||
         (topic.companies || []).map(c => c.toLowerCase()).includes(companyFilter.toLowerCase());

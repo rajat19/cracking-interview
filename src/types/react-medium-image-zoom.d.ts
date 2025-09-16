@@ -15,5 +15,3 @@ declare module 'react-medium-image-zoom' {
   const Zoom: React.ComponentType<ZoomProps>;
   export default Zoom;
 }
-
-
