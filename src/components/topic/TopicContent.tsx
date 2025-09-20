@@ -18,7 +18,7 @@ import { Complexity } from '@/components/Complexity';
 
 // Public assets helper for Next.js
 import assetPath from '@/lib/assetPath';
-const companyIconSrc = (company: string) => assetPath(`/assets/img/company/${company}.svg`);
+import { companyIconSrc, getCompanyInfo } from '@/config/companies';
 
 interface TopicContentProps {
   topic: ITopic;
@@ -217,21 +217,22 @@ export function TopicContent({
           <h3 className="mb-3 text-lg font-medium text-foreground lg:mb-4 lg:text-xl">Companies</h3>
           <div className="flex flex-wrap gap-2">
             {topic.companies.map((company, index) => {
+              const info = getCompanyInfo(company);
               return (
                 <button
                   className="btn border-[#e5e5e5] bg-white px-2 py-1 text-xs text-black lg:px-3 lg:py-2 lg:text-sm"
                   key={index}
                   onClick={() => onFilterByCompany?.(company)}
-                  title={`Filter by ${company}`}
+                  title={`Filter by ${info.label}`}
                 >
                   <Image
                     src={companyIconSrc(company)}
-                    alt={company}
+                    alt={info.label}
                     width={16}
                     height={16}
                     className="h-3 w-3 lg:h-4 lg:w-4"
                   />
-                  {company}
+                  {info.label}
                 </button>
               );
             })}

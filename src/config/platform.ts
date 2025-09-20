@@ -84,6 +84,13 @@ export const PLATFORMS: Platform[] = [
     identifier: 'scaler',
     img: 'scaler.png',
   },
+  {
+    name: 'Neetcode',
+    base: 'https://neetcode.io/problems/',
+    suffix: '',
+    identifier: 'neetcode',
+    img: 'neetcode.png',
+  }
 ];
 
 export default PLATFORMS;

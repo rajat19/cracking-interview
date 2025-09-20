@@ -19,7 +19,7 @@ out/**/*.woff2
 
 # Optional: ignore all authored content to speed up indexing
 # Uncomment if you rarely ask AI to read MDX or raw solutions
-# src/content/**
+src/content/**
 
 # Git metadata
 .git/**
