@@ -1,4 +1,6 @@
 class Solution {
+    private static final int ALPHABET_COUNT = 26;
+
     public String alienOrder(String[] words) {
         final boolean[][] graph = new boolean[ALPHABET_COUNT][ALPHABET_COUNT];
         final boolean[] characters = new boolean[ALPHABET_COUNT];

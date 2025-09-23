@@ -14,13 +14,13 @@ import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { Bookmark, ExternalLink, CheckCircle, UserCircle, LogOut } from 'lucide-react';
 import TopicDifficulty from '@/components/TopicDifficulty';
-import { ITopicCategory } from '@/types/topic';
+import { ITopicCategory, ITopicDifficulty } from '@/types/topic';
 import Image from 'next/image';
 
 interface ProgressItem {
   id: string;
   title: string;
-  difficulty: string;
+  difficulty: ITopicDifficulty;
   question_type: ITopicCategory;
   description?: string;
 }
@@ -126,6 +126,8 @@ const Profile = () => {
         return '/topics/behavioral';
       case 'ood':
         return '/topics/ood';
+      case 'design-pattern':
+        return '/topics/design-pattern';
       default:
         return '/';
     }
@@ -148,6 +150,8 @@ const Profile = () => {
               <Image
                 src={user.photoURL}
                 alt="Profile"
+                width={96}
+                height={96}
                 className="h-24 w-24 rounded-full border-2 border-primary shadow-lg"
               />
             ) : (
@@ -185,7 +189,7 @@ const Profile = () => {
               </button>
             </div>
 
-            <div className="grid gap-4">
+            <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
               {(activeTab === 'bookmarks' ? bookmarks : completed).map(item => (
                 <div
                   key={`${item.question_type}-${item.id}`}
@@ -197,7 +201,7 @@ const Profile = () => {
                       <p className="mt-2 text-muted-foreground">{item.description}</p>
                       <div className="mt-4 flex items-center gap-2">
                         <TopicDifficulty
-                          difficulty={item.difficulty as 'easy' | 'medium' | 'hard'}
+                          difficulty={item.difficulty}
                         />
                         <div className="badge badge-info rounded-md p-2 text-xs capitalize">
                           {item.question_type.replace('_', ' ')}
@@ -206,7 +210,7 @@ const Profile = () => {
                     </div>
                     <div className="flex gap-2">
                       <Link
-                        href={getQuestionRoute(item.question_type)}
+                        href={{ pathname: getQuestionRoute(item.question_type), query: { t: item.id } }}
                         className="btn btn-primary btn-sm"
                       >
                         <ExternalLink size={16} />

@@ -90,6 +90,13 @@ export const PLATFORMS: Platform[] = [
     suffix: '',
     identifier: 'neetcode',
     img: 'neetcode.png',
+  },
+  {
+    name: 'Coding Ninjas',
+    base: 'https://www.naukri.com/code360/problems/',
+    suffix: '',
+    identifier: 'codingninjas',
+    img: 'codingninjas.svg',
   }
 ];
 
