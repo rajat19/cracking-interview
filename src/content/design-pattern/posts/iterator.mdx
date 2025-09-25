@@ -1,0 +1,72 @@
+---
+layout: post
+title: Iterator Design Pattern
+difficulty: easy
+tags: [behavioral]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/iterator-pattern
+refactoring: iterator
+sourcemaking: iterator
+wikipedia: Iterator_pattern
+scaler: design-patterns/iterator-design-pattern/
+---
+
+## Intent
+- Provide a way to access elements of an aggregate object sequentially without exposing its underlying representation
+- Support multiple simultaneous traversals of aggregate objects
+- Provide a uniform interface for traversing different aggregate structures
+
+## Problem
+
+Collections are fundamental data structures, but they can be implemented in vastly different ways - arrays, lists, trees, graphs, and other complex structures. Each implementation might require different traversal approaches, and some collections like trees can support multiple traversal algorithms (depth-first, breadth-first).
+
+Adding all possible traversal methods directly to collection classes clutters their primary responsibility of data storage. It also makes client code tightly coupled to specific collection implementations, reducing flexibility when switching between different data structures.
+
+## Solution
+
+The Iterator pattern extracts traversal behavior into separate iterator objects. Each iterator encapsulates the traversal algorithm and maintains its current position, allowing multiple iterators to traverse the same collection independently.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/iterator/structure.png" />
+
+All iterators implement a common interface with methods like next() and hasNext(), providing a uniform way to traverse any collection regardless of its internal structure. This decouples client code from collection implementation details.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Iterator-2x.png" />
+
+## Example
+
+Think of exploring a city like Rome. You have several options: wandering aimlessly (direct access), using a smartphone app for guided tours (one type of iterator), or hiring different local guides for food tours, historical tours, or art tours (different iterator implementations).
+
+Each guide (iterator) knows how to navigate the city (collection) and can take you through attractions in a specific order, but you don't need to know the city's layout or navigation details. You can even have multiple guides for different types of experiences.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Iterator_example1-2x.png" />
+
+## Implementation Checklist
+
+1. **Declare Iterator Interface**: Define methods like getNext(), hasMore(), and optionally reset() or previous()
+2. **Declare Collection Interface**: Add a factory method that returns new iterator instances
+3. **Implement Concrete Iterators**: Create iterator classes for each collection type, managing traversal state and position
+4. **Implement Concrete Collections**: Add the iterator factory method that returns appropriate iterator instances
+5. **Client Integration**: Replace direct collection access with iterator-based traversal
+6. **Consider Multiple Iterator Types**: Support different traversal algorithms for the same collection
+
+## Pros and Cons
+
+**Pros:**
+- **Single Responsibility**: Separates collection storage from traversal algorithms
+- **Open/Closed**: New collections and iteration algorithms can be added independently
+- **Parallel Iteration**: Multiple iterators can traverse the same collection simultaneously
+- **Deferred Iteration**: Iteration can be paused, resumed, or cancelled as needed
+
+**Cons:**
+- **Overkill for Simple Collections**: May add unnecessary complexity for straightforward data structures
+- **Performance Overhead**: Iterator abstraction may be slower than direct access for simple cases
+
+## Rules of Thumb
+
+- Iterator is often used with Composite to traverse tree structures
+- Factory Method can help collection subclasses return different iterator types
+- Memento can work with Iterator to capture and restore iteration state
+- Visitor can be used alongside Iterator to perform operations on collection elements during traversal
+- Most modern programming languages provide built-in iterator support, but understanding the pattern helps when implementing custom collections
+- Consider using Iterator when collections have complex internal structures or need multiple traversal methods

@@ -1,0 +1,72 @@
+---
+layout: post
+title: Mediator Design Pattern
+difficulty: medium
+tags: [behavioral]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/mediator-design-pattern
+refactoring: mediator
+sourcemaking: mediator
+wikipedia: Mediator_pattern
+scaler: design-patterns/mediator-design-pattern/
+---
+
+## Intent
+- Define how a set of objects interact with each other by centralizing complex communications and control logic
+- Reduce chaotic dependencies between communicating objects by forcing them to collaborate indirectly through a mediator
+- Encapsulate how multiple objects interact and make the interaction reusable
+
+## Problem
+
+In complex systems, objects often need to interact with multiple other objects, creating a web of interdependencies. Consider a user interface with various form elements - checkboxes, text fields, buttons, and dropdowns. Each element might need to enable/disable others, validate input, or trigger actions based on state changes.
+
+When objects communicate directly, they become tightly coupled and hard to reuse. A checkbox that directly controls three text fields can't be easily moved to a different dialog. The system becomes fragile because changes to one component can cascade through many others.
+
+## Solution
+
+The Mediator pattern introduces a mediator object that centralizes communication between components. Instead of objects referencing each other directly, they only know about the mediator. When an object needs to communicate, it sends a message to the mediator, which then determines how to handle it.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/mediator/structure.png" />
+
+This approach transforms a many-to-many relationship into a one-to-many relationship, with the mediator at the center. Components become more reusable because they're no longer coupled to specific sets of collaborators.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Mediator-2x.png" />
+
+## Example
+
+An air traffic control tower serves as a perfect example of the Mediator pattern. Pilots don't communicate directly with each other to coordinate takeoffs, landings, and flight paths - this would create chaos with dozens of aircraft trying to negotiate simultaneously.
+
+Instead, all communication goes through the control tower. The tower has a complete view of air traffic and makes coordinated decisions about flight patterns, landing sequences, and safety protocols. Pilots only need to know how to communicate with the tower, not with every other aircraft.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Mediator_example1-2x.png" />
+
+## Implementation Checklist
+
+1. **Identify Tightly Coupled Classes**: Find classes that have too many direct dependencies on each other
+2. **Design Mediator Interface**: Create an interface with methods for receiving notifications from components
+3. **Implement Concrete Mediator**: Build a class that coordinates interactions and holds references to all components
+4. **Modify Components**: Replace direct component-to-component calls with calls to the mediator
+5. **Establish Mediator References**: Ensure each component has a reference to its mediator (usually passed in constructor)
+6. **Centralize Interaction Logic**: Move complex interaction rules from components into the mediator
+
+## Pros and Cons
+
+**Pros:**
+- **Single Responsibility**: Extracts communication logic into a dedicated class
+- **Open/Closed**: New mediators can change component behavior without modifying the components
+- **Reduced Coupling**: Components don't need to know about each other directly
+- **Improved Reusability**: Components can be reused with different mediators in different contexts
+
+**Cons:**
+- **God Object Risk**: Mediators can become overly complex and accumulate too much responsibility
+- **Complexity Shift**: While simplifying component relationships, the mediator itself can become complex
+
+## Rules of Thumb
+
+- Mediator and Observer are often confused - Mediator centralizes communication while Observer creates dynamic subscriptions
+- Facade provides a simplified interface to a subsystem, while Mediator centralizes communication between tightly coupled objects
+- Chain of Responsibility, Command, Mediator, and Observer all address sender-receiver coupling differently
+- Mediator can be implemented using Observer pattern, with the mediator as publisher and components as subscribers
+- Consider Mediator when you have a group of tightly coupled classes that are hard to maintain or reuse
+- Use when you want to reuse components in different contexts by changing only the mediator

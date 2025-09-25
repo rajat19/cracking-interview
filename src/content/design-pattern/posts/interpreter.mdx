@@ -1,0 +1,75 @@
+---
+layout: post
+title: Interpreter Design Pattern
+difficulty: hard
+tags: [behavioral]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/interpreter-design-pattern
+refactoring: interpreter
+sourcemaking: interpreter
+wikipedia: Interpreter_pattern
+scaler: design-patterns/interpreter-design-pattern/
+---
+
+## Intent
+- Define a representation for a language's grammar and an interpreter that uses this representation to interpret sentences in that language
+- Map a domain to a language, then map that language to a grammar, and finally represent that grammar with an object-oriented design
+- Build an interpretation engine for a well-defined domain language
+
+## Problem
+
+When you encounter a class of problems that are well-defined and well-understood within a specific domain, and this domain could be characterized by a "language," then problems within that domain could be easily solved by an "interpretation engine."
+
+The typical scenario involves creating a simple language to express domain-specific operations. For example, you might need to evaluate mathematical expressions, process configuration rules, or interpret command sequences. Without the Interpreter pattern, you'd end up with complex conditional logic scattered throughout your code.
+
+## Structure
+
+The Interpreter pattern models the domain using a recursive grammar. Each rule in the grammar is represented as a class. The pattern leverages the recursive traversal of the Composite pattern to interpret the "sentences" it processes.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Interpreter-2x.png" />
+
+The pattern consists of:
+- **AbstractExpression**: Declares an abstract `interpret()` method
+- **TerminalExpression**: Implements terminal symbols in the grammar
+- **NonterminalExpression**: Implements composite expressions that contain other expressions
+- **Context**: Contains information that is global to the interpreter
+
+## Example
+
+Think of musicians interpreting musical notation. The musical score represents the "language" of music, the notation (pitch, duration, etc.) defines the grammar, and musicians act as the "interpreters," reading the score and reproducing the intended sounds.
+
+Another example is a calculator that can interpret and evaluate arithmetic expressions like "2 + 3 * 4". Each number is a terminal expression, while operators like addition and multiplication are non-terminal expressions that combine other expressions.
+
+## Checklist
+
+1. Define the grammar for your domain language
+2. Map each production in the grammar to a class
+3. Organize these classes using the Composite pattern
+4. Define an `interpret()` method in the abstract expression class
+5. Create terminal expression classes for basic elements
+6. Create non-terminal expression classes for complex rules
+7. Create a Context class to hold global state
+8. Build the abstract syntax tree and invoke interpretation
+
+## Pros and Cons
+
+**Pros:**
+- Easy to change and extend the grammar
+- Implementing the grammar is straightforward
+- Complex grammars can be represented in a clear object hierarchy
+- Adding new ways to interpret expressions is easy
+
+**Cons:**
+- Complex grammars are hard to maintain
+- Performance can be poor for complex expressions
+- Not suitable for complex parsing (use parser generators instead)
+- Can lead to a large number of classes
+
+## Rules of Thumb
+
+- Nearly all uses of Composite can involve Interpreter, but Interpreter is specifically for when you want to view the class hierarchy as defining a language
+- Interpreter can use State for parsing contexts
+- The abstract syntax tree is a Composite, making Iterator and Visitor applicable
+- Terminal symbols can be shared using Flyweight
+- Consider if a "little language" provides a justifiable return on investment for your problem

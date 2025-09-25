@@ -1,0 +1,67 @@
+---
+layout: post
+title: Visitor Design Pattern
+difficulty: hard
+tags: [behavioral]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/visitor-design-pattern
+refactoring: visitor
+sourcemaking: visitor
+wikipedia: Visitor_pattern
+scaler: design-patterns/visitor-design-pattern/
+---
+
+## Intent
+
+- Represent an operation to be performed on the elements of an object structure. Visitor lets you define a new operation without changing the classes of the elements on which it operates.
+- Define a family of algorithms, encapsulate each one, and make them interchangeable. Visitor lets the algorithm vary independently from the clients that use it.
+- The classic technique for recovering lost type information.
+
+## Problem
+
+You have a complex object structure (like a tree or graph) with different types of elements, and you want to perform various operations on these elements. Adding new operations would require modifying all the element classes, which violates the Open/Closed Principle and can lead to code bloat.
+
+Consider a file system with different types of nodes - files and directories. If you want to add operations like calculating total size, virus scanning, or generating reports, you'd have to modify each node class every time you add a new operation.
+
+## Solution
+
+The Visitor pattern suggests placing the new behavior into a separate class called visitor, instead of trying to integrate it into existing classes. The visitor is passed to elements as an argument of a special "accept" method, which dispatches the call to the proper visitor's method corresponding to the current element's class.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Visitor1.png" />
+
+This technique allows you to add new operations without modifying existing element classes. It uses a technique called double dispatch - the operation executed depends on both the type of Visitor and the type of Element.
+
+## Structure
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Visitor_1.png" />
+
+The pattern consists of:
+1. **Visitor Interface** - declares visit methods for each concrete element class
+2. **Concrete Visitors** - implement visitor interface and define operations for each element type
+3. **Element Interface** - declares accept method that takes a visitor
+4. **Concrete Elements** - implement accept method and call appropriate visitor method
+
+## Example
+
+The Visitor pattern is like a taxi company dispatch system. When you call for a taxi (visitor), the dispatcher (client) sends a taxi to your location (element). The taxi driver (visitor's operation) then performs the service based on your specific needs and location type.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Visitor_example1.png" />
+
+## Checklist
+
+1. Confirm that the existing hierarchy will be fairly stable and that the public interface of these classes is sufficient for the visitor to accomplish its work.
+2. Create a Visitor base class with a "visit" method signatures for each derived type in the hierarchy.
+3. Add a single pure virtual "accept" method to the base class of the Element hierarchy. accept(Visitor) functionality is "dispatch off this polymorphic element to the polymorphic visitor".
+4. In each derived Element class, implement the accept method as simply: visitor.visit(this).
+5. The Element classes are now closed (no more modifications). Create a Visitor derived class for each operation to be performed on Element objects.
+6. The client creates Visitor objects and passes each to Element objects by calling accept.
+
+## Rule of thumb
+
+- Visitor's primary purpose is to abstract functionality that can be applied to an aggregate hierarchy of "element" objects.
+- The approach encourages designing lightweight Element classes - because processing functionality is removed from their list of responsibilities.
+- New functionality can easily be added to the original inheritance hierarchy by creating a new Visitor subclass.
+- Visitor implements "double dispatch". OO messages routinely manifest "single dispatch" - the operation that is executed depends on: the name of the request, and the type of the receiver. In "double dispatch", the operation executed depends on: the name of the request, and the type of TWO receivers (the type of the Visitor and the type of the element it visits).
+- The Visitor pattern should be used when you have a stable class hierarchy that you want to define new operations over without altering the classes.
+- Visitor, like the other design patterns, should be used judiciously. The pattern's abuses and over-use will result in code that is hard to understand and maintain.

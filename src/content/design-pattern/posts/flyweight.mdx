@@ -1,0 +1,76 @@
+---
+layout: post
+title: Flyweight Design Pattern
+difficulty: hard
+tags: [structural]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/flyweight-design-pattern
+refactoring: flyweight
+sourcemaking: flyweight
+wikipedia: Flyweight_pattern
+scaler: design-patterns/flyweight-design-pattern/
+---
+
+## Intent
+- Use sharing to support large numbers of fine-grained objects efficiently.
+- Minimize memory usage when you need to support vast quantities of similar objects.
+- Separate intrinsic (shareable) state from extrinsic (context-specific) state.
+
+## Problem
+To have some fun after long hours of work, you decided to create a simple video game where players move around a map and shoot at each other. You chose to implement a realistic particle system and make it a distinctive feature of the game. Vast quantities of bullets, missiles, and shrapnel from explosions should fly all over the map and deliver a thrilling experience to the player.
+
+Upon its completion, you pushed the last commit, built the game and sent it to your friend for a test drive. Although the game was running flawlessly on your machine, your friend wasn't able to play for long. On his computer, the game kept crashing after a few minutes of gameplay. After spending several hours digging through debug logs, you discovered that the game was crashing due to an insufficient amount of RAM. It turned out that your friend's computer was less powerful than yours, and that's why the problem emerged so quickly on his machine.
+
+The actual problem was related to your particle system. Each particle, such as a bullet, missile or piece of shrapnel was represented by a separate object containing plenty of data. At some point, when the carnage on a player's screen reached its climax, newly created particles no longer fit into the remaining RAM, so the program crashed.
+
+## Structure
+
+The Flyweight pattern suggests that you stop storing the extrinsic state inside the object. Instead, you should pass this state to the specific methods which rely on it. Only the intrinsic state stays within the object, letting you reuse it in different contexts.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/flyweight/structure-indexed.png" />
+
+The intrinsic state is the data required by a flyweight to function. The extrinsic state is the data upon which flyweight methods act.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/flyweight/problem-en-indexed.png" />
+
+## Example
+
+Think of the Flyweight pattern as the way letters work in a word processor. Each letter of the alphabet (A, B, C, etc.) is like a flyweight - the letter's shape, font style, and size are intrinsic properties that can be shared. However, each letter's position on the page and color are extrinsic properties unique to each usage.
+
+Instead of storing the font data with each character instance in your document, the word processor reuses a single "A" flyweight object for all "A" characters, just passing different position coordinates when rendering each one.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/flyweight/example.png" />
+
+Another example is a forest simulation where you have millions of tree objects. The tree type (oak, pine, birch), color, and sprite are intrinsic and can be shared among trees of the same type. The position, age, and health are extrinsic and unique to each tree instance.
+
+## Checklist
+
+1. Divide fields of a class that will become a flyweight into two parts:
+   - Intrinsic state: the fields that contain unchanging data duplicated across many objects
+   - Extrinsic state: the fields that contain contextual data unique to each object
+2. Leave the fields that represent the intrinsic state in the class, but make sure they're immutable. They should take their initial values only inside the constructor.
+3. Go over methods that use fields of the extrinsic state. For each field used in the method, introduce a new parameter and use it instead of the field.
+4. Optionally, create a factory class to manage the pool of flyweights. It should check for an existing flyweight before creating a new one. Once the factory is in place, clients must only request flyweights through it. They must describe the desired flyweight by passing its intrinsic state to the factory.
+5. The client must store or calculate values of the extrinsic state (context) to be able to call methods of flyweight objects. For the sake of convenience, the extrinsic state along with the flyweight-referencing field may be moved to a separate context class.
+
+## Pros and Cons
+
+**Pros:**
+- You can save lots of RAM, assuming your program has tons of similar objects
+- Centralizes state management for similar objects
+- Reduces memory footprint significantly in scenarios with massive object creation
+
+**Cons:**
+- You might be trading RAM over CPU cycles if some of the context data needs to be recalculated each time somebody calls a flyweight method
+- The code becomes much more complicated. New team members will always be wondering why the state of an entity was separated in such a way
+- Flyweight objects must be immutable, which can be limiting in some scenarios
+
+## Rule of thumb
+
+- You can implement shared leaf nodes of the Composite tree as Flyweights to save some RAM.
+- Flyweight shows how to make lots of little objects, whereas Facade shows how to make a single object that represents an entire subsystem.
+- Flyweight would resemble Singleton if you somehow managed to reduce all shared states of the objects to just one flyweight object. But there are two fundamental differences between these patterns:
+  - There should be only one Singleton instance, whereas a Flyweight class can have multiple instances with different intrinsic states.
+  - The Singleton object can be mutable. Flyweight objects are immutable.
+- State and Strategy objects are often implemented as Flyweights.

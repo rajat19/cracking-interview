@@ -1,0 +1,72 @@
+---
+layout: post
+title: Chain of Responsibility Design Pattern
+difficulty: medium
+tags: [behavioral]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/chain-responsibility-design-pattern
+refactoring: chain-of-responsibility
+sourcemaking: chain_of_responsibility
+wikipedia: Chain-of-responsibility_pattern
+scaler: design-patterns/chain-of-responsibility-design-pattern/
+---
+
+## Intent
+- Pass requests along a chain of handlers, with each handler deciding whether to process the request or pass it to the next handler
+- Decouple the sender of a request from its receivers by giving multiple objects a chance to handle the request
+- Launch-and-leave request handling with a processing pipeline that contains many possible handlers
+
+## Problem
+
+Imagine you're building an online ordering system where incoming requests need to undergo sequential validation checks - authentication, data validation, rate limiting, and caching. If these checks are implemented as a monolithic block of code, several issues arise:
+
+The code becomes bloated and messy as more validation steps are added. It's difficult to modify individual checks without affecting others, leading to maintenance nightmares. Components become tightly coupled and hard to reuse in different contexts where only a subset of checks might be needed.
+
+## Solution
+
+The Chain of Responsibility pattern transforms each validation step into a separate handler object, linking them together to form a chain. When a request arrives, it travels through the chain until a handler can process it or the chain ends.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/chain-of-responsibility/structure.png" />
+
+Each handler in the chain follows a simple protocol: examine the request, decide whether to handle it, and either process it or pass it to the next handler. This creates a flexible pipeline where handlers can be easily added, removed, or reordered.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Chain_of_responsibility_1-2x.png" />
+
+## Example
+
+Think of a customer service call center. When you call with an issue, your call first goes to a front-desk agent who handles basic inquiries. If they can't resolve your issue, they escalate it to a technical specialist. If the technical specialist can't help, the call goes to a senior engineer, and so on.
+
+Each person in the chain has specific expertise and handles requests they're qualified for, while passing more complex issues up the chain. No single person needs to know how to handle every possible customer issue.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Chain_of_responsibility_example1-2x.png" />
+
+## Implementation Checklist
+
+1. **Define Handler Interface**: Create a common interface with methods for handling requests and setting the next handler
+2. **Create Base Handler**: Implement boilerplate code for storing references to the next handler and default request forwarding
+3. **Implement Concrete Handlers**: Create specific handler classes that contain the actual processing logic
+4. **Build the Chain**: Link handlers together by setting the next handler for each one in the sequence
+5. **Client Integration**: Send requests to the first handler in the chain and let the pattern do its work
+6. **Add Safety Net**: Include a default handler at the end to catch unprocessed requests
+
+## Pros and Cons
+
+**Pros:**
+- **Decoupling**: Separates request senders from receivers, reducing dependencies
+- **Flexibility**: Handlers can be added, removed, or reordered at runtime
+- **Single Responsibility**: Each handler focuses on a specific processing step
+- **Open/Closed Principle**: New handlers can be introduced without changing existing code
+
+**Cons:**
+- **No Handling Guarantee**: Requests might pass through the entire chain without being handled
+- **Performance Overhead**: Long chains can impact performance as requests traverse multiple handlers
+- **Debugging Complexity**: Tracing request flow through complex chains can be challenging
+
+## Rules of Thumb
+
+- Chain of Responsibility, Command, Mediator, and Observer all address sender-receiver coupling but with different approaches
+- Often combined with Composite pattern when building tree structures with request propagation
+- Can use Command objects as requests to enable more complex request structures and queuing
+- Similar to Decorator in structure but different in intent - CoR can break the processing flow while Decorator cannot
+- Consider when you have multiple objects that can handle a request but the specific handler isn't known beforehand

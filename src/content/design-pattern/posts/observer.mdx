@@ -1,0 +1,69 @@
+---
+layout: post
+title: Observer Design Pattern
+difficulty: medium
+tags: [behavioral]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/observer-pattern-set-1-introduction
+refactoring: observer
+sourcemaking: observer
+wikipedia: Observer_pattern
+scaler: design-patterns/observer-design-pattern/
+---
+
+## Intent
+- Define a one-to-many dependency between objects so that when one object changes state, all its dependents are notified and updated automatically.
+- Encapsulate the core (or common or engine) components in a Subject abstraction, and the variable (or optional or user interface) components in an Observer hierarchy.
+- The "View" part of Model-View-Controller.
+
+## Problem
+
+You have a subscription service where customers want to be notified about different events. For example, in an e-commerce application, customers might want to be notified when:
+- A product comes back in stock
+- A price drops below a certain threshold
+- A new product in their favorite category is added
+
+The naive approach would be to have the store check all customers and their preferences periodically, but this leads to wasted resources. Alternatively, customers could constantly check the store, but this creates unnecessary network traffic and poor user experience.
+
+## Structure
+
+The Observer pattern consists of two main players: the Subject (Publisher) and the Observer (Subscriber). The subject maintains a list of observers and notifies them of any state changes, usually by calling one of their methods.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/observer/structure.png" />
+
+The key is that the subject and observers are loosely coupled. The subject knows only that observers implement a certain interface, but it doesn't need to know their concrete classes, what they do, or why they're interested.
+
+## Example
+
+Think of a magazine subscription service. You (the subscriber) express interest in a particular magazine and provide your address. The magazine publisher maintains a list of subscribers and automatically sends new issues to everyone on the list. You can unsubscribe at any time, and the publisher will stop sending magazines to your address.
+
+Similarly, in software, a weather station (subject) can notify multiple display devices (observers) when weather data changes, without knowing the specific details of each display implementation.
+
+## Checklist
+
+1. Differentiate between the core (independent) functionality and the optional (dependent) functionality.
+2. Model the independent functionality with a "subject" abstraction.
+3. Model the dependent functionality with an "observer" hierarchy.
+4. The Subject is coupled only to the Observer base class.
+5. The client configures the number and type of Observers.
+6. Observers register themselves with the Subject.
+7. The Subject broadcasts events to all registered Observers.
+8. The Subject may "push" information at the Observers, or, the Observers may "pull" the information they need from the Subject.
+
+## Pros and Cons
+
+**Pros:**
+- **Open/Closed Principle** - You can introduce new subscriber classes without having to change the publisher's code.
+- **Runtime relationships** - You can establish relations between objects at runtime.
+- **Loose coupling** - Publishers and subscribers are independent of each other.
+
+**Cons:**
+- **Random notification order** - Subscribers get notified in random order.
+- **Memory leaks** - If observers are not properly removed, memory leaks can occur.
+
+## Rules of Thumb
+
+- Chain of Responsibility, Command, Mediator, and Observer, address how you can decouple senders and receivers, but with different trade-offs. Observer defines a one-to-many relationship between objects.
+- Mediator and Observer are competing patterns. The difference between them is that Observer distributes communication by introducing "observer" and "subject" objects, whereas a Mediator object encapsulates the communication between other objects.
+- Observer can use Mediator to notify observers instead of direct communication.

@@ -1,0 +1,72 @@
+---
+layout: post
+title: Memento Design Pattern
+difficulty: medium
+tags: [behavioral]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/memento-design-pattern
+refactoring: memento
+sourcemaking: memento
+wikipedia: Memento_pattern
+scaler: design-patterns/memento-design-pattern/
+---
+
+## Intent
+- Capture and externalize an object's internal state without violating encapsulation, so the object can be restored to this state later
+- Provide the ability to restore an object to its previous state (undo functionality)
+- Save snapshots of an object's state without exposing its internal structure
+
+## Problem
+
+Implementing undo functionality requires saving object states before modifications, but this creates a dilemma. Making fields public breaks encapsulation, while requiring objects to expose their private state through getters violates the principle of information hiding.
+
+Creating a separate snapshot class that mirrors the object's structure makes the system fragile - any change to the original object requires updating the snapshot class. This tight coupling makes maintenance difficult and error-prone.
+
+## Solution
+
+The Memento pattern delegates the responsibility of creating state snapshots to the object that owns the state. The originator creates a memento object containing its current state, but the memento's contents are only accessible to the originator that created it.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/memento/structure.png" />
+
+Other objects (caretakers) can store and manage mementos but cannot examine or modify their contents. This preserves encapsulation while enabling state restoration functionality.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Memento-2x.png" />
+
+## Example
+
+Consider a camera with manual settings for aperture, shutter speed, and ISO. When shooting in challenging conditions, you might want to experiment with different settings but quickly return to a known good configuration.
+
+The camera can save its current settings (memento) to a memory slot (caretaker). You can create multiple snapshots for different scenarios - portrait settings, landscape settings, low-light settings. Later, you can restore any saved configuration without manually adjusting each setting.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Memento_example1-2x.png" />
+
+## Implementation Checklist
+
+1. **Identify the Originator**: Determine which class needs state saving and restoration capabilities
+2. **Create Memento Class**: Design a class to hold the originator's state, making it immutable where possible
+3. **Implement Snapshot Creation**: Add a method to the originator that creates and returns a memento with current state
+4. **Implement State Restoration**: Add a method to the originator that accepts a memento and restores state from it
+5. **Design Caretaker**: Create a class responsible for storing and managing mementos (like a history manager)
+6. **Control Access**: Ensure only the originator can access memento contents, typically through nested classes or interfaces
+
+## Pros and Cons
+
+**Pros:**
+- **Encapsulation Preservation**: Saves and restores state without breaking object encapsulation
+- **Simplified Originator**: Object doesn't need to manage its history or multiple versions
+- **Caretaker Independence**: History management is separate from business logic
+
+**Cons:**
+- **Memory Consumption**: Storing many mementos can consume significant memory
+- **Lifecycle Management**: Caretakers must manage memento lifecycles to prevent memory leaks
+- **Language Limitations**: Some languages make it difficult to guarantee memento contents remain unmodified
+
+## Rules of Thumb
+
+- Often used with Command pattern to implement undo/redo - Commands execute operations while Mementos save state
+- Can work with Iterator to save iteration state for later restoration
+- Prototype pattern can be a simpler alternative when object state is straightforward
+- Consider using when you need undo functionality, checkpoints, or transaction rollback capabilities
+- Memento preserves encapsulation where a simple state copy would violate it
+- Essential for implementing editors, games with save states, or any system requiring state rollback

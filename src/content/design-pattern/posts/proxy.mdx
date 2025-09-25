@@ -1,0 +1,81 @@
+---
+layout: post
+title: Proxy Design Pattern
+difficulty: medium
+tags: [structural]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/proxy-design-pattern
+refactoring: proxy
+sourcemaking: proxy
+wikipedia: Proxy_pattern
+scaler: design-patterns/proxy-design-pattern/
+---
+
+## Intent
+- Provide a surrogate or placeholder for another object to control access to it.
+- Use an extra level of indirection to support distributed, controlled, or intelligent access.
+- Add a wrapper and delegation to protect the real component from undue complexity.
+
+## Problem
+Why would you want to control access to an object? Here is an example: you have a massive object that consumes a vast amount of system resources. You need it from time to time, but not always.
+
+You could implement lazy initialization: create this object only when it's actually needed. All of the object's clients would need to execute some deferred initialization code. Unfortunately, this would probably cause a lot of code duplication.
+
+In an ideal world, we'd want to put this code directly into our object's class, but that isn't always possible. For instance, the class may be part of a closed 3rd-party library.
+
+## Structure
+
+The Proxy pattern suggests that you create a new proxy class with the same interface as an original service object. Then you update your app so that it passes the proxy object to all of the original object's clients. Upon receiving a request from a client, the proxy creates a real service object and delegates all the work to it.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/proxy/structure-indexed.png" />
+
+The proxy disguises itself as a database object. It can handle lazy initialization and result caching without the client or the real database object even knowing.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/proxy/example-indexed.png" />
+
+## Example
+
+A credit card is a proxy for a bank account, which is a proxy for a bundle of cash. Both implement the same interface: they can be used for making a payment. A consumer feels great because there's no need to carry loads of cash around. A shop owner is also happy since the income from a transaction gets added electronically to the shop's bank account without the risk of depositing or losing the cash.
+
+<MdxImage src="https://refactoring.guru/images/patterns/content/proxy/proxy-comic-1-2x.png" />
+
+The proxy controls access to the original object, allowing you to perform something either before or after the request gets through to the original object.
+
+## Checklist
+
+1. If there's no pre-existing service interface, create one to make proxy and service objects interchangeable. Extracting the interface from the service class isn't always possible, because you'd need to change all of the service's clients to use that interface. Plan B is to make the proxy a subclass of the service class, and this way it'll inherit the interface of the service.
+2. Create the proxy class. It should have a field for storing a reference to the service. Usually, proxies create and manage the whole lifecycle of their services. On rare occasions, a service is passed to the proxy via a constructor by the client.
+3. Implement the proxy methods according to their purposes. In most cases, after doing some work, the proxy should delegate the work to the service object.
+4. Consider introducing a creation method that decides whether the client gets a proxy or a real service. This can be a simple static method in the proxy class or a full-blown factory method.
+5. Consider implementing lazy initialization for the service object.
+
+## Proxy Types
+
+**Virtual Proxy** - Controls access to a resource that is expensive to create. It creates the resource on demand.
+
+**Remote Proxy** - Controls access to a resource that is located remotely (different address space, network, etc.).
+
+**Protection Proxy** - Controls access to a resource based on access rights. It checks whether the caller has necessary permissions.
+
+**Smart Reference** - Performs additional actions when an object is accessed (reference counting, loading from database, locking, etc.).
+
+## Pros and Cons
+
+**Pros:**
+- You can control the service object without clients knowing about it
+- You can manage the lifecycle of the service object when clients don't care about it
+- The proxy works even if the service object isn't ready or is not available
+- Open/Closed Principle: You can introduce new proxies without changing the service or clients
+
+**Cons:**
+- The code may become more complicated since you need to introduce a lot of new classes
+- The response from the service might get delayed
+- Additional layer of indirection may impact performance
+
+## Rule of thumb
+
+- Adapter provides a different interface to the wrapped object, Proxy provides the same interface, and Decorator provides an enhanced interface.
+- Decorator and Proxy have similar structures, but very different intents. Both patterns are built on the composition principle, where one object is supposed to delegate some of the work to another. The difference is that a Proxy usually manages the lifecycle of its service object on its own, whereas the composition of Decorators is always controlled by the client.
+- Facade is similar to Proxy in that both buffer a complex entity and initialize it on their own. Unlike Facade, Proxy has the same interface as its service object, which makes them interchangeable.
+- Proxy and Decorator implement the same interface, but Decorator adds behavior while Proxy controls access.
