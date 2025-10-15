@@ -1,0 +1,79 @@
+---
+layout: post
+title: Object Pool Design Pattern
+difficulty: medium
+tags: [creational]
+langs: [java, py, cpp]
+companies: []
+gfg: java/object-pool-design-pattern
+refactoring: object-pool
+sourcemaking: object_pool
+wikipedia: Object_pool_pattern
+scaler: design-patterns/object-pool-design-pattern/
+---
+
+## Intent
+- Improve performance by managing a collection of reusable objects
+- Avoid expensive object creation and destruction when objects are frequently needed
+- Control the number of instances of a particular class
+
+## Problem
+
+Creating new objects can be computationally expensive or time-consuming, especially for objects that require significant initialization (like database connections, thread objects, or graphics resources). If an application frequently creates and destroys such objects, this can lead to performance bottlenecks and memory overhead.
+
+Additionally, in some scenarios, you need to limit the total number of objects of a particular type that can exist at any given time, such as limiting database connections to prevent overwhelming the database server.
+
+## Structure
+
+The Object Pool pattern creates a "pool" of pre-instantiated objects that can be reused instead of creating new objects each time.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Object_pool-2x.png" />
+
+Key components:
+- **Reusable**: Objects that can be used by clients and then returned to the pool
+- **Client**: Objects that use the reusable objects
+- **ReusablePool**: Manages the collection of reusable objects (often implemented as Singleton)
+
+## Example
+
+Think of an office warehouse management system. When a new employee joins, the manager checks the warehouse for spare equipment (monitors, keyboards, chairs). If available, the equipment is given to the employee. If not available, new equipment is purchased. When an employee leaves, their equipment is returned to the warehouse for future use.
+
+Database connection pools are a classic real-world example. Creating database connections is expensive, so applications maintain a pool of connections that can be shared among different operations, significantly improving performance.
+
+## Checklist
+
+1. Identify expensive-to-create objects that are frequently used
+2. Create a pool class (usually a Singleton) to manage object instances
+3. Implement `acquire()` method to get objects from the pool
+4. Implement `release()` method to return objects to the pool
+5. Handle pool empty scenarios (create new objects or wait)
+6. Optionally implement pool size limits and cleanup mechanisms
+7. Ensure thread safety if the pool will be accessed concurrently
+8. Consider object reset/cleanup when returning objects to the pool
+
+## Pros and Cons
+
+**Pros:**
+- Significantly improves performance for expensive object creation
+- Reduces memory allocation and garbage collection overhead
+- Controls resource usage by limiting object instances
+- Provides better resource management and monitoring
+- Reduces system load and improves scalability
+
+**Cons:**
+- Adds complexity to object lifecycle management
+- Risk of memory leaks if objects are not properly returned to the pool
+- Thread safety considerations in multi-threaded environments
+- Pool management overhead for simple objects might outweigh benefits
+- Potential for stale or corrupted objects if not properly reset
+
+## Rules of Thumb
+
+- Use when object creation is expensive relative to object usage
+- Most beneficial when object creation cost is high and object usage patterns are predictable
+- Consider thread safety requirements - pools are often shared resources
+- Implement proper object reset mechanisms to avoid state pollution
+- Monitor pool usage to tune pool size for optimal performance
+- Don't use for lightweight objects where creation cost is minimal
+- Often combined with Factory pattern for object creation within the pool
+- Consider using with Singleton pattern for the pool manager itself

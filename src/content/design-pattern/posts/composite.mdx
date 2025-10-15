@@ -5,7 +5,59 @@ difficulty: hard
 tags: [structural]
 langs: [java, py, cpp]
 companies: []
+gfg: system-design/composite-design-pattern
 refactoring: composite
 sourcemaking: composite
+wikipedia: Composite_pattern
+scaler: design-patterns/composite-design-pattern/
 ---
+
+## Intent
+
+- Compose objects into tree structures to represent whole-part hierarchies. Composite lets clients treat individual objects and compositions of objects uniformly.
+- Recursive composition
+- "Directories contain entries, each of which could be a directory."
+- 1-to-many "has a" up the "is a" hierarchy
+
+## Problem
+
+Application needs to manipulate a hierarchical collection of "primitive" and "composite" objects. Processing of a primitive object is handled one way, and processing of a composite object is handled differently. Having to query the "type" of each object before attempting to process it is not desirable.
+
+## Solution
+
+Define an abstract base class (Component) that specifies the behavior that needs to be exercised uniformly across all primitive and composite objects. Subclass the Primitive and Composite classes off of the Component class. Each Composite object "couples" itself only to the abstract type Component as it manages its "children".
+
+Use this pattern whenever you have "composites that contain components, each of which could be a composite".
+
+## Structure
+
+Composites that contain Components, each of which could be a Composite.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Composite.png?id=a9d52025539753637394709460041840" />
+
+Menus that contain menu items, each of which could be a menu. Row-column GUI layout managers that contain widgets, each of which could be a row-column GUI layout manager. Directories that contain files, each of which could be a directory. Containers that contain Elements, each of which could be a Container.
+
+## Example
+
+The Composite composes objects into tree structures and lets clients treat individual objects and compositions uniformly. Although the example is abstract, arithmetic expressions are Composites. An arithmetic expression consists of an operand, an operator (+ - * /), and another operand. The operand can be a number, or another arithmetic expression. Thus, 2 + 3 and (2 + 3) + (4 * 6) are both valid expressions.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Composite_example1.png?id=dad6ab11217e313f426e6c198dc36794" />
+
+## Checklist
+
+1. Ensure that your problem is about representing "whole-part" hierarchical relationships.
+2. Consider the heuristic, "Containers that contain containees, each of which could be a container." For example, "Assemblies that contain components, each of which could be an assembly." Divide your domain concepts into container classes, and containee classes.
+3. Create a "lowest common denominator" interface that makes your containers and containees interchangeable. It should specify the behavior that needs to be exercised uniformly across all containee and container objects.
+4. All container and containee classes declare an "is a" relationship to the interface.
+5. All container classes declare a one-to-many "has a" relationship to the interface.
+6. Container classes leverage polymorphism to delegate to their containee objects.
+7. Child management methods [e.g. addChild(), removeChild()] should normally be defined in the Composite class. Unfortunately, the desire to treat Leaf and Composite objects uniformly may require that these methods be promoted to the abstract Component class.
+
+## Rule of thumb
+
+- Composite and Decorator have similar structure diagrams, reflecting the fact that both rely on recursive composition to organize an open-ended number of objects.
+- Composite can be traversed with Iterator. Visitor can apply an operation over a Composite. Composite could use Chain of Responsibility to let components access global properties through their parent.
+- Composite can let you compose a Mediator out of smaller pieces through recursive composition.
+- Decorator is designed to let you add responsibilities to objects without subclassing. Composite's focus is not on embellishment but on representation. These intents are distinct but complementary. Consequently, Composite and Decorator are often used in concert.
+- Flyweight is often combined with Composite to implement shared leaf nodes.
 

@@ -1,0 +1,74 @@
+---
+layout: post
+title: Null Object Design Pattern
+difficulty: medium
+tags: [behavioral]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/null-object-design-pattern
+refactoring: null-object
+sourcemaking: null_object
+wikipedia: Null_object_pattern
+scaler: design-patterns/null-object-design-pattern/
+---
+
+## Intent
+- Encapsulate the absence of an object by providing a substitutable alternative that offers suitable default "do nothing" behavior
+- Abstract away the handling of null references from the client
+- Eliminate repetitive null checks in client code
+
+## Problem
+
+When an object reference might be null, the typical response is to do nothing or use a default value. This often leads to repetitive null checks scattered throughout the client code, making it cluttered and error-prone.
+
+Consider a logging system where sometimes no logger is available. Without the Null Object pattern, you'd need to check for null before every log operation: `if (logger != null) logger.log(message)`. This becomes tedious and error-prone when repeated throughout the codebase.
+
+## Structure
+
+The Null Object pattern provides a way to treat the absence of an object as a valid, albeit inactive, object.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Null_Object2-2x.png" />
+
+Key components:
+- **Client**: Uses the collaborator through a common interface
+- **AbstractObject**: Declares the interface for the collaborator
+- **RealObject**: Provides useful, expected behavior
+- **NullObject**: Provides identical interface but with "do nothing" implementations
+
+## Example
+
+Consider a graphics application where shapes can have different fill strategies. Sometimes a shape should have no fill at all. Instead of checking for null fill strategies everywhere, you create a `NoFillStrategy` that implements the same interface but does nothing when asked to fill a shape.
+
+Another example is a notification system. Instead of checking if a notification service is available, you can have a `NullNotificationService` that silently ignores all notification requests, allowing the code to continue without interruption.
+
+## Checklist
+
+1. Identify situations where you're checking for null references
+2. Define an abstract interface for the collaborator
+3. Create a concrete class that provides real functionality
+4. Create a null object class that implements the same interface with "do nothing" behavior
+5. Replace null checks with null object instances
+6. Consider implementing the null object as a Singleton if it has no state
+
+## Pros and Cons
+
+**Pros:**
+- Eliminates need for null checks in client code
+- Simplifies client code and makes it more readable
+- Reduces risk of null pointer exceptions
+- Provides consistent behavior regardless of object availability
+- Follows polymorphism principles
+
+**Cons:**
+- Can make debugging harder as errors fail silently
+- May mask real problems if null objects hide important error conditions
+- Can lead to unexpected behavior if clients expect exceptions for null cases
+- Adds extra classes to the system
+
+## Rules of Thumb
+
+- A Null Object does not transform into a Real Object - if transformation is needed, consider State or Proxy patterns instead
+- Null Objects are often implemented as Singletons since they typically have no state
+- If different clients expect different "do nothing" behaviors, you may need multiple Null Object classes
+- The Null Object can be a special case of Strategy pattern (a strategy that does nothing)
+- Use with Visitor pattern to allow safe traversal of hierarchies without explicit null checks

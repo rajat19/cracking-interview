@@ -1,0 +1,80 @@
+---
+layout: post
+title: Strategy Design Pattern
+difficulty: easy
+tags: [behavioral]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/strategy-pattern-set-1
+refactoring: strategy
+sourcemaking: strategy
+wikipedia: Strategy_pattern
+scaler: design-patterns/strategy-design-pattern/
+---
+
+## Intent
+- Define a family of algorithms, encapsulate each one, and make them interchangeable. Strategy lets the algorithm vary independently from clients that use it.
+- Capture the abstraction in an interface, bury implementation details in derived classes.
+
+## Problem
+
+Imagine you're developing a navigation app that can calculate routes for different transportation modes: walking, driving, cycling, and public transport. Initially, you might implement all routing algorithms directly in the main navigation class.
+
+However, this approach leads to several problems:
+- The navigation class becomes bloated with multiple algorithms
+- Adding new routing methods requires modifying the existing class
+- Testing becomes difficult as all algorithms are tightly coupled
+- Team collaboration becomes challenging due to frequent conflicts in the same large class
+
+The class essentially violates the Single Responsibility Principle by handling multiple algorithms.
+
+## Structure
+
+The Strategy pattern suggests extracting varying algorithms into separate classes called strategies, which all implement a common interface. The original class (context) stores a reference to one of the strategies and delegates the work to it.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/strategy/structure.png" />
+
+Key participants:
+- **Strategy interface** - common to all concrete strategies, declares methods the context uses to execute a strategy
+- **Concrete strategies** - implement different variations of an algorithm
+- **Context** - maintains a reference to a strategy object and communicates with strategies only via the strategy interface
+
+## Example
+
+Consider a payment processing system in an e-commerce application. Different payment methods (credit card, PayPal, cryptocurrency) require different processing algorithms:
+
+- **Credit card strategy**: Validates card number, processes through banking API
+- **PayPal strategy**: Redirects to PayPal, handles OAuth authentication
+- **Cryptocurrency strategy**: Validates wallet address, processes blockchain transaction
+
+Without Strategy pattern, the payment processor would contain complex conditionals for each payment type. With Strategy pattern, each payment method becomes a separate strategy class implementing a common `PaymentStrategy` interface.
+
+## Checklist
+
+1. Identify an algorithm that's prone to frequent changes or has multiple variants.
+2. Declare the strategy interface common to all variants of the algorithm.
+3. Extract all algorithms into their own classes. They should all implement the strategy interface.
+4. In the context class, add a field for storing a reference to a strategy object and provide a setter for changing it.
+5. Replace calls to the algorithm with calls to the strategy object's method.
+6. The client should associate the context with a suitable strategy.
+
+## Pros and Cons
+
+**Pros:**
+- **Runtime algorithm switching** - You can swap algorithms used inside an object at runtime.
+- **Code isolation** - You can isolate the implementation details of an algorithm from the code that uses it.
+- **Composition over inheritance** - You can replace inheritance with composition.
+- **Open/Closed Principle** - You can introduce new strategies without changing the context.
+
+**Cons:**
+- **Increased complexity** - If you have only a few algorithms and they rarely change, there's no real reason to overcomplicate the program.
+- **Client awareness** - Clients must be aware of the differences between strategies to be able to select a proper one.
+- **Modern languages** - A lot of modern programming languages have functional type support that lets you implement different versions of an algorithm inside a set of anonymous functions.
+
+## Rules of Thumb
+
+- Strategy is like Template Method except in its granularity.
+- State is like Strategy except in its intent.
+- Strategy lets you change the guts of an object. Decorator lets you change the skin.
+- State, Strategy, Bridge (and to some degree Adapter) have very similar structures. They're all based on composition, which is delegating work to other objects.
+- Strategy has 2 different implementations, the first is similar to State. The difference is in binding times (Strategy is a bind-once pattern, whereas State is more dynamic).

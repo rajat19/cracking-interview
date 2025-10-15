@@ -1,0 +1,68 @@
+---
+layout: post
+title: Prototype Design Pattern
+difficulty: medium
+tags: [creational]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/prototype-design-pattern
+refactoring: prototype
+sourcemaking: prototype
+wikipedia: Prototype_pattern
+scaler: design-patterns/prototype-design-pattern/
+---
+
+## Intent
+- Specify the kinds of objects to create using a prototypical instance, and create new objects by copying this prototype
+- Co-opt one instance of a class for use as a breeder of all future instances
+- The new operator considered harmful when the exact class of object that must be created changes frequently
+
+## Problem
+
+Say you have an object, and you want to create an exact copy of it. How would you do it? First, you have to create a new object of the same class. Then you have to go through all the fields of the original object and copy their values over to the new object.
+
+Nice! But there's a catch. Not all objects can be copied that way because some of the object's fields may be private and not visible from outside the object itself. There's one more problem with the direct approach. Since you have to know the object's class to create a duplicate, your code becomes dependent on that class.
+
+## Structure
+
+The Prototype pattern delegates the cloning process to the actual objects that are being cloned. The pattern declares a common interface for all objects that support cloning. This interface lets you clone an object without coupling your code to the class of that object.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/prototype/structure.png" />
+
+Usually, such an interface contains just a single `clone` method. The implementation of the `clone` method is very similar in all classes. The method creates an object of the current class and carries over all of the field values of the old object into the new one.
+
+<MdxImage src="https://refactoring.guru/images/patterns/content/prototype/prototype.png" />
+
+## Example
+
+In biology, mitotic cell division results in a pair of identical cells. The original cell acts as a prototype and takes an active role in creating the copy. Similarly, the Prototype pattern lets objects clone themselves.
+
+Think of the prototype as a "template" object that contains the standard configurations. When you need a new object, you clone the prototype and then modify the clone according to your specific requirements, rather than going through the expensive process of initializing a new object from scratch.
+
+## Implementation Checklist
+
+1. Create the prototype interface and declare the `clone` method in it. Or just add the method to all classes of an existing class hierarchy
+2. A prototype class must define the alternative constructor that accepts an object of that class as an argument. The constructor must copy the values of all fields defined in the class from the passed object into the newly created instance
+3. The cloning method usually consists of just one line: running a `new` operator with the prototypical version of the constructor. Note, that every class must explicitly override the cloning method and use its own class name along with the `new` operator
+4. Optionally, create a centralized prototype registry to store a catalog of frequently used prototypes
+
+## Pros and Cons
+
+**Pros:**
+- Clone objects without coupling to their concrete classes
+- Get rid of repeated initialization code in favor of cloning pre-built prototypes
+- Produce complex objects more conveniently
+- Get an alternative to inheritance when dealing with configuration presets for complex objects
+
+**Cons:**
+- Cloning complex objects that have circular references might be very tricky
+
+## Rules of Thumb
+
+- Many designs start out using Factory Method (less complicated and more customizable via subclasses) and evolve toward Abstract Factory, Prototype, or Builder (more flexible, but more complicated)
+- Abstract Factory classes are often based on a set of Factory Methods, but you can also use Prototype to compose the methods on these classes
+- Prototype can help when you need to save copies of Commands in history
+- Designs that make heavy use of Composite and Decorator can often benefit from Prototype. Applying the pattern lets you clone complex structures instead of re-constructing them from scratch
+- Prototype isn't based on inheritance, so it doesn't have inheritance's drawbacks. On the other hand, Prototype requires a complicated initialization of the cloned object. Factory Method is based on inheritance but doesn't require an initialization step
+- Sometimes Prototype can be a simpler alternative to Memento. This works if the object, the state of which you want to store in the history, is fairly straightforward and doesn't have links to external resources, or the links are easy to re-establish
+- Abstract Factories, Builders and Prototypes can all be implemented as Singletons
