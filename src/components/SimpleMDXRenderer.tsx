@@ -7,6 +7,7 @@ import * as devRuntime from 'react/jsx-dev-runtime';
 import { MdxImage } from '@/components/mdx/MdxImage';
 import { MdxCodeTabs } from '@/components/mdx/MdxCodeTabs';
 import { MdxLink } from '@/components/mdx/MdxLink';
+import { MdxCode } from '@/components/mdx/MdxCode';
 
 interface SimpleMDXRendererProps {
   content: string;
@@ -23,6 +24,12 @@ export default function SimpleMDXRenderer({ content }: SimpleMDXRendererProps) {
       MdxImage,
       MdxCodeTabs,
       MdxLink,
+      img: MdxImage,
+      // Custom code component to handle sub/sup in inline code
+      code: MdxCode,
+      // HTML elements - enable proper rendering of sub/sup tags
+      sub: 'sub',
+      sup: 'sup',
     }),
     []
   );
