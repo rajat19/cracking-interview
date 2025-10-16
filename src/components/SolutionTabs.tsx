@@ -18,14 +18,12 @@ const getLanguageIcon = (language: string): string => {
   return assetPath(`/assets/img/lang/${language}.svg`);
 };
 
+const getDefaultLanguage = (solutions: Record<string, ISolutionEntry>): string => {
+  return 'java' in solutions ? 'java' : Object.keys(solutions)[0] ?? '';
+};
+
 export function SolutionTabs({ solutions, showHeader = true }: SolutionTabsProps) {
-  const [activeLanguage, setActiveLanguage] = useState<string | null>(null);
-
-  useEffect(() => {
-    const firstKey = Object.keys(solutions)[0] ?? null;
-    setActiveLanguage(firstKey);
-  }, [solutions]);
-
+  const [activeLanguage, setActiveLanguage] = useState<string>(getDefaultLanguage(solutions));
   const syntaxStyle = useHighlight();
 
   return (

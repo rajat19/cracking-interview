@@ -1,5 +1,56 @@
 # Using Mdx Components
 
+## HTML Elements
+
+### Subscript and Superscript
+
+MDX files support standard HTML tags for subscript and superscript notation.
+
+#### Subscript (`<sub>`)
+
+Use `<sub>` tags for subscript notation (e.g., chemical formulas, mathematical notation):
+
+```mdx
+H<sub>2</sub>O is water
+
+Array indices: arr<sub>i</sub> or arr<sub>0</sub>
+```
+
+#### Superscript (`<sup>`)
+
+Use `<sup>` tags for superscript notation (e.g., exponents, footnotes):
+
+```mdx
+Time complexity: O(n<sup>2</sup>)
+
+E = mc<sup>2</sup>
+
+2<sup>10</sup> = 1024
+```
+
+#### Combined Usage
+
+You can combine both in the same expression:
+
+```mdx
+The formula is: x<sub>1</sub><sup>2</sup> + x<sub>2</sub><sup>2</sup>
+
+Big-O notation: O(log<sub>2</sub>n<sup>2</sup>)
+```
+
+#### Inside Inline Code (Backticks)
+
+You can also use `<sub>` and `<sup>` tags within inline code blocks (backticks):
+
+```mdx
+- Constraint: `0 <= start <= end <= 10<sup>5</sup>`
+- Chemical formula: `H<sub>2</sub>O`
+- Time complexity: `O(n<sup>2</sup>)` where `n<sup>2</sup>` is the square of n
+- Array notation: `arr<sub>i</sub>` or `matrix<sub>i,j</sub>`
+```
+
+This will properly render subscripts and superscripts even within inline code formatting.
+
 ## MdxCodeTabs
 
 ### When to use?

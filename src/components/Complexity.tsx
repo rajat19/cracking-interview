@@ -1,8 +1,8 @@
 import React from 'react';
 
 /**
- * Formats complexity notation to display superscripts properly
- * Converts <sup>X</sup> tags to proper superscript formatting
+ * Formats complexity notation to display superscripts and subscripts properly
+ * Converts <sup>X</sup> and <sub>X</sub> tags to proper formatting
  */
 /**
  * Decodes a minimal set of HTML entities from content strings so they render as symbols.
@@ -24,9 +24,9 @@ function decodeHtmlEntities(value: string): string {
 }
 
 export function Complexity(complexity: string): React.ReactElement {
-  // Decode common HTML entities (e.g., &#8730; → √) and split by <sup> tags
+  // Decode common HTML entities (e.g., &#8730; → √) and split by <sup> and <sub> tags
   const decoded = decodeHtmlEntities(complexity);
-  const parts = decoded.split(/(<sup>.*?<\/sup>)/g);
+  const parts = decoded.split(/(<sup>.*?<\/sup>|<sub>.*?<\/sub>)/g);
 
   return (
     <>
@@ -35,6 +35,11 @@ export function Complexity(complexity: string): React.ReactElement {
         const supMatch = part.match(/<sup>(.*?)<\/sup>/);
         if (supMatch) {
           return <sup key={index}>{supMatch[1]}</sup>;
+        }
+        // Check if this part is a subscript
+        const subMatch = part.match(/<sub>(.*?)<\/sub>/);
+        if (subMatch) {
+          return <sub key={index}>{subMatch[1]}</sub>;
         }
         return part;
       })}
