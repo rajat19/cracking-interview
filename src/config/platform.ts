@@ -30,8 +30,8 @@ export const PLATFORMS: Platform[] = [
   },
   {
     name: 'Hackerrank',
-    base: 'https://www.hackerrank.com/challenges/',
-    suffix: '/problem',
+    base: 'https://www.hackerrank.com/',
+    suffix: '/',
     identifier: 'hackerrank',
     img: 'hackerrank.svg',
   },
