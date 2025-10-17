@@ -12,10 +12,10 @@ import {
 } from '@/lib/progressStore';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
-import { Bookmark, ExternalLink, CheckCircle, UserCircle, LogOut } from 'lucide-react';
+import { Bookmark, ExternalLink, CheckCircle, LogOut } from 'lucide-react';
 import TopicDifficulty from '@/components/TopicDifficulty';
 import { ITopicCategory, ITopicDifficulty } from '@/types/topic';
-import Image from 'next/image';
+import { UserAvatar } from '@/components/UserAvatar';
 
 interface ProgressItem {
   id: string;
@@ -146,17 +146,9 @@ const Profile = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 flex flex-col items-center gap-8 md:flex-row md:items-start">
           <div className="flex flex-col items-center">
-            {user?.photoURL ? (
-              <Image
-                src={user.photoURL}
-                alt="Profile"
-                width={96}
-                height={96}
-                className="h-24 w-24 rounded-full border-2 border-primary shadow-lg"
-              />
-            ) : (
-              <UserCircle size={96} className="text-primary" />
-            )}
+            <div className="h-24 w-24 rounded-full border-2 border-primary shadow-lg flex items-center justify-center overflow-hidden bg-card">
+              <UserAvatar user={user} size={96} />
+            </div>
             <h1 className="mt-4 text-2xl font-bold">{user?.displayName || 'User'}</h1>
             <p className="text-muted-foreground">{user?.email}</p>
             <Button variant="ghost" onClick={signOut} className="mt-4 flex items-center gap-2">

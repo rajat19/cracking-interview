@@ -5,9 +5,10 @@ import { usePathname } from 'next/navigation';
 import { Button } from '@/components/ui/button';
 import { ThemeToggle } from '@/components/ThemeToggle';
 import { useAuth } from '@/hooks/useAuth';
-import { Bookmark, User, LogOut, Menu, X } from 'lucide-react';
+import { Bookmark, LogOut, Menu, X } from 'lucide-react';
 import { useMemo, useState } from 'react';
 import { categoryConfig } from '@/config/categoryConfig';
+import { UserAvatar } from '@/components/UserAvatar';
 
 const Navigation = () => {
   const pathname = usePathname();
@@ -73,7 +74,7 @@ const Navigation = () => {
                   <div className="group relative">
                     <Link href="/profile">
                       <Button variant="ghost" size="sm" className="flex items-center space-x-1">
-                        <User size={16} />
+                        <UserAvatar user={user} size={30} />
                       </Button>
                     </Link>
                     <div className="invisible absolute right-0 top-full mt-2 w-48 rounded-md border border-border bg-card opacity-0 shadow-lg transition-all duration-200 group-hover:visible group-hover:opacity-100">
@@ -82,7 +83,7 @@ const Navigation = () => {
                           href="/profile"
                           className="flex w-full items-center space-x-2 px-4 py-2 text-sm text-muted-foreground hover:bg-accent hover:text-foreground"
                         >
-                          <User size={16} />
+                          <UserAvatar user={user} size={20} />
                           <span>Profile</span>
                         </Link>
                         <button
@@ -151,7 +152,7 @@ const Navigation = () => {
                     onClick={() => setMobileMenuOpen(false)}
                     className="flex items-center space-x-2 rounded-md px-3 py-2 text-base font-medium text-muted-foreground transition-colors duration-200 hover:bg-accent hover:text-foreground"
                   >
-                    <User size={16} />
+                    <UserAvatar user={user} size={20} />
                     <span>Profile</span>
                   </Link>
                   <button

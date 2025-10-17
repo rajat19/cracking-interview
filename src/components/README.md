@@ -1,4 +1,44 @@
-# Using Mdx Components
+# Component Documentation
+
+## UserAvatar
+
+### When to use?
+
+When you need to display a user's profile picture from Firebase authentication (Google sign-in) with automatic fallback to a user icon.
+
+Currently used in:
+
+- Navigation bar (desktop and mobile)
+- Profile page
+
+### How to use
+
+```tsx
+import { UserAvatar } from '@/components/UserAvatar';
+
+// Basic usage
+<UserAvatar user={user} />
+
+// Custom size (default is 16)
+<UserAvatar user={user} size={24} />
+
+// Additional className
+<UserAvatar user={user} size={20} className="border-2 border-primary" />
+```
+
+### Props
+
+- `user`: Firebase User object (or null)
+- `size`: Number (optional, default: 16) - Size in pixels for both width and height
+- `className`: String (optional, default: '') - Additional CSS classes
+
+The component automatically:
+
+- Displays the user's Google profile picture if available
+- Falls back to a User icon if no photo exists or if image loading fails
+- Applies rounded-full styling for circular avatars
+- Handles CORS and ORB (Opaque Response Blocking) issues with proper `crossOrigin` and `referrerPolicy` attributes
+- Uses error boundary to gracefully handle failed image loads
 
 ## MdxCodeTabs
 
