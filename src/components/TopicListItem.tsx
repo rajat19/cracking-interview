@@ -14,9 +14,11 @@ interface TopicListItemProps {
 export function TopicListItem({ topic, isActive, onClick }: TopicListItemProps) {
   return (
     <div className={`topic-list-item m-2 ${isActive ? 'active' : ''}`} onClick={onClick}>
-      <div className="mb-2 flex items-start justify-between">
-        <h3 className="text-sm font-medium leading-tight text-foreground">{topic.title}</h3>
-        <div className="ml-2 flex items-center space-x-1">
+      <div className="mb-2 flex items-start justify-between gap-2">
+        <h3 className="line-clamp-2 flex-1 text-sm font-medium leading-tight text-foreground">
+          {topic.title}
+        </h3>
+        <div className="flex flex-shrink-0 items-center space-x-1">
           {topic.isCompleted && <CheckCircle className="h-4 w-4 text-success" />}
           {topic.isBookmarked ? (
             <BookmarkCheck className="h-4 w-4 text-primary" />
@@ -26,7 +28,7 @@ export function TopicListItem({ topic, isActive, onClick }: TopicListItemProps) 
         </div>
       </div>
 
-      <div className="flex items-center justify-between">
+      <div className="flex flex-wrap items-center justify-between gap-2">
         <TopicDifficulty difficulty={topic.difficulty} />
         {(topic.timeComplexity || topic.spaceComplexity) && (
           <div className="flex items-center space-x-2 text-xs text-muted-foreground">

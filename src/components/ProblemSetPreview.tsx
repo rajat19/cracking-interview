@@ -60,8 +60,8 @@ export function ProblemSetPreview({
         ))}
       </div>
 
-      {/* Mobile: Show 5 items in grid (2 per row) */}
-      <div className="mb-4 grid grid-cols-2 gap-2 lg:hidden">
+      {/* Mobile: Show 5 items in grid (1 per row on small, 2 on sm+) */}
+      <div className="mb-4 grid grid-cols-1 gap-2 sm:grid-cols-2 lg:hidden">
         {previewTopics.slice(0, PROBLEM_SET_PREVIEW_LIMIT.mobile).map(topic => (
           <TopicListItem
             key={topic.id}

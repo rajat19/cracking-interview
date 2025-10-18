@@ -221,6 +221,8 @@ All colors MUST be HSL.
 
   .topic-list-item {
     @apply cursor-pointer rounded-md border border-transparent p-3 transition-all duration-200 hover:border-border hover:bg-muted/50;
+    min-width: 0; /* Allow flex items to shrink below content size */
+    overflow: hidden; /* Prevent content overflow */
   }
 
   .topic-list-item.active {

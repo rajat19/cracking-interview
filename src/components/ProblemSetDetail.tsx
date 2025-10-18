@@ -111,7 +111,7 @@ export function ProblemSetDetail({ problemSet, allTopics, category }: ProblemSet
         </div>
 
         {/* Topics Grid */}
-        <div className="grid grid-cols-2 gap-2 md:grid-cols-3 lg:grid-cols-5">
+        <div className="grid grid-cols-1 gap-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5">
           {orderedTopics.map(topic => (
             <TopicListItem
               key={topic.id}

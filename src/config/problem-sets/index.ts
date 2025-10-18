@@ -7,7 +7,7 @@ import { designPatternProblemSets } from './design-pattern';
 
 // Global constants for preview limits
 export const PROBLEM_SET_PREVIEW_LIMIT = {
-  mobile: 5,
+  mobile: 4,
   desktop: 10,
 };
 
