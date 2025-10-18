@@ -128,7 +128,7 @@ export function TopicContent({
   }, [user, category, topic.id]);
 
   return (
-    <div className="w-full p-4 lg:mx-auto lg:max-w-4xl lg:p-8">
+    <div className="w-full p-4 lg:mx-auto lg:max-w-6xl lg:p-8">
       {/* Header */}
       <div className="mb-6 lg:mb-8">
         <div className="mb-4 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">

@@ -137,6 +137,9 @@ function buildFrontmatter(params: {
   gfg?: string;
   hackerrank?: string;
   interviewbit?: string;
+  hellointerview?: string;
+  neetcode?: string;
+  codingninjas?: string;
 }): string {
   const lines: string[] = ['---'];
   const pushList = (key: string, arr?: string[]) => {
@@ -160,6 +163,9 @@ function buildFrontmatter(params: {
   pushStr('gfg', params.gfg);
   pushStr('hackerrank', params.hackerrank);
   pushStr('interviewbit', params.interviewbit);
+  pushStr('hellointerview', params.hellointerview);
+  pushStr('neetcode', params.neetcode);
+  pushStr('codingninjas', params.codingninjas);
   lines.push('---');
   return lines.join('\n');
 }
@@ -233,6 +239,9 @@ async function main() {
     const gfg = (await rl.question('GeeksForGeeks slug (optional): ')).trim();
     const hackerrank = (await rl.question('HackerRank slug (optional): ')).trim();
     const interviewbit = (await rl.question('InterviewBit slug (optional): ')).trim();
+    const hellointerview = (await rl.question('HelloInterview slug (optional): ')).trim();
+    const neetcode = (await rl.question('Neetcode slug (optional): ')).trim();
+    const codingninjas = (await rl.question('CodingNinjas slug (optional): ')).trim();
 
     const langs = (langsIn || 'java').split(/\s+/).filter(Boolean);
     const companies = companiesIn ? companiesIn.split(/\s+/).filter(Boolean) : [];
@@ -258,6 +267,9 @@ async function main() {
       gfg: gfg || undefined,
       hackerrank: hackerrank || undefined,
       interviewbit: interviewbit || undefined,
+      hellointerview: hellointerview || undefined,
+      neetcode: neetcode || undefined,
+      codingninjas: codingninjas || undefined,
     });
 
     const postPath = await writeMdxFile(category, slug, frontmatter, body);
