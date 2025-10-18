@@ -3,7 +3,7 @@ import path from 'node:path';
 import fm from 'front-matter';
 
 const categories = ['dsa', 'system-design', 'ood', 'behavioral', 'design-pattern'] as const;
-type Category = typeof categories[number];
+type Category = (typeof categories)[number];
 
 const outputDir = path.join(process.cwd(), 'src/generated');
 
@@ -269,5 +269,3 @@ async function generateStaticContent(): Promise<void> {
 }
 
 generateStaticContent().catch(console.error);
-
-

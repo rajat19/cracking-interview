@@ -217,11 +217,14 @@ async function main() {
     const slug = (await rl.question('Leetcode slug (titleSlug, e.g., two-sum): ')).trim();
     if (!slug) throw new Error('Slug is required.');
 
-    const category = (await rl.question(
-      'Category [dsa | system-design | ood | behavioral | design-pattern] (default dsa): '
-    ))
-      .trim()
-      .toLowerCase() || 'dsa';
+    const category =
+      (
+        await rl.question(
+          'Category [dsa | system-design | ood | behavioral | design-pattern] (default dsa): '
+        )
+      )
+        .trim()
+        .toLowerCase() || 'dsa';
 
     const tcIn = (await rl.question('Time complexity [O(...) or e.g., n log n]: ')).trim();
     const scIn = (await rl.question('Space complexity [O(...) or e.g., n]: ')).trim();
@@ -275,5 +278,3 @@ main().catch(err => {
   console.error(err);
   process.exit(1);
 });
-
-

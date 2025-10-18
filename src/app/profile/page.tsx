@@ -146,7 +146,7 @@ const Profile = () => {
       <div className="container mx-auto px-4 py-8">
         <div className="mb-8 flex flex-col items-center gap-8 md:flex-row md:items-start">
           <div className="flex flex-col items-center">
-            <div className="h-24 w-24 rounded-full border-2 border-primary shadow-lg flex items-center justify-center overflow-hidden bg-card">
+            <div className="flex h-24 w-24 items-center justify-center overflow-hidden rounded-full border-2 border-primary bg-card shadow-lg">
               <UserAvatar user={user} size={96} />
             </div>
             <h1 className="mt-4 text-2xl font-bold">{user?.displayName || 'User'}</h1>
@@ -192,9 +192,7 @@ const Profile = () => {
                       <h3 className="text-lg font-semibold text-foreground">{item.title}</h3>
                       <p className="mt-2 text-muted-foreground">{item.description}</p>
                       <div className="mt-4 flex items-center gap-2">
-                        <TopicDifficulty
-                          difficulty={item.difficulty}
-                        />
+                        <TopicDifficulty difficulty={item.difficulty} />
                         <div className="badge badge-info rounded-md p-2 text-xs capitalize">
                           {item.question_type.replace('_', ' ')}
                         </div>
@@ -202,7 +200,10 @@ const Profile = () => {
                     </div>
                     <div className="flex gap-2">
                       <Link
-                        href={{ pathname: getQuestionRoute(item.question_type), query: { t: item.id } }}
+                        href={{
+                          pathname: getQuestionRoute(item.question_type),
+                          query: { t: item.id },
+                        }}
                         className="btn btn-primary btn-sm"
                       >
                         <ExternalLink size={16} />

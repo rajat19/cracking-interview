@@ -34,4 +34,3 @@ export const UserAvatar = ({ user, size = 20, className = '' }: UserAvatarProps)
     />
   );
 };
-

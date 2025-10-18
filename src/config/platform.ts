@@ -22,6 +22,20 @@ export const PLATFORMS: Platform[] = [
     img: 'gfg.svg',
   },
   {
+    name: 'HelloInterview',
+    base: 'https://www.hellointerview.com/learn/',
+    suffix: '',
+    identifier: 'hellointerview',
+    img: 'hellointerview.svg',
+  },
+  {
+    name: 'Youtube',
+    base: 'https://www.youtube.com/results?search_query=',
+    suffix: '',
+    identifier: 'title',
+    img: 'youtube.svg',
+  },
+  {
     name: 'InterviewBit',
     base: 'https://www.interviewbit.com/problems/',
     suffix: '/',
@@ -36,13 +50,6 @@ export const PLATFORMS: Platform[] = [
     img: 'hackerrank.svg',
   },
   {
-    name: 'Youtube',
-    base: 'https://www.youtube.com/results?search_query=',
-    suffix: '',
-    identifier: 'title',
-    img: 'youtube.svg',
-  },
-  {
     name: 'Metacareers',
     base: 'https://www.metacareers.com/profile/coding_practice_question/?problem_id=',
     suffix: '',
@@ -50,11 +57,11 @@ export const PLATFORMS: Platform[] = [
     img: 'meta.svg',
   },
   {
-    name: 'HelloInterview',
-    base: 'https://www.hellointerview.com/learn/',
+    name: 'Neetcode',
+    base: 'https://neetcode.io/problems/',
     suffix: '',
-    identifier: 'hellointerview',
-    img: 'hellointerview.svg',
+    identifier: 'neetcode',
+    img: 'neetcode.png',
   },
   {
     name: 'Refactoring Guru',
@@ -85,13 +92,6 @@ export const PLATFORMS: Platform[] = [
     img: 'scaler.png',
   },
   {
-    name: 'Neetcode',
-    base: 'https://neetcode.io/problems/',
-    suffix: '',
-    identifier: 'neetcode',
-    img: 'neetcode.png',
-  },
-  {
     name: 'Coding Ninjas',
     base: 'https://www.naukri.com/code360/problems/',
     suffix: '',
@@ -111,7 +111,21 @@ export const PLATFORMS: Platform[] = [
     suffix: '',
     identifier: 'leetid',
     img: 'algomonster.svg',
-  }
+  },
+  {
+    name: 'Baeldung',
+    base: 'https://www.baeldung.com/',
+    suffix: '',
+    identifier: 'baeldung',
+    img: 'baeldung.png',
+  },
+  {
+    name: 'HackerEarth',
+    base: 'https://www.hackerearth.com/problem/',
+    suffix: '',
+    identifier: 'hackerearth',
+    img: 'hackerearth.svg',
+  },
 ];
 
 export default PLATFORMS;

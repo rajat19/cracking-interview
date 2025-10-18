@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState, lazy, Suspense } from 'react';
+import { useEffect, useState, useMemo, lazy, Suspense } from 'react';
 import { CheckCircle, Circle, Bookmark, BookmarkCheck, Clock, Code, Share2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { ITopic, ITopicCategory } from '@/types/topic';
@@ -16,9 +16,7 @@ import config from '@/config';
 import Image from 'next/image';
 import { Complexity } from '@/components/Complexity';
 
-// Public assets helper for Next.js
-import assetPath from '@/lib/assetPath';
-import { companyIconSrc, getCompanyInfo } from '@/config/companies';
+import COMPANIES, { companyIconSrc } from '@/config/companies';
 
 interface TopicContentProps {
   topic: ITopic;
@@ -41,6 +39,9 @@ export function TopicContent({
   const { user } = useAuth();
   const router = useRouter();
   const [copied, setCopied] = useState(false);
+
+  // Convert companies array to Set for O(1) lookup performance
+  const companiesSet = useMemo(() => new Set(topic.companies || []), [topic.companies]);
 
   const toggleComplete = async () => {
     if (!user) {
@@ -216,23 +217,24 @@ export function TopicContent({
         <div className="my-6 lg:my-8">
           <h3 className="mb-3 text-lg font-medium text-foreground lg:mb-4 lg:text-xl">Companies</h3>
           <div className="flex flex-wrap gap-2">
-            {topic.companies.map((company, index) => {
-              const info = getCompanyInfo(company);
+            {COMPANIES.map(company => {
+              if (!companiesSet.has(company.identifier)) return null;
+
               return (
                 <button
                   className="btn border-[#e5e5e5] bg-white px-2 py-1 text-xs text-black lg:px-3 lg:py-2 lg:text-sm"
-                  key={index}
-                  onClick={() => onFilterByCompany?.(company)}
-                  title={`Filter by ${info.label}`}
+                  key={company.identifier}
+                  onClick={() => onFilterByCompany?.(company.identifier)}
+                  title={`Filter by ${company.label}`}
                 >
                   <Image
                     src={companyIconSrc(company)}
-                    alt={info.label}
+                    alt={company.label}
                     width={16}
                     height={16}
                     className="h-3 w-3 lg:h-4 lg:w-4"
                   />
-                  {info.label}
+                  {company.label}
                 </button>
               );
             })}

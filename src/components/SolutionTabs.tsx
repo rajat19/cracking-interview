@@ -19,7 +19,7 @@ const getLanguageIcon = (language: string): string => {
 };
 
 const getDefaultLanguage = (solutions: Record<string, ISolutionEntry>): string => {
-  return 'java' in solutions ? 'java' : Object.keys(solutions)[0] ?? '';
+  return 'java' in solutions ? 'java' : (Object.keys(solutions)[0] ?? '');
 };
 
 export function SolutionTabs({ solutions, showHeader = true }: SolutionTabsProps) {

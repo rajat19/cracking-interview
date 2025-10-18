@@ -52,7 +52,7 @@ export function ProblemSetDetail({ problemSet, allTopics, category }: ProblemSet
 
   const orderedTopics = useMemo(() => {
     const topics: ITopicList[] = [];
-    
+
     for (const questionId of problemSet.questions) {
       const topic = topicsMap.get(questionId);
       if (topic) {
@@ -63,7 +63,7 @@ export function ProblemSetDetail({ problemSet, allTopics, category }: ProblemSet
         });
       }
     }
-    
+
     return topics;
   }, [problemSet.questions, topicsMap, userProgress]);
 
@@ -131,4 +131,3 @@ export function ProblemSetDetail({ problemSet, allTopics, category }: ProblemSet
     </div>
   );
 }
-

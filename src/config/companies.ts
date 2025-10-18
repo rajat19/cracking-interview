@@ -1,74 +1,56 @@
 import assetPath from '@/lib/assetPath';
 
-export interface CompanyInfo {
+export interface Company {
   label: string;
-  icon: string;
+  identifier: string;
+  img: string;
 }
 
-export const COMPANIES: Record<string, CompanyInfo> = {
-  adobe: { label: 'Adobe', icon: 'adobe' },
-  airbnb: { label: 'Airbnb', icon: 'airbnb' },
-  amazon: { label: 'Amazon', icon: 'amazon' },
-  apple: { label: 'Apple', icon: 'apple' },
-  atlassian: { label: 'Atlassian', icon: 'atlassian' },
-  bloomberg: { label: 'Bloomberg', icon: 'bloomberg' },
-  booking: { label: 'Booking', icon: 'booking' },
-  doordash: { label: 'DoorDash', icon: 'doordash' },
-  ebay: { label: 'eBay', icon: 'ebay' },
-  expedia: { label: 'Expedia', icon: 'expedia' },
-  facebook: { label: 'Facebook', icon: 'facebook' },
-  flipkart: { label: 'Flipkart', icon: 'flipkart' },
-  goldman: { label: 'Goldman Sachs', icon: 'goldman' },
-  google: { label: 'Google', icon: 'google' },
-  indeed: { label: 'Indeed', icon: 'indeed' },
-  intuit: { label: 'Intuit', icon: 'intuit' },
-  linkedin: { label: 'LinkedIn', icon: 'linkedin' },
-  lyft: { label: 'Lyft', icon: 'lyft' },
-  meta: { label: 'Meta', icon: 'meta' },
-  microsoft: { label: 'Microsoft', icon: 'microsoft' },
-  netflix: { label: 'Netflix', icon: 'netflix' },
-  nutanix: { label: 'Nutanix', icon: 'nutanix' },
-  nvidia: { label: 'NVIDIA', icon: 'nvidia' },
-  openai: { label: 'OpenAI', icon: 'openai' },
-  oracle: { label: 'Oracle', icon: 'oracle' },
-  paypal: { label: 'PayPal', icon: 'paypal' },
-  pinterest: { label: 'Pinterest', icon: 'pinterest' },
-  salesforce: { label: 'Salesforce', icon: 'salesforce' },
-  sap: { label: 'SAP', icon: 'sap' },
-  snapchat: { label: 'Snapchat', icon: 'snapchat' },
-  tesla: { label: 'Tesla', icon: 'tesla' },
-  twitter: { label: 'Twitter', icon: 'twitter' },
-  uber: { label: 'Uber', icon: 'uber' },
-  vmware: { label: 'VMware', icon: 'vmware' },
-  walmart: { label: 'Walmart', icon: 'walmart' },
-  x: { label: 'X', icon: 'x' },
-  yelp: { label: 'Yelp', icon: 'yelp' },
-};
-
-function toTitleCase(value: string): string {
-  return value
-    .replace(/[-_]/g, ' ')
-    .replace(/\s+/g, ' ')
-    .trim()
-    .replace(/\b([a-z])/g, (_, ch: string) => ch.toUpperCase());
-}
-
-/**
- * Returns normalized company info, falling back to a title-cased label and same icon key when absent.
- */
-export function getCompanyInfo(companyKey: string): CompanyInfo {
-  const key = (companyKey || '').toLowerCase();
-  const preset = COMPANIES[key];
-  if (preset) return preset;
-  return { label: toTitleCase(key), icon: key };
-}
+export const COMPANIES: Company[] = [
+  { label: 'Meta', identifier: 'meta', img: 'meta.svg' },
+  { label: 'Facebook', identifier: 'facebook', img: 'facebook.svg' },
+  { label: 'Google', identifier: 'google', img: 'google.svg' },
+  { label: 'Microsoft', identifier: 'microsoft', img: 'microsoft.svg' },
+  { label: 'Amazon', identifier: 'amazon', img: 'amazon.svg' },
+  { label: 'Netflix', identifier: 'netflix', img: 'netflix.svg' },
+  { label: 'Apple', identifier: 'apple', img: 'apple.svg' },
+  { label: 'OpenAI', identifier: 'openai', img: 'openai.svg' },
+  { label: 'NVIDIA', identifier: 'nvidia', img: 'nvidia.svg' },
+  { label: 'Tesla', identifier: 'tesla', img: 'tesla.svg' },
+  { label: 'Uber', identifier: 'uber', img: 'uber.svg' },
+  { label: 'Airbnb', identifier: 'airbnb', img: 'airbnb.svg' },
+  { label: 'LinkedIn', identifier: 'linkedin', img: 'linkedin.svg' },
+  { label: 'Salesforce', identifier: 'salesforce', img: 'salesforce.svg' },
+  { label: 'Adobe', identifier: 'adobe', img: 'adobe.svg' },
+  { label: 'Oracle', identifier: 'oracle', img: 'oracle.svg' },
+  { label: 'Twitter', identifier: 'twitter', img: 'twitter.svg' },
+  { label: 'X', identifier: 'x', img: 'x.svg' },
+  { label: 'Bloomberg', identifier: 'bloomberg', img: 'bloomberg.svg' },
+  { label: 'Goldman Sachs', identifier: 'goldman', img: 'goldman.svg' },
+  { label: 'PayPal', identifier: 'paypal', img: 'paypal.svg' },
+  { label: 'Intuit', identifier: 'intuit', img: 'intuit.svg' },
+  { label: 'Walmart', identifier: 'walmart', img: 'walmart.svg' },
+  { label: 'eBay', identifier: 'ebay', img: 'ebay.svg' },
+  { label: 'Flipkart', identifier: 'flipkart', img: 'flipkart.svg' },
+  { label: 'DoorDash', identifier: 'doordash', img: 'doordash.svg' },
+  { label: 'Booking', identifier: 'booking', img: 'booking.svg' },
+  { label: 'Expedia', identifier: 'expedia', img: 'expedia.svg' },
+  { label: 'Atlassian', identifier: 'atlassian', img: 'atlassian.svg' },
+  { label: 'Snapchat', identifier: 'snapchat', img: 'snapchat.svg' },
+  { label: 'Pinterest', identifier: 'pinterest', img: 'pinterest.svg' },
+  { label: 'Lyft', identifier: 'lyft', img: 'lyft.svg' },
+  { label: 'Indeed', identifier: 'indeed', img: 'indeed.svg' },
+  { label: 'Yelp', identifier: 'yelp', img: 'yelp.svg' },
+  { label: 'SAP', identifier: 'sap', img: 'sap.svg' },
+  { label: 'VMware', identifier: 'vmware', img: 'vmware.svg' },
+  { label: 'Nutanix', identifier: 'nutanix', img: 'nutanix.svg' },
+];
 
 /**
  * Builds the asset path for the given company icon, respecting basePath/assetPrefix.
  */
-export function companyIconSrc(companyKey: string): string {
-  const { icon } = getCompanyInfo(companyKey);
-  return assetPath(`/assets/img/company/${icon}.svg`);
+export function companyIconSrc(company: Company): string {
+  return assetPath(`/assets/img/company/${company.img}`);
 }
 
-
+export default COMPANIES;

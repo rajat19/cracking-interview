@@ -101,10 +101,10 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
     const topicId = searchParams.get('t');
     const topicFilterParam = searchParams.get('topic') || '';
     const companyFilterParam = searchParams.get('company') || '';
-    
+
     setTopicTagFilter(topicFilterParam);
     setCompanyFilter(companyFilterParam);
-    
+
     if (!topicId) {
       // Clear selected topic when no 't' param in URL
       if (selectedTopic !== null) {
@@ -112,7 +112,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
       }
       return;
     }
-    
+
     if (topicId !== selectedTopic?.id) {
       // Load topic if it's different from current
       loadFullTopic(topicId);

@@ -24,17 +24,17 @@ export function ProblemSetPreview({
 }: ProblemSetPreviewProps) {
   const previewTopics = useMemo(() => {
     const topics: ITopicList[] = [];
-    
+
     // Get the appropriate limit based on screen size (will use CSS to handle responsiveness)
     const limit = PROBLEM_SET_PREVIEW_LIMIT.desktop;
-    
+
     for (const questionId of problemSet.questions.slice(0, limit)) {
       const topic = topicsMap.get(questionId);
       if (topic) {
         topics.push(topic);
       }
     }
-    
+
     return topics;
   }, [problemSet.questions, topicsMap]);
 
@@ -84,4 +84,3 @@ export function ProblemSetPreview({
     </div>
   );
 }
-

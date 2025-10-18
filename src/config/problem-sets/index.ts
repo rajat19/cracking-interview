@@ -40,4 +40,3 @@ export function getProblemSet(category: ITopicCategory, setId: string): IProblem
 export function hasProblemSets(category: ITopicCategory): boolean {
   return getProblemSets(category).length > 0;
 }
-

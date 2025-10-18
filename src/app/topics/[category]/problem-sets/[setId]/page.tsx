@@ -51,9 +51,10 @@ export default async function ProblemSetPage({ params }: PageProps) {
   const allTopics = await loadTopicsList(typedCategory);
 
   return (
-    <Suspense fallback={<div className="flex min-h-screen items-center justify-center">Loading...</div>}>
+    <Suspense
+      fallback={<div className="flex min-h-screen items-center justify-center">Loading...</div>}
+    >
       <ProblemSetDetail problemSet={problemSet} allTopics={allTopics} category={typedCategory} />
     </Suspense>
   );
 }
-
