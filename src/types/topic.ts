@@ -16,11 +16,17 @@ export interface ITopic {
 
   // Platform identifiers
   leetcode?: string;
+  leetid?: string; // Used by AlgoMonster (LeetCode problem ID)
   gfg?: string;
   interviewbit?: string;
   hackerrank?: string;
   hellointerview?: string;
   metacareers?: string;
+  neetcode?: string;
+  codingninjas?: string;
+  codechef?: string;
+  scaler?: string;
+  wikipedia?: string;
 
   // Design pattern platform identifiers
   sourcemaking?: string;

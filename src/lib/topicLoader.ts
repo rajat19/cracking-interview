@@ -40,11 +40,17 @@ interface UniversalFrontmatterData {
   companies?: string[];
   categories?: string;
   leetcode?: string;
+  leetid?: string;
   gfg?: string;
   interviewbit?: string;
   hackerrank?: string;
   hellointerview?: string;
   metacareers?: string;
+  neetcode?: string;
+  codingninjas?: string;
+  codechef?: string;
+  scaler?: string;
+  wikipedia?: string;
   sourcemaking?: string;
   refactoring?: string;
   [key: string]: unknown;

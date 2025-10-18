@@ -29,8 +29,19 @@ interface FrontmatterAttrs {
   tc?: string;
   sc?: string;
   leetcode?: string;
-  gfg?: string;
   leetid?: string;
+  gfg?: string;
+  interviewbit?: string;
+  hackerrank?: string;
+  hellointerview?: string;
+  metacareers?: string;
+  neetcode?: string;
+  codingninjas?: string;
+  codechef?: string;
+  scaler?: string;
+  wikipedia?: string;
+  sourcemaking?: string;
+  refactoring?: string;
   [key: string]: unknown;
 }
 
@@ -44,8 +55,19 @@ interface TopicContent {
   tc?: string;
   sc?: string;
   leetcode?: string;
-  gfg?: string;
   leetid?: string;
+  gfg?: string;
+  interviewbit?: string;
+  hackerrank?: string;
+  hellointerview?: string;
+  metacareers?: string;
+  neetcode?: string;
+  codingninjas?: string;
+  codechef?: string;
+  scaler?: string;
+  wikipedia?: string;
+  sourcemaking?: string;
+  refactoring?: string;
   content: string;
   body: string;
   solutions: SolutionsMap;
@@ -139,8 +161,19 @@ async function generateStaticContent(): Promise<void> {
           tc: parsed.attributes.tc as string | undefined,
           sc: parsed.attributes.sc as string | undefined,
           leetcode: parsed.attributes.leetcode as string | undefined,
-          gfg: parsed.attributes.gfg as string | undefined,
           leetid: parsed.attributes.leetid as string | undefined,
+          gfg: parsed.attributes.gfg as string | undefined,
+          interviewbit: parsed.attributes.interviewbit as string | undefined,
+          hackerrank: parsed.attributes.hackerrank as string | undefined,
+          hellointerview: parsed.attributes.hellointerview as string | undefined,
+          metacareers: parsed.attributes.metacareers as string | undefined,
+          neetcode: parsed.attributes.neetcode as string | undefined,
+          codingninjas: parsed.attributes.codingninjas as string | undefined,
+          codechef: parsed.attributes.codechef as string | undefined,
+          scaler: parsed.attributes.scaler as string | undefined,
+          wikipedia: parsed.attributes.wikipedia as string | undefined,
+          sourcemaking: parsed.attributes.sourcemaking as string | undefined,
+          refactoring: parsed.attributes.refactoring as string | undefined,
           content: content,
           body: parsed.body as string,
           solutions: solutions,

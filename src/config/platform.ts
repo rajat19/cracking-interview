@@ -97,6 +97,20 @@ export const PLATFORMS: Platform[] = [
     suffix: '',
     identifier: 'codingninjas',
     img: 'codingninjas.svg',
+  },
+  {
+    name: 'CodeChef',
+    base: 'https://www.codechef.com/',
+    suffix: '',
+    identifier: 'codechef',
+    img: 'codechef.svg',
+  },
+  {
+    name: 'AlgoMonster',
+    base: 'https://algo.monster/liteproblems/',
+    suffix: '',
+    identifier: 'leetid',
+    img: 'algomonster.svg',
   }
 ];
 
