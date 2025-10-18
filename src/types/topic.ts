@@ -55,3 +55,10 @@ export interface ISolutionEntry {
   language: string;
   code: string;
 }
+
+export interface IProblemSet {
+  id: string;
+  name: string;
+  description: string;
+  questions: string[]; // array of topic IDs
+}

@@ -17,6 +17,8 @@ import config from '@/config';
 import TopicDefault from '@/components/topic/TopicDefault';
 import TopicLoading from '@/components/topic/TopicLoading';
 import SearchSuggest from '@/components/filters/SearchSuggest';
+import { ProblemSetsHome } from '@/components/ProblemSetsHome';
+import { hasProblemSets } from '@/config/problem-sets';
 
 interface DocsLayoutProps {
   title: string;
@@ -99,12 +101,15 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
     const topicId = searchParams.get('t');
     if (topicId && topicId !== selectedTopic?.id) {
       loadFullTopic(topicId);
+    } else if (!topicId && selectedTopic) {
+      // Clear selected topic when no 't' param in URL
+      setSelectedTopic(null);
     }
     const topicFilterParam = searchParams.get('topic') || '';
     const companyFilterParam = searchParams.get('company') || '';
     setTopicTagFilter(topicFilterParam);
     setCompanyFilter(companyFilterParam);
-  }, [searchParams, loadFullTopic, selectedTopic?.id]);
+  }, [searchParams, loadFullTopic, selectedTopic]);
 
   const topicsWithProgress = useMemo(() => {
     return topics.map(topic => ({
@@ -308,7 +313,16 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
                 suggestions={searchSuggestions}
                 onSelectSuggestion={id => handleTopicSelect(id)}
               />
-              <TopicDefault />
+              {hasProblemSets(category) ? (
+                <ProblemSetsHome
+                  category={category}
+                  topicsWithProgress={topicsWithProgress}
+                  onTopicSelect={handleTopicSelect}
+                  selectedTopicId={selectedTopic?.id}
+                />
+              ) : (
+                <TopicDefault />
+              )}
             </div>
           )}
         </div>
@@ -396,6 +410,13 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
                 onFilterByCompany={comp => {
                   handleSetCompanyFilter(comp);
                 }}
+              />
+            ) : hasProblemSets(category) ? (
+              <ProblemSetsHome
+                category={category}
+                topicsWithProgress={topicsWithProgress}
+                onTopicSelect={handleTopicSelect}
+                selectedTopicId={selectedTopic?.id}
               />
             ) : (
               <TopicDefault />
