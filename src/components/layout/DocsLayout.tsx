@@ -99,17 +99,26 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
 
   useEffect(() => {
     const topicId = searchParams.get('t');
-    if (topicId && topicId !== selectedTopic?.id) {
-      loadFullTopic(topicId);
-    } else if (!topicId && selectedTopic) {
-      // Clear selected topic when no 't' param in URL
-      setSelectedTopic(null);
-    }
     const topicFilterParam = searchParams.get('topic') || '';
     const companyFilterParam = searchParams.get('company') || '';
+    
     setTopicTagFilter(topicFilterParam);
     setCompanyFilter(companyFilterParam);
-  }, [searchParams, loadFullTopic, selectedTopic]);
+    
+    if (!topicId) {
+      // Clear selected topic when no 't' param in URL
+      if (selectedTopic !== null) {
+        setSelectedTopic(null);
+      }
+      return;
+    }
+    
+    if (topicId !== selectedTopic?.id) {
+      // Load topic if it's different from current
+      loadFullTopic(topicId);
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [searchParams, loadFullTopic]);
 
   const topicsWithProgress = useMemo(() => {
     return topics.map(topic => ({
@@ -318,7 +327,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
                   category={category}
                   topicsWithProgress={topicsWithProgress}
                   onTopicSelect={handleTopicSelect}
-                  selectedTopicId={selectedTopic?.id}
+                  selectedTopicId={(selectedTopic as ITopic | null)?.id}
                 />
               ) : (
                 <TopicDefault />
@@ -416,7 +425,7 @@ export function DocsLayout({ title, description, category }: DocsLayoutProps) {
                 category={category}
                 topicsWithProgress={topicsWithProgress}
                 onTopicSelect={handleTopicSelect}
-                selectedTopicId={selectedTopic?.id}
+                selectedTopicId={(selectedTopic as ITopic | null)?.id}
               />
             ) : (
               <TopicDefault />
