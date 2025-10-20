@@ -4,11 +4,17 @@ difficulty: easy
 tags: [dynamic-programming, bit-manipulation]
 langs: [java, cpp, py]
 leetid: 338
+tc: O(n)
+sc: O(n)
+companies: []
 leetcode: counting-bits
+gfg: dsa/count-set-bits-in-an-integer
+neetcode: counting-bits
+hellointerview: code/dynamic-programming/counting-bits
+codingninjas: count-set-bits_1112627
+baeldung: cs/integer-bitcount
 ---
 Given an integer `n`, return *an array *`ans`* of length *`n + 1`* such that for each *`i`* *(`0 <= i <= n`)*, *`ans[i]`* is the **number of ***`1`***'s** in the binary representation of *`i`.
-
- 
 
 ---
 ## Test Cases
@@ -22,6 +28,7 @@ Explanation:
 1 --> 1
 2 --> 10
 ```
+
 **Example 2:**
 
 ```
@@ -36,17 +43,11 @@ Explanation:
 5 --> 101
 ```
  
-
 **Constraints:**
-
 	
 * `0 <= n <= 10<sup>5</sup>`
 
- 
-
 **Follow up:**
 
-	
-* It is very easy to come up with a solution with a runtime of `O(n log n)`. Can you do it in linear time `O(n)` and possibly in a single pass?
-	
+* It is very easy to come up with a solution with a runtime of `O(n log n)`. Can you do it in linear time `O(n)` and possibly in a single pass?	
 * Can you do it without using any built-in function (i.e., like `__builtin_popcount` in C++)?

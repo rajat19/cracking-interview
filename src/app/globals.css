@@ -199,16 +199,24 @@ All colors MUST be HSL.
     background: var(--gradient-card);
   }
 
-  .difficulty-easy {
-    @apply border-accent/20 bg-accent/10 text-accent;
+  /* Easy Difficulty - Only show color when selected */
+  .difficulty-easy.selected-difficulty {
+    @apply border-accent bg-accent text-white hover:bg-accent/90;
   }
 
-  .difficulty-medium {
-    @apply border-warning/20 bg-warning/10 text-warning;
+  /* Medium Difficulty - Only show color when selected */
+  .difficulty-medium.selected-difficulty {
+    @apply border-warning bg-warning text-white hover:bg-warning/90;
   }
 
-  .difficulty-hard {
-    @apply border-destructive/20 bg-destructive/10 text-destructive;
+  /* Hard Difficulty - Only show color when selected */
+  .difficulty-hard.selected-difficulty {
+    @apply border-destructive bg-destructive text-white hover:bg-destructive/90;
+  }
+
+  /* All button - default */
+  .difficulty-all {
+    /* Uses default button styling */
   }
 
   .progress-indicator {
