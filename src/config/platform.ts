@@ -26,7 +26,7 @@ export const PLATFORMS: Platform[] = [
     base: 'https://www.hellointerview.com/learn/',
     suffix: '',
     identifier: 'hellointerview',
-    img: 'hellointerview.svg',
+    img: 'hellointerview.jpeg',
   },
   {
     name: 'Youtube',

@@ -7,11 +7,14 @@ tc: O(n)
 sc: O(n)
 leetid: 103
 difficulty: medium
-companies: 
-gfg: 
+companies: [amazon, flipkart, microsoft, expedia, goldman]
+gfg: dsa/zigzag-tree-traversal
 hackerrank: 
-interviewbit: 
+interviewbit: zigzag-level-order-traversal-bt
 leetcode: binary-tree-zigzag-level-order-traversal
+codingninjas: binary-tree-zigzag-traversal_1062662
+neetcode: binary-tree-zigzag-level-order-traversal
+hellointerview: code/breadth-first-search/zigzag-level-order
 ---
 
 Given the `root` of a binary tree, 
@@ -22,21 +25,24 @@ return the zigzag level order traversal of its nodes' values.
 
 ## Test Cases
 
-**Input:** 
+**Example 1:**
+
+<MdxImage src="https://assets.leetcode.com/uploads/2021/02/19/tree1.jpg" style={{width: '200px'}} />
 ```
-(TreeNode) root = [3,9,20,null,null,15,7]
+Input: root = [3,9,20,null,null,15,7]
+Output: [[3],[20,9],[15,7]]
 ```
 
-**Output:** 
+**Example 2:**
+
 ```
-(int[]) [[3],[20,9],[15,7]]
+Input: root = [1]
+Output: [[1]]
 ```
 
-**Explanation:**
+**Example 3:**
+
 ```
-    3
-   / \
-  9   20
-     /  \
-    15   7
+Input: root = []
+Output: []
 ```

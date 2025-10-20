@@ -52,7 +52,7 @@ export const PlatformLinks: React.FC<PlatformLinksProps> = ({ topic }) => {
   // Get available platforms for this topic
   const availablePlatforms = PLATFORMS.filter(platform => {
     const identifier = platform.identifier as keyof ITopic;
-    return topic[identifier] && typeof topic[identifier] === 'string';
+    return topic[identifier] && ['string', 'number'].includes(typeof topic[identifier]);
   });
 
   if (availablePlatforms.length === 0) {

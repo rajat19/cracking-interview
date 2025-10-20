@@ -6,12 +6,14 @@ langs: [java, py, cpp]
 tc: O(nmw)
 sc: O(n)
 leetid: 79
-companies: [adobe, amazon, apple, atlassian, bloomberg, facebook, goldman, google, microsoft, oracle, twitter]
+companies: [adobe, amazon, apple, atlassian, bloomberg, facebook, goldman, google, microsoft, oracle, twitter, walmart, salesforce]
 difficulty: medium
-gfg: word-ladder-length-of-shortest-chain-to-reach-a-target-word
+gfg: dsa/check-if-a-word-exists-in-a-grid-or-not
 hackerrank: 
-interviewbit: 
+interviewbit: word-search-board
 leetcode: word-search
+hellointerview: code/backtracking/word-search
+codingninjas: word-search_892986
 ---
 
 Given an `m x n` grid of characters `board` and a string `word`, 
@@ -27,39 +29,28 @@ The same letter cell may not be used more than once.
 
 <MdxImage src="code/word2.jpeg" alt="Word Search" />
 
-**Input:**
+**Example 1:**
 ```
-(char[]) board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]
-(string) word = "ABCCED"
-```
-
-**Output:**
-```
-(boolean) true
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCCED"
+Output: true
 ```
 
----
-
-**Input:**
+**Example 2:**
 ```
-(char[]) board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]
-(string) word = "See"
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "SEE"
+Output: true
 ```
 
-**Output:**
+**Example 3:**
 ```
-(boolean) true
-```
-
----
-
-**Input:**
-```
-(char[]) board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]]
-(string) word = "ABCB"
+Input: board = [["A","B","C","E"],["S","F","C","S"],["A","D","E","E"]], word = "ABCB"
+Output: false
 ```
 
-**Output:**
-```
-(boolean) false
-```
+**Constraints:**
+
+* `m == board.length`
+* `n = board[i].length`
+* `1 <= m, n <= 6`
+* `1 <= word.length <= 15`
+* `board` and `word` consists of only lowercase and uppercase English letters.

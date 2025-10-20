@@ -84,4 +84,17 @@ export const dsaProblemSets: IProblemSet[] = [
       'longest-increasing-path-in-a-matrix',
     ],
   },
+  {
+    id: 'striver-sde-sheet',
+    name: 'Striver SDE Sheet',
+    description: 'A curated list of essential coding interview questions covering all major topics and patterns.',
+    questions: [
+      'set-matrix-zeroes',
+      'maximum-subarray',
+      'sort-colors',
+      'best-time-to-buy-and-sell-stock',
+      'next-permutation',
+      'rotate-image',
+    ],
+  }
 ];

@@ -1,26 +1,31 @@
+import java.util.*;
+
 class Solution {
+    private List<String> res;
+    private int n;
+    
     public List<String> generateParenthesis(int n) {
-        List<String> res = new ArrayList<>();
-        backtrack(n, res, new StringBuilder(), 0, 0);
+        this.n = n;
+        this.res = new ArrayList<>();
+        dfs("", 0, 0);
         return res;
     }
-
-    private void backtrack(int n, List<String> res, StringBuilder sb, int open, int close) {
-        if (sb.length() == n*2) {
-            res.add(sb.toString());
+    
+    private void dfs(String s, int open, int close) {
+        // base case
+        if (s.length() == 2 * n) {
+            res.add(s);
             return;
         }
 
         if (open < n) {
-            sb.append('(');
-            backtrack(n, res, sb, open+1, close);
-            sb.deleteCharAt(sb.length() - 1);
+            // add an opening parenthesis and increment the open count
+            dfs(s + "(", open + 1, close);
         }
-
+        
         if (close < open) {
-            sb.append(')');
-            backtrack(n, res, sb, open, close+1);
-            sb.deleteCharAt(sb.length() - 1);
+            // add a closing parenthesis and increment the close count
+            dfs(s + ")", open, close + 1);
         }
     }
 }

@@ -7,18 +7,20 @@ tc: O(h)
 sc: O(1)
 leetid: 662
 difficulty: medium
-companies: 
-gfg: 
+companies: [amazon, microsoft, flipkart]
+gfg: dsa/maximum-width-of-a-binary-tree
 hackerrank: 
 interviewbit: 
 leetcode: maximum-width-of-binary-tree
+codingninjas: maximum-width-in-binary-tree_763671
+hellointerview: code/breadth-first-search/maximum-width-of-binary-tree
 ---
 
-Given the root of a binary tree, return the **_maximum width_** of the given tree.
+Given the root of a binary tree, return the *_maximum width_* of the given tree.
 
-The **maximum width** of a tree is the maximum width among all levels.
+The *maximum width* of a tree is the maximum width among all levels.
 
-The **width** of one level is defined as the length between the end-nodes (the leftmost and rightmost non-null nodes), where the null nodes between the end-nodes are also counted into the length calculation.
+The *width* of one level is defined as the length between the end-nodes (the leftmost and rightmost non-null nodes), where the null nodes between the end-nodes are also counted into the length calculation.
 
 It is guaranteed that the answer will in the range of 32-bit signed integer.
 
@@ -27,10 +29,12 @@ It is guaranteed that the answer will in the range of 32-bit signed integer.
 ## Test Cases
 
 **Example 1:** 
+
+<MdxImage alt="" src="https://assets.leetcode.com/uploads/2021/05/03/width1-tree.jpg" style="width: 359px; height: 302px;" />
 ```
-Input: root = [1,3,null,5,3]
-Output: 2
-Explanation: The maximum width existing in the third level with the length 2 (5,3).
+Input: root = [1,3,2,5,3,null,9]
+Output: 4
+Explanation: The maximum width exists in the third level with length 4 (5,3,null,9).
     1
    / \
   3   2
@@ -39,6 +43,8 @@ Explanation: The maximum width existing in the third level with the length 2 (5,
 ```
 
 **Example 2:** 
+
+<MdxImage alt="" src="https://assets.leetcode.com/uploads/2021/05/03/width3-tree.jpg" style="width: 289px; height: 299px;" />
 ```
 Input: root = [1,3,2,5]
 Output: 2
@@ -48,4 +54,13 @@ Explanation: The maximum width existing in the second level with the length 2 (3
   3   2
  /
 5
+```
+
+**Example 3:**
+
+<MdxImage alt="" src="https://assets.leetcode.com/uploads/2022/03/14/maximum-width-of-binary-tree-v3.jpg" style="width: 442px; height: 422px;" />
+```
+Input: root = [1,3,2,5,null,null,9,6,null,7]
+Output: 7
+Explanation: The maximum width exists in the fourth level with length 7 (6,null,null,null,null,null,7).
 ```
