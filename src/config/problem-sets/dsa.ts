@@ -4,6 +4,7 @@ export const dsaProblemSets: IProblemSet[] = [
   {
     id: 'blind-75',
     name: 'Blind 75',
+    status: 'active',
     description:
       'A curated list of 75 essential coding interview questions covering all major topics and patterns.',
     questions: [
@@ -87,6 +88,7 @@ export const dsaProblemSets: IProblemSet[] = [
   {
     id: 'striver-sde-sheet',
     name: 'Striver SDE Sheet',
+    status: 'inactive',
     description: 'A curated list of essential coding interview questions covering all major topics and patterns.',
     questions: [
       'set-matrix-zeroes',
@@ -95,6 +97,15 @@ export const dsaProblemSets: IProblemSet[] = [
       'best-time-to-buy-and-sell-stock',
       'next-permutation',
       'rotate-image',
+    ],
+  },
+  {
+    id: 'premium-algo-100',
+    name: 'Premium Algo 100',
+    status: 'active',
+    description: 'Curated Leetcode premium problems. Hand-picked by LC staff',
+    questions: [
+      
     ],
   }
 ];

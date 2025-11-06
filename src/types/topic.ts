@@ -59,6 +59,7 @@ export interface ISolutionEntry {
 export interface IProblemSet {
   id: string;
   name: string;
+  status: 'active' | 'inactive';
   description: string;
   questions: string[]; // array of topic IDs
 }
