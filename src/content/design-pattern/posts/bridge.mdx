@@ -5,7 +5,65 @@ difficulty: hard
 tags: [structural]
 langs: [java, py, cpp]
 companies: []
+gfg: system-design/bridge-design-pattern
 refactoring: bridge
 sourcemaking: bridge
+wikipedia: Bridge_pattern
+scaler: design-patterns/bridge-design-pattern/
 ---
+
+## Intent
+
+- Decouple an abstraction from its implementation so that the two can vary independently.
+- Publish interface in an inheritance hierarchy, and bury implementation in its own inheritance hierarchy.
+- Beyond encapsulation, to insulation
+
+## Problem
+
+"Hardening of the software arteries" has occurred by using subclassing of an abstract base class to provide alternative implementations. This locks in compile-time binding between interface and implementation. The abstraction and implementation cannot be independently extended or composed.
+
+Consider the domain of "thread scheduling". There are two types of thread schedulers, and two types of operating systems or "platforms". Given this approach to specialization, we have to define a class for each permutation of these two dimensions.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Bridge.png?id=49f91c771a1559064bd845aa940d7cb9" />
+
+What if we had three kinds of thread schedulers, and four kinds of platforms? The number of classes we would have to define is the product of the number of scheduling schemes and the number of platforms.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Bridge_.png?id=43eec8bc5995f8fedecbeab71000896b" />
+
+## Solution
+
+The Bridge design pattern proposes refactoring this exponentially explosive inheritance hierarchy into two orthogonal hierarchies – one for platform-independent abstractions, and the other for platform-dependent implementations.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Bridge__.png?id=c32fa8bb4a1f3d2453791c9306d769bc" />
+
+Decompose the component's interface and implementation into orthogonal class hierarchies. The interface class contains a pointer to the abstract implementation class. This pointer is initialized with an instance of a concrete implementation class, but all subsequent interaction from the interface class to the implementation class is limited to the abstraction maintained in the implementation base class.
+
+## Structure
+
+The Client doesn't want to deal with platform-dependent details. The Bridge pattern encapsulates this complexity behind an abstraction "wrapper".
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Bridge___.png?id=d8cddaee2f6359a376189e96e5a56c86" />
+
+## Example
+
+The Bridge pattern decouples an abstraction from its implementation, so that the two can vary independently. A household switch controlling lights, ceiling fans, etc. is an example of the Bridge. The purpose of the switch is to turn a device on or off. The actual switch can be implemented as a pull chain, simple two position switch, or a variety of dimmer switches.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Bridge_example.png?id=82f41684fd73d0632183e5519e8e7116" />
+
+## Checklist
+
+1. Decide if two orthogonal dimensions exist in the domain. These independent concepts could be: abstraction/platform, or domain/infrastructure, or front-end/back-end, or interface/implementation.
+2. Design the separation of concerns: what does the client want, and what do the platforms provide.
+3. Design a platform-oriented interface that is minimal, necessary, and sufficient. Its goal is to decouple the abstraction from the platform.
+4. Define a derived class of that interface for each platform.
+5. Create the abstraction base class that "has a" platform object and delegates the platform-oriented functionality to it.
+6. Define specializations of the abstraction class if desired.
+
+## Rule of thumb
+
+- Adapter makes things work after they're designed; Bridge makes them work before they are.
+- Bridge is designed up-front to let the abstraction and the implementation vary independently. Adapter is retrofitted to make unrelated classes work together.
+- State, Strategy, Bridge (and to some degree Adapter) have similar solution structures. They all share elements of the "handle/body" idiom. They differ in intent - that is, they solve different problems.
+- The structure of State and Bridge are identical (except that Bridge admits hierarchies of envelope classes, whereas State allows only one). The two patterns use the same structure to solve different problems: State allows an object's behavior to change along with its state, while Bridge's intent is to decouple an abstraction from its implementation so that the two can vary independently.
+- If interface classes delegate the creation of their implementation classes (instead of creating/coupling themselves directly), then the design usually uses the Abstract Factory pattern to create the implementation objects.
 

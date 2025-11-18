@@ -1,0 +1,83 @@
+---
+layout: post
+title: Template Method Design Pattern
+difficulty: medium
+tags: [behavioral]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/template-method-design-pattern
+refactoring: template-method
+sourcemaking: template-method
+wikipedia: Template_method_pattern
+scaler: design-patterns/template-method-design-pattern/
+---
+
+## Intent
+- Define the skeleton of an algorithm in an operation, deferring some steps to subclasses. Template Method lets subclasses redefine certain steps of an algorithm without changing the algorithm's structure.
+- Base class declares algorithm 'placeholders', and derived classes implement the placeholders.
+
+## Problem
+
+Imagine you're developing a data analysis application that processes different file formats (CSV, JSON, XML). Each format requires similar processing steps: open file, parse data, analyze data, generate report, and close file. However, the specific implementation of parsing varies for each format.
+
+Without Template Method, you might end up with:
+- Code duplication across different format processors
+- Inconsistent processing workflows
+- Difficulty maintaining the overall algorithm structure
+- Risk of missing steps in new format implementations
+
+Each processor class would need to implement the entire workflow, leading to scattered and duplicate code for common operations like opening files and generating reports.
+
+## Structure
+
+The Template Method pattern defines the skeleton of an algorithm in a base class and lets subclasses override specific steps without changing the overall structure.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/template-method/structure.png" />
+
+Key components:
+- **Abstract Class** - declares methods that act as steps of an algorithm, plus the actual template method
+- **Concrete Classes** - can override all steps, but not the template method itself
+
+## Example
+
+Consider a social media posting application that supports different platforms (Facebook, Twitter, LinkedIn). The posting process follows these steps:
+
+1. Authenticate with the platform
+2. Prepare content (format according to platform rules)
+3. Post content
+4. Handle response
+5. Log activity
+
+While the overall workflow remains the same, each platform has specific requirements:
+- **Facebook**: Supports rich text, images, longer posts
+- **Twitter**: Character limit, hashtag optimization, threading
+- **LinkedIn**: Professional tone, article format, networking features
+
+The Template Method pattern allows you to define the posting workflow once while letting each platform implement its specific formatting and posting logic.
+
+## Checklist
+
+1. Identify the parts of an algorithm that are invariant and the parts that are variant.
+2. Create an abstract base class and declare the template method and the set of abstract "primitive" operations.
+3. Implement the invariant parts of the algorithm in the template method.
+4. Identify the parts that require variants and make them abstract methods.
+5. For each variant, create a concrete derived class that implements all abstract methods.
+
+## Pros and Cons
+
+**Pros:**
+- **Code reuse** - You can pull the duplicate code into a superclass.
+- **Control extension** - You can let clients extend only particular steps of an algorithm, but not the whole algorithm or its structure.
+- **Framework creation** - Perfect for creating frameworks where the framework defines the workflow and users provide specific implementations.
+
+**Cons:**
+- **Limited flexibility** - You're restricted by the provided skeleton of an algorithm.
+- **Liskov Substitution Principle** - Some clients may be limited by the provided skeleton of an algorithm.
+- **Maintenance difficulty** - Template methods tend to be harder to maintain the more steps they have.
+
+## Rules of Thumb
+
+- Strategy is like Template Method except in its granularity. Template Method uses inheritance to vary part of an algorithm. Strategy uses delegation to vary the entire algorithm.
+- Template Method is based on inheritance: it lets you alter parts of an algorithm by extending those parts in subclasses. Strategy is based on composition: you can alter parts of the object's behavior by supplying it with different strategies that correspond to that behavior.
+- Factory Method is a specialization of Template Method. At the same time, a Factory Method may serve as a step in a large Template Method.
+- Template Methods are frequently used in frameworks. Developers can extend framework classes and override template method steps to customize processing logic.

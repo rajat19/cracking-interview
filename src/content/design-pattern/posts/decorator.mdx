@@ -1,0 +1,73 @@
+---
+layout: post
+title: Decorator Design Pattern
+difficulty: medium
+tags: [structural]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/decorator-pattern
+refactoring: decorator
+sourcemaking: decorator
+wikipedia: Decorator_pattern
+scaler: design-patterns/decorator-design-pattern/
+---
+
+## Intent
+- Attach new behaviors to objects dynamically by placing these objects inside special wrapper objects that contain the behaviors.
+- Provide a flexible alternative to subclassing for extending functionality.
+- Allow responsibilities to be added and removed from an object at runtime.
+
+## Problem
+You need to extend an object's behavior dynamically but creating subclasses for every possible combination would lead to a combinatorial explosion of classes. For example, a notification system might need to send notifications via email, SMS, Facebook, and various combinations of these channels. Creating separate subclasses for every combination (EmailNotifier, SMSNotifier, FacebookNotifier, EmailAndSMSNotifier, etc.) becomes unmanageable.
+
+Another issue is that inheritance is static - you can't change the behavior of an existing object at runtime by altering its class.
+
+## Structure
+
+The key insight is to aggregate objects with the target behavior in decorators, rather than trying to integrate all variations into a single class.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/decorator/structure-indexed.png" />
+
+The Decorator pattern suggests creating a set of decorator classes that are used to wrap concrete components. Each decorator has a field for storing a reference to a wrapped object.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/decorator/problem1-indexed.png" />
+
+## Example
+
+The Decorator pattern is like wearing clothes. You start with a basic outfit (the core object), then you can add layers like a sweater, jacket, or raincoat (decorators). Each piece of clothing modifies your appearance or capabilities (behavior) without changing who you fundamentally are. You can put on and take off layers as needed, and the order might matter (sweater before jacket).
+
+Another analogy is data processing: you might have a basic data source that reads from a file, then wrap it with compression, encryption, and logging decorators. Each decorator adds its functionality while maintaining the same interface.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/decorator/example.png" />
+
+## Checklist
+
+1. Ensure that your business domain can be represented as a primary component with optional layers over it.
+2. Figure out what methods are common to both the primary component and the optional layers. Create a component interface and declare those methods there.
+3. Create a concrete component class and define the base behavior in it.
+4. Create a base decorator class. It should have a field for storing a reference to a wrapped object. The field should be declared with the component interface type to allow linking to concrete components as well as decorators. The base decorator must delegate all work to the wrapped object.
+5. Make sure all classes implement the component interface.
+6. Create concrete decorators by extending them from the base decorator. A concrete decorator must execute its behavior before or after the call to the parent method (which delegates to the wrapped object).
+7. The client code must be responsible for creating decorators and composing them in the way the client needs.
+
+## Pros and Cons
+
+**Pros:**
+- You can extend an object's behavior without making a new subclass
+- You can add or remove responsibilities from an object at runtime
+- You can combine several behaviors by wrapping an object into multiple decorators
+- Single Responsibility Principle: You can divide a monolithic class that implements many possible variants of behavior into several smaller classes
+
+**Cons:**
+- It's hard to remove a specific wrapper from the wrappers stack
+- It's hard to implement a decorator in such a way that its behavior doesn't depend on the order in the wrapper stack
+- The initial configuration code of layers might look pretty ugly
+
+## Rule of thumb
+
+- Adapter changes the interface of an existing object, while Decorator enhances an object without changing its interface. In addition, Decorator supports recursive composition, which isn't possible with pure Adapters.
+- Adapter provides a different interface to the wrapped object, Proxy provides the same interface, and Decorator provides an enhanced interface.
+- Chain of Responsibility and Decorator have very similar structures. Both patterns rely on recursive composition to pass the execution through a series of handlers. However, there are several crucial differences.
+- Composite and Decorator have similar structure diagrams since both rely on recursive composition to organize an open-ended number of objects.
+- Designs that make heavy use of Composite and Decorator can often benefit from using Prototype. Applying the pattern lets you clone complex structures instead of re-constructing them from scratch.
+- Decorator lets you change the skin of an object, while Strategy lets you change the guts.

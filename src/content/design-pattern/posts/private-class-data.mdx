@@ -1,0 +1,74 @@
+---
+layout: post
+title: Private Class Data Design Pattern
+difficulty: medium
+tags: [structural]
+langs: [java, py, cpp]
+companies: []
+refactoring: private-class-data
+sourcemaking: private_class_data
+wikipedia: Private_class_data_pattern
+scaler: design-patterns/private-class-data-design-pattern/
+---
+
+## Intent
+- Control write access to class attributes after object construction
+- Separate data from methods that use it for better organization
+- Encapsulate class data initialization and provide immutability after construction
+
+## Problem
+
+A class may expose its attributes to manipulation when such manipulation is no longer desirable, especially after the object has been fully constructed. Traditional access modifiers don't provide fine-grained control over when attributes can be modified.
+
+Consider a `Person` class with attributes like name, birthDate, and socialSecurityNumber. Once a person object is created, these attributes should be immutable, but the programming language might not provide a way to make them truly final after construction while still allowing initialization flexibility.
+
+## Structure
+
+The Private Class Data pattern addresses this by extracting data into a separate class that controls access to the attributes.
+
+The pattern involves:
+- **Main Class**: The primary class that needs to protect its data
+- **Data Class**: A separate class that holds the sensitive attributes
+- **Controlled Access**: The data class provides controlled access through getters and limited setters
+
+## Example
+
+Think of a bank account system. Once an account is created with an account number, customer details, and initial balance, certain information like the account number and customer ID should never change. The Private Class Data pattern allows you to separate this immutable data into a protected data class while still allowing operations like balance updates through controlled methods.
+
+Another example is a configuration class where settings should be read-only after initialization but need to be set during the object creation phase.
+
+## Checklist
+
+1. Identify attributes that need protection from modification
+2. Create a dedicated data class to hold these attributes
+3. Move the protected attributes to the data class
+4. Create an instance of the data class in the main class
+5. Initialize the data class through its constructor
+6. Expose each attribute through getter methods in the data class
+7. Only expose setters for attributes that truly need post-construction modification
+8. Ensure the main class accesses data only through the data class interface
+
+## Pros and Cons
+
+**Pros:**
+- Provides fine-grained control over attribute access
+- Improves data integrity by preventing unintended modifications
+- Separates data concerns from business logic
+- Enables creation of immutable-like behavior even in languages without strong immutability support
+- Makes the design more explicit about what data can and cannot be changed
+
+**Cons:**
+- Increases complexity by adding an extra layer of indirection
+- Can lead to more verbose code with additional getter/setter methods
+- May impact performance due to extra method calls
+- Can make the code harder to understand for developers unfamiliar with the pattern
+- Might be overkill for simple classes with minimal data protection needs
+
+## Rules of Thumb
+
+- Use when you need "final after construction" behavior that your language doesn't directly support
+- Consider this pattern for classes with sensitive data that should be immutable after initialization
+- Don't use if simple access modifiers (private, protected) are sufficient for your needs
+- The data class can often be implemented as an inner class to maintain close coupling
+- Consider combining with Factory pattern for complex initialization scenarios
+- If you need true immutability, consider using immutable data structures or value objects instead

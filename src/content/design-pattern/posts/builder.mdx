@@ -1,0 +1,69 @@
+---
+layout: post
+title: Builder Design Pattern
+difficulty: medium
+tags: [creational]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/builder-design-pattern
+refactoring: builder
+sourcemaking: builder
+wikipedia: Builder_pattern
+scaler: design-patterns/builder-design-pattern/
+---
+
+## Intent
+- Separate the construction of a complex object from its representation so that the same construction process can create different representations
+- Parse a complex representation, create one of several targets
+- Construct a complex object step by step. The final step returns the object
+
+## Problem
+
+Imagine a complex object that requires laborious, step-by-step initialization of many fields and nested objects. Such initialization code is usually buried inside a monstrous constructor with lots of parameters. Or even worse: scattered all over the client code.
+
+Consider how to create a House object. To build a simple house, you need to construct four walls and a floor, install a door, fit a pair of windows, and build a roof. But what if you want a bigger, brighter house, with a backyard and other goodies (like a heating system, plumbing, and electrical wiring)?
+
+The simplest solution is to extend the base House class and create a set of subclasses to cover all combinations of the parameters. But eventually you'll end up with a considerable number of subclasses.
+
+## Structure
+
+The Builder pattern suggests that you extract the object construction code out of its own class and move it to separate objects called builders. The pattern organizes object construction into a set of steps. To create an object, you execute a series of these steps on a builder object.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/builder/structure.png" />
+
+You can go further and extract a series of calls to the builder steps you use to construct a product into a separate class called director. The director class defines the order in which to execute the building steps.
+
+<MdxImage src="https://refactoring.guru/images/patterns/content/builder/builder-en.png" />
+
+## Example
+
+You can think of the Builder pattern as a specialized foreman who knows how to build particular types of things. The same foreman (Director) can work with different construction crews (Builders) to create different products. For instance, the same set of instructions can be used to build a stone house, a wooden house, or even a manual describing how to build the house.
+
+The key difference is that while similar construction steps are used, the materials and techniques differ, resulting in completely different products.
+
+## Implementation Checklist
+
+1. Make sure that you can clearly define the common construction steps for building all available product representations
+2. Declare these steps in the base builder interface
+3. Create a concrete builder class for each of the product representations and implement their construction steps
+4. Think about creating a director class. It may encapsulate various ways to construct a product using the same builder object
+5. The client code creates both the builder and the director objects. Before construction starts, the client must pass a builder object to the director
+6. The construction result can be obtained directly from the director only if all products follow the same interface
+
+## Pros and Cons
+
+**Pros:**
+- Construct objects step-by-step, defer construction steps or run steps recursively
+- Reuse the same construction code when building various representations of products
+- Single Responsibility Principle. Isolate complex construction code from the business logic of the product
+
+**Cons:**
+- Overall complexity of the code increases since the pattern requires creating multiple new classes
+
+## Rules of Thumb
+
+- Many designs start out using Factory Method (less complicated and more customizable via subclasses) and evolve toward Abstract Factory, Prototype, or Builder (more flexible, but more complicated)
+- Builder focuses on constructing complex objects step by step. Abstract Factory specializes in creating families of related objects
+- You can use Builder when creating complex Composite trees because you can program its construction steps to work recursively
+- You can combine Builder with Bridge: the director class plays the role of the abstraction, while different builders act as implementations
+- Abstract Factories, Builders and Prototypes can all be implemented as Singletons

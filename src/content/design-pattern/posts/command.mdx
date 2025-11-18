@@ -1,0 +1,72 @@
+---
+layout: post
+title: Command Design Pattern
+difficulty: medium
+tags: [behavioral]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/command-pattern
+refactoring: command
+sourcemaking: command
+wikipedia: Command_pattern
+scaler: design-patterns/command-design-pattern/
+---
+
+## Intent
+- Encapsulate a request as an object, allowing you to parameterize clients with different requests and queue or log operations
+- Turn requests into stand-alone objects that contain all information about the request
+- Support undoable operations by storing commands along with their execution state
+
+## Problem
+
+Consider building a text editor with multiple ways to trigger the same operation - toolbar buttons, context menus, and keyboard shortcuts. A naive approach would embed the business logic directly in UI elements, creating tight coupling between interface and functionality.
+
+This approach leads to massive code duplication when the same operation needs to be accessible from multiple places. It becomes nearly impossible to implement features like undo/redo, macro recording, or operation queuing because the logic is scattered across different UI components.
+
+## Solution
+
+The Command pattern extracts requests into separate command objects that act as intermediaries between UI elements and business logic. Each command encapsulates all the information needed to perform an operation, including the receiver object and method parameters.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/command/structure.png" />
+
+Commands implement a common interface with an execute() method, making them interchangeable. This allows the same UI element to work with different commands, and the same command to be triggered from multiple sources.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Command-2x.png" />
+
+## Example
+
+Imagine ordering food at a restaurant. You (the client) don't go directly to the kitchen (receiver) to request your meal. Instead, you give your order to a waiter (invoker) who writes it down on an order slip (command object). This slip contains all the necessary information and can be queued, prioritized, or even cancelled.
+
+The waiter doesn't need to know how to cook - they just need to know how to deliver the order slip to the kitchen. The kitchen can process orders in any sequence, and the restaurant can implement features like order tracking or cancellation.
+
+<MdxImage src="https://sourcemaking.com/files/v2/content/patterns/Command_example1-2x.png" />
+
+## Implementation Checklist
+
+1. **Define Command Interface**: Create an interface with execute() and optionally undo() methods
+2. **Create Concrete Commands**: Implement command classes that encapsulate specific operations with their receivers
+3. **Identify Invokers**: Modify sender classes to store and work with command objects instead of calling receivers directly
+4. **Connect Components**: Client code creates command objects, configures them with receivers, and associates them with invokers
+5. **Add History Support**: Implement command storage for undo/redo functionality
+6. **Consider Macro Commands**: Create composite commands that execute multiple operations in sequence
+
+## Pros and Cons
+
+**Pros:**
+- **Single Responsibility**: Decouples invokers from receivers, separating request initiation from execution
+- **Open/Closed**: New commands can be added without changing existing invoker or receiver code
+- **Undo/Redo Support**: Commands can store state to enable operation reversal
+- **Deferred Execution**: Operations can be queued, scheduled, or executed remotely
+- **Macro Support**: Complex operations can be built by combining simple commands
+
+**Cons:**
+- **Code Complexity**: Introduces an additional layer of objects, increasing overall complexity
+- **Memory Overhead**: Storing command objects, especially for undo/redo, can consume significant memory
+
+## Rules of Thumb
+
+- Command, Chain of Responsibility, Mediator, and Observer all help decouple senders and receivers of requests
+- Commands can be used as parameters for Chain of Responsibility handlers to create more flexible processing pipelines
+- Often combined with Memento pattern for implementing undo functionality - Commands perform operations while Mementos save state
+- Strategy and Command are similar but Strategy defines how to do something while Command defines what to do
+- Use when you need to parameterize objects with operations, queue operations, or support undo functionality

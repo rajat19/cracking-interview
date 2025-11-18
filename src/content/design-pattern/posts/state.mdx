@@ -1,0 +1,75 @@
+---
+layout: post
+title: State Design Pattern
+difficulty: medium
+tags: [behavioral]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/state-design-pattern
+refactoring: state
+sourcemaking: state
+wikipedia: State_pattern
+scaler: design-patterns/state-design-pattern/
+---
+
+## Intent
+- Allow an object to alter its behavior when its internal state changes. The object will appear to change its class.
+- An object-oriented state machine.
+- Wrapper + polymorphism + collaboration.
+
+## Problem
+
+When an object's behavior changes drastically based on its internal state, implementing this with conditional statements leads to complex, hard-to-maintain code. Consider a media player application where the behavior of play, pause, and stop buttons changes based on whether the player is in a "playing", "stopped", or "locked" state.
+
+Using traditional if/else or switch statements throughout the class creates several problems:
+- The class becomes bloated with numerous conditional statements
+- Adding new states requires modifying existing conditional logic
+- The code becomes fragile and error-prone
+- State-specific behavior is scattered across multiple methods
+
+## Structure
+
+The State pattern extracts state-related behaviors into separate state classes and makes the original object delegate work to an instance of one of these classes, instead of acting on its own.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/state/structure-en.png" />
+
+The pattern consists of:
+- **Context** - maintains a reference to one of the concrete state objects and delegates state-specific work to it
+- **State interface** - declares methods that all concrete states should implement
+- **Concrete States** - provide their own implementations for state-specific methods
+
+## Example
+
+Consider a document editor where documents can be in different states: Draft, Moderation, and Published. The available actions and their behaviors change based on the current state:
+
+- **Draft state**: User can modify content, submit for review
+- **Moderation state**: Admin can approve/reject, user can only view
+- **Published state**: Content is read-only for users, admin can unpublish
+
+Instead of having complex conditionals in every method, each state is a separate class that knows how to handle specific actions and when to transition to other states.
+
+## Checklist
+
+1. Identify an existing class or create a new class that will serve as the "context".
+2. Define the State base class that replicates all the methods of the context class. Don't worry about implementing these methods yet.
+3. Create classes for each state of the context. These classes should extend the State base class and override the methods that are relevant for that state.
+4. In the context class, add a reference field for storing the current state object and a method for changing it.
+5. Replace all conditional logic in the context with calls to methods of the state object.
+6. To switch the state, simply assign a new state object to the context.
+
+## Pros and Cons
+
+**Pros:**
+- **Single Responsibility Principle** - Organize code related to particular states into separate classes.
+- **Open/Closed Principle** - Introduce new states without changing existing state classes or context.
+- **Simplified context** - Eliminate bulky conditional statements from context class.
+
+**Cons:**
+- **Overkill** - May be overkill if state machine has few states or rarely changes.
+- **Complexity** - Can introduce unnecessary complexity for simple state machines.
+
+## Rules of Thumb
+
+- State can be regarded as an extension of Strategy. Both patterns are based on composition: they change the behavior of the context by delegating work to helper objects. Strategy makes these objects completely independent and unaware of each other. However, State doesn't restrict dependencies between concrete states, letting them alter the state of the context at will.
+- State, Strategy, Bridge (and to some degree Adapter) have very similar solution structures. They all share the same solution: "composition". However, they all solve different problems.
+- State pattern is closely related to the concept of Finite-State Machine. The main idea is that at any given moment, there's a finite number of states which a program can be in.

@@ -1,0 +1,65 @@
+---
+layout: post
+title: Factory Method Design Pattern
+difficulty: medium
+tags: [creational]
+langs: [java, py, cpp]
+companies: []
+gfg: system-design/factory-method-for-designing-pattern
+refactoring: factory-method
+sourcemaking: factory_method
+wikipedia: Factory_method_pattern
+scaler: design-patterns/factory-method-design-pattern/
+---
+
+## Intent
+- Define an interface for creating an object, but let subclasses decide which class to instantiate
+- Factory Method lets a class defer instantiation to subclasses
+- Provide a way to encapsulate a group of individual factories with a common theme
+
+## Problem
+
+Imagine you're creating a logistics management application. The first version of your app can only handle transportation by trucks, so the bulk of your code lives inside the `Truck` class. After a while, your app becomes pretty popular. Each day you receive dozens of requests from sea transportation companies to incorporate sea logistics into the app.
+
+Adding a new transportation class to the program isn't that simple if the rest of the code is already coupled to existing classes. Adding `Ship` classes would require making changes to the entire codebase. Worse, if later you decide to add another type of transportation to the app, you will probably need to make all of these changes again.
+
+## Structure
+
+The Factory Method pattern suggests that you replace direct object construction calls (using the `new` operator) with calls to a special factory method. Don't worry: the objects are still created via the `new` operator, but it's being called from within the factory method. Objects returned by a factory method are often referred to as products.
+
+<MdxImage src="https://refactoring.guru/images/patterns/diagrams/factory-method/structure.png" />
+
+The Factory Method pattern is based on inheritance: it relies on a class hierarchy and delegates the object creation to the subclasses.
+
+<MdxImage src="https://refactoring.guru/images/patterns/content/factory-method/factory-method-en.png" />
+
+## Example
+
+The Factory Method pattern allows creating transport objects without specifying the exact class of object that will be created. For instance, a logistics application might use trucks for road transport and ships for sea transport. The client code doesn't need to know whether it's working with a truck or ship - it just calls the deliver method on the transport object.
+
+This is similar to how different assembly lines in a factory produce different products but use similar processes and tooling. The factory method determines which "assembly line" (concrete creator) to use based on the specific requirements.
+
+## Implementation Checklist
+
+1. Make all products follow the same interface. This interface should declare methods that make sense in every product.
+2. Add an empty factory method inside the creator class. The return type of the method should match the common product interface.
+3. In the creator's code find all references to product constructors. One by one, replace them with calls to the factory method, while extracting the product creation code into the factory method.
+4. Create a set of creator subclasses for each type of product listed in the factory method. Override the factory method in the subclasses and extract the appropriate bits of construction code from the base method.
+5. If there are too many product types and it doesn't make sense to create subclasses for all of them, you can reuse the control parameter from the base class in subclasses.
+
+## Pros and Cons
+
+**Pros:**
+- Avoids tight coupling between the creator and the concrete products
+- Single Responsibility Principle. You can move the product creation code into one place in the program
+- Open/Closed Principle. You can introduce new types of products into the program without breaking existing client code
+
+**Cons:**
+- Code may become more complicated since you need to introduce a lot of new subclasses to implement the pattern
+
+## Rules of Thumb
+
+- Factory Method is a specialization of Template Method. At the same time, a Factory Method may serve as a step in a large Template Method
+- Factory Method is based on inheritance but doesn't require an initialization step. Prototype is based on a copy or clone step. As such, Factory Method requires subclassing, but Prototype doesn't
+- Factory Methods are usually called within Template Methods
+- Abstract Factory is often based on a set of Factory Methods, but you can also use Prototype to compose the methods on these classes
